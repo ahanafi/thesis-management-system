@@ -2,25 +2,36 @@
 
 namespace App\Models;
 
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+//use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Ramsey\Uuid\DeprecatedUuidMethodsTrait;
+
+
+use GoldSpecDigital\LaravelEloquentUUID\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Uuid;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
+     *
      */
     protected $fillable = [
-        'name',
+        'full_name',
+        'username',
         'email',
         'password',
+        'level',
+        'avatar'
     ];
+
+    public $incrementing = false;
 
     /**
      * The attributes that should be hidden for arrays.
