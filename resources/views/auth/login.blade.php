@@ -27,7 +27,7 @@
                                 <div class="py-3">
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-lg form-control-alt @error('username') is-invalid @enderror"
-                                               id="login-username" name="username" placeholder="Username">
+                                               id="login-username" name="username" placeholder="Username" value="{{ old('username') }}" autocomplete="off">
 
                                         @error('username')
                                             <span class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-lg form-control-alt @error('password') is-invalid @enderror"
-                                               id="login-password" name="password" placeholder="Password">
+                                               id="login-password" name="password" placeholder="Password" autocomplete="off">
 
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
