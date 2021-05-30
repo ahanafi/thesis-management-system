@@ -20,10 +20,11 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Example Routes
-Route::view('/', 'landing');
-Route::match(['get', 'post'], '/dashboard', function(){
+Route::view('/', 'auth.login');
+Route::get('/dashboard', function(){
     return view('dashboard');
-});
+})->middleware('auth');
+
 Route::view('/pages/slick', 'pages.slick');
 Route::view('/pages/datatables', 'pages.datatables');
 Route::view('/pages/blank', 'pages.blank');
