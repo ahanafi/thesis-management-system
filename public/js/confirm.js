@@ -3,14 +3,15 @@ let confirmDelete = (dataType, dataId) => {
 		Swal.fire({
 			title: 'Konfirmasi',
 			text: 'Apakah Anda yakin akan menghapus data ini?',
-			icon: 'warning',
+			icon: 'question',
 			showCancelButton: true,
 			confirmButtonColor: '#dc3544',
 			confirmButtonText: 'Ya, Hapus.',
 			cancelButtonText: 'Batalkan',
 		}).then((value) => {
+		    console.log(value);
 			if (value.isConfirmed) {
-				const actionURL = `${BASE_URL}${dataType}/delete/${dataId}`;
+				const actionURL = `/master/${dataType}/${dataId}`;
 
 				const body = document.querySelector("body");
 
@@ -25,23 +26,16 @@ let confirmDelete = (dataType, dataId) => {
 				inputMethod.setAttribute("name", "_method");
 				inputMethod.setAttribute("value", "DELETE");
 
-				//Input Data Type
-				const inputDataType = document.createElement("input");
-				inputDataType.setAttribute("type", "hidden");
-				inputDataType.setAttribute("name", "data_type");
-				inputDataType.setAttribute("value", dataType);
-
-				//Input Data ID
-				const inputDataId = document.createElement("input");
-				inputDataId.setAttribute("type", "hidden");
-				inputDataId.setAttribute("name", "data_id");
-				inputDataId.setAttribute("value", dataId);
+				//Input Token
+				const inputToken = document.createElement("input");
+				const token = document.querySelector("meta[name=csrf-token]").getAttribute('content')
+				inputToken.setAttribute("type", "hidden");
+				inputToken.setAttribute("name", "_token");
+				inputToken.setAttribute("value", token);
 
 				const br = document.createElement("br");
 
-				form.appendChild(inputDataType);
-				form.appendChild(br.cloneNode());
-				form.appendChild(inputDataId);
+				form.appendChild(inputToken)
 				form.appendChild(br.cloneNode());
 				form.appendChild(inputMethod);
 

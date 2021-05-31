@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-        <title>Dashmix - Bootstrap 4 Admin Template &amp; UI Framework</title>
+        <title>TMS - Thesis Management System</title>
 
         <meta name="description" content="Dashmix - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
         <meta name="author" content="pixelcave">
@@ -123,6 +123,17 @@
         <!-- <script src="{{ mix('/js/laravel.app.js') }}"></script> -->
         <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
         <script src="{{ asset('js/confirm.js') }}"></script>
+        <script src="{{ asset('js/script.js') }}"></script>
         @yield('js_after')
+        @if(session()->has('message'))
+            <script type="text/javascript">
+                Swal.fire({
+                    title: '{{ ucwords(session()->get('message.type')) }}',
+                    text: '{{ session()->get('message.text') }}',
+                    icon: '{{ session()->get('message.type') }}',
+                    timer: 2000
+                });
+            </script>
+        @endif
     </body>
 </html>

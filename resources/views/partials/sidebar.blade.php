@@ -8,7 +8,7 @@
                                 D<span class="opacity-75">x</span>
                             </span>
                             <span class="smini-hidden">
-                                Dash<span class="opacity-75">mix</span>
+                                Thesis<span class="opacity-75">App</span>
                             </span>
                         </a>
                         <!-- END Logo -->
@@ -42,31 +42,45 @@
                         <ul class="nav-main">
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
-                                    <i class="nav-main-link-icon fa fa-location-arrow"></i>
+                                    <i class="nav-main-link-icon fa fa-home"></i>
                                     <span class="nav-main-link-name">Dashboard</span>
-                                    <span class="nav-main-link-badge badge badge-pill badge-success">5</span>
                                 </a>
                             </li>
-                            <li class="nav-main-heading">Various</li>
-                            <li class="nav-main-item{{ request()->is('pages/*') ? ' open' : '' }}">
+                            <li class="nav-main-heading">MAIN MENU</li>
+                            <li class="nav-main-item{{ request()->is('master/*') ? ' open' : '' }}">
                                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
-                                    <i class="nav-main-link-icon fa fa-lightbulb"></i>
-                                    <span class="nav-main-link-name">Examples</span>
+                                    <i class="nav-main-link-icon fa fa-database"></i>
+                                    <span class="nav-main-link-name">DATA MASTER</span>
                                 </a>
                                 <ul class="nav-main-submenu">
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link{{ request()->is('pages/datatables') ? ' active' : '' }}" href="/pages/datatables">
-                                            <span class="nav-main-link-name">DataTables</span>
+                                        <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}" href="{{ route('faculty.index') }}">
+                                            <i class="nav-main-link-icon fa fa-home"></i>
+                                            <span class="nav-main-link-name">FAKULTAS</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
                                         <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
-                                            <span class="nav-main-link-name">Slick Slider</span>
+                                            <i class="nav-main-link-icon fa fa-list-alt"></i>
+                                            <span class="nav-main-link-name">PROGRAM STUDI</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link{{ request()->is('pages/blank') ? ' active' : '' }}" href="/pages/blank">
-                                            <span class="nav-main-link-name">Blank</span>
+                                        <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
+                                            <i class="nav-main-link-icon fa fa-users"></i>
+                                            <span class="nav-main-link-name">DOSEN</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
+                                            <i class="nav-main-link-icon fa fa-users"></i>
+                                            <span class="nav-main-link-name">MAHASISWA</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
+                                            <i class="nav-main-link-icon fa fa-lightbulb"></i>
+                                            <span class="nav-main-link-name">BIDANG ILMU</span>
                                         </a>
                                     </li>
                                 </ul>

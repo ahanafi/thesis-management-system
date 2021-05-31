@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BAAK\FacultyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +26,15 @@ Route::get('/dashboard', function(){
     return view('dashboard');
 })->middleware('auth');
 
-Route::view('/pages/slick', 'pages.slick');
-Route::view('/pages/datatables', 'pages.datatables');
-Route::view('/pages/blank', 'pages.blank');
+//DATA MASTER
+
+Route::group([
+    'prefix' => 'master',
+], function () {
+    Route::resource('faculty', FacultyController::class);
+});
+
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
