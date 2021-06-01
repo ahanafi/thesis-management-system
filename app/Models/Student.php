@@ -11,4 +11,10 @@ class Student extends Model
     use HasFactory, Uuid;
 
     public $incrementing = false;
+
+    protected $fillable = [
+        'nim', 'full_name', 'study_program_code', 'gender',
+        'place_of_birth', 'date_of_birth', 'address',
+        'phone', 'email', 'picture'
+    ];
 }

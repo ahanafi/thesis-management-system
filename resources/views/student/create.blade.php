@@ -5,7 +5,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Dosen</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Mahasiswa</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Examples</li>
@@ -21,37 +21,29 @@
     <div class="content content-full content-boxed">
         <div class="block block-rounded">
             <div class="block-content">
-                <form action="{{ route('lecturer.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <!-- User Profile -->
+                <form action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <!-- User Profile -->
                     <h2 class="content-heading pt-0">
-                        <i class="fa fa-fw fa-user-circle text-muted mr-1"></i> Form Dosen
+                        <i class="fa fa-fw fa-user-circle text-muted mr-1"></i> Form Mahasiswa
                     </h2>
                     <div class="row push">
                         <div class="col-lg-6 col-xl-6">
-                            <x-input-horizontal type="text" field="nidn" placeholder="Masukkan nomor induk" label="NIDN" is-required="true"></x-input-horizontal>
-                            <x-input-horizontal type="text" field="full_name" placeholder="Masukkan nama lengkap..." label="Nama Lengkap" is-required="true"></x-input-horizontal>
+                            <x-input-horizontal type="text" field="nim" placeholder="Masukkan nomor induk" label="NIM"
+                                                is-required="true"></x-input-horizontal>
 
-                            <x-input-horizontal type="text" field="degree" placeholder="Contoh gelar: S.Kom., M.Kom." label="Gelar" is-required="true"></x-input-horizontal>
+                            <x-input-horizontal type="text" field="full_name" placeholder="Masukkan nama lengkap..."
+                                                label="Nama Lengkap" is-required="true"></x-input-horizontal>
 
-                            <x-input-horizontal type="email" field="email" placeholder="Alamat email" label="Email" is-required="true"></x-input-horizontal>
+                            <x-input-horizontal type="text" field="place_of_birth" placeholder="Tempat Lahir"
+                                                label="Tempat Lahir"></x-input-horizontal>
 
-                            <div class="form-group row">
-                                <label for="phone" class="col-form-label col-sm-4">No. Telpon</label>
-                                <div class="col-sm-7">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                +62
-                                            </span>
-                                        </div>
-                                        <input type="telp" class="form-control" id="phone" name="phone" autocomplete="off" placeholder="812345xxx...">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <x-input-horizontal type="date" field="date_of_birth" placeholder="Tanggal Lahir"
+                                                label="Tanggal Lahir"></x-input-horizontal>
 
-                        <div class="col-lg-6 col-xl-6">
+                            <x-input-horizontal type="textarea" field="address" placeholder="Alamat"
+                                                label="Alamat"></x-input-horizontal>
+
                             <div class="form-group row">
                                 <label for="gender" class="col-sm-4">
                                     Jenis Kelamin
@@ -61,9 +53,29 @@
                                     <x-input-radio label="Perempuan" name="gender" value="female"></x-input-radio>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col-lg-6 col-xl-6">
+                            <div class="form-group row">
+                                <label for="phone" class="col-form-label col-sm-4">No. Telpon</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                +62
+                                            </span>
+                                        </div>
+                                        <input type="telp" class="form-control" id="phone" name="phone"
+                                               autocomplete="off" placeholder="812345xxx...">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <x-input-horizontal type="email" field="email" placeholder="Alamat email" label="Email"
+                                                is-required="true"></x-input-horizontal>
 
                             <div class="form-group row">
-                                <label for="study_program_code" class="col-sm-4">
+                                <label for="study_program_code" class="col-sm-4 col-form-label">
                                     Program Studi
                                 </label>
                                 <div class="col-sm-7">
@@ -79,17 +91,15 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="functional" class="col-sm-4">
-                                    Jabtan Fungsional
-                                </label>
+                                <label for="semester" class="col-sm-4 col-form-label">Semester</label>
                                 <div class="col-sm-7">
-                                    <select class="custom-select" name="functional" required>
-                                        <option value="">-- Pilih Jabtan Fungsional --</option>
-                                        @foreach(getLecturship() as $code => $label)
-                                            <option value="{{ $code }}">
-                                                {{ $label }}
+                                    <select class="custom-select" name="semester" required>
+                                        <option value="">-- Pilih Semester --</option>
+                                        @for($i=1; $i<=8; $i++)
+                                            <option value="{{ $i }}">
+                                                Semester {{ $i }}
                                             </option>
-                                        @endforeach
+                                        @endfor
                                     </select>
                                 </div>
                             </div>
@@ -104,7 +114,8 @@
                                         <input type="file" class="custom-file-input js-custom-file-input-enabled"
                                                data-toggle="custom-file-input" id="dm-profile-edit-avatar"
                                                name="avatar" accept="image/*">
-                                        <label class="custom-file-label" for="dm-profile-edit-avatar">Pilih gambar</label>
+                                        <label class="custom-file-label" for="dm-profile-edit-avatar">Pilih
+                                            gambar</label>
                                     </div>
 
                                 </div>
@@ -113,13 +124,14 @@
                             <div class="form-group row">
                                 <div class="col-sm-7 offset-sm-4">
                                     <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-save mr-1"></i>
-                                    <span>Simpan</span>
-                                </button>
-                                <button type="reset" class="btn btn-light btn-secondary float-right btn-outline-secondary">
-                                    <i class="fa fa-redo-alt mr-1"></i>
-                                    <span>Reset</span>
-                                </button>
+                                        <i class="fa fa-save mr-1"></i>
+                                        <span>Simpan</span>
+                                    </button>
+                                    <button type="reset"
+                                            class="btn btn-light btn-secondary float-right btn-outline-secondary">
+                                        <i class="fa fa-redo-alt mr-1"></i>
+                                        <span>Reset</span>
+                                    </button>
                                 </div>
                             </div>
 
