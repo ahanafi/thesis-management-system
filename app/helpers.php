@@ -30,6 +30,23 @@ if(!function_exists('userLevel')) {
     }
 }
 
+if(!function_exists('userBadge')) {
+    function userBadge($level) {
+        $badgeColor = [
+            'ACADEMIC_STAFF' => 'success',
+            'STUDENT' => 'info',
+            'STUDY_PROGRAM_LEADER' => 'warning',
+            'LECTURER' => 'primary'
+        ];
+
+        if($level !== null && key_exists($level, $badgeColor)) {
+            $color = $badgeColor[$level];
+            $userLevel = strtoupper(userLevel($level));
+            return "<span class='badge badge-$color'>$userLevel</span>";
+        }
+    }
+}
+
 if(!function_exists('getLecturship')) {
     function getLecturship($key = null) {
         $posisitions = [

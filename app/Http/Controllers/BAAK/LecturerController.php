@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\BAAK;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lecturer;
+use App\Models\StudyProgram;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class LecturerController extends Controller
 {
@@ -14,7 +18,8 @@ class LecturerController extends Controller
      */
     public function index()
     {
-        //
+        $lecturers = Lecturer::orderBy('full_name', 'ASC')->get();
+        return view('lecturer.index', compact('lecturers'));
     }
 
     /**
@@ -24,7 +29,8 @@ class LecturerController extends Controller
      */
     public function create()
     {
-        //
+        $studyPrograms = StudyProgram::all();
+        return view('lecturer.create', compact('studyPrograms'));
     }
 
     /**
@@ -35,7 +41,57 @@ class LecturerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nidn' => 'required|unique:lecturers',
+            'full_name' => 'required',
+            'email' => 'required|unique:lecturers,email',
+            'gender' => 'required',
+            'study_program_code' => 'required',
+            'functional' => 'required',
+        ]);
+
+        $nidn = $request->get('nidn');
+        $email = $request->get('email');
+        $fullName = strtoupper($request->get('full_name'));
+
+        $lecturer = [
+            'nidn' => $nidn,
+            'full_name' => $fullName,
+            'email' => $email,
+            'degree' => $request->get('degree'),
+            'gender' => $request->get('gender'),
+            'phone' => $request->get('phone'),
+            'study_program_code' => $request->get('study_program_code'),
+            'functional' => $request->get('functional'),
+        ];
+
+        //Create lecturer
+        $createLecturer = Lecturer::create($lecturer);
+
+        //Create account (user)
+        $user = new User();
+        $user->full_name = $fullName;
+        $user->username = $nidn;
+        $user->email = $email;
+        $user->password = bcrypt($nidn);
+        $user->level = "LECTURER";
+        $user->registration_number = $nidn;
+
+        if($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar')->store('avatars');
+            $user->avatar = $avatar;
+        }
+
+        $createUser = $user->save();
+
+        if($createUser && $createLecturer) {
+            $message = setFlashMessage('success', 'insert', 'dosen');
+        } else {
+            $message = setFlashMessage('error', 'insert', 'dosen');
+        }
+
+        return redirect()->route('lecturer.index')->with('message', $message);
+
     }
 
     /**
@@ -57,7 +113,9 @@ class LecturerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $lecturer = Lecturer::where('id', $id)->firstOrFail();
+        $studyPrograms = StudyProgram::all();
+        return view('lecturer.edit', compact('lecturer', 'studyPrograms'));
     }
 
     /**
@@ -69,7 +127,55 @@ class LecturerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'nidn' => 'required|unique:lecturers,nidn,'.$id,
+            'full_name' => 'required',
+            'email' => 'required|unique:lecturers,email,'.$id,
+            'gender' => 'required',
+            'study_program_code' => 'required',
+            'functional' => 'required',
+        ]);
+
+        $nidn = $request->get('nidn');
+        $email = $request->get('email');
+        $fullName = strtoupper($request->get('full_name'));
+
+        $lecturer = [
+            'nidn' => $nidn,
+            'full_name' => $fullName,
+            'email' => $email,
+            'gender' => $request->get('gender'),
+            'study_program_code' => $request->get('study_program_code'),
+            'functional' => $request->get('functional'),
+        ];
+
+        //Update lecturer
+        $updateLecturer = Lecturer::where('id', $id)->update($lecturer);
+
+        //Update account (user)
+        $user = User::where('username', $nidn)
+                    ->orWhere('registration_number', $nidn)
+                    ->firstOrFail();
+        $user->full_name = $fullName;
+        $user->username = $nidn;
+        $user->email = $email;
+        $user->password = bcrypt($nidn);
+        $user->level = "LECTURER";
+
+        if($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar')->store('avatars');
+            $user->avatar = $avatar;
+        }
+
+        $updateUser = $user->save();
+
+        if($updateUser && $updateLecturer) {
+            $message = setFlashMessage('success', 'update', 'dosen');
+        } else {
+            $message = setFlashMessage('error', 'update', 'dosen');
+        }
+
+        return redirect()->route('lecturer.index')->with('message', $message);
     }
 
     /**
@@ -80,6 +186,23 @@ class LecturerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $lecturer = Lecturer::where('id', $id)->firstOrFail();
+        $nidn = $lecturer->nidn;
+        $user = User::where('username', $nidn)
+                    ->orWhere('registration_number', $nidn)
+                    ->firstOrFail();
+        if(Storage::exists($user->avatar)) {
+            Storage::delete($user->avatar);
+        }
+        $deleteUser = $user->delete();
+        $deleteLecturer = $lecturer->delete();
+
+        if($deleteUser && $deleteLecturer) {
+            $message = setFlashMessage('success', 'delete', 'dosen');
+        } else {
+            $message = setFlashMessage('error', 'delete', 'dosen');
+        }
+
+        return redirect()->route('lecturer.index')->with('message', $message);
     }
 }

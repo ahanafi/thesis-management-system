@@ -25,7 +25,9 @@
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-fw fa-user d-sm-none"></i>
-                                <span class="d-none d-sm-inline-block">Admin</span>
+                                <span class="d-none d-sm-inline-block">
+                                    {{ Auth::user()->full_name }}
+                                </span>
                                 <i class="fa fa-fw fa-angle-down ml-1 d-none d-sm-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">

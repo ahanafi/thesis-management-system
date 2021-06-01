@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Input extends Component
+class InputHorizontal extends Component
 {
     public $label, $field, $type, $placeholder, $value, $layout;
     public $isRequired, $isReadOnly;
@@ -21,13 +21,13 @@ class Input extends Component
      * @param bool $isReadOnly
      */
     public function __construct(
-        $label = "",
-        $field,
-        $type,
-        $placeholder = '',
-        $value = '',
-        $isRequired = false,
-        $isReadOnly = false
+        string $label,
+        string $field,
+        string $type,
+        string $placeholder = '',
+        string $value = '',
+        bool $isRequired = false,
+        bool $isReadOnly = false
     )
     {
         $this->label = $label;
@@ -46,6 +46,6 @@ class Input extends Component
      */
     public function render()
     {
-        return view('components.input');
+        return view('components.input-horizontal');
     }
 }

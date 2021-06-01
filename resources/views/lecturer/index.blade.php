@@ -25,7 +25,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Pengguna</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Dosen</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Examples</li>
@@ -42,9 +42,9 @@
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Data Pengguna</h3>
+                <h3 class="block-title">Data Dosen</h3>
                 <div class="block-options">
-                    <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('lecturer.create') }}" class="btn btn-sm btn-primary">
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </a>
@@ -58,35 +58,35 @@
                         <th class="text-center" style="width: 80px;">
                             <i class="fa fa-user"></i>
                         </th>
+                        <th>NIDN</th>
                         <th>Nama Lengkap</th>
-                        <th>Username</th>
                         <th class="d-none d-sm-table-cell">Email</th>
-                        <th class="d-none d-sm-table-cell">Hak Akses</th>
+                        <th class="d-none d-sm-table-cell">Jab. Fungsional</th>
                         <th class="d-none d-sm-table-cell text-center">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
                     @php($index = 1)
-                    @foreach ($users as $user)
+                    @foreach ($lecturers as $lecturer)
                         <tr>
                             <td class="text-center">
                                 <img class="img-avatar img-avatar48" src="{{ asset('media/avatars/avatar7.jpg') }}" alt="">
                             </td>
-                            <td class="text-center">{{ $user->full_name }}</td>
-                            <td class="font-w600">{{ $user->username }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $user->email }}</td>
+                            <td class="font-w600">{{ $lecturer->nidn }}</td>
+                            <td class="text-center">{{ $lecturer->full_name }}</td>
+                            <td class="d-none d-sm-table-cell">{{ $lecturer->email }}</td>
                             <td class="d-none d-sm-table-cell">
-                                {!! userBadge($user->level) !!}
+                                <span class="badge badge-success">{{ getLecturship($lecturer->functional) }}</span>
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary js-tooltip-enabled"
+                                    <a href="{{ route('lecturer.edit', $lecturer->id) }}" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip" title="Edit" data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="Delete" data-original-title="Delete"
-                                            onclick="confirmDelete('user', '{{ $user->id }}')"
+                                            onclick="confirmDelete('master/lecturer', '{{ $lecturer->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\BAAK;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
+use App\Models\StudyProgram;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -14,7 +16,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::all();
+        return view('student.index', compact('students'));
     }
 
     /**
@@ -24,7 +27,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $studyPrograms = StudyProgram::all();
+        return view('student.create', compact('studyPrograms'));
     }
 
     /**

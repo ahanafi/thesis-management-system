@@ -9,4 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 class Lecturer extends Model
 {
     use HasFactory, Uuid;
+
+    public $incrementing = false;
+
+    protected $fillable = [
+        'nidn',
+        'full_name',
+        'email',
+        'gender',
+        'study_program_code',
+        'functional',
+    ];
 }

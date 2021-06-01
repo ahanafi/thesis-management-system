@@ -60,25 +60,25 @@
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}" href="{{ route('study-program.index') }}">
+                                        <a class="nav-main-link{{ request()->is('master/study-program/*') ? ' active' : '' }}" href="{{ route('study-program.index') }}">
                                             <i class="nav-main-link-icon fa fa-list-alt"></i>
                                             <span class="nav-main-link-name">PROGRAM STUDI</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
+                                        <a class="nav-main-link{{ request()->is('master/lecturer/*') ? ' active' : '' }}" href="{{ route('lecturer.index') }}">
                                             <i class="nav-main-link-icon fa fa-users"></i>
                                             <span class="nav-main-link-name">DOSEN</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
+                                        <a class="nav-main-link{{ request()->is('master/student/*') ? ' active' : '' }}" href="{{ route('student.index') }}">
                                             <i class="nav-main-link-icon fa fa-users"></i>
                                             <span class="nav-main-link-name">MAHASISWA</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
+                                        <a class="nav-main-link{{ request()->is('master/science-field/*') ? ' active' : '' }}" href="{{ route('science-field.index') }}">
                                             <i class="nav-main-link-icon fa fa-lightbulb"></i>
                                             <span class="nav-main-link-name">BIDANG ILMU</span>
                                         </a>
