@@ -60,7 +60,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
+                                        <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}" href="{{ route('study-program.index') }}">
                                             <i class="nav-main-link-icon fa fa-list-alt"></i>
                                             <span class="nav-main-link-name">PROGRAM STUDI</span>
                                         </a>
@@ -85,11 +85,11 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-main-heading">More</li>
+                            <li class="nav-main-heading">PENGATURAN</li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="/">
-                                    <i class="nav-main-link-icon fa fa-globe"></i>
-                                    <span class="nav-main-link-name">Landing</span>
+                                <a class="nav-main-link" href="{{ route('user.index') }}">
+                                    <i class="nav-main-link-icon fa fa-users-cog"></i>
+                                    <span class="nav-main-link-name">DATA PENGGUNA</span>
                                 </a>
                             </li>
                         </ul>

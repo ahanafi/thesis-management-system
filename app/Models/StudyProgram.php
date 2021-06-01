@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class StudyProgram extends Model
 {
     use HasFactory, Uuid;
+
+    public $incrementing = false;
 }

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BAAK\FacultyController;
+use App\Http\Controllers\BAAK\StudyProgramController;
+use App\Http\Controllers\BAAK\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,9 +32,13 @@ Route::get('/dashboard', function(){
 
 Route::group([
     'prefix' => 'master',
+    'middleware' => 'auth'
 ], function () {
     Route::resource('faculty', FacultyController::class);
+    Route::resource('study-program', StudyProgramController::class);
 });
+
+Route::resource('user', UserController::class);
 
 
 

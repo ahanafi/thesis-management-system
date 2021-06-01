@@ -25,7 +25,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Fakultas</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Program Studi</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Examples</li>
@@ -42,16 +42,16 @@
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Data Fakultas</h3>
+                <h3 class="block-title">Data Program Studi</h3>
                 <div class="block-options">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="addFaculty()">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="addStudyProgram()">
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </button>
                 </div>
             </div>
             <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
-                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none">
+                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none mb-0">
                     <div class="block-header bg-white-25">
                         <h3 class="block-title">Tambah Data</h3>
                         <div class="block-options">
@@ -64,19 +64,41 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-                        <form action="{{ route('faculty.store') }}" method="POST">
+                        <form action="{{ route('study-program.store') }}" method="POST">
                             @csrf
                             @method('POST')
                             <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" name="faculty_code" value="{{ old('faculty_code') }}" placeholder="Kode Fakultas" autocomplete="off">
+                                    <x-input type="text" field="study_program_code" placeholder="Kode Prodi" is-required="true"></x-input>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="example-hosting-name" name="faculty_name" placeholder="Nama Fakultas">
+                                <div class="col-md-2">
+                                    <select class="custom-select" name="level">
+                                        <option value="">- Pilih Jenjang -</option>
+                                        @foreach(educationLevel() as $level)
+                                            <option value="{{ $level }}">
+                                                {{ $level }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                <div class="col-md-4 offset-1">
+                                    <select class="custom-select" name="faculty_code" required>
+                                        <option value="">-- Pilih Fakultas --</option>
+                                        @foreach($faculties as $faculty)
+                                            <option value="{{ $faculty->faculty_code }}">
+                                                {{ $faculty->faculty_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-4">
-                                    <select class="custom-select" id="example-hosting-vps" name="dean_code">
-                                        <option value="">-- Pilih Dekan --</option>
+                                    <x-input type="text" field="name" placeholder="Nama Program Studi" is-required="true"></x-input>
+                                </div>
+                                <div class="col-md-4 offset-1">
+                                    <select class="custom-select" name="lecturer_code">
+                                        <option value="">-- Pilih Kaprodi --</option>
                                         @foreach($lecturers as $lecturer)
                                             <option value="{{ $lecturer->nidn }}">
                                                 {{ $lecturer->full_name }}
@@ -84,7 +106,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <button type="submit" class="btn btn-primary btn-block">
                                         <i class="fa fa-save mr-1"></i>
                                         <span>Simpan</span>
@@ -102,28 +124,40 @@
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
                         <th class="text-center" style="width: 100px;">Kode</th>
-                        <th>Nama Fakultas</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30%;">Dekan</th>
+                        <th class="text-center" style="width: 100px;">Jenjang</th>
+                        <th>Nama Program Studi</th>
+                        <th class="d-none d-sm-table-cell" style="width: 30%;">Kaprodi</th>
                         <th style="width: 15%;">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
                     @php($index = 1)
-                    @foreach ($faculties as $faculty)
+                    @foreach ($studyPrograms as $studyProgram)
                         <tr>
                             <td class="text-center">{{ $index++ }}</td>
-                            <td class="text-center">{{ $faculty->faculty_code }}</td>
-                            <td class="font-w600">{{ $faculty->faculty_name }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $faculty->dean_code }}</td>
+                            <td class="text-center">{{ $studyProgram->study_program_code }}</td>
+                            <td class="text-center">{{ $studyProgram->level }}</td>
+                            <td class="font-w600">{{ $studyProgram->name }}</td>
+                            <td class="d-none d-sm-table-cell">{{ $studyProgram->lecturer_code }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"
-                                            data-toggle="tooltip" title="" onclick="editFaculty('{{ $faculty->id }}', '{{ $faculty->faculty_code }}', '{{ $faculty->faculty_name }}', '{{ $faculty->dean_code }}')" data-original-title="Edit">
+                                            data-toggle="tooltip" title=""
+                                            onclick="editStudyProgram(
+                                                    '{{ $studyProgram->id }}',
+                                                    '{{ $studyProgram->study_program_code }}',
+                                                    '{{ $studyProgram->name }}',
+                                                    '{{ $studyProgram->level }}',
+                                                    '{{ $studyProgram->faculty_code }}',
+                                                    '{{ $studyProgram->lecturer_code }}'
+                                                )"
+                                            data-original-title="Edit"
+                                    >
                                         <i class="fa fa-pencil-alt"></i>
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('master/faculty', '{{ $faculty->id }}')"
+                                            onclick="confirmDelete('master/study-program', '{{ $studyProgram->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

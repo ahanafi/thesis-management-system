@@ -11,7 +11,7 @@ let confirmDelete = (dataType, dataId) => {
 		}).then((value) => {
 		    console.log(value);
 			if (value.isConfirmed) {
-				const actionURL = `/master/${dataType}/${dataId}`;
+				const actionURL = `/${dataType}/${dataId}`;
 
 				const body = document.querySelector("body");
 

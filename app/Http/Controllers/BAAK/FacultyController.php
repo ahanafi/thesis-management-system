@@ -36,15 +36,9 @@ class FacultyController extends Controller
         $faculty->dean_code = $request->get('dean_code');
 
         if($faculty->save()) {
-            $message = [
-                'type' => 'success',
-                'text' => 'Data fakultas berhasil disimpan.'
-            ];
+            $message = setFlashMessage('success', 'insert', 'fakultas');
         } else {
-            $message = [
-                'type' => 'error',
-                'text' => 'Data fakultas gagal disimpan.'
-            ];
+            $message = setFlashMessage('error', 'insert', 'fakultas');
         }
 
         return redirect()->route('faculty.index')->with('message', $message);
@@ -91,16 +85,10 @@ class FacultyController extends Controller
         $faculty->faculty_name = $request->get('faculty_name');
         $faculty->dean_code = $request->get('dean_code');
 
-        if($faculty->save()) {
-            $message = [
-                'type' => 'success',
-                'text' => 'Data fakultas berhasil diperbarui.'
-            ];
+        if($faculty->update()) {
+            $message = setFlashMessage('success', 'update', 'fakultas');
         } else {
-            $message = [
-                'type' => 'error',
-                'text' => 'Data fakultas gagal diperbarui.'
-            ];
+            $message = setFlashMessage('error', 'update', 'fakultas');
         }
 
         return redirect()->route('faculty.index')->with('message', $message);
@@ -117,15 +105,9 @@ class FacultyController extends Controller
         $faculty = Faculty::where('id', $id)->firstOrFail();
 
         if($faculty->delete()) {
-            $message = [
-                'type' => 'success',
-                'text' => 'Data fakultas berhasil dihapus.'
-            ];
+            $message = setFlashMessage('success', 'delete', 'fakultas');
         } else {
-            $message = [
-                'type' => 'error',
-                'text' => 'Data fakultas gagal dihapus.'
-            ];
+            $message = setFlashMessage('error', 'delete', 'fakultas');
         }
 
         return redirect()->route('faculty.index')->with('message', $message);
