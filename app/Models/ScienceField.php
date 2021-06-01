@@ -9,4 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class ScienceField extends Model
 {
     use HasFactory, Uuid;
+
+    public $incrementing = false;
+    public $timestamps = false;
 }

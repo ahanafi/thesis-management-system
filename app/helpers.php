@@ -86,3 +86,19 @@ if(!function_exists('setFlashMessage')) {
         ];
     }
 }
+
+if(!function_exists('getTypeOfAssessment')) {
+    function getTypeOfAssessment($key = null) {
+        $typeOfAssessment = [
+            'SEMINAR' => 'Seminar',
+            'TRIAL' => 'Sidang',
+            'COLLOQUIUM' => 'Kolokium'
+        ];
+
+        if($key !== null && key_exists($key, $typeOfAssessment)) {
+            return $typeOfAssessment[$key] . " Skripsi";
+        }
+
+        return $typeOfAssessment;
+    }
+}

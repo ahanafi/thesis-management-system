@@ -82,3 +82,33 @@ const editStudyProgram = (studyProgramId, studyProgramCode, name, level, faculty
     Dashmix.block('open', '#dm-add-server');
 }
 
+const addScienceField = () => {
+    let blockTitle = document.querySelector("#dm-add-server h3.block-title");
+    blockTitle.textContent = 'Tambah Data';
+
+    let formScienceField = document.querySelector("#dm-add-server form");
+    formScienceField.setAttribute("method", "POST");
+
+    Dashmix.block('open', '#dm-add-server');
+}
+
+const editScienceField = (scienceFieldId, scienceFieldCode, scienceFieldName) => {
+    let blockTitle = document.querySelector("#dm-add-server h3.block-title");
+    blockTitle.textContent = 'Edit Data';
+    let action = `/master/science-field/${scienceFieldId}`;
+
+    let formScienceField = document.querySelector("#dm-add-server form");
+    formScienceField.setAttribute("method", "POST");
+    formScienceField.setAttribute("action", action);
+
+    let inputScienceFieldCode = document.querySelector("#dm-add-server input[name=code]");
+    let inputScienceFieldName = document.querySelector("#dm-add-server input[name=name]");
+    let inputMethod = document.querySelector("#dm-add-server input[name=_method]");
+
+    inputScienceFieldCode.value = scienceFieldCode;
+    inputScienceFieldName.value = scienceFieldName;
+    inputMethod.value = "PUT";
+
+
+    Dashmix.block('open', '#dm-add-server');
+}
