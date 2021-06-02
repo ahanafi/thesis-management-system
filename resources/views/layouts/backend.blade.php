@@ -6,8 +6,8 @@
 
         <title>TMS - Thesis Management System</title>
 
-        <meta name="description" content="Dashmix - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-        <meta name="author" content="pixelcave">
+        <meta name="description" content="TMS - Thesis Management Information System at CIC University">
+        <meta name="author" content="Ahmad Hanafi">
         <meta name="robots" content="noindex, nofollow">
 
         <!-- CSRF Token -->
@@ -97,7 +97,15 @@
                 Adding 'smini-visible' to an element will show it (display: inline-block) only when the sidebar is in mini mode
                 Adding 'smini-visible-block' to an element will show it (display: block) only when the sidebar is in mini mode
             -->
-            @include('partials.sidebar')
+            @if(Auth::user()->level === 'ACADEMIC_STAFF')
+                @include('partials.sidebar.academic-staff')
+            @elseif(Auth::user()->level === 'STUDENT')
+                @include('partials.sidebar.student')
+            @elseif(Auth::user()->level === 'STUDY_PROGRAM_LEADER')
+                @include('partials.sidebar.study-program-leader')
+            @elseif(Auth::user()->level === 'LECTURER')
+                @include('partials.sidebar.lecturer')
+            @endif
             <!-- END Sidebar -->
 
             <!-- Header -->

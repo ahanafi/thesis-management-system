@@ -15,6 +15,6 @@ class Student extends Model
     protected $fillable = [
         'nim', 'full_name', 'study_program_code', 'gender',
         'place_of_birth', 'date_of_birth', 'address',
-        'phone', 'email', 'picture'
+        'phone', 'email', 'picture', 'semester'
     ];
 }
