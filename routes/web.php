@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BAAK\AssessmentComponentController;
+use App\Http\Controllers\BAAK\AssessmentScheduleController;
 use App\Http\Controllers\BAAK\FacultyController;
 use App\Http\Controllers\BAAK\LecturerController;
 use App\Http\Controllers\BAAK\ScienceFieldController;
 use App\Http\Controllers\BAAK\StudentController;
 use App\Http\Controllers\BAAK\StudyProgramController;
+use App\Http\Controllers\BAAK\ThesisRequirementController;
 use App\Http\Controllers\BAAK\UserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +49,11 @@ Route::middleware(['auth'])->group(function (){
         Route::resource('student', StudentController::class);
         Route::resource('science-field', ScienceFieldController::class);
     });
+
+    //DATA SKRIPSI
+    Route::resource('thesis-requirement', ThesisRequirementController::class);
+    Route::resource('assessment-schedule', AssessmentScheduleController::class);
+    Route::resource('assessment-component', AssessmentComponentController::class);
 
     Route::resource('user', UserController::class);
 });

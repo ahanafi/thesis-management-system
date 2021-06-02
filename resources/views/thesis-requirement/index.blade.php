@@ -25,7 +25,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Program Studi</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Persyaratan Skripsi</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Examples</li>
@@ -42,16 +42,16 @@
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Data Program Studi</h3>
+                <h3 class="block-title">Persyaratan Skripsi</h3>
                 <div class="block-options">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="addStudyProgram()">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="addThesisRequirement()">
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </button>
                 </div>
             </div>
             <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
-                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none mb-0">
+                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none">
                     <div class="block-header bg-white-25">
                         <h3 class="block-title">Tambah Data</h3>
                         <div class="block-options">
@@ -64,47 +64,31 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-                        <form action="{{ route('study-program.store') }}" method="POST">
+                        <form action="{{ route('thesis-requirement.store') }}" method="POST">
                             @csrf
                             @method('POST')
                             <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-2">
-                                    <x-input type="text" field="study_program_code" placeholder="Kode Prodi" is-required="true"></x-input>
+                                    <input type="text" class="form-control" name="document_name" value="{{ old('document_name') }}" placeholder="Nama dokumen..." autocomplete="off">
                                 </div>
-                                <div class="col-md-2">
-                                    <select class="custom-select" name="level">
-                                        <option value="">- Pilih Jenjang -</option>
-                                        @foreach(educationLevel() as $level)
-                                            <option value="{{ $level }}">
-                                                {{ $level }}
+                                <div class="col-md-3">
+                                    <select class="custom-select" id="example-hosting-vps" name="document_type" required>
+                                        <option value="">-- Pilih Tipe Dokumen --</option>
+                                        @foreach(documentTypes() as $type => $label)
+                                            <option value="{{ $type }}">
+                                                {{ $label }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4 offset-1">
-                                    <select class="custom-select" name="faculty_code" required>
-                                        <option value="">-- Pilih Fakultas --</option>
-                                        @foreach($faculties as $faculty)
-                                            <option value="{{ $faculty->faculty_code }}">
-                                                {{ $faculty->faculty_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-4">
-                                    <x-input type="text" field="name" placeholder="Nama Program Studi" is-required="true"></x-input>
+                                    <input type="text" class="form-control" name="note" value="{{ old('note') }}" placeholder="Keterangan tambahan (opsional)" autocomplete="off">
                                 </div>
-                                <div class="col-md-4 offset-1">
-                                    <select class="custom-select" name="lecturer_code">
-                                        <option value="">-- Pilih Kaprodi --</option>
-                                        @foreach($lecturers as $lecturer)
-                                            <option value="{{ $lecturer->nidn }}">
-                                                {{ $lecturer->full_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-md-1">
+                                    <div class="custom-control custom-checkbox custom-checkbox-square custom-control-lg custom-control-dark mb-1 mt-2">
+                                        <input type="checkbox" class="custom-control-input bg-white" id="is-required" name="is-required" checked="checked" onclick="toggleIsRequired()">
+                                        <label class="custom-control-label" for="is-required">Wajib</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-2">
                                     <button type="submit" class="btn btn-primary btn-block">
@@ -123,41 +107,46 @@
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
-                        <th class="text-center" style="width: 100px;">Kode</th>
-                        <th class="text-center" style="width: 100px;">Jenjang</th>
-                        <th>Nama Program Studi</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30%;">Kaprodi</th>
+                        <th>Nama Dokumen</th>
+                        <th class="d-none d-sm-table-cell">Format</th>
+                        <th class="text-center">Sifat</th>
+                        <th class="text-center" style="width: 200px;">Keterangan</th>
                         <th style="width: 15%;">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
 
-                    @foreach ($studyPrograms as $studyProgram)
+                    @foreach ($thesisRequirements as $requirement)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $studyProgram->study_program_code }}</td>
-                            <td class="text-center">{{ $studyProgram->level }}</td>
-                            <td class="font-w600">{{ $studyProgram->name }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $studyProgram->lecturer_code }}</td>
+                            <td>{{ $requirement->document_name }}</td>
+                            <td class="font-w600">{!! documentTypes($requirement->document_type) !!}</td>
+                            <td class="text-center">
+                                @if($requirement->is_required)
+                                    <span class="badge badge-success">WAJIB</span>
+                                @else
+                                    <span class="badge badge-warning">OPSIONAL</span>
+                                @endif
+                            </td>
+                            <td class="d-none d-sm-table-cell">{{ $requirement->note }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"
-                                            data-toggle="tooltip" title=""
-                                            onclick="editStudyProgram(
-                                                    '{{ $studyProgram->id }}',
-                                                    '{{ $studyProgram->study_program_code }}',
-                                                    '{{ $studyProgram->name }}',
-                                                    '{{ $studyProgram->level }}',
-                                                    '{{ $studyProgram->faculty_code }}',
-                                                    '{{ $studyProgram->lecturer_code }}'
+                                            data-toggle="tooltip"
+                                            title=""
+                                            onclick="editThesisRequirement(
+                                                    '{{ $requirement->id }}',
+                                                    '{{ $requirement->document_name }}',
+                                                    '{{ $requirement->document_type }}',
+                                                    '{{ $requirement->is_required }}',
+                                                    '{{ $requirement->note }}'
                                                 )"
-                                            data-original-title="Edit"
-                                    >
+                                            data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('master/study-program', '{{ $studyProgram->id }}')"
+                                            onclick="confirmDelete('thesis-requirement', '{{ $requirement->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

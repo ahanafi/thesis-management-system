@@ -1,3 +1,4 @@
+/* FACULTY */
 const addFaculty = () => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Tambah Data';
@@ -30,6 +31,8 @@ const editFaculty = (facultyId, facultyCode, facultyName, deanCode) => {
     Dashmix.block('open', '#dm-add-server');
 }
 
+
+/* STUDY PROGRAM */
 const addStudyProgram = () => {
     const blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Tambah Data';
@@ -82,6 +85,8 @@ const editStudyProgram = (studyProgramId, studyProgramCode, name, level, faculty
     Dashmix.block('open', '#dm-add-server');
 }
 
+
+/* SCIENCE FIELD */
 const addScienceField = () => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Tambah Data';
@@ -109,6 +114,111 @@ const editScienceField = (scienceFieldId, scienceFieldCode, scienceFieldName) =>
     inputScienceFieldName.value = scienceFieldName;
     inputMethod.value = "PUT";
 
+    Dashmix.block('open', '#dm-add-server');
+}
+
+/* THESIS REQUIREMENT */
+const addThesisRequirement = () => {
+    let blockTitle = document.querySelector("#dm-add-server h3.block-title");
+    blockTitle.textContent = 'Tambah Data';
+
+    let formThesisRequirement = document.querySelector("#dm-add-server form");
+    formThesisRequirement.setAttribute("method", "POST");
+    formThesisRequirement.setAttribute("action", '/thesis-requirement');
+
+    let inputDocumentName = document.querySelector("#dm-add-server input[name=document_name]");
+    let inputNote = document.querySelector("#dm-add-server input[name=note]");
+    let inputMethod = document.querySelector("#dm-add-server input[name=_method]");
+    let inputIsRequired = document.querySelector("#is-required");
+
+    const documentTypeOptions = document.querySelectorAll("#dm-add-server select[name=document_type] > option");
+    documentTypeOptions.forEach((opt, index) => (opt.value === '') ? opt.setAttribute('selected', 'selected') : '');
+
+    inputDocumentName.value = '';
+    inputNote.value = '';
+    inputIsRequired.setAttribute('checked', 'checked');
+
+    inputMethod.value = "POST";
+
+    Dashmix.block('open', '#dm-add-server');
+}
+
+const editThesisRequirement = (thesisRequirementId, documentName, documentType, isRequired, note) => {
+    let blockTitle = document.querySelector("#dm-add-server h3.block-title");
+    blockTitle.textContent = 'Edit Data';
+    let action = `/thesis-requirement/${thesisRequirementId}`;
+
+    let formThesisRequirement = document.querySelector("#dm-add-server form");
+    formThesisRequirement.setAttribute("method", "POST");
+    formThesisRequirement.setAttribute("action", action);
+
+    let inputDocumentName = document.querySelector("#dm-add-server input[name=document_name]");
+    let inputNote = document.querySelector("#dm-add-server input[name=note]");
+    let inputMethod = document.querySelector("#dm-add-server input[name=_method]");
+    let inputIsRequired = document.querySelector("#is-required");
+
+    const documentTypeOptions = document.querySelectorAll("#dm-add-server select[name=document_type] > option");
+    documentTypeOptions.forEach((opt, index) => {
+        (opt.value.toLowerCase() === documentType.toLowerCase()) ? opt.setAttribute('selected', 'selected') : (opt.hasAttribute('selected') ? opt.removeAttribute('selected') : '');
+    });
+
+    inputDocumentName.value = documentName;
+    inputNote.value = note;
+
+    if(parseInt(isRequired) === 1) {
+        inputIsRequired.setAttribute('checked', 'checked');
+    } else {
+        inputIsRequired.removeAttribute('checked');
+    }
+
+    inputMethod.value = "PUT";
+
+    Dashmix.block('open', '#dm-add-server');
+}
+
+
+/* THESIS REQUIREMENT */
+const addAssessmentComponent = () => {
+    let blockTitle = document.querySelector("#dm-add-server h3.block-title");
+    blockTitle.textContent = 'Tambah Data';
+
+    let formAssessmentComponent = document.querySelector("#dm-add-server form");
+    formAssessmentComponent.setAttribute("method", "POST");
+    formAssessmentComponent.setAttribute("action", '/assessment-component');
+
+    let inputName = document.querySelector("#dm-add-server input[name=name]");
+    let inputWeight = document.querySelector("#dm-add-server input[name=weight]");
+    let inputMethod = document.querySelector("#dm-add-server input[name=_method]");
+
+    const assessmentTypeOptions = document.querySelectorAll("#dm-add-server select[name=assessment_type] > option");
+    assessmentTypeOptions.forEach((opt, index) => (opt.value === '') ? opt.setAttribute('selected', 'selected') : '');
+
+    inputName.value = '';
+    inputWeight.value = '';
+    inputMethod.value = "POST";
+
+    Dashmix.block('open', '#dm-add-server');
+}
+
+const editAssessmentComponent = (assessmentComponentId, name, assessmentType, weight) => {
+    let blockTitle = document.querySelector("#dm-add-server h3.block-title");
+    blockTitle.textContent = 'Edit Data';
+    let action = `/assessment-component/${assessmentComponentId}`;
+
+    let formAssessmentComponent = document.querySelector("#dm-add-server form");
+    formAssessmentComponent.setAttribute("method", "POST");
+    formAssessmentComponent.setAttribute("action", action);
+
+    let inputName = document.querySelector("#dm-add-server input[name=name]");
+    let inputWeight = document.querySelector("#dm-add-server input[name=weight]");
+    let inputMethod = document.querySelector("#dm-add-server input[name=_method]");
+
+    const assessmentTypeOptions = document.querySelectorAll("#dm-add-server select[name=assessment_type] > option");
+    assessmentTypeOptions.forEach((opt, index) => (opt.value.toLowerCase() === assessmentType.toLowerCase()) ? opt.setAttribute('selected', 'selected') : (opt.hasAttribute('selected') ? opt.removeAttribute('selected') : ''));
+
+    inputName.value = name;
+    inputWeight.value = weight;
+    inputMethod.value = 'PUT';
 
     Dashmix.block('open', '#dm-add-server');
 }

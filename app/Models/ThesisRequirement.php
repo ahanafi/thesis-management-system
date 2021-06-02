@@ -9,4 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class ThesisRequirement extends Model
 {
     use HasFactory, Uuid;
+
+    public $incrementing = false;
+
+    protected $fillable = [
+        'document_name',
+        'document_type',
+        'note',
+        'is_required',
+    ];
 }

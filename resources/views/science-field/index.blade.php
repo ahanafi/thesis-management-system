@@ -97,10 +97,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @php($index = 1)
+
                     @foreach ($scienceFields as $field)
                         <tr>
-                            <td class="text-center">{{ $index++ }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
                             <td class="text-center">{{ $field->code }}</td>
                             <td class="font-w600">{{ $field->name }}</td>
                             <td class="text-center">

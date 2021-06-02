@@ -66,7 +66,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @php($index = 1)
+
                     @foreach ($students as $student)
                         <tr>
                             <td class="text-center">

@@ -102,3 +102,19 @@ if(!function_exists('getTypeOfAssessment')) {
         return $typeOfAssessment;
     }
 }
+
+if(!function_exists('documentTypes')) {
+    function documentTypes($key = null) {
+        $types = [
+            'image' => 'JPG, PNG, JPEG',
+            'document' => 'PDF, DOC, DOCX',
+            'archive' => 'ZIP, RAR, GZIP'
+        ];
+
+        if($key !== null && key_exists($key, $types)) {
+            return $types[$key];
+        }
+
+        return $types;
+    }
+}

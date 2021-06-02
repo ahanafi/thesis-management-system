@@ -25,7 +25,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Program Studi</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Persyaratan Skripsi</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Examples</li>
@@ -42,16 +42,16 @@
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Data Program Studi</h3>
+                <h3 class="block-title">Persyaratan Skripsi</h3>
                 <div class="block-options">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="addStudyProgram()">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="addAssessmentComponent()">
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </button>
                 </div>
             </div>
             <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
-                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none mb-0">
+                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none">
                     <div class="block-header bg-white-25">
                         <h3 class="block-title">Tambah Data</h3>
                         <div class="block-options">
@@ -64,49 +64,27 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-                        <form action="{{ route('study-program.store') }}" method="POST">
+                        <form action="{{ route('assessment-component.store') }}" method="POST">
                             @csrf
                             @method('POST')
                             <div class="form-group row gutters-tiny mb-0 items-push">
-                                <div class="col-md-2">
-                                    <x-input type="text" field="study_program_code" placeholder="Kode Prodi" is-required="true"></x-input>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama komponen nilai" autocomplete="off" required>
                                 </div>
-                                <div class="col-md-2">
-                                    <select class="custom-select" name="level">
-                                        <option value="">- Pilih Jenjang -</option>
-                                        @foreach(educationLevel() as $level)
-                                            <option value="{{ $level }}">
-                                                {{ $level }}
+                                <div class="col-md-3">
+                                    <select class="custom-select" id="example-hosting-vps" name="assessment_type" required>
+                                        <option value="">-- Pilih Jenis Pengujain --</option>
+                                        @foreach(getTypeOfAssessment() as $type => $label)
+                                            <option value="{{ $type }}">
+                                                {{ strtoupper($label) }} SKRIPSI
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4 offset-1">
-                                    <select class="custom-select" name="faculty_code" required>
-                                        <option value="">-- Pilih Fakultas --</option>
-                                        @foreach($faculties as $faculty)
-                                            <option value="{{ $faculty->faculty_code }}">
-                                                {{ $faculty->faculty_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-md-3">
+                                    <input type="number" class="form-control" name="weight" value="{{ old('weight') }}" placeholder="Bobot nilai" autocomplete="off" required>
                                 </div>
-                            </div>
-                            <div class="form-group row gutters-tiny mb-0 items-push">
-                                <div class="col-md-4">
-                                    <x-input type="text" field="name" placeholder="Nama Program Studi" is-required="true"></x-input>
-                                </div>
-                                <div class="col-md-4 offset-1">
-                                    <select class="custom-select" name="lecturer_code">
-                                        <option value="">-- Pilih Kaprodi --</option>
-                                        @foreach($lecturers as $lecturer)
-                                            <option value="{{ $lecturer->nidn }}">
-                                                {{ $lecturer->full_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <button type="submit" class="btn btn-primary btn-block">
                                         <i class="fa fa-save mr-1"></i>
                                         <span>Simpan</span>
@@ -123,41 +101,36 @@
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
-                        <th class="text-center" style="width: 100px;">Kode</th>
-                        <th class="text-center" style="width: 100px;">Jenjang</th>
-                        <th>Nama Program Studi</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30%;">Kaprodi</th>
-                        <th style="width: 15%;">Aksi</th>
+                        <th>Nama Komponen Nilai</th>
+                        <th class="d-none d-sm-table-cell">Jenis Ujian</th>
+                        <th class="text-center" style="width: 200px;">Bobot Nilai</th>
+                        <th style="width: 15%;" class="text-center">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    @foreach ($studyPrograms as $studyProgram)
+                    @foreach ($assessmentComponents as $component)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $studyProgram->study_program_code }}</td>
-                            <td class="text-center">{{ $studyProgram->level }}</td>
-                            <td class="font-w600">{{ $studyProgram->name }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $studyProgram->lecturer_code }}</td>
+                            <td>{{ $component->name }}</td>
+                            <td class="font-w600">{!! getTypeOfAssessment($component->assessment_type) !!}</td>
+                            <td class="text-center">{{ $component->weight }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"
-                                            data-toggle="tooltip" title=""
-                                            onclick="editStudyProgram(
-                                                    '{{ $studyProgram->id }}',
-                                                    '{{ $studyProgram->study_program_code }}',
-                                                    '{{ $studyProgram->name }}',
-                                                    '{{ $studyProgram->level }}',
-                                                    '{{ $studyProgram->faculty_code }}',
-                                                    '{{ $studyProgram->lecturer_code }}'
+                                            data-toggle="tooltip"
+                                            title=""
+                                            onclick="editAssessmentComponent(
+                                                    '{{ $component->id }}',
+                                                    '{{ $component->name }}',
+                                                    '{{ $component->assessment_type }}',
+                                                    '{{ $component->weight }}'
                                                 )"
-                                            data-original-title="Edit"
-                                    >
+                                            data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('master/study-program', '{{ $studyProgram->id }}')"
+                                            onclick="confirmDelete('assessment-component', '{{ $component->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

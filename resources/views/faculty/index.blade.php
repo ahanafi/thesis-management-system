@@ -108,10 +108,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @php($index = 1)
+
                     @foreach ($faculties as $faculty)
                         <tr>
-                            <td class="text-center">{{ $index++ }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
                             <td class="text-center">{{ $faculty->faculty_code }}</td>
                             <td class="font-w600">{{ $faculty->faculty_name }}</td>
                             <td class="d-none d-sm-table-cell">{{ $faculty->dean_code }}</td>

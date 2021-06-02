@@ -50,11 +50,12 @@
                         <span class="nav-main-link-name">DASHBOARD</span>
                     </a>
                 </li>
+                <!-- DATA MASTER -->
                 <li class="nav-main-heading">DATA MASTER</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}"
                        href="{{ route('faculty.index') }}">
-                        <i class="nav-main-link-icon fa fa-home"></i>
+                        <i class="nav-main-link-icon fa fa-building"></i>
                         <span class="nav-main-link-name">FAKULTAS</span>
                     </a>
                 </li>
@@ -86,6 +87,34 @@
                         <span class="nav-main-link-name">BIDANG ILMU</span>
                     </a>
                 </li>
+                <!-- END DATA MASTER -->
+
+                <!-- DATA SKRIPSI -->
+                <li class="nav-main-heading">DATA SKRIPSI</li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('thesis-requirement') ? ' active' : '' }}"
+                       href="{{ route('thesis-requirement.index') }}">
+                        <i class="nav-main-link-icon fa fa-file-alt"></i>
+                        <span class="nav-main-link-name">PERSYARATAN SKRIPSI</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
+                       href="{{ route('user.index') }}">
+                        <i class="nav-main-link-icon fa fa-calendar-alt"></i>
+                        <span class="nav-main-link-name">JADWAL UJIAN SKRIPSI</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('assessment-component') ? ' active' : '' }}"
+                       href="{{ route('assessment-component.index') }}">
+                        <i class="nav-main-link-icon fa fa-layer-group"></i>
+                        <span class="nav-main-link-name">KOMPONEN NILAI</span>
+                    </a>
+                </li>
+                <!-- END DATA SKRIPSI -->
+
+                <!-- PENGATURAN -->
                 <li class="nav-main-heading">PENGATURAN</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
@@ -94,6 +123,7 @@
                         <span class="nav-main-link-name">DATA PENGGUNA</span>
                     </a>
                 </li>
+                <!-- END PENGATURAN -->
             </ul>
         </div>
         <!-- END Side Navigation -->

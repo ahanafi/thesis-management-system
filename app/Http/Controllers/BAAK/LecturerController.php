@@ -91,7 +91,6 @@ class LecturerController extends Controller
         }
 
         return redirect()->route('lecturer.index')->with('message', $message);
-
     }
 
     /**
