@@ -144,7 +144,9 @@ class LecturerController extends Controller
             'nidn' => $nidn,
             'full_name' => $fullName,
             'email' => $email,
+            'degree' => $request->get('degree'),
             'gender' => $request->get('gender'),
+            'phone' => $request->get('phone'),
             'study_program_code' => $request->get('study_program_code'),
             'functional' => $request->get('functional'),
         ];
