@@ -76,6 +76,8 @@ if(!function_exists('setFlashMessage')) {
             $messageType = " diperbarui!";
         } else if (in_array($actionType, ['delete', 'destroy', 'remove'])) {
             $messageType = " dihapus!";
+        } else if($actionType == 'upload') {
+            $messageType = " diupload!";
         }
 
         $messageText = "Data " . $dataType . $messageStatus . $messageType;

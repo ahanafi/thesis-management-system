@@ -39,67 +39,80 @@
 
     <!-- Page Content -->
     <div class="content">
-        <!-- Dynamic Table with Export Buttons -->
-        <div class="block block-rounded">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">Persyaratan Skripsi</h3>
-                <div class="block-options">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="addThesisRequirement()">
-                        <i class="fa fa-plus"></i>
-                        <span>Tambah Data</span>
-                    </button>
-                </div>
-            </div>
-            <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
-                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none">
-                    <div class="block-header bg-white-25">
-                        <h3 class="block-title">Tambah Data</h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option">
-                                <i class="si si-question"></i>
-                            </button>
-                            <button type="button" class="btn-block-option" data-toggle="block-option" data-action="close">
-                                <i class="si si-close"></i>
-                            </button>
-                        </div>
+        <div class="row row-deck">
+            <div class="col-sm-7">
+                <div class="block block-rounded">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">
+                            <i class="fa fa-fw fa-upload text-muted mr-1"></i>
+                            Unggah Persyaratan Skripsi
+                        </h3>
                     </div>
-                    <div class="block-content block-content-full">
-                        <form action="{{ route('thesis-requirement.store') }}" method="POST">
-                            @csrf
-                            @method('POST')
-                            <div class="form-group row gutters-tiny mb-0 items-push">
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control" name="document_name" value="{{ old('document_name') }}" placeholder="Nama dokumen..." autocomplete="off">
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="custom-select" id="example-hosting-vps" name="document_type" required>
-                                        <option value="">-- Pilih Tipe Dokumen --</option>
-                                        @foreach(documentTypes() as $type => $label)
-                                            <option value="{{ $type }}">
-                                                {{ $label }}
+                    <div class="block-content">
+                        <div class="row justify-content-center py-sm-3 py-md-4">
+                            <form action="{{ route('student.thesis-requirement.upload') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="thesis_requirement_id">Jenis Dokumen</label>
+                                    <select class="custom-select" name="thesis_requirement_id" required>
+                                        <option value="">-- Pilih Jenis Dokumen --</option>
+                                        @foreach($thesisRequirements as $requirement)
+                                            <option value="{{ $requirement->id }}">
+                                                {{ $requirement->document_name }}
+                                                ({{ documentTypes($requirement->document_type) }})
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" name="note" value="{{ old('note') }}" placeholder="Keterangan tambahan (opsional)" autocomplete="off">
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="custom-control custom-checkbox custom-checkbox-square custom-control-lg custom-control-dark mb-1 mt-2">
-                                        <input type="checkbox" class="custom-control-input bg-white" id="is-required" name="is-required" checked="checked" onclick="toggleIsRequired()">
-                                        <label class="custom-control-label" for="is-required">Wajib</label>
+
+                                <div class="form-group">
+                                    <label for="document">File</label>
+                                    <div class="custom-file">
+                                        <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
+                                               data-toggle="custom-file-input" id="dm-profile-edit-file"
+                                               name="document" required>
+                                        <label class="custom-file-label" for="dm-profile-edit-file">Pilih file</label>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary btn-block">
-                                        <i class="fa fa-save mr-1"></i>
-                                        <span>Simpan</span>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fa fa-save"></i>
+                                        Upload
                                     </button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="block block-rounded">
+                    <div class="block-header block-header-default">
+                        <i class="fa fa-fw fa-check-double text-muted mr-1"></i>
+                        <h3 class="block-title">Status Unggahan Dokumen</h3>
+                    </div>
+                    <div class="block-content">
+                        <ul class="fa-ul list-icons">
+                            @foreach ($thesisRequirements as $requirement)
+                            <li>
+                                <span class="fa-li text-success">
+                                    <i class="fa fa-check-circle"></i>
+                                </span>
+                                <div class="font-w600">{{ $requirement->document_name }}</div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Table with Export Buttons -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Persyaratan Skripsi</h3>
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
@@ -108,52 +121,12 @@
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
                         <th>Nama Dokumen</th>
-                        <th class="d-none d-sm-table-cell">Format</th>
-                        <th class="text-center">Sifat</th>
-                        <th class="text-center" style="width: 200px;">Keterangan</th>
+                        <th class="d-none d-sm-table-cell">Nama file</th>
+                        <th class="text-center" style="width: 200px;">Tanggal Upload</th>
                         <th style="width: 15%;">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    @foreach ($thesisRequirements as $requirement)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $requirement->document_name }}</td>
-                            <td class="font-w600">{!! documentTypes($requirement->document_type) !!}</td>
-                            <td class="text-center">
-                                @if($requirement->is_required)
-                                    <span class="badge badge-success">WAJIB</span>
-                                @else
-                                    <span class="badge badge-warning">OPSIONAL</span>
-                                @endif
-                            </td>
-                            <td class="d-none d-sm-table-cell">{{ $requirement->note }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary js-tooltip-enabled"
-                                            data-toggle="tooltip"
-                                            title=""
-                                            onclick="editThesisRequirement(
-                                                    '{{ $requirement->id }}',
-                                                    '{{ $requirement->document_name }}',
-                                                    '{{ $requirement->document_type }}',
-                                                    '{{ $requirement->is_required }}',
-                                                    '{{ $requirement->note }}'
-                                                )"
-                                            data-original-title="Edit">
-                                        <i class="fa fa-pencil-alt"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger js-tooltip-enabled"
-                                            data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('thesis-requirement', '{{ $requirement->id }}')"
-                                    >
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
                     </tbody>
                 </table>
             </div>

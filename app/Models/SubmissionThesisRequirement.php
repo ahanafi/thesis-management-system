@@ -10,4 +10,10 @@ class SubmissionThesisRequirement extends Model
 {
     use HasFactory, Uuid;
     protected $table = 'submission_of_thesis_requirements';
+
+    public $incrementing = false;
+
+    protected $fillable = [
+        'nim', 'date_of_filling', 'response_date', 'status'
+    ];
 }

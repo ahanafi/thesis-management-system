@@ -65,6 +65,7 @@ Route::middleware(['auth'])->group(function (){
         ->name('student.')
         ->group(function () {
             Route::get('thesis-requirement', [StudentThesisRequirementController::class, 'index'])->name('thesis-requirement');
+            Route::post('thesis-requirement', [StudentThesisRequirementController::class, 'upload'])->name('thesis-requirement.upload');
         });
 });
 
