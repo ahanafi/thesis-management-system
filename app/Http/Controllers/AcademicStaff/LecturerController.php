@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lecturer;
@@ -19,7 +19,7 @@ class LecturerController extends Controller
     public function index()
     {
         $lecturers = Lecturer::orderBy('full_name', 'ASC')->get();
-        return view('lecturer.index', compact('lecturers'));
+        return viewAcademicStaff('lecturer.index', compact('lecturers'));
     }
 
     /**
@@ -30,7 +30,7 @@ class LecturerController extends Controller
     public function create()
     {
         $studyPrograms = StudyProgram::all();
-        return view('lecturer.create', compact('studyPrograms'));
+        return viewAcademicStaff('lecturer.create', compact('studyPrograms'));
     }
 
     /**
@@ -114,7 +114,7 @@ class LecturerController extends Controller
     {
         $lecturer = Lecturer::where('id', $id)->firstOrFail();
         $studyPrograms = StudyProgram::all();
-        return view('lecturer.edit', compact('lecturer', 'studyPrograms'));
+        return viewAcademicStaff('lecturer.edit', compact('lecturer', 'studyPrograms'));
     }
 
     /**

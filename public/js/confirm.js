@@ -48,7 +48,7 @@ let confirmDelete = (dataType, dataId) => {
 	}
 }
 
-let confirmLogout = (token) => {
+let confirmLogout = () => {
     Swal.fire({
         title: 'Konfirmasi',
         text: 'Apakah Anda yakin akan keluar?',
@@ -69,6 +69,7 @@ let confirmLogout = (token) => {
             form.setAttribute("action", actionURL);
 
             const inputMethod = document.createElement("input");
+            const token = document.querySelector("meta[name=csrf-token]").getAttribute('content');
             inputMethod.setAttribute("type", "hidden");
             inputMethod.setAttribute("name", "_token");
             inputMethod.setAttribute("value", token);

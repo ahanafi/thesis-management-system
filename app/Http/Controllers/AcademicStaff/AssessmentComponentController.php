@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssessmentComponent;
@@ -16,7 +16,7 @@ class AssessmentComponentController extends Controller
     public function index()
     {
         $assessmentComponents = AssessmentComponent::all();
-        return view('assessment-component.index', compact('assessmentComponents'));
+        return viewAcademicStaff('assessment-component.index', compact('assessmentComponents'));
     }
 
     /**

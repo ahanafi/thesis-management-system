@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
@@ -20,7 +20,7 @@ class StudyProgramController extends Controller
         $studyPrograms = StudyProgram::orderBy('created_at', 'ASC')->get();
         $lecturers = Lecturer::all();
         $faculties = Faculty::all();
-        return view('study-program.index', compact('studyPrograms', 'lecturers', 'faculties'));
+        return viewAcademicStaff('study-program.index', compact('studyPrograms', 'lecturers', 'faculties'));
     }
 
     /**

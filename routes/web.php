@@ -1,16 +1,19 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\BAAK\AssessmentComponentController;
-use App\Http\Controllers\BAAK\AssessmentScheduleController;
-use App\Http\Controllers\BAAK\FacultyController;
-use App\Http\Controllers\BAAK\LecturerController;
-use App\Http\Controllers\BAAK\ScienceFieldController;
-use App\Http\Controllers\BAAK\StudentController;
-use App\Http\Controllers\BAAK\StudyProgramController;
-use App\Http\Controllers\BAAK\ThesisRequirementController;
-use App\Http\Controllers\BAAK\UserController;
+use App\Http\Controllers\AcademicStaff\AssessmentComponentController;
+use App\Http\Controllers\AcademicStaff\AssessmentScheduleController;
+use App\Http\Controllers\AcademicStaff\FacultyController;
+use App\Http\Controllers\AcademicStaff\LecturerController;
+use App\Http\Controllers\AcademicStaff\ScienceFieldController;
+use App\Http\Controllers\AcademicStaff\StudentController;
+use App\Http\Controllers\AcademicStaff\StudyProgramController;
+use App\Http\Controllers\AcademicStaff\ThesisRequirementController;
+use App\Http\Controllers\AcademicStaff\UserController;
 use App\Http\Controllers\HomeController;
+
+
+use App\Http\Controllers\Student\ThesisRequirementController as StudentThesisRequirementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +39,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     //ACADEMIC_STAFF
-    Route::middleware(\App\Http\Middleware\CheckRoleUser::class.':ACADEMIC_STAFF')->group(function () {
+    Route::middleware('role:ACADEMIC_STAFF')->group(function () {
         //DATA MASTER
         Route::group([
             'prefix' => 'master',
@@ -55,6 +58,14 @@ Route::middleware(['auth'])->group(function (){
 
         Route::resource('user', UserController::class);
     });
+
+    //STUDENT
+    Route::prefix('student')
+        ->middleware('role:STUDENT')
+        ->name('student.')
+        ->group(function () {
+            Route::get('thesis-requirement', [StudentThesisRequirementController::class, 'index'])->name('thesis-requirement');
+        });
 });
 
 

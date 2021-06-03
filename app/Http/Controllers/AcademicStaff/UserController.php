@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('created_at', 'DESC')->get();
-        return view('users.index', compact('users'));
+        return viewAcademicStaff('users.index', compact('users'));
     }
 
     /**
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return viewAcademicStaff('users.create');
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::where('id', $id)->firstOrFail();
-        return view('users.edit', compact('user'));
+        return viewAcademicStaff('users.edit', compact('user'));
     }
 
     /**

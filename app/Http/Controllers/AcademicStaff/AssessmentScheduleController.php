@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

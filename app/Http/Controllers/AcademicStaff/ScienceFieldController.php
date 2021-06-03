@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\ScienceField;
@@ -16,7 +16,7 @@ class ScienceFieldController extends Controller
     public function index()
     {
         $scienceFields = ScienceField::all();
-        return view('science-field.index', compact('scienceFields'));
+        return viewAcademicStaff('science-field.index', compact('scienceFields'));
     }
 
     /**

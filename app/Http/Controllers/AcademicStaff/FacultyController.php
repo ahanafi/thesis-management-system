@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
@@ -14,7 +14,7 @@ class FacultyController extends Controller
     {
         $faculties = Faculty::orderBy('created_at', 'ASC')->get();
         $lecturers = Lecturer::all();
-        return view('faculty.index', compact('faculties', 'lecturers'));
+        return viewAcademicStaff('faculty.index', compact('faculties', 'lecturers'));
     }
 
     /**

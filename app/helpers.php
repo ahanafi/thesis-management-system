@@ -118,3 +118,27 @@ if(!function_exists('documentTypes')) {
         return $types;
     }
 }
+
+if(!function_exists('viewAcademicStaff')) {
+    function viewAcademicStaff($view = null, $data = []) {
+        return view('academic-staff.' . $view, $data);
+    }
+}
+
+if(!function_exists('viewStudent')) {
+    function viewStudent($view = null, $data = []) {
+        return view('student.' . $view, $data);
+    }
+}
+
+if(!function_exists('viewStudyProgramLeader')) {
+    function viewStudyProgramLeader($view = null, $data = []) {
+        return view('student.' . $view, $data);
+    }
+}
+
+if(!function_exists('viewLecturer')) {
+    function viewLecturer($view = null, $data = []) {
+        return view('student.' . $view, $data);
+    }
+}

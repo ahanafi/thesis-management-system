@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
@@ -19,7 +19,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('student.index', compact('students'));
+        return viewAcademicStaff('student.index', compact('students'));
     }
 
     /**
@@ -30,7 +30,7 @@ class StudentController extends Controller
     public function create()
     {
         $studyPrograms = StudyProgram::all();
-        return view('student.create', compact('studyPrograms'));
+        return viewAcademicStaff('student.create', compact('studyPrograms'));
     }
 
     /**
@@ -115,7 +115,7 @@ class StudentController extends Controller
     {
         $studyPrograms = StudyProgram::all();
         $student = Student::where('id', $id)->firstOrFail();
-        return view('student.edit', compact('student', 'studyPrograms'));
+        return viewAcademicStaff('student.edit', compact('student', 'studyPrograms'));
     }
 
     /**

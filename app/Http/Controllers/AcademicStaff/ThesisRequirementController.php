@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BAAK;
+namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\ThesisRequirement;
@@ -16,7 +16,7 @@ class ThesisRequirementController extends Controller
     public function index()
     {
         $thesisRequirements = ThesisRequirement::all();
-        return view('thesis-requirement.index', compact('thesisRequirements'));
+        return viewAcademicStaff('thesis-requirement.index', compact('thesisRequirements'));
     }
 
     /**
