@@ -32,30 +32,29 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth'])->group(function (){
-
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    });
-
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    //DATA MASTER
-    Route::group([
-        'prefix' => 'master',
-    ], function () {
-        Route::resource('faculty', FacultyController::class);
-        Route::resource('study-program', StudyProgramController::class);
-        Route::resource('lecturer', LecturerController::class);
-        Route::resource('student', StudentController::class);
-        Route::resource('science-field', ScienceFieldController::class);
+    //ACADEMIC_STAFF
+    Route::middleware(\App\Http\Middleware\CheckRoleUser::class.':ACADEMIC_STAFF')->group(function () {
+        //DATA MASTER
+        Route::group([
+            'prefix' => 'master',
+        ], function () {
+            Route::resource('faculty', FacultyController::class);
+            Route::resource('study-program', StudyProgramController::class);
+            Route::resource('lecturer', LecturerController::class);
+            Route::resource('student', StudentController::class);
+            Route::resource('science-field', ScienceFieldController::class);
+        });
+
+        //DATA SKRIPSI
+        Route::resource('thesis-requirement', ThesisRequirementController::class);
+        Route::resource('assessment-schedule', AssessmentScheduleController::class);
+        Route::resource('assessment-component', AssessmentComponentController::class);
+
+        Route::resource('user', UserController::class);
     });
-
-    //DATA SKRIPSI
-    Route::resource('thesis-requirement', ThesisRequirementController::class);
-    Route::resource('assessment-schedule', AssessmentScheduleController::class);
-    Route::resource('assessment-component', AssessmentComponentController::class);
-
-    Route::resource('user', UserController::class);
 });
 
 
