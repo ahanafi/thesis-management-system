@@ -17,4 +17,9 @@ class Student extends Model
         'place_of_birth', 'date_of_birth', 'address',
         'phone', 'email', 'picture', 'semester'
     ];
+
+    public function submission_thesis_requirement()
+    {
+        return $this->hasOne(SubmissionThesisRequirement::class, 'nim', 'nim')->with('details');
+    }
 }

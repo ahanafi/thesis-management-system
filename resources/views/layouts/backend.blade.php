@@ -124,6 +124,8 @@
         </div>
         <!-- END Page Container -->
 
+        @yield('modal')
+
         <!-- Dashmix Core JS -->
         <script src="{{ mix('js/dashmix.app.js') }}"></script>
 

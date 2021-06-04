@@ -222,3 +222,7 @@ const editAssessmentComponent = (assessmentComponentId, name, assessmentType, we
 
     Dashmix.block('open', '#dm-add-server');
 }
+
+const showDocument = (documentName, documentType) => {
+
+}

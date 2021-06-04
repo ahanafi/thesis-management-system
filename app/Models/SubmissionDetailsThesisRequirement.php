@@ -14,4 +14,9 @@ class SubmissionDetailsThesisRequirement extends Model
     protected $fillable = [
         'submission_id', 'thesis_requirement_id', 'documents'
     ];
+
+    public function thesis_requirement()
+    {
+        return $this->belongsTo(ThesisRequirement::class, 'thesis_requirement_id', 'id');
+    }
 }

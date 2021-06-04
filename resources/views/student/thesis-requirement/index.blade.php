@@ -50,7 +50,8 @@
                     </div>
                     <div class="block-content">
                         <div class="row justify-content-center py-sm-3 py-md-4">
-                            <form action="{{ route('student.thesis-requirement.upload') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('student.thesis-requirement.upload') }}" method="POST"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="thesis_requirement_id">Jenis Dokumen</label>
@@ -96,12 +97,12 @@
                     <div class="block-content">
                         <ul class="fa-ul list-icons">
                             @foreach ($thesisRequirements as $requirement)
-                            <li>
+                                <li>
                                 <span class="fa-li text-success">
                                     <i class="fa fa-check-circle"></i>
                                 </span>
-                                <div class="font-w600">{{ $requirement->document_name }}</div>
-                            </li>
+                                    <div class="font-w600">{{ $requirement->document_name }}</div>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -123,10 +124,29 @@
                         <th>Nama Dokumen</th>
                         <th class="d-none d-sm-table-cell">Nama file</th>
                         <th class="text-center" style="width: 200px;">Tanggal Upload</th>
-                        <th style="width: 15%;">Aksi</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
+                    @forelse($detailSubmission as $submission)
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $submission->thesis_requirement->document_name }}</td>
+                            <td>{{ str_replace("documents/", "", $submission->documents) }}</td>
+                            <td>{{ $submission->created_at }}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <a href="#" data-toggle="modal" data-target="#modal-detail-document" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                    <a href="" class="btn btn-danger">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                    @endforelse
                     </tbody>
                 </table>
             </div>
@@ -134,4 +154,33 @@
         <!-- END Dynamic Table with Export Buttons -->
     </div>
     <!-- END Page Content -->
+@endsection
+
+@section('modal')
+    <!-- Slide Up Block Modal -->
+    <div class="modal fade" id="modal-detail-document" tabindex="-1" role="dialog" aria-labelledby="modal-detail-document"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-popout" role="document">
+            <div class="modal-content">
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">Modal Title</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content">
+                        Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.
+                    </div>
+                    <div class="block-content block-content-full text-right bg-light">
+                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Slide Up Block Modal -->
 @endsection

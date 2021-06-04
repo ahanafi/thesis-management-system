@@ -16,4 +16,10 @@ class SubmissionThesisRequirement extends Model
     protected $fillable = [
         'nim', 'date_of_filling', 'response_date', 'status'
     ];
+
+    public function details()
+    {
+        return $this->hasMany(SubmissionDetailsThesisRequirement::class, 'submission_id', 'id')
+            ->with('thesis_requirement');
+    }
 }
