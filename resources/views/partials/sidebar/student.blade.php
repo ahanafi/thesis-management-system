@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('student/thesis-requirement') ? ' active' : '' }}" href="{{ route('student.thesis-requirement') }}">
+                    <a class="nav-main-link{{ request()->is('student/thesis-requirement') ? ' active' : '' }}" href="{{ route('student.thesis-requirement.index') }}">
                         <i class="nav-main-link-icon fa fa-file"></i>
                         <span class="nav-main-link-name">PERSYARATAN SKRIPSI</span>
                     </a>

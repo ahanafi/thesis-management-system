@@ -64,8 +64,9 @@ Route::middleware(['auth'])->group(function (){
         ->middleware('role:STUDENT')
         ->name('student.')
         ->group(function () {
-            Route::get('thesis-requirement', [StudentThesisRequirementController::class, 'index'])->name('thesis-requirement');
+            Route::get('thesis-requirement', [StudentThesisRequirementController::class, 'index'])->name('thesis-requirement.index');
             Route::post('thesis-requirement', [StudentThesisRequirementController::class, 'upload'])->name('thesis-requirement.upload');
+            Route::delete('thesis-requirement/{id}', [StudentThesisRequirementController::class, 'destroy'])->name('thesis-requirement.delete');
         });
 });
 

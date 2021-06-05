@@ -10,6 +10,7 @@ use App\Models\ThesisRequirement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Storage;
 
 class ThesisRequirementController extends Controller
 {
@@ -38,7 +39,7 @@ class ThesisRequirementController extends Controller
             ->where('status', 'WAITING')
             ->first();
 
-        if($checkSubmission) {
+        if ($checkSubmission) {
             $submissionId = $checkSubmission->id;
         } else {
             $submission = new SubmissionThesisRequirement();
@@ -59,12 +60,29 @@ class ThesisRequirementController extends Controller
             'documents' => $document
         ]);
 
-        if($addDetailSubmission) {
+        if ($addDetailSubmission) {
             $message = setFlashMessage('success', 'upload', 'persyaratan skripsi');
         } else {
             $message = setFlashMessage('error', 'upload', 'persyaratan skripsi');
         }
 
         return redirect()->route('student.thesis-requirement')->with('message', $message);
+    }
+
+    public function destroy($id)
+    {
+        $detailSubmission = SubmissionDetailsThesisRequirement::findOrFail($id);
+
+        if(Storage::exists($detailSubmission->documents)) {
+            Storage::delete($detailSubmission->documents);
+        }
+
+        if ($detailSubmission->delete()) {
+            $message = setFlashMessage('success', 'delete', 'persyaratan skripsi');
+        } else {
+            $message = setFlashMessage('error', 'delete', 'persyaratan skripsi');
+        }
+
+        return redirect()->route('student.thesis-requirement.index')->with('message', $message);
     }
 }

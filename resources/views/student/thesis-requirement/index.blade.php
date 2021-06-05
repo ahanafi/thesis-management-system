@@ -139,7 +139,7 @@
                                     <a href="#" data-toggle="modal" data-target="#modal-detail-document" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
                                     </a>
-                                    <a href="" class="btn btn-danger">
+                                    <a href="#" onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')" class="btn btn-danger">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </div>

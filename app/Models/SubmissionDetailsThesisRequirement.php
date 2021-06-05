@@ -11,6 +11,8 @@ class SubmissionDetailsThesisRequirement extends Model
     use HasFactory, Uuid;
     protected $table = 'submission_details_thesis_requirements';
 
+    public $incrementing = false;
+
     protected $fillable = [
         'submission_id', 'thesis_requirement_id', 'documents'
     ];
