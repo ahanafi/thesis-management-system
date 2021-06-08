@@ -21,7 +21,7 @@
     <div class="content content-full content-boxed">
         <div class="block block-rounded">
             <div class="block-content">
-                <form action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- User Profile -->
                     <h2 class="content-heading pt-0">

@@ -21,7 +21,7 @@
     <div class="content content-full content-boxed">
         <div class="block block-rounded">
             <div class="block-content">
-                <form action="{{ route('student.update', $student->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                 <!-- User Profile -->

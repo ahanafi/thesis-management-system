@@ -61,7 +61,7 @@ class StudyProgramController extends Controller
             $message = setFlashMessage('error', 'insert', 'program studi');
         }
 
-        return redirect()->route('study-program.index')->with('message', $message);
+        return redirect()->route('study-programs.index')->with('message', $message);
     }
 
     /**
@@ -115,7 +115,7 @@ class StudyProgramController extends Controller
             $message = setFlashMessage('error', 'update', 'program studi');
         }
 
-        return redirect()->route('study-program.index')->with('message', $message);
+        return redirect()->route('study-programs.index')->with('message', $message);
     }
 
     /**
@@ -134,6 +134,6 @@ class StudyProgramController extends Controller
             $message = setFlashMessage('error', 'delete', 'program studi');
         }
 
-        return redirect()->route('study-program.index')->with('message', $message);
+        return redirect()->route('study-programs.index')->with('message', $message);
     }
 }

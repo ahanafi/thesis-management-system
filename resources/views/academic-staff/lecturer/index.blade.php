@@ -44,7 +44,7 @@
             <div class="block-header block-header-default">
                 <h3 class="block-title">Data Dosen</h3>
                 <div class="block-options">
-                    <a href="{{ route('lecturer.create') }}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('lecturers.create') }}" class="btn btn-sm btn-primary">
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </a>
@@ -80,7 +80,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('lecturer.edit', $lecturer->id) }}" class="btn btn-primary js-tooltip-enabled"
+                                    <a href="{{ route('lecturers.edit', $lecturer->id) }}" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip" title="Edit" data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>

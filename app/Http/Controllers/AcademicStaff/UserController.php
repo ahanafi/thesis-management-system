@@ -57,8 +57,7 @@ class UserController extends Controller
         ];
 
         if($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar')->store('avatars');
-            $user['avatar'] = $avatar;
+            $user['avatar'] = $request->file('avatar')->store('public/users');;
         }
 
         $createUser = User::create($user);
@@ -106,9 +105,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'username' => 'required|unique:users',
+            'username' => 'required|unique:users,email,' . $id,
             'full_name' => 'required',
-            'email' => 'required|unique:users|email:rfc,dns',
+            'email' => 'required|unique:users,email,'.$id.'|email:rfc,dns',
         ]);
 
         $user = [
@@ -119,8 +118,7 @@ class UserController extends Controller
         ];
 
         if($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar')->store('avatars');
-            $user['avatar'] = $avatar;
+            $user['avatar'] = $request->file('avatar')->store('public/users');;
         }
 
 

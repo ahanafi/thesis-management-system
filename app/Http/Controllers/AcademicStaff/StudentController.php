@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\StudyProgram;
 use App\Models\User;
+use App\Services\UploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -76,7 +77,7 @@ class StudentController extends Controller
         $user->registration_number = $nim;
 
         if($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar')->store('avatars');
+            $avatar = $request->file('avatar')->store('public/student');
             $user->avatar = $avatar;
             $student['picture'] = $avatar;
         }
@@ -91,7 +92,7 @@ class StudentController extends Controller
             $message = setFlashMessage('error', 'insert', 'mahasiswa');
         }
 
-        return redirect()->route('student.index')->with('message', $message);
+        return redirect()->route('students.index')->with('message', $message);
     }
 
     /**
@@ -132,7 +133,7 @@ class StudentController extends Controller
             'full_name' => 'required',
             'study_program_code' => 'required|exists:study_programs,study_program_code',
             'semester' => 'required|integer|min:1|max:8',
-            'email' => 'required|unique:students,email,' . $id . '|unique:users,email'
+            'email' => 'required|unique:students,email,' . $id,
         ]);
 
         $nim = $request->get('nim');
@@ -164,7 +165,7 @@ class StudentController extends Controller
         $user->registration_number = $nim;
 
         if($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar')->store('avatars');
+            $avatar = $request->file('avatar')->store('public/student');
             $user->avatar = $avatar;
             $student['picture'] = $avatar;
         }
@@ -179,7 +180,7 @@ class StudentController extends Controller
             $message = setFlashMessage('error', 'insert', 'mahasiswa');
         }
 
-        return redirect()->route('student.index')->with('message', $message);
+        return redirect()->route('students.index')->with('message', $message);
     }
 
     /**
@@ -194,11 +195,12 @@ class StudentController extends Controller
         $nim = $student->nim;
         $user = User::where('username', $nim)
                     ->orWhere('registration_number', $nim)
-                    ->firstOrFail();
+                    ->first();
 
         if(Storage::exists($user->avatar)) {
             Storage::delete($user->avatar);
         }
+
         $deleteUser = $user->delete();
         $deleteStudent = $student->delete();
 
@@ -208,6 +210,6 @@ class StudentController extends Controller
             $message = setFlashMessage('error', 'delete', 'mahasiswa');
         }
 
-        return redirect()->route('student.index')->with('message', $message);
+        return redirect()->route('students.index')->with('message', $message);
     }
 }

@@ -44,19 +44,19 @@ Route::middleware(['auth'])->group(function (){
         Route::group([
             'prefix' => 'master',
         ], function () {
-            Route::resource('faculty', FacultyController::class);
-            Route::resource('study-program', StudyProgramController::class);
-            Route::resource('lecturer', LecturerController::class);
-            Route::resource('student', StudentController::class);
-            Route::resource('science-field', ScienceFieldController::class);
+            Route::resource('faculties', FacultyController::class);
+            Route::resource('study-programs', StudyProgramController::class);
+            Route::resource('lecturers', LecturerController::class);
+            Route::resource('students', StudentController::class);
+            Route::resource('science-fields', ScienceFieldController::class);
         });
 
         //DATA SKRIPSI
-        Route::resource('thesis-requirement', ThesisRequirementController::class);
-        Route::resource('assessment-schedule', AssessmentScheduleController::class);
-        Route::resource('assessment-component', AssessmentComponentController::class);
+        Route::resource('thesis-requirements', ThesisRequirementController::class);
+        Route::resource('assessment-schedules', AssessmentScheduleController::class);
+        Route::resource('assessment-components', AssessmentComponentController::class);
 
-        Route::resource('user', UserController::class);
+        Route::resource('users', UserController::class);
     });
 
     //STUDENT

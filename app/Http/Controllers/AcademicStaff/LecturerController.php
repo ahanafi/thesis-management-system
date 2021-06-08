@@ -78,8 +78,7 @@ class LecturerController extends Controller
         $user->registration_number = $nidn;
 
         if($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar')->store('avatars');
-            $user->avatar = $avatar;
+            $user->avatar = $request->file('avatar')->store('avatars');
         }
 
         $createUser = $user->save();
@@ -90,7 +89,7 @@ class LecturerController extends Controller
             $message = setFlashMessage('error', 'insert', 'dosen');
         }
 
-        return redirect()->route('lecturer.index')->with('message', $message);
+        return redirect()->route('lecturers.index')->with('message', $message);
     }
 
     /**
@@ -164,8 +163,7 @@ class LecturerController extends Controller
         $user->level = "LECTURER";
 
         if($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar')->store('avatars');
-            $user->avatar = $avatar;
+            $user->avatar = $request->file('avatar')->store('avatars');
         }
 
         $updateUser = $user->save();
@@ -176,7 +174,7 @@ class LecturerController extends Controller
             $message = setFlashMessage('error', 'update', 'dosen');
         }
 
-        return redirect()->route('lecturer.index')->with('message', $message);
+        return redirect()->route('lecturers.index')->with('message', $message);
     }
 
     /**
@@ -204,6 +202,6 @@ class LecturerController extends Controller
             $message = setFlashMessage('error', 'delete', 'dosen');
         }
 
-        return redirect()->route('lecturer.index')->with('message', $message);
+        return redirect()->route('lecturers.index')->with('message', $message);
     }
 }

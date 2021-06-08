@@ -41,7 +41,7 @@ class FacultyController extends Controller
             $message = setFlashMessage('error', 'insert', 'fakultas');
         }
 
-        return redirect()->route('faculty.index')->with('message', $message);
+        return redirect()->route('faculties.index')->with('message', $message);
     }
 
     /**
@@ -91,7 +91,7 @@ class FacultyController extends Controller
             $message = setFlashMessage('error', 'update', 'fakultas');
         }
 
-        return redirect()->route('faculty.index')->with('message', $message);
+        return redirect()->route('faculties.index')->with('message', $message);
     }
 
     /**
@@ -110,6 +110,6 @@ class FacultyController extends Controller
             $message = setFlashMessage('error', 'delete', 'fakultas');
         }
 
-        return redirect()->route('faculty.index')->with('message', $message);
+        return redirect()->route('faculties.index')->with('message', $message);
     }
 }

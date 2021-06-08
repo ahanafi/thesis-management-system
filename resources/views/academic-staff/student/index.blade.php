@@ -44,7 +44,7 @@
             <div class="block-header block-header-default">
                 <h3 class="block-title">Data Mahasiswa</h3>
                 <div class="block-options">
-                    <a href="{{ route('student.create') }}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('students.create') }}" class="btn btn-sm btn-primary">
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </a>
@@ -80,13 +80,13 @@
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('student.edit', $student->id) }}" class="btn btn-primary js-tooltip-enabled"
+                                    <a href="{{ route('student.sedit', $student->id) }}" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip" title="Edit" data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="Delete" data-original-title="Delete"
-                                            onclick="confirmDelete('master/student', '{{ $student->id }}')"
+                                            onclick="confirmDelete('master/students', '{{ $student->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

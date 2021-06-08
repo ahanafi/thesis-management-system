@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-                        <form action="{{ route('study-program.store') }}" method="POST">
+                        <form action="{{ route('study-programs.store') }}" method="POST">
                             @csrf
                             @method('POST')
                             <div class="form-group row gutters-tiny mb-0 items-push">
@@ -157,7 +157,7 @@
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('master/study-program', '{{ $studyProgram->id }}')"
+                                            onclick="confirmDelete('master/study-programs', '{{ $studyProgram->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

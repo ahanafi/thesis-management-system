@@ -53,36 +53,36 @@
                 <!-- DATA MASTER -->
                 <li class="nav-main-heading">DATA MASTER</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}"
-                       href="{{ route('faculty.index') }}">
+                    <a class="nav-main-link{{ request()->is('master/faculties') ? ' active' : '' }}"
+                       href="{{ route('faculties.index') }}">
                         <i class="nav-main-link-icon fa fa-building"></i>
                         <span class="nav-main-link-name">FAKULTAS</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}"
-                       href="{{ route('study-program.index') }}">
+                    <a class="nav-main-link{{ request()->is('master/study-programs') ? ' active' : '' }}"
+                       href="{{ route('study-programs.index') }}">
                         <i class="nav-main-link-icon fa fa-list-alt"></i>
                         <span class="nav-main-link-name">PROGRAM STUDI</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/lecturer') ? ' active' : '' }}"
-                       href="{{ route('lecturer.index') }}">
+                    <a class="nav-main-link{{ request()->is('master/lecturers') ? ' active' : '' }}"
+                       href="{{ route('lecturers.index') }}">
                         <i class="nav-main-link-icon fa fa-users"></i>
                         <span class="nav-main-link-name">DOSEN</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/student/*') ? ' active' : '' }}"
-                       href="{{ route('student.index') }}">
+                    <a class="nav-main-link{{ request()->is('master/students/*') ? ' active' : '' }}"
+                       href="{{ route('students.index') }}">
                         <i class="nav-main-link-icon fa fa-users"></i>
                         <span class="nav-main-link-name">MAHASISWA</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/science-field/*') ? ' active' : '' }}"
-                       href="{{ route('science-field.index') }}">
+                    <a class="nav-main-link{{ request()->is('master/science-fields/*') ? ' active' : '' }}"
+                       href="{{ route('science-fields.index') }}">
                         <i class="nav-main-link-icon fa fa-lightbulb"></i>
                         <span class="nav-main-link-name">BIDANG ILMU</span>
                     </a>
@@ -92,22 +92,22 @@
                 <!-- DATA SKRIPSI -->
                 <li class="nav-main-heading">DATA SKRIPSI</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('thesis-requirement') ? ' active' : '' }}"
-                       href="{{ route('thesis-requirement.index') }}">
+                    <a class="nav-main-link{{ request()->is('thesis-requirements') ? ' active' : '' }}"
+                       href="{{ route('thesis-requirements.index') }}">
                         <i class="nav-main-link-icon fa fa-file-alt"></i>
                         <span class="nav-main-link-name">PERSYARATAN SKRIPSI</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
-                       href="{{ route('user.index') }}">
+                    <a class="nav-main-link{{ request()->is('users/*') ? ' active' : '' }}"
+                       href="{{ route('users.index') }}">
                         <i class="nav-main-link-icon fa fa-calendar-alt"></i>
                         <span class="nav-main-link-name">JADWAL UJIAN SKRIPSI</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('assessment-component') ? ' active' : '' }}"
-                       href="{{ route('assessment-component.index') }}">
+                    <a class="nav-main-link{{ request()->is('assessment-components') ? ' active' : '' }}"
+                       href="{{ route('assessment-components.index') }}">
                         <i class="nav-main-link-icon fa fa-layer-group"></i>
                         <span class="nav-main-link-name">KOMPONEN NILAI</span>
                     </a>
@@ -117,8 +117,8 @@
                 <!-- PENGATURAN -->
                 <li class="nav-main-heading">PENGATURAN</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
-                       href="{{ route('user.index') }}">
+                    <a class="nav-main-link{{ request()->is('users/*') ? ' active' : '' }}"
+                       href="{{ route('users.index') }}">
                         <i class="nav-main-link-icon fa fa-users-cog"></i>
                         <span class="nav-main-link-name">DATA PENGGUNA</span>
                     </a>

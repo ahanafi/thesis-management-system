@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-                        <form action="{{ route('assessment-component.store') }}" method="POST">
+                        <form action="{{ route('assessment-components.store') }}" method="POST">
                             @csrf
                             @method('POST')
                             <div class="form-group row gutters-tiny mb-0 items-push">
@@ -130,7 +130,7 @@
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('assessment-component', '{{ $component->id }}')"
+                                            onclick="confirmDelete('assessment-components', '{{ $component->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

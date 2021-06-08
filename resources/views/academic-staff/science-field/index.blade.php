@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-                        <form action="{{ route('science-field.store') }}" method="POST">
+                        <form action="{{ route('science-fields.store') }}" method="POST">
                             @csrf
                             @method('POST')
                             <div class="form-group row gutters-tiny mb-0 items-push">
@@ -111,7 +111,7 @@
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('master/science-field', '{{ $field->id }}')"
+                                            onclick="confirmDelete('master/science-fields', '{{ $field->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

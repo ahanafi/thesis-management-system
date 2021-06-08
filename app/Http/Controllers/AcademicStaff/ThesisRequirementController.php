@@ -59,7 +59,7 @@ class ThesisRequirementController extends Controller
             $message = setFlashMessage('error', 'insert', 'persyaratan skripsi');
         }
 
-        return redirect()->route('thesis-requirement.index')->with('message', $message);
+        return redirect()->route('thesis-requirements.index')->with('message', $message);
     }
 
     /**
@@ -115,7 +115,7 @@ class ThesisRequirementController extends Controller
             $message = setFlashMessage('error', 'update', 'persyaratan skripsi');
         }
 
-        return redirect()->route('thesis-requirement.index')->with('message', $message);
+        return redirect()->route('thesis-requirements.index')->with('message', $message);
     }
 
     /**
@@ -133,6 +133,6 @@ class ThesisRequirementController extends Controller
             $message = setFlashMessage('error', 'delete', 'persyaratan skripsi');
         }
 
-        return redirect()->route('thesis-requirement.index')->with('message', $message);
+        return redirect()->route('thesis-requirements.index')->with('message', $message);
     }
 }

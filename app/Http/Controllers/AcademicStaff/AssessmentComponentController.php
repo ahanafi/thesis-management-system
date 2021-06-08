@@ -57,7 +57,7 @@ class AssessmentComponentController extends Controller
             $message = setFlashMessage('error', 'insert', 'komponen penilaian');
         }
 
-        return redirect()->route('assessment-component.index')->with('message', $message);
+        return redirect()->route('assessment-components.index')->with('message', $message);
     }
 
     /**
@@ -111,7 +111,7 @@ class AssessmentComponentController extends Controller
             $message = setFlashMessage('error', 'update', 'komponen penilaian');
         }
 
-        return redirect()->route('assessment-component.index')->with('message', $message);
+        return redirect()->route('assessment-components.index')->with('message', $message);
     }
 
     /**
@@ -130,6 +130,6 @@ class AssessmentComponentController extends Controller
             $message = setFlashMessage('error', 'delete', 'komponen penilaian');
         }
 
-        return redirect()->route('assessment-component.index')->with('message', $message);
+        return redirect()->route('assessment-components.index')->with('message', $message);
     }
 }

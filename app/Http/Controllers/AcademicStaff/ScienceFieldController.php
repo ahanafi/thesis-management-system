@@ -49,7 +49,7 @@ class ScienceFieldController extends Controller
             $message = setFlashMessage('error', 'insert', 'bidang ilmu');
         }
 
-        return redirect()->route('science-field.index')->with('message', $message);
+        return redirect()->route('science-fields.index')->with('message', $message);
     }
 
     /**
@@ -95,7 +95,7 @@ class ScienceFieldController extends Controller
             $message = setFlashMessage('error', 'update', 'bidang ilmu');
         }
 
-        return redirect()->route('science-field.index')->with('message', $message);
+        return redirect()->route('science-fields.index')->with('message', $message);
     }
 
     /**
@@ -114,6 +114,6 @@ class ScienceFieldController extends Controller
             $message = setFlashMessage('error', 'delete', 'bidang ilmu');
         }
 
-        return redirect()->route('science-field.index')->with('message', $message);
+        return redirect()->route('science-fields.index')->with('message', $message);
     }
 }
