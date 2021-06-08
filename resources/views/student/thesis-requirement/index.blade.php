@@ -136,7 +136,12 @@
                             <td>{{ $submission->created_at }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="#" data-toggle="modal" data-target="#modal-detail-document" class="btn btn-primary">
+                                    <a href="#"
+                                       onclick="showDocument(
+                                           '{{ Storage::url($submission->documents) }}',
+                                           '{{ File::extension(Storage::url($submission->documents)) }}'
+                                       )"
+                                       data-toggle="modal" data-target="#modal-detail-document" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
                                     </a>
                                     <a href="#" onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')" class="btn btn-danger">
@@ -160,23 +165,20 @@
     <!-- Slide Up Block Modal -->
     <div class="modal fade" id="modal-detail-document" tabindex="-1" role="dialog" aria-labelledby="modal-detail-document"
          aria-hidden="true">
-        <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
             <div class="modal-content">
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">Modal Title</h3>
+                        <h3 class="block-title">Detail Dokumen</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-fw fa-times"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="block-content">
-                        Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.
-                    </div>
+                    <div class="block-content text-center align-middle" id="view"></div>
                     <div class="block-content block-content-full text-right bg-light">
-                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Done</button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
                     </div>
                 </div>
             </div>

@@ -79,21 +79,21 @@
                 <li class="nav-main-heading">PENGUJIAN SKRIPSI</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}"
-                       href="{{ route('faculty.index') }}">
+                       href="#">
                         <i class="nav-main-link-icon fa fa-building"></i>
                         <span class="nav-main-link-name">SEMINAR</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}"
-                       href="{{ route('study-program.index') }}">
+                       href="#">
                         <i class="nav-main-link-icon fa fa-people-carry"></i>
                         <span class="nav-main-link-name">SIDANG</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('master/lecturer') ? ' active' : '' }}"
-                       href="{{ route('lecturer.index') }}">
+                       href="#">
                         <i class="nav-main-link-icon fa fa-tools"></i>
                         <span class="nav-main-link-name">KOLOKIUM</span>
                     </a>
@@ -104,21 +104,21 @@
                 <li class="nav-main-heading">PENILAIAN</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}"
-                       href="{{ route('faculty.index') }}">
+                       href="#">
                         <i class="nav-main-link-icon fa fa-building"></i>
                         <span class="nav-main-link-name">SEMINAR</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}"
-                       href="{{ route('study-program.index') }}">
+                       href="#">
                         <i class="nav-main-link-icon fa fa-people-carry"></i>
                         <span class="nav-main-link-name">SIDANG</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('master/lecturer') ? ' active' : '' }}"
-                       href="{{ route('lecturer.index') }}">
+                       href="#">
                         <i class="nav-main-link-icon fa fa-tools"></i>
                         <span class="nav-main-link-name">KOLOKIUM</span>
                     </a>

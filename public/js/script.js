@@ -223,6 +223,20 @@ const editAssessmentComponent = (assessmentComponentId, name, assessmentType, we
     Dashmix.block('open', '#dm-add-server');
 }
 
-const showDocument = (documentName, documentType) => {
+const showDocument = (path, documentType) => {
+    let elType = documentType.toLowerCase() === 'pdf' ? 'iframe' : 'img';
+    let element = document.createElement(elType);
+    element.setAttribute('src', path);
+    if(documentType.toLowerCase() === 'pdf') {
+        element.setAttribute("width", '100%');
+        element.setAttribute("height", '400px');
+    }
+    let view = document.querySelector("#view");
 
+    while(view.lastElementChild) {
+        view.removeChild(view.lastElementChild);
+    }
+
+    view.append(element);
+    $("#modal-detail-document").modal('show');
 }

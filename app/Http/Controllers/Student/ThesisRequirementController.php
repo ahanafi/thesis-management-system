@@ -19,9 +19,11 @@ class ThesisRequirementController extends Controller
         $nim = Auth::user()->registration_number;
         $thesisRequirements = ThesisRequirement::all();
         $submission = SubmissionThesisRequirement::where('nim', $nim)->first();
-        $detailSubmission = SubmissionDetailsThesisRequirement::where('submission_id', $submission->id)
+        $detailSubmission = ($submission) ?
+            SubmissionDetailsThesisRequirement::where('submission_id', $submission->id)
             ->with('thesis_requirement')
-            ->get();
+            ->get()
+            : [];
 
         return viewStudent('thesis-requirement.index', compact('detailSubmission', 'thesisRequirements'));
     }
@@ -52,7 +54,7 @@ class ThesisRequirementController extends Controller
         }
 
         //Get document
-        $document = $request->file('document')->store('documents');
+        $document = $request->file('document')->store('public/documents');
 
         $addDetailSubmission = SubmissionDetailsThesisRequirement::create([
             'submission_id' => $submissionId,
@@ -66,7 +68,7 @@ class ThesisRequirementController extends Controller
             $message = setFlashMessage('error', 'upload', 'persyaratan skripsi');
         }
 
-        return redirect()->route('student.thesis-requirement')->with('message', $message);
+        return redirect()->route('student.thesis-requirement.index')->with('message', $message);
     }
 
     public function destroy($id)
