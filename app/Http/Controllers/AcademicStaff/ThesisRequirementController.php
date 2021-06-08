@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
+use App\Models\SubmissionThesisRequirement;
 use App\Models\ThesisRequirement;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class ThesisRequirementController extends Controller
     public function index()
     {
         $thesisRequirements = ThesisRequirement::all();
-        return viewAcademicStaff('thesis-requirement.index', compact('thesisRequirements'));
+        $submissionThesisRequirements = SubmissionThesisRequirement::with(['student', 'details'])->get();
+
+        return viewAcademicStaff('thesis-requirement.index', compact('thesisRequirements', 'submissionThesisRequirements'));
     }
 
     /**

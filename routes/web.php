@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcademicStaff\SubmissionThesisRequirementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AcademicStaff\AssessmentComponentController;
 use App\Http\Controllers\AcademicStaff\AssessmentScheduleController;
@@ -52,6 +53,10 @@ Route::middleware(['auth'])->group(function (){
         });
 
         //DATA SKRIPSI
+        Route::get('/thesis-requirements/submission/{id}', [
+            SubmissionThesisRequirementController::class, 'show'
+        ])->name('thesis-requirement.submission.show');
+
         Route::resource('thesis-requirements', ThesisRequirementController::class);
         Route::resource('assessment-schedules', AssessmentScheduleController::class);
         Route::resource('assessment-components', AssessmentComponentController::class);

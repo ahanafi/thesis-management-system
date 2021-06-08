@@ -12,7 +12,7 @@ const addFaculty = () => {
 const editFaculty = (facultyId, facultyCode, facultyName, deanCode) => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    let action = `/master/faculty/${facultyId}`;
+    let action = `/master/faculties/${facultyId}`;
 
     let formFaculty = document.querySelector("#dm-add-server form");
     formFaculty.setAttribute("method", "POST");
@@ -60,7 +60,7 @@ const addStudyProgram = () => {
 const editStudyProgram = (studyProgramId, studyProgramCode, name, level, facultyCode, lecturerCode) => {
     const blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    const action = `/master/study-program/${studyProgramId}`;
+    const action = `/master/study-programs/${studyProgramId}`;
 
     const formStudyProgram = document.querySelector("#dm-add-server form");
     formStudyProgram.setAttribute("method", "POST");
@@ -100,7 +100,7 @@ const addScienceField = () => {
 const editScienceField = (scienceFieldId, scienceFieldCode, scienceFieldName) => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    let action = `/master/science-field/${scienceFieldId}`;
+    let action = `/master/science-fields/${scienceFieldId}`;
 
     let formScienceField = document.querySelector("#dm-add-server form");
     formScienceField.setAttribute("method", "POST");
@@ -146,7 +146,7 @@ const addThesisRequirement = () => {
 const editThesisRequirement = (thesisRequirementId, documentName, documentType, isRequired, note) => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    let action = `/thesis-requirement/${thesisRequirementId}`;
+    let action = `/thesis-requirements/${thesisRequirementId}`;
 
     let formThesisRequirement = document.querySelector("#dm-add-server form");
     formThesisRequirement.setAttribute("method", "POST");

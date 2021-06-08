@@ -22,4 +22,10 @@ class SubmissionThesisRequirement extends Model
         return $this->hasMany(SubmissionDetailsThesisRequirement::class, 'submission_id', 'id')
             ->with('thesis_requirement');
     }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'nim', 'nim')
+            ->with('study_program');
+    }
 }

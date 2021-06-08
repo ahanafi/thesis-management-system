@@ -42,11 +42,14 @@
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Persyaratan Skripsi</h3>
+                <h3 class="block-title">Dokumen Persyaratan Skripsi</h3>
                 <div class="block-options">
                     <button type="button" class="btn btn-sm btn-primary" onclick="addThesisRequirement()">
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary btn-circle" data-toggle="block-option" data-action="content_toggle">
+                        <i class="si si-arrow-up"></i>
                     </button>
                 </div>
             </div>
@@ -150,6 +153,54 @@
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END Dynamic Table with Export Buttons -->
+
+        <!-- Dynamic Table with Export Buttons -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Pengajuan Dokumen Persyaratan Skripsi Mahasiswa</h3>
+            </div>
+            <div class="block-content block-content-full">
+                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                    <thead>
+                    <tr>
+                        <th class="text-center" style="width: 80px;">#</th>
+                        <th>NIM</th>
+                        <th class="d-none d-sm-table-cell">Nama Mahasiswa</th>
+                        <th class="text-center">Program Studi</th>
+                        <th class="text-center">Persyaratan yg diunggah</th>
+                        <th style="width: 15%;" class="text-center">Aksi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach ($submissionThesisRequirements as $submission)
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $submission->student->nim }}</td>
+                            <td>{{ $submission->student->getName() }}</td>
+                            <td>{{ $submission->student->study_program->name }}</td>
+                            <td class="d-none d-sm-table-cell">
+                                @foreach($submission->details as $detail)
+                                    - {{ $detail->thesis_requirement->document_name }}<br>
+                                @endforeach
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <x-button-link
+                                        link="{{ route('thesis-requirement.submission.show', $submission->id) }}"
+                                        icon="search"
+                                        type="secondary"
+                                        text="Detail"></x-button-link>
                                 </div>
                             </td>
                         </tr>
