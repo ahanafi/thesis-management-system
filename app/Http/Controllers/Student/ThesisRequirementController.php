@@ -16,14 +16,22 @@ class ThesisRequirementController extends Controller
 {
     public function index()
     {
-        $nim = Auth::user()->registration_number;
-        $thesisRequirements = ThesisRequirement::all();
+        $nim = auth()->user()->registration_number;
         $submission = SubmissionThesisRequirement::where('nim', $nim)->first();
         $detailSubmission = ($submission) ?
             SubmissionDetailsThesisRequirement::where('submission_id', $submission->id)
             ->with('thesis_requirement')
             ->get()
             : [];
+
+        $thesisRequirements = ($submission && $detailSubmission)
+            ? ThesisRequirement::all()->each(function ($requirement) use ($submission) {
+                $requirement->status = SubmissionDetailsThesisRequirement::where([
+                    'submission_id' => $submission->id,
+                    'thesis_requirement_id' => $requirement->id
+                ])->count();
+            })
+            : ThesisRequirement::all();
 
         return viewStudent('thesis-requirement.index', compact('detailSubmission', 'thesisRequirements'));
     }
@@ -48,7 +56,8 @@ class ThesisRequirementController extends Controller
             $submission->nim = $nim;
             $submission->date_of_filling = Date::now();
             $submission->response_date = Date::now();
-            $createSubmission = $submission->save();
+            $submission->save();
+
             //Get submission ID
             $submissionId = $submission->id;
         }

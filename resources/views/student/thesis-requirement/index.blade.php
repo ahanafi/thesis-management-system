@@ -58,10 +58,12 @@
                                     <select class="custom-select" name="thesis_requirement_id" required>
                                         <option value="">-- Pilih Jenis Dokumen --</option>
                                         @foreach($thesisRequirements as $requirement)
-                                            <option value="{{ $requirement->id }}">
-                                                {{ $requirement->document_name }}
-                                                ({{ documentTypes($requirement->document_type) }})
-                                            </option>
+                                            @if($requirement->status == 0)
+                                                <option value="{{ $requirement->id }}">
+                                                    {{ $requirement->document_name }}
+                                                    ({{ documentTypes($requirement->document_type) }})
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -98,9 +100,15 @@
                         <ul class="fa-ul list-icons">
                             @foreach ($thesisRequirements as $requirement)
                                 <li>
-                                <span class="fa-li text-success">
-                                    <i class="fa fa-check-circle"></i>
-                                </span>
+                                    @if($requirement->status == 1)
+                                        <span class="fa-li text-success">
+                                            <i class="fa fa-check-circle"></i>
+                                        </span>
+                                    @else
+                                        <span class="fa-li text-danger">
+                                            <i class="fa fa-times-circle"></i>
+                                        </span>
+                                    @endif
                                     <div class="font-w600">{{ $requirement->document_name }}</div>
                                 </li>
                             @endforeach
