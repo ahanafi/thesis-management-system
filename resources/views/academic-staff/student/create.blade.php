@@ -127,11 +127,7 @@
                                         <i class="fa fa-save mr-1"></i>
                                         <span>Simpan</span>
                                     </button>
-                                    <button type="reset"
-                                            class="btn btn-light btn-secondary float-right btn-outline-secondary">
-                                        <i class="fa fa-redo-alt mr-1"></i>
-                                        <span>Reset</span>
-                                    </button>
+                                    <x-button-link extend-class="float-right" type="secondary" link="{{ route('students.index') }}" icon="chevron-left" text="Kembali"></x-button-link>
                                 </div>
                             </div>
 
