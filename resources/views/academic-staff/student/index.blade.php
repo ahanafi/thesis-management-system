@@ -70,7 +70,14 @@
                     @foreach ($students as $student)
                         <tr>
                             <td class="text-center">
-                                <img class="img-avatar img-avatar48" src="{{ asset('media/avatars/avatar7.jpg') }}" alt="">
+                                <img
+                                    class="img-avatar img-avatar48"
+                                    src="{{
+                                        Storage::exists($student->picture)
+                                        ? Storage::url($student->picture)
+                                        : asset('media/avatars/avatar7.jpg')
+                                    }}"
+                                    alt="User picture">
                             </td>
                             <td class="font-w600">{{ $student->nim }}</td>
                             <td class="text-center">{{ $student->full_name }}</td>
@@ -80,7 +87,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('student.sedit', $student->id) }}" class="btn btn-primary js-tooltip-enabled"
+                                    <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip" title="Edit" data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>

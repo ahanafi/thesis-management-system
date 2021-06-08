@@ -70,7 +70,14 @@
                     @foreach ($users as $user)
                         <tr>
                             <td class="text-center">
-                                <img class="img-avatar img-avatar48" src="{{ asset('media/avatars/avatar7.jpg') }}" alt="">
+                                <img
+                                    class="img-avatar img-avatar48"
+                                    src="{{
+                                        Storage::exists($user->avatar)
+                                        ? Storage::url($user->avatar)
+                                        : asset('media/avatars/avatar7.jpg')
+                                    }}"
+                                    alt="User picture">
                             </td>
                             <td class="text-center">{{ $user->full_name }}</td>
                             <td class="font-w600">{{ $user->username }}</td>
