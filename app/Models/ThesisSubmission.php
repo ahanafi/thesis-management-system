@@ -10,6 +10,5 @@ class ThesisSubmission extends Model
 {
     use HasFactory, Uuid;
 
-    protected $table = 'thesis_submission';
     public $incrementing = false;
 }
