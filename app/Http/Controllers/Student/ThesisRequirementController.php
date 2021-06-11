@@ -68,7 +68,7 @@ class ThesisRequirementController extends Controller
         $addDetailSubmission = SubmissionDetailsThesisRequirement::create([
             'submission_id' => $submissionId,
             'thesis_requirement_id' => $request->get('thesis_requirement_id'),
-            'documents' => $document
+            'document' => $document
         ]);
 
         if ($addDetailSubmission) {

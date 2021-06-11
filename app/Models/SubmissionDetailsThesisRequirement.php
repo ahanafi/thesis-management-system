@@ -14,7 +14,7 @@ class SubmissionDetailsThesisRequirement extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'submission_id', 'thesis_requirement_id', 'documents'
+        'submission_id', 'thesis_requirement_id', 'document'
     ];
 
     public function thesis_requirement()

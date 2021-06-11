@@ -45,4 +45,9 @@ class Student extends Model
     {
         return $this->hasOne(SubmissionThesisRequirement::class, 'nim', 'nim')->with('details');
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'registration_number', 'nim');
+    }
 }

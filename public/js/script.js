@@ -240,3 +240,13 @@ const showDocument = (path, documentType) => {
     view.append(element);
     $("#modal-detail-document").modal('show');
 }
+
+const submitResponse = (type) => {
+    const form = document.querySelector("#submit-response");
+    const inputTypeResponse = document.createElement("input");
+    inputTypeResponse.setAttribute('type', 'hidden');
+    inputTypeResponse.setAttribute('name', 'response_type');
+    inputTypeResponse.setAttribute('value', type);
+    form.appendChild(inputTypeResponse);
+    form.submit();
+}

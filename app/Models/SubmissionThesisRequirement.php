@@ -26,7 +26,7 @@ class SubmissionThesisRequirement extends Model
     public function student()
     {
         return $this->belongsTo(Student::class, 'nim', 'nim')
-            ->with('study_program');
+            ->with(['study_program', 'user']);
     }
 
     public static function getByStudentId($nim)

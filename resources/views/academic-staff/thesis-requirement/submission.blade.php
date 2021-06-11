@@ -1,25 +1,5 @@
 @extends('layouts.backend')
 
-@section('css_before')
-    <!-- Page JS Plugins CSS -->
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
-@endsection
-
-@section('js_after')
-    <!-- Page JS Plugins -->
-    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
-
-    <!-- Page JS Code -->
-    <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
-@endsection
-
 @section('content')
     <!-- Hero -->
     <div class="bg-body-light">
@@ -39,60 +19,140 @@
 
     <!-- Page Content -->
     <div class="content">
-        <!-- Dynamic Table with Export Buttons -->
-        <div class="block block-rounded">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">Persyaratan Skripsi</h3>
-                <div class="block-options">
-                    <x-button-link link="{{ route('thesis-requirements.index') }}" text="Kembali" icon="chevron-left" type="outline-primary btn-sm"></x-button-link>
+        <div class="row row-deck">
+            <div class="col-sm-7">
+                <!-- Dynamic Table with Export Buttons -->
+                <div class="block block-rounded">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">Persyaratan Skripsi</h3>
+                        <div class="block-options">
+                            @if($submission->status == App\Status::WAITING)
+                                <form action="{{ route('thesis-requirement.submit-response', $submission->id) }}"
+                                      method="POST" id="submit-response">
+                                    @csrf
+                                    <button type="button" onclick="submitResponse('REJECT')"
+                                            class="btn btn-sm btn-danger">
+                                        <i class="fa fa-times"></i>
+                                        <span>Tolak</span>
+                                    </button>
+                                    <button type="button" onclick="submitResponse('APPROVE')"
+                                            class="btn btn-sm btn-success">
+                                        <i class="fa fa-check"></i>
+                                        <span>Terima</span>
+                                    </button>
+                                    <x-button-link link="{{ route('thesis-requirements.index') }}" text="Kembali"
+                                                   icon="chevron-left" type="outline-primary btn-sm"></x-button-link>
+                                </form>
+                            @else
+                                <x-button-link link="{{ route('thesis-requirements.index') }}" text="Kembali"
+                                               icon="chevron-left" type="outline-primary btn-sm"></x-button-link>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full">
+                        @if($submission->status === App\Status::APPROVE)
+                            <x-alert type="success" icon="fa-check-circle" style="margin-top: 0;"
+                                     message="Pengajuan persyaratan skripsi ini sudah <b>DISETUJUI</b> pada tanggal {{ $submission->response_date }}"
+                            ></x-alert>
+                        @elseif($submission->status === App\Status::REJECT)
+                            <x-alert type="success" icon="fa-times-circle" style="margin-top: 0;"
+                                     message="Pengajuan persyaratan skripsi ini <b>DITOLAK</b> pada tanggal {{ $submission->response_date }}"
+                            ></x-alert>
+                        @endif
+
+                        <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
+                        <table class="table table-bordered table-striped table-vcenter">
+                            <thead>
+                            <tr>
+                                <th class="text-center" style="width: 80px;">#</th>
+                                <th>Nama Dokumen</th>
+                                <th class="text-center" style="width: 200px;">Tanggal Upload</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($submission->details as $detail)
+                                <tr>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td>{{ $detail->thesis_requirement->document_name }}</td>
+                                    <td>{{ $detail->created_at }}</td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <a href="#"
+                                               onclick="showDocument(
+                                                   '{{ Storage::url($detail->document) }}',
+                                                   '{{ File::extension(Storage::url($detail->document)) }}'
+                                                   )"
+                                               data-toggle="modal" data-target="#modal-detail-document"
+                                               class="btn btn-primary">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <!-- END Dynamic Table with Export Buttons -->
             </div>
-            <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
-                    <thead>
-                    <tr>
-                        <th class="text-center" style="width: 80px;">#</th>
-                        <th>Nama Dokumen</th>
-                        <th class="d-none d-sm-table-cell">Nama file</th>
-                        <th class="text-center" style="width: 200px;">Tanggal Upload</th>
-                        <th class="text-center">Aksi</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($submission->details as $submission)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $submission->thesis_requirement->document_name }}</td>
-                            <td>{{ str_replace("documents/", "", $submission->documents) }}</td>
-                            <td>{{ $submission->created_at }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="#"
-                                       onclick="showDocument(
-                                           '{{ Storage::url($submission->documents) }}',
-                                           '{{ File::extension(Storage::url($submission->documents)) }}'
-                                       )"
-                                       data-toggle="modal" data-target="#modal-detail-document" class="btn btn-primary">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                    @endforelse
-                    </tbody>
-                </table>
+            <div class="col-sm-5">
+                <!-- Dynamic Table with Export Buttons -->
+                <div class="block block-rounded">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">Data Mahasiswa</h3>
+                    </div>
+                    <div class="block-content block-content-full">
+                        <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
+                        <table class="table table-bordered table-striped table-vcenter">
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <img
+                                        class="img-avatar128 img-avatar img-avatar-rounded"
+                                        src="{{
+                                        Storage::exists($submission->student->user->avatar)
+                                        ? Storage::url($submission->student->user->avatar)
+                                        : asset('media/avatars/avatar7.jpg')
+                                    }}"
+                                        alt="User picture">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nama Lengkap</td>
+                                <td>:</td>
+                                <td>{{ $submission->student->getName() }}</td>
+                            </tr>
+                            <tr>
+                                <td>NIM</td>
+                                <td>:</td>
+                                <td>{{ $submission->student->nim }}</td>
+                            </tr>
+                            <tr>
+                                <td>Program Studi</td>
+                                <td>:</td>
+                                <td>{{ $submission->student->study_program->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Semester</td>
+                                <td>:</td>
+                                <td>{{ $submission->student->semester }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- END Dynamic Table with Export Buttons -->
             </div>
         </div>
-        <!-- END Dynamic Table with Export Buttons -->
     </div>
     <!-- END Page Content -->
 @endsection
 
 @section('modal')
     <!-- Slide Up Block Modal -->
-    <div class="modal fade" id="modal-detail-document" tabindex="-1" role="dialog" aria-labelledby="modal-detail-document"
+    <div class="modal fade" id="modal-detail-document" tabindex="-1" role="dialog"
+         aria-labelledby="modal-detail-document"
          aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
             <div class="modal-content">

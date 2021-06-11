@@ -140,14 +140,14 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $submission->thesis_requirement->document_name }}</td>
-                            <td>{{ str_replace("documents/", "", $submission->documents) }}</td>
+                            <td>{{ str_replace("documents/", "", $submission->document) }}</td>
                             <td>{{ $submission->created_at }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <a href="#"
                                        onclick="showDocument(
-                                           '{{ Storage::url($submission->documents) }}',
-                                           '{{ File::extension(Storage::url($submission->documents)) }}'
+                                           '{{ Storage::url($submission->document) }}',
+                                           '{{ File::extension(Storage::url($submission->document)) }}'
                                        )"
                                        data-toggle="modal" data-target="#modal-detail-document" class="btn btn-primary">
                                         <i class="fa fa-search"></i>

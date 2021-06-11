@@ -58,6 +58,10 @@ Route::middleware(['auth'])->group(function (){
             SubmissionThesisRequirementController::class, 'show'
         ])->name('thesis-requirement.submission.show');
 
+        Route::post('/thesis-requirements/submit-response/{id}', [
+            SubmissionThesisRequirementController::class, 'submitResponse'
+        ])->name('thesis-requirement.submit-response');
+
         Route::resource('thesis-requirements', ThesisRequirementController::class);
         Route::resource('assessment-schedules', AssessmentScheduleController::class);
         Route::resource('assessment-components', AssessmentComponentController::class);
