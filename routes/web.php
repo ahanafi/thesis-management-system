@@ -15,6 +15,7 @@ use App\Http\Controllers\HomeController;
 
 
 use App\Http\Controllers\Student\ThesisRequirementController as StudentThesisRequirementController;
+use App\Http\Controllers\Student\ThesisSubmissionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,6 +73,9 @@ Route::middleware(['auth'])->group(function (){
             Route::get('thesis-requirement', [StudentThesisRequirementController::class, 'index'])->name('thesis-requirement.index');
             Route::post('thesis-requirement', [StudentThesisRequirementController::class, 'upload'])->name('thesis-requirement.upload');
             Route::delete('thesis-requirement/{id}', [StudentThesisRequirementController::class, 'destroy'])->name('thesis-requirement.delete');
+
+            Route::get('thesis-submission', [ThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
+            Route::post('thesis-submission', [ThesisSubmissionController::class, 'upload'])->name('thesis-submission.upload');
         });
 });
 

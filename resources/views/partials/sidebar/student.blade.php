@@ -57,9 +57,9 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
+                    <a class="nav-main-link{{ request()->is('student/thesis-submission') ? ' active' : '' }}" href="{{ route('student.thesis-submission.index') }}">
                         <i class="nav-main-link-icon fa fa-file-alt"></i>
-                        <span class="nav-main-link-name">PROPOSAL</span>
+                        <span class="nav-main-link-name">PROPOSAL SKRIPSI</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
