@@ -124,7 +124,7 @@ const addThesisRequirement = () => {
 
     let formThesisRequirement = document.querySelector("#dm-add-server form");
     formThesisRequirement.setAttribute("method", "POST");
-    formThesisRequirement.setAttribute("action", '/thesis-requirement');
+    formThesisRequirement.setAttribute("action", '/thesis-requirements');
 
     let inputDocumentName = document.querySelector("#dm-add-server input[name=document_name]");
     let inputNote = document.querySelector("#dm-add-server input[name=note]");

@@ -15,7 +15,7 @@
                 spellcheck="false"
                 @if($isRequired) required="required" @endif
                 style="resize: none;"
-            >{{ $value }}</textarea>
+            >{{ old($field) }}</textarea>
         @else
             <input type="{{ $type }}" class="form-control @error($field) is-invalid @enderror"
                    name="{{ $field }}"

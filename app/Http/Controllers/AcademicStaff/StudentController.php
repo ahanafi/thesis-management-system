@@ -47,7 +47,7 @@ class StudentController extends Controller
             'full_name' => 'required',
             'study_program_code' => 'required|exists:study_programs,study_program_code',
             'semester' => 'required|integer|min:1|max:8',
-            'email' => 'required|unique:students,email',
+            'email' => 'required|unique:students,email|unique:users,email',
         ]);
 
         $nim = $request->get('nim');
@@ -79,7 +79,6 @@ class StudentController extends Controller
         if($request->hasFile('avatar')) {
             $avatar = $request->file('avatar')->store('public/student');
             $user->avatar = $avatar;
-            $student['picture'] = $avatar;
         }
 
         $createUser = $user->save();
@@ -167,7 +166,6 @@ class StudentController extends Controller
         if($request->hasFile('avatar')) {
             $avatar = $request->file('avatar')->store('public/student');
             $user->avatar = $avatar;
-            $student['picture'] = $avatar;
         }
 
         $updateUser = $user->update();

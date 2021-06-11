@@ -68,7 +68,7 @@ class UserController extends Controller
             $message = setFlashMessage('error', 'insert', 'pengguna');
         }
 
-        return redirect()->route('user.index')->with('message', $message);
+        return redirect()->route('users.index')->with('message', $message);
 
     }
 
@@ -130,7 +130,7 @@ class UserController extends Controller
             $message = setFlashMessage('error', 'update', 'pengguna');
         }
 
-        return redirect()->route('user.index')->with('message', $message);
+        return redirect()->route('users.index')->with('message', $message);
     }
 
     /**
@@ -148,6 +148,6 @@ class UserController extends Controller
             $message = setFlashMessage('error', 'delete', 'pengguna');
         }
 
-        return redirect()->route('user.index')->with('message', $message);
+        return redirect()->route('users.index')->with('message', $message);
     }
 }

@@ -82,7 +82,7 @@
                                     <select class="custom-select" name="study_program_code" required>
                                         <option value="">-- Pilih Program Studi --</option>
                                         @foreach($studyPrograms as $studyProgram)
-                                            <option value="{{ $studyProgram->study_program_code }}">
+                                            <option {{ old('study_program_code') == $studyProgram->study_program_code ? 'selected' : '' }} value="{{ $studyProgram->study_program_code }}">
                                                 {{ $studyProgram->name }}
                                             </option>
                                         @endforeach
@@ -96,7 +96,7 @@
                                     <select class="custom-select" name="semester" required>
                                         <option value="">-- Pilih Semester --</option>
                                         @for($i=1; $i<=8; $i++)
-                                            <option value="{{ $i }}">
+                                            <option {{ old('semester') == $i ? 'selected' : '' }} value="{{ $i }}">
                                                 Semester {{ $i }}
                                             </option>
                                         @endfor

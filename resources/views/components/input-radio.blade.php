@@ -5,7 +5,7 @@
         id="{{ $value }}"
         name="{{ $name }}"
         value="{{ $value }}"
-        @if(strtolower($checked) === strtolower($value)) checked='checked' @endif
+        @if(old($name) === strtolower($value)) checked='checked' @endif
     >
     <label class="custom-control-label" for="{{ $value }}">{{ $label }}</label>
 </div>
