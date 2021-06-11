@@ -17,7 +17,7 @@ class CreateSubmissionDetailsThesisRequirementsTable extends Migration
             $table->uuid('id');
             $table->uuid('submission_id');
             $table->uuid('thesis_requirement_id');
-            $table->string('documents');
+            $table->string('document');
             $table->timestamps();
 
             $table->primary('id');

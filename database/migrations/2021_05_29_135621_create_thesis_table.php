@@ -18,7 +18,7 @@ class CreateThesisTable extends Migration
             $table->string('nim');
             $table->string('research_title');
             $table->uuid('science_field_id');
-            $table->string('documents')->nullable();
+            $table->string('document')->nullable();
             $table->string('application')->nullable();
             $table->string('journal')->nullable();
             $table->string('first_guide');

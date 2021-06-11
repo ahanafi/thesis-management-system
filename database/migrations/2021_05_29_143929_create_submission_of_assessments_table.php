@@ -17,6 +17,7 @@ class CreateSubmissionOfAssessmentsTable extends Migration
             $table->uuid('id');
             $table->string('nim');
             $table->uuid('thesis_id');
+
             $table->enum('assessment_type', [
                 'SEMINAR', 'TRIAL', 'COLLOQUIUM'
             ])->default('SEMINAR');

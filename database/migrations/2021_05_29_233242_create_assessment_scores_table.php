@@ -24,8 +24,10 @@ class CreateAssessmentScoresTable extends Migration
 
             $table->foreign('submission_assessment_id')->references('id')
                 ->on('submission_of_assessments');
+
             $table->foreign('assessment_component_id')->references('id')
                 ->on('assessment_components');
+
             $table->foreign('nidn')->references('nidn')
                 ->on('lecturers');
         });

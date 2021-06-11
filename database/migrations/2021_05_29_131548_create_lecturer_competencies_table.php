@@ -22,6 +22,7 @@ class CreateLecturerCompetenciesTable extends Migration
 
             $table->foreign('nidn')->references('nidn')
                 ->on('lecturers');
+
             $table->foreign('science_field_id')->references('id')
                 ->on('science_fields');
         });

@@ -25,7 +25,7 @@ class CreateStudentsTable extends Migration
             $table->text('address')->nullable()->default(null);
             $table->string('phone')->nullable();
             $table->string('email')->nullable()->default(null);
-            $table->string('picture')->nullable();
+            $table->integer('semester')->default(8);
             $table->timestamps();
 
             $table->primary('id');

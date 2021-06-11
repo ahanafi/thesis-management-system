@@ -13,14 +13,15 @@ class CreateThesisSubmissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('thesis_submission', function (Blueprint $table) {
+        Schema::create('thesis_submissions', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('nim');
             $table->string('research_title');
             $table->uuid('science_field_id');
             $table->string('document');
             $table->timestamp('date_of_filling')->useCurrent();
-            $table->dateTime('response_date')->default(null);
+            $table->dateTime('response_date')->default(null)->nullable();
+
             $table->enum('status', [
                 'APPROVE', 'REJECT', 'REVISION', 'WAITING'
             ])->default('WAITING');
@@ -29,6 +30,7 @@ class CreateThesisSubmissionTable extends Migration
             $table->primary('id');
             $table->foreign('nim')->references('nim')
                 ->on('students');
+
             $table->foreign('science_field_id')->references('id')
                 ->on('science_fields');
         });
@@ -41,6 +43,6 @@ class CreateThesisSubmissionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('thesis_submission');
+        Schema::dropIfExists('thesis_submissions');
     }
 }
