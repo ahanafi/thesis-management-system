@@ -12,6 +12,11 @@ class StudyProgram extends Model
 
     public $incrementing = false;
 
+    public function leader()
+    {
+        return $this->hasOne(Lecturer::class, 'nidn', 'lecturer_code');
+    }
+
     public function getName()
     {
         $names = explode(" ", $this->name);

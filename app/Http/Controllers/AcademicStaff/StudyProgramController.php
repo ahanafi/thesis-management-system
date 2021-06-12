@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Faculty;
 use App\Models\Lecturer;
 use App\Models\StudyProgram;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudyProgramController extends Controller
@@ -17,8 +18,11 @@ class StudyProgramController extends Controller
      */
     public function index()
     {
-        $studyPrograms = StudyProgram::orderBy('created_at', 'ASC')->get();
-        $lecturers = Lecturer::all();
+        $studyPrograms = StudyProgram::with('leader')->get();
+        $lecturers = Lecturer::all()->each(function ($lecturer) use ($studyPrograms){
+            $lecturer->isLeader = (bool) StudyProgram::where('lecturer_code', $lecturer->id)->count();
+        });
+
         $faculties = Faculty::all();
         return viewAcademicStaff('study-program.index', compact('studyPrograms', 'lecturers', 'faculties'));
     }
@@ -102,11 +106,18 @@ class StudyProgramController extends Controller
             'faculty_code' => 'required|exists:faculties,faculty_code'
         ]);
 
+        $lecturerCode = $request->get('lecturer_code');
+        if($lecturerCode !== '') {
+            $user = User::where('username', $lecturerCode)->first();
+            $user->level = User::STUDY_PROGRAM_LEADER;
+            $user->save();
+        }
+
         $studyProgram = StudyProgram::where('id', $id)->firstOrFail();
         $studyProgram->study_program_code = $request->get('study_program_code');
         $studyProgram->name = $request->get('name');
         $studyProgram->level = $request->get('level');
-        $studyProgram->lecturer_code = $request->get('lecturer_code');
+        $studyProgram->lecturer_code = $lecturerCode;
         $studyProgram->faculty_code = $request->get('faculty_code');
 
         if($studyProgram->update()) {
