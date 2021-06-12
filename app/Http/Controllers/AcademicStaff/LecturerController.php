@@ -78,7 +78,7 @@ class LecturerController extends Controller
         $user->registration_number = $nidn;
 
         if($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->store('avatars');
+            $user->avatar = $request->file('avatar')->store('public/lecturer');
         }
 
         $createUser = $user->save();
@@ -163,7 +163,7 @@ class LecturerController extends Controller
         $user->level = "LECTURER";
 
         if($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->store('avatars');
+            $user->avatar = $request->file('avatar')->store('public/lecturer');
         }
 
         $updateUser = $user->save();

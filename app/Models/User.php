@@ -13,6 +13,11 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, Uuid;
 
+    const ACADEMIC_STAFF = 'ACADEMIC_STAFF',
+        STUDENT = 'STUDENT',
+        STUDY_PROGRAM_LEADER = 'STUDY_PROGRAM_LEADER',
+        LECTURER = 'LECTURER';
+
     /**
      * The attributes that are mass assignable.
      *

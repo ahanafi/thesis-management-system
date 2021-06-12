@@ -73,7 +73,7 @@
                                 <img
                                     class="img-avatar img-avatar48"
                                     src="{{
-                                        Storage::exists($user->avatar)
+                                        $user->avatar !== '' && Storage::exists($user->avatar)
                                         ? Storage::url($user->avatar)
                                         : asset('media/avatars/avatar7.jpg')
                                     }}"

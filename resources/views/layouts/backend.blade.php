@@ -97,13 +97,13 @@
                 Adding 'smini-visible' to an element will show it (display: inline-block) only when the sidebar is in mini mode
                 Adding 'smini-visible-block' to an element will show it (display: block) only when the sidebar is in mini mode
             -->
-            @if(Auth::user()->level === 'ACADEMIC_STAFF')
+            @if(auth()->user()->level === App\Models\User::ACADEMIC_STAFF)
                 @include('partials.sidebar.academic-staff')
-            @elseif(Auth::user()->level === 'STUDENT')
+            @elseif(auth()->user()->level === App\Models\User::STUDENT)
                 @include('partials.sidebar.student')
-            @elseif(Auth::user()->level === 'STUDY_PROGRAM_LEADER')
+            @elseif(auth()->user()->level === App\Models\User::STUDY_PROGRAM_LEADER)
                 @include('partials.sidebar.study-program-leader')
-            @elseif(Auth::user()->level === 'LECTURER')
+            @elseif(auth()->user()->level === App\Models\User::LECTURER)
                 @include('partials.sidebar.lecturer')
             @endif
             <!-- END Sidebar -->

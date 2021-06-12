@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AcademicStaff;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -32,7 +33,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -56,13 +57,13 @@ class UserController extends Controller
             'password' => $hashedPassword
         ];
 
-        if($request->hasFile('avatar')) {
+        if ($request->hasFile('avatar')) {
             $user['avatar'] = $request->file('avatar')->store('public/users');;
         }
 
         $createUser = User::create($user);
 
-        if($createUser) {
+        if ($createUser) {
             $message = setFlashMessage('success', 'insert', 'pengguna');
         } else {
             $message = setFlashMessage('error', 'insert', 'pengguna');
@@ -75,7 +76,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -86,7 +87,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -98,8 +99,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -107,24 +108,33 @@ class UserController extends Controller
         $this->validate($request, [
             'username' => 'required|unique:users,email,' . $id,
             'full_name' => 'required',
-            'email' => 'required|unique:users,email,'.$id.'|email:rfc,dns',
+            'email' => 'required|unique:users,email,' . $id . '|email:rfc,dns',
         ]);
 
-        $user = [
-            'username' => $request->get('username'),
-            'full_name' => $request->get('full_name'),
-            'email' => $request->get('email'),
-            'level' => $request->get('level'),
-        ];
+        $user = User::where('id', $id)->firstOrFail();
 
-        if($request->hasFile('avatar')) {
-            $user['avatar'] = $request->file('avatar')->store('public/users');;
+        $user->username = $request->get('username');
+        $user->full_name = $request->get('full_name');
+        $user->email = $request->get('email');
+        $user->level = $request->get('level');
+
+        if ($request->hasFile('avatar')) {
+            $path = 'users';
+
+            if($user->level === User::LECTURER || $user->level === User::STUDY_PROGRAM_LEADER) {
+                $path = strtolower(User::LECTURER);
+            } else if($user->level === User::STUDENT) {
+                $path = strtolower(User::STUDENT);
+            }
+
+            if($user->avatar !== '' && Storage::exists($user->avatar)) {
+                Storage::delete($user->avatar);
+            }
+
+            $user->avatar = $request->file('avatar')->store('public/' . $path);
         }
 
-
-        $updateUser = User::where('id', $id)->update($user);
-
-        if($updateUser) {
+        if ($user->save()) {
             $message = setFlashMessage('success', 'update', 'pengguna');
         } else {
             $message = setFlashMessage('error', 'update', 'pengguna');
@@ -136,13 +146,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $user = User::where('id', $id)->firstOrFail();
-        if($user->delete()) {
+        if ($user->delete()) {
             $message = setFlashMessage('success', 'delete', 'pengguna');
         } else {
             $message = setFlashMessage('error', 'delete', 'pengguna');
