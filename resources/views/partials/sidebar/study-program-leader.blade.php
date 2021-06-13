@@ -50,80 +50,51 @@
                         <span class="nav-main-link-name">DASHBOARD</span>
                     </a>
                 </li>
-                <!-- DATA MASTER -->
-                <li class="nav-main-heading">DATA MASTER</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}"
-                       href="{{ route('faculty.index') }}">
-                        <i class="nav-main-link-icon fa fa-building"></i>
-                        <span class="nav-main-link-name">FAKULTAS</span>
+                    <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="{{ route('leader.thesis-submission.index') }}">
+                        <i class="nav-main-link-icon fa fa-file-alt"></i>
+                        <span class="nav-main-link-name">PENGAJUAN SKRIPSI</span>
                     </a>
                 </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}"
-                       href="{{ route('study-program.index') }}">
-                        <i class="nav-main-link-icon fa fa-list-alt"></i>
-                        <span class="nav-main-link-name">PROGRAM STUDI</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/lecturer') ? ' active' : '' }}"
-                       href="{{ route('lecturer.index') }}">
-                        <i class="nav-main-link-icon fa fa-users"></i>
-                        <span class="nav-main-link-name">DOSEN</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/student/*') ? ' active' : '' }}"
-                       href="{{ route('student.index') }}">
-                        <i class="nav-main-link-icon fa fa-users"></i>
-                        <span class="nav-main-link-name">MAHASISWA</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('master/science-field/*') ? ' active' : '' }}"
-                       href="{{ route('science-field.index') }}">
-                        <i class="nav-main-link-icon fa fa-lightbulb"></i>
-                        <span class="nav-main-link-name">BIDANG ILMU</span>
-                    </a>
-                </li>
-                <!-- END DATA MASTER -->
-
-                <!-- DATA SKRIPSI -->
-                <li class="nav-main-heading">DATA SKRIPSI</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('thesis-requirement') ? ' active' : '' }}"
-                       href="{{ route('thesis-requirement.index') }}">
-                        <i class="nav-main-link-icon fa fa-file-alt"></i>
-                        <span class="nav-main-link-name">PERSYARATAN SKRIPSI</span>
+                       href="{{ route('home') }}">
+                        <i class="nav-main-link-icon fa fa-book"></i>
+                        <span class="nav-main-link-name">DATA SKRIPSI</span>
                     </a>
                 </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
-                       href="{{ route('user.index') }}">
-                        <i class="nav-main-link-icon fa fa-calendar-alt"></i>
-                        <span class="nav-main-link-name">JADWAL UJIAN SKRIPSI</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('assessment-component') ? ' active' : '' }}"
-                       href="{{ route('assessment-component.index') }}">
-                        <i class="nav-main-link-icon fa fa-layer-group"></i>
-                        <span class="nav-main-link-name">KOMPONEN NILAI</span>
-                    </a>
-                </li>
-                <!-- END DATA SKRIPSI -->
 
-                <!-- PENGATURAN -->
-                <li class="nav-main-heading">PENGATURAN</li>
+                <!-- PENENTUAN -->
+                <li class="nav-main-heading">PENENTUAN</li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
-                       href="{{ route('user.index') }}">
-                        <i class="nav-main-link-icon fa fa-users-cog"></i>
-                        <span class="nav-main-link-name">DATA PENGGUNA</span>
+                       href="{{ route('home') }}">
+                        <i class="nav-main-link-icon fa fa-users"></i>
+                        <span class="nav-main-link-name">DOSEN PEMBIMBING</span>
                     </a>
                 </li>
-                <!-- END PENGATURAN -->
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
+                       href="{{ route('home') }}">
+                        <i class="nav-main-link-icon fa fa-user-friends"></i>
+                        <span class="nav-main-link-name">PENGUJI SEMINAR</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
+                       href="{{ route('home') }}">
+                        <i class="nav-main-link-icon fa fa-users-cog"></i>
+                        <span class="nav-main-link-name">PENGUJI SIDANG</span>
+                    </a>
+                </li>
+                <!-- END PENENTUAN -->
+                <li class="nav-main-heading"></li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="#" onclick="confirmLogout()">
+                        <i class="nav-main-link-icon fa fa-sign-out-alt"></i>
+                        <span class="nav-main-link-name">LOGOUT</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- END Side Navigation -->

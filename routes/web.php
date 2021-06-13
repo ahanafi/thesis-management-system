@@ -13,9 +13,14 @@ use App\Http\Controllers\AcademicStaff\ThesisRequirementController;
 use App\Http\Controllers\AcademicStaff\UserController;
 use App\Http\Controllers\HomeController;
 
-
+//Student
 use App\Http\Controllers\Student\ThesisRequirementController as StudentThesisRequirementController;
 use App\Http\Controllers\Student\ThesisSubmissionController;
+
+//Study Program Leader
+use App\Http\Controllers\Leader\ThesisSubmissionController as LeaderThesisSubmissionController;
+
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +46,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     //ACADEMIC_STAFF
-    Route::middleware('role:ACADEMIC_STAFF')->group(function () {
+    Route::middleware('role:' . User::ACADEMIC_STAFF)->group(function () {
         //DATA MASTER
         Route::group([
             'prefix' => 'master',
@@ -71,7 +76,7 @@ Route::middleware(['auth'])->group(function (){
 
     //STUDENT
     Route::prefix('student')
-        ->middleware('role:STUDENT')
+        ->middleware('role:' . User::STUDENT)
         ->name('student.')
         ->group(function () {
             Route::get('thesis-requirement', [StudentThesisRequirementController::class, 'index'])->name('thesis-requirement.index');
@@ -80,6 +85,14 @@ Route::middleware(['auth'])->group(function (){
 
             Route::get('thesis-submission', [ThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
             Route::post('thesis-submission', [ThesisSubmissionController::class, 'upload'])->name('thesis-submission.upload');
+        });
+
+    //STUDY PROGRAM LEADER
+    Route::prefix('study-program-leader')
+        ->middleware('role:' . User::STUDY_PROGRAM_LEADER)
+        ->name('leader.')
+        ->group(function () {
+            Route::get('thesis-submission', [LeaderThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
         });
 });
 

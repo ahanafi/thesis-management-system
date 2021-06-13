@@ -35,6 +35,17 @@ class User extends Authenticatable
 
     public $incrementing = false;
 
+    public function studentProfile()
+    {
+        return $this->hasOne(Student::class, 'nim', 'registration_number');
+    }
+
+    public function lecturerProfile()
+    {
+        return $this->hasOne(Lecturer::class, 'nidn', 'registration_number');
+    }
+
+
     /**
      * The attributes that should be hidden for arrays.
      *

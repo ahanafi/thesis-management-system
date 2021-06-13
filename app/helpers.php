@@ -135,12 +135,12 @@ if(!function_exists('viewStudent')) {
 
 if(!function_exists('viewStudyProgramLeader')) {
     function viewStudyProgramLeader($view = null, $data = []) {
-        return view('student.' . $view, $data);
+        return view('study-program-leader.' . $view, $data);
     }
 }
 
 if(!function_exists('viewLecturer')) {
     function viewLecturer($view = null, $data = []) {
-        return view('student.' . $view, $data);
+        return view('lecturer.' . $view, $data);
     }
 }

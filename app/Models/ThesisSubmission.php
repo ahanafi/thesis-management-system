@@ -11,4 +11,14 @@ class ThesisSubmission extends Model
     use HasFactory, Uuid;
 
     public $incrementing = false;
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'nim', 'nim');
+    }
+
+    public function scienceField()
+    {
+        return $this->hasOne(ScienceField::class, 'id', 'science_field_id');
+    }
 }
