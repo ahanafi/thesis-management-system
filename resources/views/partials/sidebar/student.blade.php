@@ -63,7 +63,7 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
+                    <a class="nav-main-link{{ request()->routeIs('student.theses.*') ? ' active' : '' }}" href="{{ route('student.theses.index') }}">
                         <i class="nav-main-link-icon fa fa-book"></i>
                         <span class="nav-main-link-name">DATA SKRIPSI</span>
                     </a>

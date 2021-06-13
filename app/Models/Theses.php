@@ -16,4 +16,18 @@ class Theses extends Model
         'application', 'journal', 'first_guide', 'second_guide'
     ];
 
+    public static function getByStudentId($nim)
+    {
+        return self::where('nim', $nim);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'nim', 'nim')->with(['study_program', 'user']);
+    }
+
+    public function scienceField()
+    {
+        return $this->hasOne(ScienceField::class, 'id', 'science_field_id');
+    }
 }

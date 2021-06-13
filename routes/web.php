@@ -14,8 +14,9 @@ use App\Http\Controllers\AcademicStaff\UserController;
 use App\Http\Controllers\HomeController;
 
 //Student
+use App\Http\Controllers\Student\ThesesController as StudentThesesController;
 use App\Http\Controllers\Student\ThesisRequirementController as StudentThesisRequirementController;
-use App\Http\Controllers\Student\ThesisSubmissionController;
+use App\Http\Controllers\Student\ThesisSubmissionController as StudentThesisSubmissionController;
 
 //Study Program Leader
 use App\Http\Controllers\Leader\ThesisSubmissionController as LeaderThesisSubmissionController;
@@ -42,10 +43,15 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth'])->group(function (){
+    //Globals Route
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    //ACADEMIC_STAFF
+
+    //---------------------------------------------------------------------------------------------------- //
+    //                                          ACADEMIC_STAFF
+    //---------------------------------------------------------------------------------------------------- //
+
     Route::middleware('role:' . User::ACADEMIC_STAFF)->group(function () {
         //DATA MASTER
         Route::group([
@@ -74,7 +80,10 @@ Route::middleware(['auth'])->group(function (){
         Route::resource('users', UserController::class);
     });
 
-    //STUDENT
+
+    //---------------------------------------------------------------------------------------------------- //
+    //                                              STUDENT
+    //---------------------------------------------------------------------------------------------------- //
     Route::prefix('student')
         ->middleware('role:' . User::STUDENT)
         ->name('student.')
@@ -83,11 +92,16 @@ Route::middleware(['auth'])->group(function (){
             Route::post('thesis-requirement', [StudentThesisRequirementController::class, 'upload'])->name('thesis-requirement.upload');
             Route::delete('thesis-requirement/{id}', [StudentThesisRequirementController::class, 'destroy'])->name('thesis-requirement.delete');
 
-            Route::get('thesis-submission', [ThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
-            Route::post('thesis-submission', [ThesisSubmissionController::class, 'upload'])->name('thesis-submission.upload');
+            Route::get('thesis-submission', [StudentThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
+            Route::post('thesis-submission', [StudentThesisSubmissionController::class, 'upload'])->name('thesis-submission.upload');
+
+            Route::resource('theses', StudentThesesController::class);
         });
 
-    //STUDY PROGRAM LEADER
+
+    //---------------------------------------------------------------------------------------------------- //
+    //                                              STUDY PROGRAM LEADER
+    //---------------------------------------------------------------------------------------------------- //
     Route::prefix('study-program-leader')
         ->middleware('role:' . User::STUDY_PROGRAM_LEADER)
         ->name('leader.')
@@ -95,7 +109,6 @@ Route::middleware(['auth'])->group(function (){
             Route::get('thesis-submission', [LeaderThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
             Route::get('thesis-submission/{submission}', [LeaderThesisSubmissionController::class, 'show'])->name('thesis-submission.show');
             Route::post('thesis-submission/submit-response/{submission}', [LeaderThesisSubmissionController::class, 'submitResponse'])->name('thesis-submission.submit-response');
-
         });
 });
 
