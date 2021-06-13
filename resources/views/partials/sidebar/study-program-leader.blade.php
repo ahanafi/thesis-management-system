@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="{{ route('leader.thesis-submission.index') }}">
+                    <a class="nav-main-link{{ request()->routeIs('leader.thesis-submission.*') ? ' active' : '' }}" href="{{ route('leader.thesis-submission.index') }}">
                         <i class="nav-main-link-icon fa fa-file-alt"></i>
                         <span class="nav-main-link-name">PENGAJUAN SKRIPSI</span>
                     </a>

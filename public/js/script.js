@@ -165,7 +165,7 @@ const editThesisRequirement = (thesisRequirementId, documentName, documentType, 
     inputDocumentName.value = documentName;
     inputNote.value = note;
 
-    if(parseInt(isRequired) === 1) {
+    if (parseInt(isRequired) === 1) {
         inputIsRequired.setAttribute('checked', 'checked');
     } else {
         inputIsRequired.removeAttribute('checked');
@@ -227,13 +227,13 @@ const showDocument = (path, documentType) => {
     let elType = documentType.toLowerCase() === 'pdf' ? 'iframe' : 'img';
     let element = document.createElement(elType);
     element.setAttribute('src', path);
-    if(documentType.toLowerCase() === 'pdf') {
+    if (documentType.toLowerCase() === 'pdf') {
         element.setAttribute("width", '100%');
         element.setAttribute("height", '400px');
     }
     let view = document.querySelector("#view");
 
-    while(view.lastElementChild) {
+    while (view.lastElementChild) {
         view.removeChild(view.lastElementChild);
     }
 
@@ -249,4 +249,52 @@ const submitResponse = (type) => {
     inputTypeResponse.setAttribute('value', type);
     form.appendChild(inputTypeResponse);
     form.submit();
+}
+
+const submitThesisSubmissionResponse = (responseType) => {
+    if (responseType !== undefined) {
+        const responseNote = document.querySelector("#note");
+        if (responseNote.value.toString().replace(" ", '') === '') {
+            Swal.fire({
+                title: 'Perhatian',
+                text: 'Harap masukkan catatan terlebih dahulu!.',
+                icon: 'warning',
+                timer: 1500
+            });
+            responseNote.classList.add('is-invalid');
+            responseNote.setAttribute('aria-invalid', true);
+        } else {
+            const messageType = responseType === 'REJECT' ? 'menolak' : 'menerima';
+            const confirmButtonColor = responseType === 'REJECT' ? '#e04f1a' : '#82b54b';
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: `Apakah Anda yakin akan ${messageType} proposal Skripsi ini?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: confirmButtonColor,
+                confirmButtonText: 'Ya, Lanjutkan.',
+                cancelButtonText: 'Batalkan',
+            }).then((value) => {
+                if (value.isConfirmed) {
+                    const form = document.querySelector("#thesis-submission-response");
+                    const inputTypeResponse = document.createElement("input");
+                    inputTypeResponse.setAttribute('type', 'hidden');
+                    inputTypeResponse.setAttribute('name', 'response_type');
+                    inputTypeResponse.setAttribute('value', responseType);
+                    form.appendChild(inputTypeResponse);
+                    form.submit();
+                }
+            });
+        }
+    }
+}
+
+const validateNotes = (el) => {
+    const notes = el.value;
+    if(notes.length > 1) {
+        el.classList.remove('is-invalid');
+    } else {
+        el.classList.add('is-invalid');
+        el.focus();
+    }
 }

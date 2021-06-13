@@ -69,16 +69,9 @@
                             <td>{{ $submission->date_of_filling }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="#"
-                                       onclick="showDocument(
-                                           '{{ Storage::url($submission->document) }}',
-                                           '{{ File::extension(Storage::url($submission->document)) }}'
-                                       )"
-                                       data-toggle="modal" data-target="#modal-detail-document" class="btn btn-primary">
+                                    <a href="{{ route('leader.thesis-submission.show', $submission->id) }}"
+                                       class="btn btn-primary">
                                         <i class="fa fa-search"></i>
-                                    </a>
-                                    <a href="#" onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')" class="btn btn-danger">
-                                        <i class="fa fa-times"></i>
                                     </a>
                                 </div>
                             </td>

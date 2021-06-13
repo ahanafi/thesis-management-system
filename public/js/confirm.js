@@ -9,7 +9,6 @@ let confirmDelete = (dataType, dataId) => {
 			confirmButtonText: 'Ya, Hapus.',
 			cancelButtonText: 'Batalkan',
 		}).then((value) => {
-		    console.log(value);
 			if (value.isConfirmed) {
 				const actionURL = `/${dataType}/${dataId}`;
 

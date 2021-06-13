@@ -82,6 +82,11 @@ if(!function_exists('setFlashMessage')) {
 
         $messageText = "Data " . $dataType . $messageStatus . $messageType;
 
+        //For customize message
+        if($actionType == 'custom') {
+            $messageText = $dataType;
+        }
+
         return [
             'type' => $type,
             'text' => $messageText,
@@ -142,5 +147,34 @@ if(!function_exists('viewStudyProgramLeader')) {
 if(!function_exists('viewLecturer')) {
     function viewLecturer($view = null, $data = []) {
         return view('lecturer.' . $view, $data);
+    }
+}
+
+if(!function_exists('getStatus')) {
+    function getStatus($statusCode) {
+        $status = [
+            'WAITING' => [
+                'text' => 'Menunggu',
+                'class' => 'warning'
+            ],
+            'APPROVE' => [
+                'text' => 'Diterima/Disetujui',
+                'class' => 'success'
+            ],
+            'REJECT' => [
+                'text' => 'Ditolak',
+                'class' => 'danger'
+            ]
+        ];
+
+        $text = "";
+        $class = "secondary";
+
+        if($statusCode !== null && key_exists($statusCode, $status)) {
+            $text = strtoupper($status[$statusCode]['text']);
+            $class = $status[$statusCode]['class'];
+        }
+
+        return "<span class='badge badge-$class'>$text</span>";
     }
 }
