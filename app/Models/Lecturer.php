@@ -31,8 +31,8 @@ class Lecturer extends Model
         } else {
             $firstName = $names[0] . " " . $names[1];
             foreach($names as $key => $val) {
-                if($key >= 2) {
-                    $lastName .= $val[0];
+                if($key >= 2 && !empty($val)) {
+                    $lastName .= $val[0].".";
                 }
             }
 

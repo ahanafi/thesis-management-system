@@ -84,10 +84,10 @@
                                     alt="User picture">
                             </td>
                             <td class="font-w600">{{ $student->nim }}</td>
-                            <td class="text-center">{{ $student->full_name }}</td>
+                            <td>{{ $student->getName() }}</td>
                             <td class="d-none d-sm-table-cell">{{ $student->email }}</td>
                             <td class="d-none d-sm-table-cell">
-                                <span class="badge badge-success">{{ $student->study_program_code }}</span>
+                                <span class="badge badge-success">{{ $student->study_program->name }}</span>
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">

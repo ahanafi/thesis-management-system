@@ -79,7 +79,7 @@
                                     }}"
                                     alt="User picture">
                             </td>
-                            <td class="text-center">{{ $user->full_name }}</td>
+                            <td>{{ $user->full_name }}</td>
                             <td class="font-w600">{{ $user->username }}</td>
                             <td class="d-none d-sm-table-cell">{{ $user->email }}</td>
                             <td class="d-none d-sm-table-cell">

@@ -26,9 +26,10 @@ class Student extends Model
             return ucwords(strtolower($this->full_name));
         } else {
             $firstName = $names[0] . " " . $names[1];
+            $lastName = "";
             foreach($names as $key => $val) {
-                if($key >= 2) {
-                    $lastName .= $val[0];
+                if($key >= 2 && !empty($val)) {
+                    $lastName .= $val[0] . ".";
                 }
             }
 

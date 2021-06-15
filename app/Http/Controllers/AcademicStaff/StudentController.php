@@ -19,7 +19,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
+        $students = Student::with('study_program')->get();
         return viewAcademicStaff('student.index', compact('students'));
     }
 
@@ -37,7 +37,7 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -76,7 +76,7 @@ class StudentController extends Controller
         $user->level = "STUDENT";
         $user->registration_number = $nim;
 
-        if($request->hasFile('avatar')) {
+        if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar')->store('public/student');
             $user->avatar = $avatar;
         }
@@ -85,7 +85,7 @@ class StudentController extends Controller
 
         $createStudent = Student::create($student);
 
-        if($createUser && $createStudent) {
+        if ($createUser && $createStudent) {
             $message = setFlashMessage('success', 'insert', 'mahasiswa');
         } else {
             $message = setFlashMessage('error', 'insert', 'mahasiswa');
@@ -97,7 +97,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -108,7 +108,7 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -121,8 +121,8 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -154,8 +154,9 @@ class StudentController extends Controller
 
         //Create account (user)
         $user = User::where('username', $nim)
-                    ->orWhere('registration_number', $nim)
-                    ->firstOrFail();
+                ->orWhere('registration_number', $nim)
+                ->orWhere('email', $email)
+                ->firstOrFail();
         $user->full_name = $fullName;
         $user->username = $nim;
         $user->email = $email;
@@ -163,7 +164,7 @@ class StudentController extends Controller
         $user->level = "STUDENT";
         $user->registration_number = $nim;
 
-        if($request->hasFile('avatar')) {
+        if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar')->store('public/student');
             $user->avatar = $avatar;
         }
@@ -172,7 +173,7 @@ class StudentController extends Controller
 
         $updateStudent = Student::where('id', $id)->update($student);
 
-        if($updateUser && $updateStudent) {
+        if ($updateUser && $updateStudent) {
             $message = setFlashMessage('success', 'insert', 'mahasiswa');
         } else {
             $message = setFlashMessage('error', 'insert', 'mahasiswa');
@@ -184,7 +185,7 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -192,17 +193,17 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->firstOrFail();
         $nim = $student->nim;
         $user = User::where('username', $nim)
-                    ->orWhere('registration_number', $nim)
-                    ->first();
+            ->orWhere('registration_number', $nim)
+            ->first();
 
-        if(Storage::exists($user->avatar)) {
+        if (Storage::exists($user->avatar)) {
             Storage::delete($user->avatar);
         }
 
         $deleteUser = $user->delete();
         $deleteStudent = $student->delete();
 
-        if($deleteUser && $deleteStudent) {
+        if ($deleteUser && $deleteStudent) {
             $message = setFlashMessage('success', 'delete', 'mahasiswa');
         } else {
             $message = setFlashMessage('error', 'delete', 'mahasiswa');
