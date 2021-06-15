@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lecturer;
+use App\Models\ScienceField;
 use App\Models\Student;
 use App\Models\StudyProgram;
 use App\Models\User;
@@ -127,5 +128,35 @@ class ImportController extends Controller
         }
 
         return redirect()->route('students.index')->with('message', $message);
+    }
+
+    public function getImportScienceField()
+    {
+        return viewAcademicStaff('science-field.import');
+    }
+
+    public function processImportScienceField(Request $request)
+    {
+        $this->validate($request, ['file' => 'required|file|mimes:xlsx,xls']);
+
+        $file = $request->file('file')->store('public/imports');
+        $collection = (new FastExcel)->import(storage_path('app/' . $file));
+
+        $collection->each(function ($row) {
+            $scienceFieldCountCheck = ScienceField::where('name', $row['NAMA_BIDANG_ILMU'])->count();
+            if ($scienceFieldCountCheck <= 0) {
+                ScienceField::create([
+                    'code' => ScienceField::generateCode(),
+                    'name' => ucwords(strtolower($row['NAMA_BIDANG_ILMU']))
+                ]);
+            }
+        });
+        $message = setFlashMessage('success', 'insert', 'bidang ilmu');
+
+        if (Storage::exists($file)) {
+            Storage::delete($file);
+        }
+
+        return redirect()->route('science-fields.index')->with('message', $message);
     }
 }

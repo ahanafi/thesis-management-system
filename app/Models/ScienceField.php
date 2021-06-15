@@ -12,4 +12,13 @@ class ScienceField extends Model
 
     public $incrementing = false;
     public $timestamps = false;
+
+    protected $fillable = ['code', 'name'];
+
+    public static function generateCode()
+    {
+        $lastCode = self::max('code') + 1;
+        return str_pad($lastCode, 4, 0, STR_PAD_LEFT);
+
+    }
 }

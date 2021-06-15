@@ -48,6 +48,10 @@
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </button>
+                    <a href="{{ route('science-fields.import') }}" class="btn btn-sm btn-info">
+                        <i class="fa fa-download"></i>
+                        <span>Import Data</span>
+                    </a>
                 </div>
             </div>
             <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
