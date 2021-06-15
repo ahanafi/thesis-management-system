@@ -15,6 +15,7 @@ use App\Http\Controllers\AcademicStaff\UserController;
 use App\Http\Controllers\HomeController;
 
 //Student
+use App\Http\Controllers\Leader\Determination\SupervisorController;
 use App\Http\Controllers\Student\ThesesController as StudentThesesController;
 use App\Http\Controllers\Student\ThesisRequirementController as StudentThesisRequirementController;
 use App\Http\Controllers\Student\ThesisSubmissionController as StudentThesisSubmissionController;
@@ -68,6 +69,9 @@ Route::middleware(['auth'])->group(function (){
             Route::get('students/import', [ImportController::class, 'getImportStudent'])->name('students.import');
             Route::post('students/import', [ImportController::class, 'processImportStudent'])->name('students.import');
             Route::resource('students', StudentController::class);
+
+            Route::get('science-fields/import', [ImportController::class, 'getImportScienceField'])->name('science-fields.import');
+            Route::post('science-fields/import', [ImportController::class, 'processImportScienceField'])->name('science-fields.import');
             Route::resource('science-fields', ScienceFieldController::class);
         });
 
@@ -116,6 +120,13 @@ Route::middleware(['auth'])->group(function (){
             Route::get('thesis-submission', [LeaderThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
             Route::get('thesis-submission/{submission}', [LeaderThesisSubmissionController::class, 'show'])->name('thesis-submission.show');
             Route::post('thesis-submission/submit-response/{submission}', [LeaderThesisSubmissionController::class, 'submitResponse'])->name('thesis-submission.submit-response');
+
+            //Determination
+            Route::prefix('determination')
+                ->name('determination.')
+                ->group(function () {
+                    Route::get('supervisor', [SupervisorController::class, 'index'])->name('supervisor.index');
+                });
         });
 });
 

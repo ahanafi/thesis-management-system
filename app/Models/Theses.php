@@ -21,6 +21,19 @@ class Theses extends Model
         return self::where('nim', $nim);
     }
 
+    public static function getDoesNotHaveSupervisor(string $studyProgramCode)
+    {
+        return self::with(['student', 'scienceField'])
+            ->whereHas('student', function ($q) use ($studyProgramCode) {
+                return $q->where('study_program_code', $studyProgramCode);
+            })
+            ->where(function($q){
+                return $q->whereNull('first_supervisor')
+                ->orWhereNull('second_supervisor');
+            })
+            ->get();
+    }
+
     public function student()
     {
         return $this->belongsTo(Student::class, 'nim', 'nim')->with(['study_program', 'user']);

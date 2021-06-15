@@ -25,7 +25,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Dosen</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Persyaratan Skripsi</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Examples</li>
@@ -42,66 +42,42 @@
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Data Dosen</h3>
-                <div class="block-options">
-                    <a href="{{ route('lecturers.create') }}" class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i>
-                        <span>Tambah Data</span>
-                    </a>
-                    <a href="{{ route('lecturers.import') }}" class="btn btn-sm btn-info">
-                        <i class="fa fa-download"></i>
-                        <span>Import Data</span>
-                    </a>
-                </div>
+                <h3 class="block-title">Persyaratan Skripsi</h3>
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
                     <tr>
-                        <th class="text-center" style="width: 80px;">
-                            <i class="fa fa-user"></i>
-                        </th>
-                        <th>NIDN</th>
-                        <th>Nama Lengkap</th>
-                        <th class="d-none d-sm-table-cell">Email</th>
-                        <th class="d-none d-sm-table-cell">Jab. Fungsional</th>
-                        <th class="d-none d-sm-table-cell text-center">Aksi</th>
+                        <th class="text-center" style="width: 80px;">#</th>
+                        <th>NIM</th>
+                        <th>Nama Mahasiswa</th>
+                        <th class="d-none d-sm-table-cell">Judul Skripsi</th>
+                        <th class="d-none d-sm-table-cell">Bidang</th>
+                        <th class="text-center" style="width: 200px;">Tanggal Upload</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    @foreach ($lecturers as $lecturer)
+                    @forelse($theses as $thesis)
                         <tr>
-                            <td class="text-center">
-                                <img class="img-avatar img-avatar48" src="{{ asset('media/avatars/avatar7.jpg') }}" alt="">
-                            </td>
-                            <td class="font-w600">{{ $lecturer->nidn }}</td>
-                            <td>{{ $lecturer->getName() }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $lecturer->email }}</td>
-                            <td class="d-none d-sm-table-cell">
-                                @if($lecturer->functional)
-                                    <span class="badge badge-success">{{ getLecturship($lecturer->functional) }}</span>
-                                @else
-                                    -
-                                @endif
-                            </td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $thesis->student->nim }}</td>
+                            <td>{{ $thesis->student->getName() }}</td>
+                            <td>{{ $thesis->research_title }}</td>
+                            <td>{{ $thesis->scienceField->name }}</td>
+                            <td>{{ $thesis->date_of_filling }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('lecturers.edit', $lecturer->id) }}" class="btn btn-primary js-tooltip-enabled"
-                                            data-toggle="tooltip" title="Edit" data-original-title="Edit">
-                                        <i class="fa fa-pencil-alt"></i>
+                                    <a href="{{ route('leader.thesis-submission.show', $thesis->id) }}"
+                                       class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger js-tooltip-enabled"
-                                            data-toggle="tooltip" title="Delete" data-original-title="Delete"
-                                            onclick="confirmDelete('master/lecturer', '{{ $lecturer->id }}')"
-                                    >
-                                        <i class="fa fa-times"></i>
-                                    </button>
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                    @endforelse
                     </tbody>
                 </table>
             </div>
