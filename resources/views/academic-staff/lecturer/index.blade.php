@@ -48,6 +48,10 @@
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </a>
+                    <a href="{{ route('lecturers.import') }}" class="btn btn-sm btn-info">
+                        <i class="fa fa-download"></i>
+                        <span>Import Data</span>
+                    </a>
                 </div>
             </div>
             <div class="block-content block-content-full">
@@ -76,7 +80,11 @@
                             <td class="text-center">{{ $lecturer->full_name }}</td>
                             <td class="d-none d-sm-table-cell">{{ $lecturer->email }}</td>
                             <td class="d-none d-sm-table-cell">
-                                <span class="badge badge-success">{{ getLecturship($lecturer->functional) }}</span>
+                                @if($lecturer->functional)
+                                    <span class="badge badge-success">{{ getLecturship($lecturer->functional) }}</span>
+                                @else
+                                    -
+                                @endif
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">

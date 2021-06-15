@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcademicStaff\ImportController;
 use App\Http\Controllers\AcademicStaff\SubmissionThesisRequirementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AcademicStaff\AssessmentComponentController;
@@ -59,7 +60,11 @@ Route::middleware(['auth'])->group(function (){
         ], function () {
             Route::resource('faculties', FacultyController::class);
             Route::resource('study-programs', StudyProgramController::class);
+
+            Route::get('lecturers/import', [ImportController::class, 'getImportLecturer'])->name('lecturers.import');
+            Route::post('lecturers/import', [ImportController::class, 'processImportLecturer'])->name('lecturers.import');
             Route::resource('lecturers', LecturerController::class);
+
             Route::resource('students', StudentController::class);
             Route::resource('science-fields', ScienceFieldController::class);
         });
