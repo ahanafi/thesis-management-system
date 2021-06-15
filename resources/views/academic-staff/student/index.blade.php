@@ -48,6 +48,10 @@
                         <i class="fa fa-plus"></i>
                         <span>Tambah Data</span>
                     </a>
+                    <a href="{{ route('students.import') }}" class="btn btn-sm btn-info">
+                        <i class="fa fa-file-import"></i>
+                        <span>Import Data</span>
+                    </a>
                 </div>
             </div>
             <div class="block-content block-content-full">

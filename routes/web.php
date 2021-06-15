@@ -65,6 +65,8 @@ Route::middleware(['auth'])->group(function (){
             Route::post('lecturers/import', [ImportController::class, 'processImportLecturer'])->name('lecturers.import');
             Route::resource('lecturers', LecturerController::class);
 
+            Route::get('students/import', [ImportController::class, 'getImportStudent'])->name('students.import');
+            Route::post('students/import', [ImportController::class, 'processImportStudent'])->name('students.import');
             Route::resource('students', StudentController::class);
             Route::resource('science-fields', ScienceFieldController::class);
         });
