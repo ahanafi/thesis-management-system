@@ -77,7 +77,9 @@
                                 <img class="img-avatar img-avatar48" src="{{ asset('media/avatars/avatar7.jpg') }}" alt="">
                             </td>
                             <td class="font-w600">{{ $lecturer->nidn }}</td>
-                            <td>{{ $lecturer->getName() }}</td>
+                            <td>
+                                <a href="{{ route('lecturers.show', $lecturer->id) }}">{{ $lecturer->getNameWithDegree() }}</a>
+                            </td>
                             <td class="d-none d-sm-table-cell">{{ $lecturer->email }}</td>
                             <td class="d-none d-sm-table-cell">
                                 @if($lecturer->functional)

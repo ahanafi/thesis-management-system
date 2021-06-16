@@ -15,10 +15,20 @@ class ScienceField extends Model
 
     protected $fillable = ['code', 'name'];
 
+    public static function scopeOrdered()
+    {
+        return self::orderBy('code', 'ASC')->get();
+    }
+
     public static function generateCode()
     {
         $lastCode = self::max('code') + 1;
         return str_pad($lastCode, 4, 0, STR_PAD_LEFT);
 
+    }
+
+    public function lecturers()
+    {
+        return $this->belongsToMany(Lecturer::class, LecturerCompetency::class, 'science_field_id', 'nidn');
     }
 }

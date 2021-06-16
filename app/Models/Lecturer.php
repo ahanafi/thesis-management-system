@@ -22,7 +22,30 @@ class Lecturer extends Model
         'degree'
     ];
 
-    public function getName()
+    public function getNameWithDegree()
+    {
+        $names = explode(" ", ucwords(strtolower($this->full_name)));
+
+        if(count($names) <= 2) {
+            return ucwords(strtolower($this->full_name)) .  " " . $this->degree;
+        } else {
+            $firstName = $names[0] . " " . $names[1];
+            $lastName = "";
+            foreach($names as $key => $val) {
+                if($key >= 2 && !empty($val)) {
+                    $lastName .= $val[0];
+                }
+
+                if($key < count($names) - 4) {
+                    $lastName .= ".";
+                }
+            }
+
+            return $firstName . " " . $lastName . ". " . $this->degree;
+        }
+    }
+
+    public function getShortName()
     {
         $names = explode(" ", ucwords(strtolower($this->full_name)));
 
@@ -33,11 +56,35 @@ class Lecturer extends Model
             $lastName = "";
             foreach($names as $key => $val) {
                 if($key >= 2 && !empty($val)) {
-                    $lastName .= $val[0].".";
+                    $lastName .= $val[0];
+                }
+
+                if($key < count($names) - 4) {
+                    $lastName .= ".";
                 }
             }
 
-            return $firstName . " " . $lastName . ", " . $this->degree;
+            return $firstName . " " . $lastName;
         }
+    }
+
+    public function getFullName()
+    {
+        return ucwords(strtolower($this->full_name));
+    }
+
+    public function competencies()
+    {
+        return $this->belongsToMany(ScienceField::class, LecturerCompetency::class, 'science_field_id', 'nidn');
+    }
+
+    public function study_program()
+    {
+        return $this->hasOne(StudyProgram::class, 'study_program_code', 'study_program_code');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'registration_number', 'nidn');
     }
 }

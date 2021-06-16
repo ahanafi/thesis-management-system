@@ -95,12 +95,13 @@ class LecturerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Lecturer $lecturer
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Lecturer $lecturer)
     {
-        //
+        $lecturer->load(['competencies', 'user', 'study_program']);
+        return viewAcademicStaff('lecturer.single', compact('lecturer'));
     }
 
     /**

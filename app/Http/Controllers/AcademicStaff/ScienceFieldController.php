@@ -15,8 +15,9 @@ class ScienceFieldController extends Controller
      */
     public function index()
     {
-        $scienceFields = ScienceField::all();
-        return viewAcademicStaff('science-field.index', compact('scienceFields'));
+        $scienceFields = ScienceField::ordered();
+        $code = ScienceField::generateCode();
+        return viewAcademicStaff('science-field.index', compact('scienceFields', 'code'));
     }
 
     /**

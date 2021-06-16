@@ -73,7 +73,7 @@
                             @method('POST')
                             <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" name="code" value="{{ old('code') }}" placeholder="Kode Bidang Ilmu" autocomplete="off">
+                                    <input type="text" class="form-control" name="code" value="{{ $code }}" placeholder="Kode Bidang Ilmu" autocomplete="off" readonly>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control" id="example-hosting-name" name="name" placeholder="Nama Bidang Ilmu">
