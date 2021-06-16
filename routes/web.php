@@ -15,13 +15,17 @@ use App\Http\Controllers\AcademicStaff\UserController;
 use App\Http\Controllers\HomeController;
 
 //Student
-use App\Http\Controllers\Leader\Determination\SupervisorController;
 use App\Http\Controllers\Student\ThesesController as StudentThesesController;
 use App\Http\Controllers\Student\ThesisRequirementController as StudentThesisRequirementController;
 use App\Http\Controllers\Student\ThesisSubmissionController as StudentThesisSubmissionController;
 
 //Study Program Leader
 use App\Http\Controllers\Leader\ThesisSubmissionController as LeaderThesisSubmissionController;
+use App\Http\Controllers\Leader\Determination\SupervisorController;
+
+//Lecturer
+use App\Http\Controllers\Lecturer\ProfileController as LecturerProfileController;
+use App\Http\Controllers\Lecturer\CompetencyController;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -44,7 +48,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth'])->group(function () {
     //Globals Route
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -127,6 +131,18 @@ Route::middleware(['auth'])->group(function (){
                 ->group(function () {
                     Route::get('supervisor', [SupervisorController::class, 'index'])->name('supervisor.index');
                 });
+        });
+
+    //---------------------------------------------------------------------------------------------------- //
+    //                                              LECTURER
+    //---------------------------------------------------------------------------------------------------- //
+    Route::prefix('lecturer')
+        ->middleware('role:' . User::LECTURER)
+        ->name('lecturer.')
+        ->group(function () {
+            Route::get('profile', [LecturerProfileController::class, 'index'])->name('profile');
+
+            Route::post('competency', [CompetencyController::class, 'store'])->name('competency.store');
         });
 });
 

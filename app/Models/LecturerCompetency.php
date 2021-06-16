@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LecturerCompetency extends Model
 {
-    protected $table = 'lecturer_competencies';
+    protected $table = 'lecturer_competency';
     use HasFactory, Uuid;
     public $incrementing = false;
     public $timestamps = false;

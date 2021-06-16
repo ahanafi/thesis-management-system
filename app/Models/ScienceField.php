@@ -24,7 +24,6 @@ class ScienceField extends Model
     {
         $lastCode = self::max('code') + 1;
         return str_pad($lastCode, 4, 0, STR_PAD_LEFT);
-
     }
 
     public function lecturers()

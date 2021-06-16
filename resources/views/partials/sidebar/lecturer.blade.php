@@ -112,8 +112,8 @@
                 <!-- PENGATURAN -->
                 <li class="nav-main-heading">PENGATURAN</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
-                       href="#">
+                    <a class="nav-main-link{{ request()->routeIs('lecturer.profile') ? ' active' : '' }}"
+                       href="{{ route('lecturer.profile') }}">
                         <i class="nav-main-link-icon fa fa-user-alt"></i>
                         <span class="nav-main-link-name">PROFIL SAYA</span>
                     </a>
