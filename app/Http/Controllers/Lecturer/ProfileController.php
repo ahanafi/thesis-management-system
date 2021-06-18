@@ -17,9 +17,11 @@ class ProfileController extends Controller
             ->where('nidn', $nidn)
             ->first();
 
-        $scienceFields = ScienceField::ordered()->each(function ($field) use ($lecturer) {
+        $scienceFields = ($lecturer->hasCompetency())
+            ? ScienceField::ordered()->each(function ($field) use ($lecturer) {
             $field->isSelected = (bool) $lecturer->competencies()->where('science_field_id', $field->id)->count();
-        });
+            })
+            : ScienceField::ordered();
 
         return viewLecturer('profile', compact('lecturer', 'scienceFields'));
     }

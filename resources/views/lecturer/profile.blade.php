@@ -118,20 +118,22 @@
                         </div>
                         <div class="col-lg-9 col-xl-7">
                             <div class="form-group row items-push mb-0">
-                                @foreach ($lecturer->competencies as $competency)
+                                @forelse ($lecturer->competencies as $competency)
                                     <div class="col-md-6 col-xl-4">
                                         <div class="custom-control custom-block custom-control-primary">
                                             <input type="checkbox" class="custom-control-input"
                                                    id="dm-project-new-people-{{ $competency->id }}"
                                                    name="dm-project-new-people-{{ $competency->id }}">
-                                            <label class="custom-control-label" for="dm-project-new-people-{{ $competency->id }}">
+                                            <label class="custom-control-label"
+                                                   for="dm-project-new-people-{{ $competency->id }}">
                                         <span class="d-flex align-items-center">
                                             <img class="img-avatar img-avatar48"
                                                  src="{{ asset('media/avatars/avatar8.jpg') }}"
                                                  alt="">
                                             <span class="ml-2">
                                                 <span class="font-w700">{{ $competency->name }}</span>
-                                                <span class="d-block font-size-sm text-muted">{{ $competency->code }}</span>
+                                                <span
+                                                    class="d-block font-size-sm text-muted">{{ $competency->code }}</span>
                                             </span>
                                         </span>
                                             </label>
@@ -140,7 +142,13 @@
                                     </span>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <div class="col-md-12">
+                                        <x-alert type="info" icon="fa-info"
+                                                 message="Tidak ada data kompetensi."
+                                        ></x-alert>
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
                     </div>

@@ -34,7 +34,7 @@
                     <h2 class="h4 font-w700 text-white-75">
                         {{ $lecturer->nidn }}
                     </h2>
-                    <a class="btn btn-hero-dark" href="be_pages_generic_profile.php">
+                    <a class="btn btn-hero-dark" href="{{ route('lecturers.index') }}">
                         <i class="fa fa-fw fa-arrow-left"></i>
                         Kembali
                     </a>
@@ -48,7 +48,7 @@
     <div class="content content-full content-boxed">
         <div class="block block-rounded">
             <div class="block-content">
-                <form action="be_pages_projects_edit.php" method="POST" enctype="multipart/form-data"
+                <form action="" method="POST" enctype="multipart/form-data"
                       onsubmit="return false;">
                     <!-- User Profile -->
                     <h2 class="content-heading pt-0">
@@ -114,43 +114,39 @@
                         </div>
                         <div class="col-lg-9 col-xl-7">
                             <div class="form-group row items-push mb-0">
-                                @for ($i = 1; $i <= 6; $i++)
-                                <div class="col-md-6 col-xl-4">
-                                    <div class="custom-control custom-block custom-control-primary">
-                                        <input type="checkbox" class="custom-control-input" id="dm-project-new-people-{{ $i }}"
-                                               name="dm-project-new-people-{{ $i }}">
-                                        <label class="custom-control-label" for="dm-project-new-people-{{ $i }}">
+                                @forelse ($lecturer->competencies as $competency)
+                                    <div class="col-md-6 col-xl-4">
+                                        <div class="custom-control custom-block custom-control-primary">
+                                            <input type="checkbox" class="custom-control-input"
+                                                   id="dm-project-new-people-{{ $competency->id }}"
+                                                   name="dm-project-new-people-{{ $competency->id }}">
+                                            <label class="custom-control-label" for="dm-project-new-people-{{ $competency->id }}">
                                         <span class="d-flex align-items-center">
-                                            <img class="img-avatar img-avatar48" src="{{ asset('media/avatars/avatar8.jpg') }}"
+                                            <img class="img-avatar img-avatar48"
+                                                 src="{{ asset('media/avatars/avatar8.jpg') }}"
                                                  alt="">
                                             <span class="ml-2">
-                                                <span class="font-w700">{{ "asdsladk" }}</span>
-                                                <span class="d-block font-size-sm text-muted">Web Designer</span>
+                                                <span class="font-w700">{{ $competency->name }}</span>
+                                                <span class="d-block font-size-sm text-muted">{{ $competency->code }}</span>
                                             </span>
                                         </span>
-                                        </label>
-                                        <span class="custom-block-indicator">
+                                            </label>
+                                            <span class="custom-block-indicator">
                                         <i class="fa fa-check"></i>
                                     </span>
+                                        </div>
                                     </div>
-                                </div>
-                                    @endfor
+                                @empty
+                                    <div class="col-md-12">
+                                        <x-alert type="info" icon="fa-info"
+                                                     message="Tidak ada data kompetensi."
+                                            ></x-alert>
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
                     </div>
                     <!-- END Connections -->
-
-                    <!-- Submit -->
-                    <div class="row push">
-                        <div class="col-lg-8 col-xl-5 offset-lg-3">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-alt-primary">
-                                    <i class="fa fa-check-circle mr-1"></i> Update Profile
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END Submit -->
                 </form>
             </div>
         </div>

@@ -26,17 +26,17 @@ class Lecturer extends Model
     {
         $names = explode(" ", ucwords(strtolower($this->full_name)));
 
-        if(count($names) <= 2) {
-            return ucwords(strtolower($this->full_name)) .  " " . $this->degree;
+        if (count($names) <= 2) {
+            return ucwords(strtolower($this->full_name)) . " " . $this->degree;
         } else {
             $firstName = $names[0] . " " . $names[1];
             $lastName = "";
-            foreach($names as $key => $val) {
-                if($key >= 2 && !empty($val)) {
+            foreach ($names as $key => $val) {
+                if ($key >= 2 && !empty($val)) {
                     $lastName .= $val[0];
                 }
 
-                if($key < count($names) - 4) {
+                if ($key < count($names) - 4) {
                     $lastName .= ".";
                 }
             }
@@ -49,17 +49,17 @@ class Lecturer extends Model
     {
         $names = explode(" ", ucwords(strtolower($this->full_name)));
 
-        if(count($names) <= 2) {
+        if (count($names) <= 2) {
             return ucwords(strtolower($this->full_name));
         } else {
             $firstName = $names[0] . " " . $names[1];
             $lastName = "";
-            foreach($names as $key => $val) {
-                if($key >= 2 && !empty($val)) {
+            foreach ($names as $key => $val) {
+                if ($key >= 2 && !empty($val)) {
                     $lastName .= $val[0];
                 }
 
-                if($key < count($names) - 4) {
+                if ($key < count($names) - 4) {
                     $lastName .= ".";
                 }
             }
@@ -71,6 +71,11 @@ class Lecturer extends Model
     public function getFullName()
     {
         return ucwords(strtolower($this->full_name));
+    }
+
+    public function hasCompetency(): bool
+    {
+        return $this->competencies() ? true : false;
     }
 
     public function competencies()

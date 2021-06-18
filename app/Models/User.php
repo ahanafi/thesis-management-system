@@ -30,7 +30,8 @@ class User extends Authenticatable
         'email',
         'password',
         'level',
-        'avatar'
+        'avatar',
+        'registration_number'
     ];
 
     public $incrementing = false;

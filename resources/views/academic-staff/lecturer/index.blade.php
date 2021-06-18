@@ -64,7 +64,7 @@
                         </th>
                         <th>NIDN</th>
                         <th>Nama Lengkap</th>
-                        <th class="d-none d-sm-table-cell">Email</th>
+                        <th class="d-none d-sm-table-cell">Homebase</th>
                         <th class="d-none d-sm-table-cell">Jab. Fungsional</th>
                         <th class="d-none d-sm-table-cell text-center">Aksi</th>
                     </tr>
@@ -80,7 +80,7 @@
                             <td>
                                 <a href="{{ route('lecturers.show', $lecturer->id) }}">{{ $lecturer->getNameWithDegree() }}</a>
                             </td>
-                            <td class="d-none d-sm-table-cell">{{ $lecturer->email }}</td>
+                            <td class="d-none d-sm-table-cell">{{ $lecturer->study_program->name }}</td>
                             <td class="d-none d-sm-table-cell">
                                 @if($lecturer->functional)
                                     <span class="badge badge-success">{{ getLecturship($lecturer->functional) }}</span>
@@ -96,7 +96,7 @@
                                     </a>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="Delete" data-original-title="Delete"
-                                            onclick="confirmDelete('master/lecturer', '{{ $lecturer->id }}')"
+                                            onclick="confirmDelete('master/lecturers', '{{ $lecturer->id }}')"
                                     >
                                         <i class="fa fa-times"></i>
                                     </button>

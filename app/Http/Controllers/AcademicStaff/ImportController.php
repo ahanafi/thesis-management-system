@@ -40,17 +40,16 @@ class ImportController extends Controller
                     'email' => $row['EMAIL'],
                     'password' => bcrypt($row['NIDN']),
                     'level' => 'LECTURER',
+                    'registration_number' => $row['NIDN']
                 ]);
 
                 $gender = strtolower($row['JENIS_KELAMIN']) === 'L' ? 'Male' : 'Female';
                 $studyProgramName = ucwords(strtolower($row['PROGRAM_STUDI']));
                 $studyProgram = StudyProgram::where('name', $studyProgramName)->first();
-                $studyProgramCode = ($studyProgram)
-                    ? $studyProgram->study_program_code
-                    : null;
+                $studyProgramCode = $studyProgram->study_program_code ?? null;
 
                 $functionalCode = ($row['JABATAN_FUNGSIONAL'] !== '')
-                    ? array_search(ucwords(strtolower($row['JABATAN_FUNGSIONAL'])), getLecturship())
+                    ? array_search(ucwords(strtolower($row['JABATAN_FUNGSIONAL'])), getLecturship(), true)
                     : null;
 
                 Lecturer::create([
@@ -97,6 +96,7 @@ class ImportController extends Controller
                     'email' => $row['EMAIL'],
                     'password' => bcrypt($row['NIM']),
                     'level' => 'STUDENT',
+                    'registration_number' => $row['NIM'],
                 ]);
 
                 $gender = strtolower($row['JENIS_KELAMIN']) === 'L' ? 'Male' : 'Female';

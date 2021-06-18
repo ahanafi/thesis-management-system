@@ -138,7 +138,13 @@
                             <td class="text-center">{{ $studyProgram->study_program_code }}</td>
                             <td class="text-center">{{ $studyProgram->level }}</td>
                             <td class="font-w600">{{ $studyProgram->name }}</td>
-                            <td class="d-none d-sm-table-cell">{{ optional($studyProgram->leader)->getName() }}</td>
+                            <td class="d-none d-sm-table-cell">
+                                @if($studyProgram->leader)
+                                    <a href="{{ route('lecturers.show', $studyProgram->leader->id) }}">{{ $studyProgram->leader->getNameWithDegree() }}</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"

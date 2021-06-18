@@ -19,7 +19,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('study_program')->get();
+        $students = Student::with('study_program')
+            ->orderBy('nim')
+            ->get();
         return viewAcademicStaff('student.index', compact('students'));
     }
 

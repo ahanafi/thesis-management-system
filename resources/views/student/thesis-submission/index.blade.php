@@ -19,7 +19,7 @@
 
     <!-- Page Content -->
     <div class="content">
-        @if($submission->status !== App\Status::APPROVE)
+        @if(is_null($submission) || $submission->status !== App\Status::APPROVE)
             <div class="alert alert-info d-flex align-items-center justify-content-between" role="alert">
                 <div class="flex-fill mr-3">
                     <h3 class="alert-heading font-size-h4 my-2">
@@ -27,9 +27,11 @@
                     </h3>
                     <p class="mb-0">
                         Maaf! Anda belum bisa melakukan pengajuan proposal Skripsi. <br>
-                        Harap lengkapi seluruh dokumen <a href="{{ route('student.thesis-requirement.index') }}"
-                                                          class="alert-link font-italic"><u>persyaratan pengajuan
-                                skripsi</u></a>
+                        Harap lengkapi seluruh dokumen
+                        <a href="{{ route('student.thesis-requirement.index') }}"
+                           class="alert-link font-italic">
+                            <u>persyaratan pengajuan skripsi</u>
+                        </a>
                         terlebih dahulu!.
                     </p>
                 </div>

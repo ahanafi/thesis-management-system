@@ -18,7 +18,10 @@ class LecturerController extends Controller
      */
     public function index()
     {
-        $lecturers = Lecturer::orderBy('full_name', 'ASC')->get();
+        $lecturers = Lecturer::with('study_program')
+            ->orderBy('full_name', 'ASC')
+            ->get();
+
         return viewAcademicStaff('lecturer.index', compact('lecturers'));
     }
 
