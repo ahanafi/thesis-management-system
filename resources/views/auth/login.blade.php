@@ -45,6 +45,22 @@
                                             </span>
                                         @enderror
                                     </div>
+
+                                    {!! htmlFormSnippet([
+                                        "theme" => "light",
+                                        "size" => "full",
+                                        "tabindex" => "3",
+                                        "callback" => "callbackFunction",
+                                        "expired-callback" => "expiredCallbackFunction",
+                                        "error-callback" => "errorCallbackFunction",
+                                    ]) !!}
+
+                                    @error('g-recaptcha-response')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+
                                 </div>
                                 <div class="form-group">
                                     <button type="submit"

@@ -22,11 +22,27 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    /**
+     * Validate the user login request.
+     *
+     * @param Request $request
+     * @return void
+     *
+     */
+    protected function validateLogin(Request $request): void
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+            'g-recaptcha-response' => 'required|recaptcha'
+        ]);
+    }
+
     /*
      * Change email to username
      * Default laravel is email
      * */
-    public function username()
+    public function username(): string
     {
         return 'username';
     }
