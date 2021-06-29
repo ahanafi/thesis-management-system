@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateThesisTable extends Migration
+class CreateThesesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateThesisTable extends Migration
      */
     public function up()
     {
-        Schema::create('thesis', function (Blueprint $table) {
+        Schema::create('theses', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('nim');
             $table->string('research_title');
@@ -21,21 +21,33 @@ class CreateThesisTable extends Migration
             $table->string('document')->nullable();
             $table->string('application')->nullable();
             $table->string('journal')->nullable();
-            $table->string('first_guide');
-            $table->string('second_guide');
+            $table->string('first_supervisor');
+            $table->string('second_supervisor');
 
             $table->timestamps();
 
             $table->primary('id');
             $table->foreign('nim')->references('nim')
-                ->on('students');
-            $table->foreign('science_field_id')->references('id')
-                ->on('science_fields');
+                ->on('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            $table->foreign('first_guide')->references('nidn')
-                ->on('lecturers');
-            $table->foreign('second_guide')->references('nidn')
-                ->on('lecturers');
+            $table->foreign('science_field_id')->references('id')
+                ->on('science_fields')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+
+            $table->foreign('first_supervisor')->references('nidn')
+                ->on('lecturers')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('second_supervisor')->references('nidn')
+                ->on('lecturers')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
         });
     }
 
@@ -46,6 +58,6 @@ class CreateThesisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('thesis');
+        Schema::dropIfExists('theses');
     }
 }

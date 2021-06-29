@@ -28,8 +28,11 @@ class CreateAssessmentSchedulesTable extends Migration
             $table->timestamps();
 
             $table->primary('id');
-            $table->foreign('submission_assessment_id')->references('id')
-                ->on('submission_of_assessments');
+            $table->foreign('submission_assessment_id')
+                ->references('id')
+                ->on('submission_of_assessments')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

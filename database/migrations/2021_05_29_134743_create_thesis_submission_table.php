@@ -20,19 +20,29 @@ class CreateThesisSubmissionTable extends Migration
             $table->uuid('science_field_id');
             $table->string('document');
             $table->timestamp('date_of_filling')->useCurrent();
+            $table->string('response_note')->nullable()->default(null);
+            $table->string('response_document')->nullable()->default(null);
             $table->dateTime('response_date')->default(null)->nullable();
 
             $table->enum('status', [
-                'APPROVE', 'REJECT', 'REVISION', 'WAITING'
+                'APPLY',
+                'WAITING',
+                'APPROVE',
+                'REVISION',
+                'REJECT',
             ])->default('WAITING');
             $table->timestamps();
 
             $table->primary('id');
             $table->foreign('nim')->references('nim')
-                ->on('students');
+                ->on('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->foreign('science_field_id')->references('id')
-                ->on('science_fields');
+                ->on('science_fields')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

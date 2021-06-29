@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubmissionDetailsThesisRequirementsTable extends Migration
+class CreateLecturerCompetencyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,24 @@ class CreateSubmissionDetailsThesisRequirementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('submission_details_thesis_requirements', function (Blueprint $table) {
+        Schema::create('lecturer_competency', function (Blueprint $table) {
             $table->uuid('id');
-            $table->uuid('submission_id');
-            $table->uuid('thesis_requirement_id');
-            $table->string('document');
-            $table->timestamps();
+            $table->string('lecturer_id');
+            $table->uuid('science_field_id');
 
             $table->primary('id');
-            $table->foreign('submission_id')
+
+            $table->foreign('lecturer_id')
                 ->references('id')
-                ->on('submission_of_thesis_requirements')
+                ->on('lecturers')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreign('thesis_requirement_id', 'submission_details_thesis_requirements_id')
+            $table->foreign('science_field_id')
                 ->references('id')
-                ->on('thesis_requirements')
+                ->on('science_fields')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
         });
     }
 
@@ -43,6 +41,6 @@ class CreateSubmissionDetailsThesisRequirementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('submission_details_thesis_requirements');
+        Schema::dropIfExists('lecturer_competency');
     }
 }

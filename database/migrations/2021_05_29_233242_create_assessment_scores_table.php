@@ -23,13 +23,19 @@ class CreateAssessmentScoresTable extends Migration
             $table->timestamps();
 
             $table->foreign('submission_assessment_id')->references('id')
-                ->on('submission_of_assessments');
+                ->on('submission_of_assessments')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->foreign('assessment_component_id')->references('id')
-                ->on('assessment_components');
+                ->on('assessment_components')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->foreign('nidn')->references('nidn')
-                ->on('lecturers');
+                ->on('lecturers')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

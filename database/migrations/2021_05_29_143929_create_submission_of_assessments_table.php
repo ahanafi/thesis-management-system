@@ -40,13 +40,25 @@ class CreateSubmissionOfAssessmentsTable extends Migration
 
             $table->primary('id');
             $table->foreign('nim')->references('nim')
-                ->on('students');
+                ->on('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->foreign('thesis_id')->references('id')
-                ->on('thesis');
+                ->on('theses')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->foreign('first_examiner')->references('nidn')
-                ->on('lecturers');
+                ->on('lecturers')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->foreign('second_examiner')->references('nidn')
-                ->on('lecturers');
+                ->on('lecturers')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
 
         });
     }

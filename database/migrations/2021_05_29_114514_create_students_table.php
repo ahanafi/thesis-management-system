@@ -18,8 +18,8 @@ class CreateStudentsTable extends Migration
             $table->string('nim')->unique();
             $table->string('full_name', 200);
             $table->string('study_program_code', 10);
-            $table->enum('gender', ['Male', 'Female'])
-                ->default('Male');
+            $table->enum('gender', ['M','F'])
+                ->default('M');
             $table->string('place_of_birth')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->text('address')->nullable()->default(null);

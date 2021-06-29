@@ -19,7 +19,11 @@ class CreateSubmissionOfThesisRequirementsTable extends Migration
             $table->dateTime('date_of_filling')->default(null);
             $table->dateTime('response_date')->default(null);
             $table->enum('status', [
-                'APPROVE', 'REJECT', 'WAITING'
+                'DRAFT',
+                'APPLY',
+                'WAITING',
+                'APPROVE',
+                'REJECT',
             ])->default('WAITING');
             $table->timestamps();
 

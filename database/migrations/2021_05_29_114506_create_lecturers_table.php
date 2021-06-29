@@ -23,8 +23,8 @@ class CreateLecturersTable extends Migration
                 'EXPERT_ASSISTANT', 'LECTURER',
                 'CHIEF_LECTURER', 'PROFESSOR'
             ])->nullable()->default(null);
-            $table->enum('gender', ['Male', 'Female'])
-                ->default('Male');
+            $table->enum('gender', ['M','F'])
+                ->default('M');
             $table->string('phone')->nullable();
             $table->string('email')->nullable()->default(null);
             $table->timestamps();
