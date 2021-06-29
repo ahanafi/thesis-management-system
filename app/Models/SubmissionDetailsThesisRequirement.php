@@ -19,6 +19,6 @@ class SubmissionDetailsThesisRequirement extends Model
 
     public function thesis_requirement()
     {
-        return $this->belongsTo(ThesisRequirement::class, 'thesis_requirement_id', 'id');
+        return $this->belongsTo(ThesisRequirement::class);
     }
 }

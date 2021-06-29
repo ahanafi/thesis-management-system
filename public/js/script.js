@@ -227,8 +227,8 @@ const showDocument = (path, documentType) => {
     let elType = documentType.toLowerCase() === 'pdf' ? 'iframe' : 'img';
     let element = document.createElement(elType);
     element.setAttribute('src', path);
+    element.setAttribute("width", '100%');
     if (documentType.toLowerCase() === 'pdf') {
-        element.setAttribute("width", '100%');
         element.setAttribute("height", '400px');
     }
     let view = document.querySelector("#view");

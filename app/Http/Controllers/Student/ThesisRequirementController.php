@@ -17,14 +17,11 @@ class ThesisRequirementController extends Controller
     public function index()
     {
         $nim = auth()->user()->registration_number;
-        $submission = SubmissionThesisRequirement::where('nim', $nim)->first();
-        $detailSubmission = ($submission) ?
-            SubmissionDetailsThesisRequirement::where('submission_id', $submission->id)
-            ->with('thesis_requirement')
-            ->get()
-            : [];
+        $submission = SubmissionThesisRequirement::with('details')
+            ->where('nim', $nim)
+            ->first();
 
-        $thesisRequirements = ($submission && $detailSubmission)
+        $thesisRequirements = ($submission)
             ? ThesisRequirement::all()->each(function ($requirement) use ($submission) {
                 $requirement->status = SubmissionDetailsThesisRequirement::where([
                     'submission_id' => $submission->id,
@@ -33,7 +30,7 @@ class ThesisRequirementController extends Controller
             })
             : ThesisRequirement::all();
 
-        return viewStudent('thesis-requirement.index', compact('detailSubmission', 'thesisRequirements'));
+        return viewStudent('thesis-requirement.index', compact('thesisRequirements', 'submission'));
     }
 
     public function upload(Request $request)

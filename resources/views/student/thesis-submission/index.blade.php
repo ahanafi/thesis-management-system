@@ -19,7 +19,7 @@
 
     <!-- Page Content -->
     <div class="content">
-        @if(is_null($submission) || $submission->status !== App\Status::APPROVE)
+        @if(is_null($submission) || ($submission->details_count <= 3) || $submission->status === App\Status::REJECT)
             <div class="alert alert-info d-flex align-items-center justify-content-between" role="alert">
                 <div class="flex-fill mr-3">
                     <h3 class="alert-heading font-size-h4 my-2">
@@ -33,6 +33,19 @@
                             <u>persyaratan pengajuan skripsi</u>
                         </a>
                         terlebih dahulu!.
+                    </p>
+                </div>
+            </div>
+        @elseif($submission->status !== App\Status::APPROVE)
+            <div class="alert alert-warning d-flex align-items-center justify-content-between" role="alert">
+                <div class="flex-fill mr-3">
+                    <h3 class="alert-heading font-size-h4 my-2">
+                        <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
+                    </h3>
+                    <p class="mb-0">
+                        Mohon menunggu, BAAK sedang <b>memverifikasi</b> dokumen persyaratan skripsi yang telah Anda unggah.
+                        <br>
+                        Kami akan mengirim notifikasi via email Anda untuk memperbarui status verifikasi dokumen Anda.
                     </p>
                 </div>
             </div>

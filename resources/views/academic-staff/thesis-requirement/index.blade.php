@@ -191,7 +191,7 @@
                             <td>{{ $submission->student->study_program->name }}</td>
                             <td class="d-none d-sm-table-cell">
                                 @foreach($submission->details as $detail)
-                                    - {{ $detail->thesis_requirement->document_name }}<br>
+                                    - {{ optional($detail->thesis_requirement)->document_name }}<br>
                                 @endforeach
                             </td>
                             <td class="text-center">

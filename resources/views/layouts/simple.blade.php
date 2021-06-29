@@ -29,7 +29,7 @@
 
         <!-- Scripts -->
         <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),]) !!};</script>
-        {!! \ReCaptcha::htmlScriptTagJsApi() !!}
+        {!! htmlScriptTagJsApi() !!}
     </head>
     <body>
         <!-- Page Container -->

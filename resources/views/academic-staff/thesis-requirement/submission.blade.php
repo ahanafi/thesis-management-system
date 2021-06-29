@@ -26,7 +26,7 @@
                     <div class="block-header block-header-default">
                         <h3 class="block-title">Persyaratan Skripsi</h3>
                         <div class="block-options">
-                            @if($submission->status == App\Status::WAITING)
+                            @if($submission->status === App\Status::WAITING)
                                 <form action="{{ route('thesis-requirement.submit-response', $submission->id) }}"
                                       method="POST" id="submit-response">
                                     @csrf
@@ -55,7 +55,7 @@
                                      message="Pengajuan persyaratan skripsi ini sudah <b>DISETUJUI</b> pada tanggal {{ $submission->response_date }}"
                             ></x-alert>
                         @elseif($submission->status === App\Status::REJECT)
-                            <x-alert type="success" icon="fa-times-circle" style="margin-top: 0;"
+                            <x-alert type="danger" icon="fa-times-circle" style="margin-top: 0;"
                                      message="Pengajuan persyaratan skripsi ini <b>DITOLAK</b> pada tanggal {{ $submission->response_date }}"
                             ></x-alert>
                         @endif
@@ -74,7 +74,7 @@
                             @forelse($submission->details as $detail)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $detail->thesis_requirement->document_name }}</td>
+                                    <td>{{ optional($detail->thesis_requirement)->document_name }}</td>
                                     <td>{{ $detail->created_at }}</td>
                                     <td class="text-center">
                                         <div class="btn-group">

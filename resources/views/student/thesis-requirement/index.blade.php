@@ -39,6 +39,17 @@
 
     <!-- Page Content -->
     <div class="content">
+        <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info" role="alert">
+            <div class="flex-fill mr-3">
+                <h3 class="alert-heading font-size-h4 my-2">
+                    <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
+                </h3>
+                <p class="mb-0">
+                    Silahkan unggah dokumen persyaratan untuk mengajukan Skripsi terlebih dahulu. <br>
+                    <u>Anda dapat mengajukan Skripsi, setelah Anda mengunggah semua dokumen persyaratan Skripsi di bawah ini.</u>
+                </p>
+            </div>
+        </div>
         <div class="row row-deck">
             <div class="col-sm-7">
                 <div class="block block-rounded">
@@ -58,12 +69,10 @@
                                     <select class="custom-select" name="thesis_requirement_id" required>
                                         <option value="">-- Pilih Jenis Dokumen --</option>
                                         @foreach($thesisRequirements as $requirement)
-                                            @if($requirement->status == 0)
-                                                <option value="{{ $requirement->id }}">
-                                                    {{ $requirement->document_name }}
-                                                    ({{ documentTypes($requirement->document_type) }})
-                                                </option>
-                                            @endif
+                                            <option value="{{ $requirement->id }}">
+                                                {{ $requirement->document_name }}
+                                                ({{ documentTypes($requirement->document_type) }})
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -100,7 +109,7 @@
                         <ul class="fa-ul list-icons">
                             @foreach ($thesisRequirements as $requirement)
                                 <li>
-                                    @if($requirement->status == 1)
+                                    @if($requirement->status === 1)
                                         <span class="fa-li text-success">
                                             <i class="fa fa-check-circle"></i>
                                         </span>
@@ -121,7 +130,13 @@
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Persyaratan Skripsi</h3>
+                <h3 class="block-title">Daftar Dokumen Persyaratan Skripsi</h3>
+                <div class="block-options">
+                    <button type="button" class="btn btn-sm btn-primary" @if(!$submission) disabled @endif>
+                        <i class="fa fa-paper-plane"></i>
+                        <span>Kirim Pengajuan</span>
+                    </button>
+                </div>
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
@@ -136,30 +151,38 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($detailSubmission as $submission)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $submission->thesis_requirement->document_name }}</td>
-                            <td>{{ str_replace("documents/", "", $submission->document) }}</td>
-                            <td>{{ $submission->created_at }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="#"
-                                       onclick="showDocument(
-                                           '{{ Storage::url($submission->document) }}',
-                                           '{{ File::extension(Storage::url($submission->document)) }}'
-                                       )"
-                                       data-toggle="modal" data-target="#modal-detail-document" class="btn btn-primary">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                    <a href="#" onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')" class="btn btn-danger">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                    @endforelse
+                    @if($submission !== null)
+                        @forelse($submission->details as $submission)
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td>{{ optional($submission->thesis_requirement)->document_name }}</td>
+                                <td>{{ str_replace("documents/", "", $submission->document) }}</td>
+                                <td>{{ $submission->created_at }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="#"
+                                           onclick="showDocument(
+                                               '{{ Storage::url($submission->document) }}',
+                                               '{{ File::extension(Storage::url($submission->document)) }}'
+                                               )"
+                                           data-toggle="modal" data-target="#modal-detail-document"
+                                           class="btn btn-primary">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                        <a href="#"
+                                           onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')"
+                                           class="btn btn-danger">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center font-italic font-weight-bold">Tidak Ada data.</td>
+                            </tr>
+                        @endforelse
+                    @endif
                     </tbody>
                 </table>
             </div>
@@ -171,7 +194,8 @@
 
 @section('modal')
     <!-- Slide Up Block Modal -->
-    <div class="modal fade" id="modal-detail-document" tabindex="-1" role="dialog" aria-labelledby="modal-detail-document"
+    <div class="modal fade" id="modal-detail-document" tabindex="-1" role="dialog"
+         aria-labelledby="modal-detail-document"
          aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
             <div class="modal-content">

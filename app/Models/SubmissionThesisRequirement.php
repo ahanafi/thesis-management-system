@@ -31,6 +31,6 @@ class SubmissionThesisRequirement extends Model
 
     public static function getByStudentId($nim)
     {
-        return self::where('nim', $nim)->first();
+        return self::where('nim', $nim)->withCount('details')->first();
     }
 }
