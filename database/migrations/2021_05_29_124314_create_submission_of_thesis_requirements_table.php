@@ -17,6 +17,7 @@ class CreateSubmissionOfThesisRequirementsTable extends Migration
             $table->uuid('id');
             $table->string('nim');
             $table->dateTime('date_of_filling')->default(null);
+            $table->text('response_note')->nullable()->default(null);
             $table->dateTime('response_date')->default(null);
             $table->enum('status', [
                 'DRAFT',
@@ -30,7 +31,10 @@ class CreateSubmissionOfThesisRequirementsTable extends Migration
             $table->primary('id');
 
             $table->foreign('nim')->references('nim')
-                ->on('students');
+                ->on('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
         });
     }
 

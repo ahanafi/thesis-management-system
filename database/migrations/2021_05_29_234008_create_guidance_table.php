@@ -25,6 +25,16 @@ class CreateGuidanceTable extends Migration
             $table->dateTime('guide_response_date')->nullable();
             $table->dateTime('guidance_date')->useCurrent();
 
+            $table->foreign('nim')->references('nim')
+                ->on('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('nidn')->references('nidn')
+                ->on('lecturers')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

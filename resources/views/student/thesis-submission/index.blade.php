@@ -20,7 +20,7 @@
     <!-- Page Content -->
     <div class="content">
         @if(is_null($submission) || ($submission->details_count <= 3) || $submission->status === App\Status::REJECT)
-            <div class="alert alert-info d-flex align-items-center justify-content-between" role="alert">
+            <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info" role="alert">
                 <div class="flex-fill mr-3">
                     <h3 class="alert-heading font-size-h4 my-2">
                         <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
@@ -37,7 +37,7 @@
                 </div>
             </div>
         @elseif($submission->status !== App\Status::APPROVE)
-            <div class="alert alert-warning d-flex align-items-center justify-content-between" role="alert">
+            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-info" role="alert">
                 <div class="flex-fill mr-3">
                     <h3 class="alert-heading font-size-h4 my-2">
                         <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
