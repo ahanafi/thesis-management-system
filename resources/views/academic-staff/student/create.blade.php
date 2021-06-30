@@ -49,8 +49,8 @@
                                     Jenis Kelamin
                                 </label>
                                 <div class="col-sm-7">
-                                    <x-input-radio label="Laki-laki" name="gender" value="male"></x-input-radio>
-                                    <x-input-radio label="Perempuan" name="gender" value="female"></x-input-radio>
+                                    <x-input-radio label="Laki-laki" name="gender" value="M"></x-input-radio>
+                                    <x-input-radio label="Perempuan" name="gender" value="F"></x-input-radio>
                                 </div>
                             </div>
                         </div>

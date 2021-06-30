@@ -22,19 +22,23 @@
         <div class="block block-rounded">
             <div class="block-content">
                 <form action="{{ route('lecturers.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <!-- User Profile -->
+                @csrf
+                <!-- User Profile -->
                     <h2 class="content-heading pt-0">
                         <i class="fa fa-fw fa-user-circle text-muted mr-1"></i> Form Dosen
                     </h2>
                     <div class="row push">
                         <div class="col-lg-6 col-xl-6">
-                            <x-input-horizontal type="text" field="nidn" placeholder="Masukkan nomor induk" label="NIDN" is-required="true"></x-input-horizontal>
-                            <x-input-horizontal type="text" field="full_name" placeholder="Masukkan nama lengkap..." label="Nama Lengkap" is-required="true"></x-input-horizontal>
+                            <x-input-horizontal type="text" field="nidn" placeholder="Masukkan nomor induk" label="NIDN"
+                                                is-required="true"></x-input-horizontal>
+                            <x-input-horizontal type="text" field="full_name" placeholder="Masukkan nama lengkap..."
+                                                label="Nama Lengkap" is-required="true"></x-input-horizontal>
 
-                            <x-input-horizontal type="text" field="degree" placeholder="Contoh gelar: S.Kom., M.Kom." label="Gelar" is-required="true"></x-input-horizontal>
+                            <x-input-horizontal type="text" field="degree" placeholder="Contoh gelar: S.Kom., M.Kom."
+                                                label="Gelar" is-required="true"></x-input-horizontal>
 
-                            <x-input-horizontal type="email" field="email" placeholder="Alamat email" label="Email" is-required="true"></x-input-horizontal>
+                            <x-input-horizontal type="email" field="email" placeholder="Alamat email" label="Email"
+                                                is-required="true"></x-input-horizontal>
 
                             <div class="form-group row">
                                 <label for="phone" class="col-form-label col-sm-4">No. Telpon</label>
@@ -45,7 +49,8 @@
                                                 +62
                                             </span>
                                         </div>
-                                        <input type="telp" class="form-control" id="phone" name="phone" autocomplete="off" placeholder="812345xxx...">
+                                        <input type="telp" class="form-control" id="phone" name="phone"
+                                               autocomplete="off" placeholder="812345xxx...">
                                     </div>
                                 </div>
                             </div>
@@ -57,8 +62,8 @@
                                     Jenis Kelamin
                                 </label>
                                 <div class="col-sm-7">
-                                    <x-input-radio label="Laki-laki" name="gender" value="male"></x-input-radio>
-                                    <x-input-radio label="Perempuan" name="gender" value="female"></x-input-radio>
+                                    <x-input-radio label="Laki-laki" name="gender" value="M"></x-input-radio>
+                                    <x-input-radio label="Perempuan" name="gender" value="F"></x-input-radio>
                                 </div>
                             </div>
 
@@ -104,7 +109,8 @@
                                         <input type="file" class="custom-file-input js-custom-file-input-enabled"
                                                data-toggle="custom-file-input" id="dm-profile-edit-avatar"
                                                name="avatar" accept="image/*">
-                                        <label class="custom-file-label" for="dm-profile-edit-avatar">Pilih gambar</label>
+                                        <label class="custom-file-label" for="dm-profile-edit-avatar">Pilih
+                                            gambar</label>
                                     </div>
 
                                 </div>
@@ -113,10 +119,12 @@
                             <div class="form-group row">
                                 <div class="col-sm-7 offset-sm-4">
                                     <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-save mr-1"></i>
-                                    <span>Simpan</span>
-                                </button>
-                                <x-button-link extend-class="float-right" type="secondary" link="{{ route('lecturers.index') }}" icon="chevron-left" text="Kembali"></x-button-link>
+                                        <i class="fa fa-save mr-1"></i>
+                                        <span>Simpan</span>
+                                    </button>
+                                    <x-button-link extend-class="float-right" type="secondary"
+                                                   link="{{ route('lecturers.index') }}" icon="chevron-left"
+                                                   text="Kembali"></x-button-link>
                                 </div>
                             </div>
 

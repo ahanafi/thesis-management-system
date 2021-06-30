@@ -59,8 +59,8 @@
                                     Jenis Kelamin
                                 </label>
                                 <div class="col-sm-7">
-                                    <x-input-radio label="Laki-laki" name="gender" checked="{{ $lecturer->gender }}" value="male"></x-input-radio>
-                                    <x-input-radio label="Perempuan" name="gender" checked="{{ $lecturer->gender }}" value="female"></x-input-radio>
+                                    <x-input-radio label="Laki-laki" name="gender" checked="{{ $lecturer->gender }}" value="M"></x-input-radio>
+                                    <x-input-radio label="Perempuan" name="gender" checked="{{ $lecturer->gender }}" value="F"></x-input-radio>
                                 </div>
                             </div>
 
