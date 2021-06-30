@@ -229,7 +229,7 @@ const showDocument = (path, documentType) => {
     element.setAttribute('src', path);
     element.setAttribute("width", '100%');
     if (documentType.toLowerCase() === 'pdf') {
-        element.setAttribute("height", '400px');
+        element.setAttribute("height", '550px');
     }
     let view = document.querySelector("#view");
 

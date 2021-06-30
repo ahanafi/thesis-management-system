@@ -127,15 +127,39 @@
             </div>
         </div>
 
+        @if($submission !== null && $submission->status === \App\Status::APPLY)
+            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning" role="alert">
+                <div class="flex-fill mr-3">
+                    <h3 class="alert-heading font-size-h4 my-2">
+                        <i class="fa fa-fw fa-exclamation-circle"></i> Informasi Pengajuan
+                    </h3>
+                    <p class="mb-0 font-weight-bold">
+                        Status pengajuan persyaratan Skripsi Anda sedang diproses oleh BAAK. Mohon tunggu informasi selanjutnya via email. Terima kasih.
+                    </p>
+                </div>
+            </div>
+        @endif
+
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Daftar Dokumen Persyaratan Skripsi</h3>
                 <div class="block-options">
-                    <button type="button" class="btn btn-sm btn-primary" @if(!$submission) disabled @endif>
+                    <button onclick="applyThesisRequirement()"
+                            type="button"
+                            class="btn btn-sm btn-primary"
+                            @if(!$submission || $submission->status === \App\Status::APPLY || $submission->details->count() < $thesisRequirements->count())
+                                disabled
+                            @endif
+                    >
                         <i class="fa fa-paper-plane"></i>
                         <span>Kirim Pengajuan</span>
                     </button>
+                    @if(isset($submission) && $submission->details->count() === $thesisRequirements->count())
+                        <form action="{{ route('student.thesis-requirement.apply', $submission->id) }}" id="form-apply" method="POST">
+                            @csrf
+                        </form>
+                    @endif
                 </div>
             </div>
             <div class="block-content block-content-full">
@@ -169,11 +193,13 @@
                                            class="btn btn-primary">
                                             <i class="fa fa-search"></i>
                                         </a>
+                                        @if($submission->status === \App\Status::APPLY || $submission->status === \App\Status::APPROVE)
                                         <a href="#"
                                            onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')"
                                            class="btn btn-danger">
                                             <i class="fa fa-times"></i>
                                         </a>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -197,7 +223,7 @@
     <div class="modal fade" id="modal-detail-document" tabindex="-1" role="dialog"
          aria-labelledby="modal-detail-document"
          aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-popout" role="document">
             <div class="modal-content">
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">

@@ -106,6 +106,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('thesis-requirement', [StudentThesisRequirementController::class, 'index'])->name('thesis-requirement.index');
             Route::post('thesis-requirement', [StudentThesisRequirementController::class, 'upload'])->name('thesis-requirement.upload');
             Route::delete('thesis-requirement/{id}', [StudentThesisRequirementController::class, 'destroy'])->name('thesis-requirement.delete');
+            Route::post('thesis-requirement/{submission}/apply', [StudentThesisRequirementController::class, 'apply'])->name('thesis-requirement.apply');
 
             Route::get('thesis-submission', [StudentThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
             Route::post('thesis-submission', [StudentThesisSubmissionController::class, 'upload'])->name('thesis-submission.upload');

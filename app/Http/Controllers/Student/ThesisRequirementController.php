@@ -43,7 +43,7 @@ class ThesisRequirementController extends Controller
         $nim = Auth::user()->registration_number;
 
         $checkSubmission = SubmissionThesisRequirement::where('nim', $nim)
-            ->where('status', 'WAITING')
+            ->where('status', 'DRAFT')
             ->first();
 
         if ($checkSubmission) {
@@ -75,6 +75,22 @@ class ThesisRequirementController extends Controller
         }
 
         return redirect()->route('student.thesis-requirement.index')->with('message', $message);
+    }
+
+    public function apply(Request $request, SubmissionThesisRequirement $submission)
+    {
+        if($submission) {
+            $submission->update([
+                'status' => 'APPLY',
+                'date_of_filling' => Date::now(),
+            ]);
+
+            $message = setFlashMessage('success', 'custom', 'Pengajuan persyaratan skripsi Anda berhasil dilakukan.');
+        } else {
+            $message = setFlashMessage('error', 'custom', 'Pengajuan persyaratan skripsi Anda gagal dilakukan.');
+        }
+
+        return redirect()->back()->with('message', $message);
     }
 
     public function destroy($id)
