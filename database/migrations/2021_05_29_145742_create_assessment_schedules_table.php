@@ -23,7 +23,7 @@ class CreateAssessmentSchedulesTable extends Migration
             $table->date('date');
             $table->time('start_at')->nullable();
             $table->time('finished_at')->nullable();
-            $table->string('room_number');
+            $table->string('room_number')->nullable()->default(null);
             $table->uuid('submission_assessment_id');
             $table->timestamps();
 

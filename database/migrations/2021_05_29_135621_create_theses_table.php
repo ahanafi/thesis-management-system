@@ -18,11 +18,11 @@ class CreateThesesTable extends Migration
             $table->string('nim');
             $table->string('research_title');
             $table->uuid('science_field_id');
-            $table->string('document')->nullable();
-            $table->string('application')->nullable();
-            $table->string('journal')->nullable();
-            $table->string('first_supervisor');
-            $table->string('second_supervisor');
+            $table->string('document')->nullable()->default(null);
+            $table->string('application')->nullable()->default(null);
+            $table->string('journal')->nullable()->default(null);
+            $table->string('first_supervisor')->nullable()->default(null);
+            $table->string('second_supervisor')->nullable()->default(null);
 
             $table->timestamps();
 
