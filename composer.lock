@@ -4,8 +4,72 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b6a49b3496733058de93ee4e3ec8136",
+    "content-hash": "1c9c980ef997f1b1fb009692f17c86c8",
     "packages": [
+        {
+            "name": "anhskohbo/no-captcha",
+            "version": "3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anhskohbo/no-captcha.git",
+                "reference": "f654a4093bd2e9ddbdfad3297bb7aa142a55e611"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anhskohbo/no-captcha/zipball/f654a4093bd2e9ddbdfad3297bb7aa142a55e611",
+                "reference": "f654a4093bd2e9ddbdfad3297bb7aa142a55e611",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2|^7.0",
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
+                "php": ">=5.5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Anhskohbo\\NoCaptcha\\NoCaptchaServiceProvider"
+                    ],
+                    "aliases": {
+                        "NoCaptcha": "Anhskohbo\\NoCaptcha\\Facades\\NoCaptcha"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Anhskohbo\\NoCaptcha\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "anhskohbo",
+                    "email": "anhskohbo@gmail.com"
+                }
+            ],
+            "description": "No CAPTCHA reCAPTCHA For Laravel.",
+            "keywords": [
+                "captcha",
+                "laravel",
+                "laravel4",
+                "laravel5",
+                "laravel6",
+                "no-captcha",
+                "recaptcha"
+            ],
+            "support": {
+                "issues": "https://github.com/anhskohbo/no-captcha/issues",
+                "source": "https://github.com/anhskohbo/no-captcha/tree/3.3.0"
+            },
+            "time": "2020-09-10T02:31:52+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.0.3",
@@ -61,76 +125,6 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.0.3"
             },
             "time": "2021-03-11T06:42:03+00:00"
-        },
-        {
-            "name": "biscolab/laravel-recaptcha",
-            "version": "5.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/biscolab/laravel-recaptcha.git",
-                "reference": "21018b259827e1446ea9d829ae423022a0e1025e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/biscolab/laravel-recaptcha/zipball/21018b259827e1446ea9d829ae423022a0e1025e",
-                "reference": "21018b259827e1446ea9d829ae423022a0e1025e",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^7.0|^8.0",
-                "php": "^7.3|^8.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "5.*|6.*",
-                "phpunit/phpunit": "^9.1"
-            },
-            "suggest": {
-                "biscolab/laravel-authlog": "It allows to handle logged-in users and force log-out if needed"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Biscolab\\ReCaptcha\\ReCaptchaServiceProvider"
-                    ],
-                    "aliases": {
-                        "ReCaptcha": "Biscolab\\ReCaptcha\\Facades\\ReCaptcha"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Biscolab\\ReCaptcha\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roberto Belotti",
-                    "email": "roby.belotti@gmail.com",
-                    "homepage": "https://biscolab.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Simple and painless Google reCAPTCHA package for Laravel framework",
-            "homepage": "https://biscolab.com/laravel-recaptcha",
-            "keywords": [
-                "captcha",
-                "laravel",
-                "recaptcha",
-                "validation"
-            ],
-            "support": {
-                "issues": "https://github.com/biscolab/laravel-recaptcha/issues",
-                "source": "https://github.com/biscolab/laravel-recaptcha/tree/v5.0.1"
-            },
-            "time": "2021-02-03T16:26:03+00:00"
         },
         {
             "name": "box/spout",

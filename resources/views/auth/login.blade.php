@@ -46,14 +46,7 @@
                                         @enderror
                                     </div>
 
-                                    {!! htmlFormSnippet([
-                                        "theme" => "light",
-                                        "size" => "full",
-                                        "tabindex" => "3",
-                                        "callback" => "callbackFunction",
-                                        "expired-callback" => "expiredCallbackFunction",
-                                        "error-callback" => "errorCallbackFunction",
-                                    ]) !!}
+                                    {!! NoCaptcha::display() !!}
 
                                     @error('g-recaptcha-response')
                                         <span class="invalid-feedback d-block" role="alert">
