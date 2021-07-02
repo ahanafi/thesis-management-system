@@ -8,6 +8,7 @@ use App\Models\ThesisSubmission;
 use App\Models\User;
 use App\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ThesisSubmissionController extends Controller
 {
@@ -58,6 +59,19 @@ class ThesisSubmissionController extends Controller
         }
 
         return redirect()->back()->with('message', $message);
+    }
+
+    public function downloadProposal(ThesisSubmission $submission)
+    {
+        $submission->load('student');
+        if($submission->document !== null) {
+            $filePath = public_path(Storage::url($submission->document));
+            $splitFileName = explode('.', $submission->document);
+            $fileExtension = end($splitFileName);
+            $fileName = "Proposal_Skripsi_" . $submission->student->getName() . '.' . $fileExtension;
+
+            return response()->download($filePath, $fileName);
+        }
     }
 
     private function createThesis(ThesisSubmission $submission)

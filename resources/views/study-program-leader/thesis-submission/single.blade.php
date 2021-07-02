@@ -63,12 +63,7 @@
                                         <i class="fa fa-search"></i>
                                         <span>Lihat Detail</span>
                                     </a>
-                                    <a href="#"
-                                       onclick="showDocument(
-                                           '{{ Storage::url($submission->document) }}',
-                                           '{{ File::extension(Storage::url($submission->document)) }}'
-                                           )"
-                                       data-toggle="modal" data-target="#modal-detail-document"
+                                    <a href="{{ route('leader.thesis-submission.download-proposal', $submission->id) }}"
                                        class="btn btn-sm btn-secondary">
                                         <i class="fa fa-file-download"></i>
                                         <span>Unduh Dokumen</span>
@@ -107,11 +102,6 @@
                                                 <span>Lihat Detail</span>
                                             </a>
                                             <a href="#"
-                                               onclick="showDocument(
-                                                   '{{ Storage::url($submission->response_document) }}',
-                                                   '{{ File::extension(Storage::url($submission->response_document)) }}'
-                                                   )"
-                                               data-toggle="modal" data-target="#modal-detail-document"
                                                class="btn btn-sm btn-secondary">
                                                 <i class="fa fa-file-download"></i>
                                                 <span>Unduh Dokumen</span>

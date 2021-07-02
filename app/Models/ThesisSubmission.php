@@ -14,7 +14,8 @@ class ThesisSubmission extends Model
 
     public function student()
     {
-        return $this->belongsTo(Student::class, 'nim', 'nim');
+        return $this->belongsTo(Student::class, 'nim', 'nim')
+            ->with('study_program');
     }
 
     public function scienceField()
