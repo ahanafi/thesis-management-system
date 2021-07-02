@@ -6,7 +6,7 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Theses extends Model
+class Thesis extends Model
 {
     use HasFactory, Uuid;
     public $incrementing = false;
@@ -42,5 +42,15 @@ class Theses extends Model
     public function scienceField()
     {
         return $this->hasOne(ScienceField::class, 'id', 'science_field_id');
+    }
+
+    public function firstSupervisor()
+    {
+        return $this->hasOne(Lecturer::class, 'nidn', 'first_supervisor');
+    }
+
+    public function secondSupervisor()
+    {
+        return $this->hasOne(Lecturer::class, 'nidn', 'second_supervisor');
     }
 }

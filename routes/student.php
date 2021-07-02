@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Student\ThesesController;
+use App\Http\Controllers\Student\ThesisController;
 use App\Http\Controllers\Student\ThesisRequirementController;
 use App\Http\Controllers\Student\ThesisSubmissionController;
 
@@ -19,5 +19,5 @@ Route::prefix('student')
         Route::get('thesis-submission', [ThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
         Route::post('thesis-submission', [ThesisSubmissionController::class, 'upload'])->name('thesis-submission.upload');
 
-        Route::resource('theses', ThesesController::class);
+        Route::resource('thesis', ThesisController::class);
     });

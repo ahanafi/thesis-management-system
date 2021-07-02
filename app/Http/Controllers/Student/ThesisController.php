@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Models\Theses;
+use App\Models\Thesis;
 use Illuminate\Http\Request;
 
-class ThesesController extends Controller
+class ThesisController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,11 @@ class ThesesController extends Controller
     public function index()
     {
         $nim = auth()->user()->registration_number;
-        $theses = Theses::getByStudentId($nim)->with(['student', 'scienceField'])->first();
+        $thesis = Thesis::getByStudentId($nim)->with([
+            'student', 'scienceField', 'firstSupervisor', 'secondSupervisor'
+        ])->first();
 
-        return viewStudent('theses.index', compact('theses'));
+        return viewStudent('thesis.index', compact('thesis'));
     }
 
     /**
@@ -45,10 +47,10 @@ class ThesesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Theses  $theses
+     * @param  \App\Models\Thesis  $theses
      * @return \Illuminate\Http\Response
      */
-    public function show(Theses $theses)
+    public function show(Thesis $theses)
     {
         //
     }
@@ -56,10 +58,10 @@ class ThesesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Theses  $theses
+     * @param  \App\Models\Thesis  $theses
      * @return \Illuminate\Http\Response
      */
-    public function edit(Theses $theses)
+    public function edit(Thesis $theses)
     {
         //
     }
@@ -68,10 +70,10 @@ class ThesesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Theses  $theses
+     * @param  \App\Models\Thesis  $theses
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Theses $theses)
+    public function update(Request $request, Thesis $theses)
     {
         //
     }
@@ -79,10 +81,10 @@ class ThesesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Theses  $theses
+     * @param  \App\Models\Thesis  $theses
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Theses $theses)
+    public function destroy(Thesis $theses)
     {
         //
     }

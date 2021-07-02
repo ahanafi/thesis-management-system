@@ -54,7 +54,7 @@
                         <th>Nama Mahasiswa</th>
                         <th class="d-none d-sm-table-cell">Judul Skripsi</th>
                         <th class="d-none d-sm-table-cell">Bidang</th>
-                        <th class="text-center" style="width: 200px;">Tanggal Upload</th>
+                        <th class="text-center" style="width: 200px;">Tanggal <i>Acc.</i></th>
                         <th class="text-center">Aksi</th>
                     </tr>
                     </thead>
@@ -66,7 +66,7 @@
                             <td>{{ $thesis->student->getName() }}</td>
                             <td>{{ $thesis->research_title }}</td>
                             <td>{{ $thesis->scienceField->name }}</td>
-                            <td>{{ $thesis->date_of_filling }}</td>
+                            <td>{{ $thesis->created_at }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <a href="{{ route('leader.thesis-submission.show', $thesis->id) }}"

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Leader;
 
 use App\Http\Controllers\Controller;
-use App\Models\Theses;
+use App\Models\Thesis;
 use App\Models\ThesisSubmission;
 use App\Models\User;
 use App\Status;
@@ -76,7 +76,7 @@ class ThesisSubmissionController extends Controller
 
     private function createThesis(ThesisSubmission $submission)
     {
-        Theses::create([
+        Thesis::create([
             'nim' => $submission->nim,
             'research_title' => $submission->research_title,
             'science_field_id' => $submission->science_field_id,
