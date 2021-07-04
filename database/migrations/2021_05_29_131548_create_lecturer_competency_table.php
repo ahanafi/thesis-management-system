@@ -15,7 +15,7 @@ class CreateLecturerCompetencyTable extends Migration
     {
         Schema::create('lecturer_competency', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('lecturer_id');
+            $table->uuid('lecturer_id');
             $table->uuid('science_field_id');
 
             $table->primary('id');
