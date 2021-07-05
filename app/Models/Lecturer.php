@@ -24,25 +24,7 @@ class Lecturer extends Model
 
     public function getNameWithDegree()
     {
-        $names = explode(" ", ucwords(strtolower($this->full_name)));
-
-        if (count($names) <= 2) {
-            return ucwords(strtolower($this->full_name)) . " " . $this->degree;
-        } else {
-            $firstName = $names[0] . " " . $names[1];
-            $lastName = "";
-            foreach ($names as $key => $val) {
-                if ($key >= 2 && !empty($val)) {
-                    $lastName .= $val[0];
-                }
-
-                if ($key < count($names) - 4) {
-                    $lastName .= ".";
-                }
-            }
-
-            return $firstName . " " . $lastName . ". " . $this->degree;
-        }
+        return showName($this->full_name, $this->degree);
     }
 
     public function getShortName()

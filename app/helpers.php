@@ -13,6 +13,41 @@ if(!function_exists('educationLevel')) {
     }
 }
 
+if(!function_exists('studyProgramShortName')) {
+    function studyProgramShortName($fullStudyProgramName = null) {
+        $studyProgramName = "";
+        $names = explode(" ", $fullStudyProgramName);
+        if(count($names) > 1) {
+            foreach ($names as $name) {
+                $studyProgramName .= strtoupper($name[0]);
+            }
+            return $studyProgramName;
+        }
+
+        return $fullStudyProgramName;
+    }
+}
+
+if(!function_exists('showName')) {
+    function showName($fullName, $degree = '') {
+        $names = explode(" ", ucwords(strtolower($fullName)));
+
+        if(count($names) <= 2) {
+            return ucwords(strtolower($fullName)) . " " . $degree;
+        }
+
+        $firstName = $names[0] . " " . $names[1];
+        $lastName = "";
+        foreach($names as $key => $val) {
+            if($key >= 2 && !empty($val)) {
+                $lastName .= $val[0] . ".";
+            }
+        }
+
+        return $firstName . " " . $lastName . " " . $degree;
+    }
+}
+
 if(!function_exists('userLevel')) {
     function userLevel($level = null) {
         $userLevels = [
@@ -68,7 +103,7 @@ if(!function_exists('setFlashMessage')) {
     function setFlashMessage($type, $actionType, $dataType) {
         $messageText = "";
         $messageType = "";
-        $messageStatus = ($type == 'success') ? " berhasil " : " gagal ";
+        $messageStatus = ($type === 'success') ? " berhasil " : " gagal ";
 
         if (in_array($actionType, ['insert', 'add'])) {
             $messageType = " disimpan!";
@@ -76,14 +111,14 @@ if(!function_exists('setFlashMessage')) {
             $messageType = " diperbarui!";
         } else if (in_array($actionType, ['delete', 'destroy', 'remove'])) {
             $messageType = " dihapus!";
-        } else if($actionType == 'upload') {
+        } else if($actionType === 'upload') {
             $messageType = " diupload!";
         }
 
         $messageText = "Data " . $dataType . $messageStatus . $messageType;
 
         //For customize message
-        if($actionType == 'custom') {
+        if($actionType === 'custom') {
             $messageText = $dataType;
         }
 

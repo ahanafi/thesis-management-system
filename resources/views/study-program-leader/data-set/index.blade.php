@@ -4,6 +4,11 @@
     <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
+    <style>
+        .popover .show .bs-popover-top > .popover-body{
+            display: none;visibility: hidden;
+        }
+    </style>
 @endsection
 
 @section('js_after')
@@ -102,8 +107,8 @@
                 <h3 class="block-title">Persyaratan Skripsi</h3>
             </div>
             <div class="block-content block-content-full">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                <div class="table-responsive table-responsive-sm">
+                    <table class="table table-sm table-bordered table-striped table-vcenter js-dataTable-full">
                         <thead>
                         <tr>
                             <th class="text-center" style="width: 80px;">#</th>
@@ -126,30 +131,28 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $dataSet->nim }}</td>
-                                <td>{{ $dataSet->student_name }}</td>
-                                <td>{{ $dataSet->study_program_name }}</td>
+                                <td>{{ showName($dataSet->student_name) }}</td>
+                                <td>{{ studyProgramShortName($dataSet->study_program_name) }}</td>
                                 <td>{{ $dataSet->thesis_year }}</td>
                                 <td>
                                     @if($dataSet->research_title !== '-')
-                                        <button type="button" class="btn btn-sm btn-primary js-popover"
-                                                data-toggle="popover"
-                                                data-placement="top"
-                                                title="{{ $dataSet->research_title }}"
-                                                data-content="{{ $dataSet->research_title }}"
-                                                data-original-title="{{ $dataSet->research_title }}">
-                                            Hover me.
-                                        </button>
+                                        <span class="badge badge-info js-popover"
+                                              data-toggle="popover"
+                                            data-placement="top"
+                                            title="{{ $dataSet->research_title }}"
+                                            data-original-title="{{ $dataSet->research_title }}"
+                                        >Lihat Judul</span>
                                     @else
                                         -
                                     @endif
                                 </td>
                                 <td>{{ $dataSet->science_field_name }}</td>
-                                <td>{{ $dataSet->first_supervisor }}</td>
-                                <td>{{ $dataSet->second_supervisor }}</td>
-                                <td>{{ $dataSet->first_seminar_examiner }}</td>
-                                <td>{{ $dataSet->second_seminar_examiner }}</td>
-                                <td>{{ $dataSet->first_trial_examiner }}</td>
-                                <td>{{ $dataSet->second_trial_examiner }}</td>
+                                <td>{{ showName($dataSet->first_supervisor) }}</td>
+                                <td>{{ showName($dataSet->second_supervisor) }}</td>
+                                <td>{{ showName($dataSet->first_seminar_examiner) }}</td>
+                                <td>{{ showName($dataSet->second_seminar_examiner) }}</td>
+                                <td>{{ showName($dataSet->first_trial_examiner) }}</td>
+                                <td>{{ showName($dataSet->second_trial_examiner) }}</td>
                             </tr>
                         @empty
                         @endforelse

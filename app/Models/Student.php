@@ -20,21 +20,7 @@ class Student extends Model
 
     public function getName()
     {
-        $names = explode(" ", ucwords(strtolower($this->full_name)));
-
-        if(count($names) <= 2) {
-            return ucwords(strtolower($this->full_name));
-        } else {
-            $firstName = $names[0] . " " . $names[1];
-            $lastName = "";
-            foreach($names as $key => $val) {
-                if($key >= 2 && !empty($val)) {
-                    $lastName .= $val[0] . ".";
-                }
-            }
-
-            return $firstName . " " . $lastName;
-        }
+        return showName($this->full_name);
     }
 
     public function study_program()
