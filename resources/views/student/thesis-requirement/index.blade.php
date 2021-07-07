@@ -190,13 +190,13 @@
                                                '{{ File::extension(Storage::url($submission->document)) }}'
                                                )"
                                            data-toggle="modal" data-target="#modal-detail-document"
-                                           class="btn btn-primary">
+                                           class="btn btn-sm btn-primary">
                                             <i class="fa fa-search"></i>
                                         </a>
-                                        @if($submission->status === \App\Status::APPLY || $submission->status === \App\Status::APPROVE)
+                                        @if($submission->status === \App\Status::DRAFT || $submission->status === \App\Status::REJECT)
                                         <a href="#"
                                            onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')"
-                                           class="btn btn-danger">
+                                           class="btn btn-sm btn-danger">
                                             <i class="fa fa-times"></i>
                                         </a>
                                         @endif

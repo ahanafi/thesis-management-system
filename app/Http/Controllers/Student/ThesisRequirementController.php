@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\SubmissionDetailsThesisRequirement;
 use App\Models\SubmissionThesisRequirement;
 use App\Models\ThesisRequirement;
+use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -51,6 +52,7 @@ class ThesisRequirementController extends Controller
         } else {
             $submission = new SubmissionThesisRequirement();
             $submission->nim = $nim;
+            $submission->status = Status::DRAFT;
             $submission->date_of_filling = Date::now();
             $submission->response_date = Date::now();
             $submission->save();
@@ -60,7 +62,7 @@ class ThesisRequirementController extends Controller
         }
 
         //Get document
-        $document = $request->file('document')->store('public/documents');
+        $document = $request->file('document')->store('documents/thesis-requirement');
 
         $addDetailSubmission = SubmissionDetailsThesisRequirement::create([
             'submission_id' => $submissionId,
@@ -81,7 +83,7 @@ class ThesisRequirementController extends Controller
     {
         if($submission) {
             $submission->update([
-                'status' => 'APPLY',
+                'status' => Status::APPLY,
                 'date_of_filling' => Date::now(),
             ]);
 
