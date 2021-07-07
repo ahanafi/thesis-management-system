@@ -26,8 +26,7 @@ class ImportController extends Controller
     public function processImportLecturer(Request $request)
     {
         $this->validate($request, ['file' => 'required|file|mimes:xlsx,xls']);
-
-        $file = $request->file('file')->store('public/imports');
+        $file = Storage::disk('local')->put('public/imports', $request->file('file'));
         $collection = (new FastExcel)->import(storage_path('app/' . $file));
 
         $collection->each(function ($row) {
@@ -83,7 +82,7 @@ class ImportController extends Controller
     {
         $this->validate($request, ['file' => 'required|file|mimes:xlsx,xls']);
 
-        $file = $request->file('file')->store('public/imports');
+        $file = Storage::disk('local')->put('public/imports', $request->file('file'));
         $collection = (new FastExcel)->import(storage_path('app/' . $file));
 
         $collection->each(function ($row) {
@@ -102,9 +101,7 @@ class ImportController extends Controller
                 $gender = strtolower($row['JENIS_KELAMIN']) === 'L' ? 'M' : 'F';
                 $studyProgramName = ucwords(strtolower($row['PROGRAM_STUDI']));
                 $studyProgram = StudyProgram::where('name', $studyProgramName)->first();
-                $studyProgramCode = ($studyProgram)
-                    ? $studyProgram->study_program_code
-                    : null;
+                $studyProgramCode = $studyProgram->study_program_code ?? null;
 
                 Student::create([
                     'nim' => $row['NIM'],
@@ -139,7 +136,7 @@ class ImportController extends Controller
     {
         $this->validate($request, ['file' => 'required|file|mimes:xlsx,xls']);
 
-        $file = $request->file('file')->store('public/imports');
+        $file = Storage::disk('local')->put('public/imports', $request->file('file'));
         $collection = (new FastExcel)->import(storage_path('app/' . $file));
 
         $collection->each(function ($row) {

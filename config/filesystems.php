@@ -51,7 +51,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
@@ -65,6 +65,15 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'azure' => [
+            'driver' => 'azure',
+            'local_address' => env('AZURE_STORAGE_LOCAL_ADDRESS', null),
+            'name' => env('AZURE_STORAGE_NAME'),
+            'key' => env('AZURE_STORAGE_KEY'),
+            'container' => env('AZURE_STORAGE_CONTAINER'),
+            'prefix' => env('AZURE_STORAGE_PREFIX', null),
+            'url' => env('AZURE_STORAGE_URL', null),
+        ],
     ],
 
     /*

@@ -58,7 +58,10 @@ class UserController extends Controller
         ];
 
         if ($request->hasFile('avatar')) {
-            $user['avatar'] = $request->file('avatar')->store('public/users');;
+            $avatarFile = $request->file('avatar');
+            $extension = $avatarFile->getClientOriginalExtension();
+            $filename = strtolower($request->get('username')) . "-" . time() . '.' . $extension;
+            $user['avatar'] = $avatarFile->storeAs('avatar', $filename, 'azure');
         }
 
         $createUser = User::create($user);
@@ -131,7 +134,11 @@ class UserController extends Controller
                 Storage::delete($user->avatar);
             }
 
-            $user->avatar = $request->file('avatar')->store('public/' . $path);
+            $avatarFile = $request->file('avatar');
+            $extension = $avatarFile->getClientOriginalExtension();
+            $filename = strtolower($request->get('username')) . "-" . time() . '.' . $extension;
+            $user['avatar'] = $avatarFile->storeAs('avatar', $filename, 'azure');
+
         }
 
         if ($user->save()) {
