@@ -142,7 +142,7 @@
                     title: '{{ ucwords(session()->get('message.type')) }}',
                     text: '{{ session()->get('message.text') }}',
                     icon: '{{ session()->get('message.type') }}',
-                    timer: 2000
+                    timer: {{ session()->has('message.timer') ? session()->get('message.timer') : 2000 }}
                 });
             </script>
         @endif

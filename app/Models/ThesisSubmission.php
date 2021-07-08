@@ -22,4 +22,9 @@ class ThesisSubmission extends Model
     {
         return $this->hasOne(ScienceField::class, 'id', 'science_field_id');
     }
+
+    public static function getByStudentId($nim)
+    {
+        return self::where('nim', $nim)->get();
+    }
 }
