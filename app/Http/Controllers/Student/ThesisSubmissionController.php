@@ -9,6 +9,7 @@ use App\Models\ThesisRequirement;
 use App\Models\ThesisSubmission;
 use App\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ThesisSubmissionController extends Controller
 {
@@ -44,7 +45,7 @@ class ThesisSubmissionController extends Controller
                 ]);
         }
 
-        $scienceFields = ScienceField::all();
+        $scienceFields = ScienceField::Ordered();
         return viewStudent('thesis-submission.create', [
             'scienceFields' => $scienceFields
         ]);
@@ -55,7 +56,7 @@ class ThesisSubmissionController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'science_field_id' => 'required|exists:science_fields,id',
-            'file' => 'required|file|mimes:doc,docx,pdf'
+            'file' => 'required|file|mimes:doc,docx,pdf|max:2048'
         ]);
 
         $file = $request->file('file')->store('documents/thesis-submission');
@@ -76,5 +77,26 @@ class ThesisSubmissionController extends Controller
         }
 
         return redirect()->route('student.thesis-submission.index')->with('message', $message);
+    }
+
+    public function show(ThesisSubmission $thesisSubmission)
+    {
+        $thesisSubmission->load(['scienceField', 'student']);
+        return viewStudent('thesis-submission.single', [
+            'submission' => $thesisSubmission
+        ]);
+    }
+
+    public function downloadProposal(ThesisSubmission $submission)
+    {
+        $submission->load('student');
+
+        if($submission->document !== null) {
+            $splitFileName = explode('.', $submission->document);
+            $fileExtension = end($splitFileName);
+            $fileName = "Proposal_Skripsi_" . $submission->student->getName() . '.' . $fileExtension;
+
+            return Storage::download($submission->document, $fileName);
+        }
     }
 }

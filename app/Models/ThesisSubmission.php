@@ -10,6 +10,16 @@ class ThesisSubmission extends Model
 {
     use HasFactory, Uuid;
 
+    protected $fillable = [
+        'nim',
+        'research_title',
+        'science_field_id',
+        'status',
+        'document',
+        'date_of_filling',
+        'response_date',
+    ];
+
     public $incrementing = false;
 
     public function student()

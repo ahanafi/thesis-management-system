@@ -16,6 +16,7 @@ Route::prefix('student')
         Route::delete('thesis-requirement/{id}', [ThesisRequirementController::class, 'destroy'])->name('thesis-requirement.delete');
         Route::post('thesis-requirement/{submission}/apply', [ThesisRequirementController::class, 'apply'])->name('thesis-requirement.apply');
 
+        Route::get('thesis-submission/{submission}/download-proposal', [ThesisSubmissionController::class, 'downloadProposal'])->name('thesis-submission.download-proposal');
         Route::resource('thesis-submission', ThesisSubmissionController::class)->except('destroy');
 //        Route::get('thesis-submission', [ThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
 //        Route::get('thesis-submission/create', [ThesisSubmissionController::class, 'create'])->name('thesis-submission.create');

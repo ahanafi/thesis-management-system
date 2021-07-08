@@ -17,7 +17,11 @@ class ThesisSubmissionController extends Controller
         $status = request()->get('status');
         if(request()->has('status') && !in_array(strtolower($status), ['apply', 'approve', 'reject'])) {
             abort(404);
+        } else {
+            $status = request()->has('status') ? request()->get('status') : Status::APPLY;
         }
+
+
 
         $userId = auth()->user()->id;
         $user = User::with('lecturerProfile')->where('id', $userId)->first();

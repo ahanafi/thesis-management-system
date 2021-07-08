@@ -77,22 +77,10 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group">
-                                            <a href="#"
-                                               onclick="showDocument(
-                                                   '{{ Storage::url($submission->document) }}',
-                                                   '{{ File::extension(Storage::url($submission->document)) }}'
-                                                   )"
-                                               data-toggle="modal" data-target="#modal-detail-document"
-                                               class="btn btn-sm btn-primary">
-                                                <i class="fa fa-search"></i>
-                                            </a>
-                                            @if($submission->status === \App\Status::DRAFT || $submission->status === \App\Status::REJECT)
-                                                <a href="#"
-                                                   onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')"
-                                                   class="btn btn-sm btn-danger">
-                                                    <i class="fa fa-times"></i>
-                                                </a>
-                                            @endif
+                                            <a href="{{ route('student.thesis-submission.show', $submission->id) }}"
+                                           class="btn btn-primary">
+                                            <i class="fa fa-search"></i>
+                                        </a>
                                         </div>
                                     </td>
                                 </tr>
