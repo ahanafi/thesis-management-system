@@ -70,11 +70,11 @@
                                     </a>
                                 </td>
                             </tr>
-                            @if($submission->status !== \App\Status::WAITING)
+                            @if(!in_array($submission->status, [\App\Status::WAITING, \App\Status::APPLY], true))
                                 <tr>
                                     <td>Status Proposal</td>
                                     <td>:</td>
-                                    <td>{!! getStatus($submission->status) !!}</td>
+                                    <td>{!! \App\Status::getLabel($submission->status) !!}</td>
                                 </tr>
                                 <tr>
                                     <td>Tanggal Respons</td>
@@ -112,7 +112,7 @@
                             @endif
                         </table>
                         <br>
-                        @if($submission->status === \App\Status::WAITING)
+                        @if($submission->status === \App\Status::APPLY)
                             <h3 class="block-title">Tanggapi Pengajuan Proposal Skripsi</h3>
                             <hr>
                             <form action="{{ route('leader.thesis-submission.submit-response', $submission->id) }}"

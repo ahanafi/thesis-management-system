@@ -4,12 +4,12 @@
         <div class="content-header bg-white-10">
             <!-- Logo -->
             <a class="font-w600 text-white tracking-wide" href="/">
-                            <span class="smini-visible">
-                                D<span class="opacity-75">x</span>
-                            </span>
+                <span class="smini-visible">
+                    D<span class="opacity-75">x</span>
+                </span>
                 <span class="smini-hidden">
-                                Thesis<span class="opacity-75">App</span>
-                            </span>
+                    Thesis<span class="opacity-75">App</span>
+                </span>
             </a>
             <!-- END Logo -->
 
@@ -51,7 +51,8 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->routeIs('leader.thesis-submission.*') ? ' active' : '' }}" href="{{ route('leader.thesis-submission.index') }}">
+                    <a class="nav-main-link{{ request()->routeIs('leader.thesis-submission.*') ? ' active' : '' }}"
+                       href="{{ route('leader.thesis-submission.index') }}">
                         <i class="nav-main-link-icon fa fa-file-alt"></i>
                         <span class="nav-main-link-name">PENGAJUAN SKRIPSI</span>
                     </a>

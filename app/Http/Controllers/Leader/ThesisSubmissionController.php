@@ -14,9 +14,16 @@ class ThesisSubmissionController extends Controller
 {
     public function index()
     {
+        $status = request()->get('status');
+        if(request()->has('status') && !in_array(strtolower($status), ['apply', 'approve', 'reject'])) {
+            abort(404);
+        }
+
         $userId = auth()->user()->id;
         $user = User::with('lecturerProfile')->where('id', $userId)->first();
+
         $thesisSubmission = ThesisSubmission::with(['student', 'scienceField'])
+            ->where('status', strtoupper($status))
             ->whereHas('student', function ($query) use ($user) {
                 return $query->where('study_program_code', $user->lecturerProfile->study_program_code);
             })->get();
@@ -65,12 +72,11 @@ class ThesisSubmissionController extends Controller
     {
         $submission->load('student');
         if($submission->document !== null) {
-            $filePath = public_path(Storage::url($submission->document));
             $splitFileName = explode('.', $submission->document);
             $fileExtension = end($splitFileName);
             $fileName = "Proposal_Skripsi_" . $submission->student->getName() . '.' . $fileExtension;
 
-            return response()->download($filePath, $fileName);
+            return Storage::download($submission->document, $fileName);
         }
     }
 

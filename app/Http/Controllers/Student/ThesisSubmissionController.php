@@ -63,6 +63,7 @@ class ThesisSubmissionController extends Controller
             'nim' => auth()->user()->registration_number,
             'research_title' => $request->get('title'),
             'science_field_id' => $request->get('science_field_id'),
+            'status' => Status::APPLY,
             'document' => $file,
             'date_of_filling' => now(),
             'response_date' => now(),

@@ -25,7 +25,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Persyaratan Skripsi</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Pengajuan Proposal Skripsi</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Examples</li>
@@ -41,45 +41,63 @@
     <div class="content">
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">Persyaratan Skripsi</h3>
-            </div>
-            <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
-                    <thead>
-                    <tr>
-                        <th class="text-center" style="width: 80px;">#</th>
-                        <th>NIM</th>
-                        <th>Nama Mahasiswa</th>
-                        <th class="d-none d-sm-table-cell">Judul Skripsi</th>
-                        <th class="d-none d-sm-table-cell">Bidang</th>
-                        <th class="text-center" style="width: 200px;">Tanggal Upload</th>
-                        <th class="text-center">Aksi</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($thesisSubmission as $submission)
+            <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->get('status') === null ? 'active' : '' }}"
+                       href="{{ route('leader.thesis-submission.index') }}">
+                        BELUM DIRESPON
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->get('status') === 'approve' ? 'active' : '' }}"
+                       href="{{ route('leader.thesis-submission.index', ['status' => 'approve']) }}">
+                        DITERIMA
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->get('status') === 'reject' ? 'active' : '' }}"
+                       href="{{ route('leader.thesis-submission.index', ['status' => 'reject']) }}">
+                        DITOLAK
+                    </a>
+                </li>
+            </ul>
+            <div class="block-content tab-content">
+                <div class="tab-pane active" role="tabpanel">
+                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                        <thead>
                         <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $submission->student->nim }}</td>
-                            <td>{{ $submission->student->getName() }}</td>
-                            <td>{{ $submission->research_title }}</td>
-                            <td>{{ $submission->scienceField->name }}</td>
-                            <td>{{ $submission->date_of_filling }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="{{ route('leader.thesis-submission.show', $submission->id) }}"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </div>
-                            </td>
+                            <th class="text-center" style="width: 80px;">#</th>
+                            <th>NIM</th>
+                            <th>Nama Mahasiswa</th>
+                            <th class="d-none d-sm-table-cell">Judul Skripsi</th>
+                            <th class="d-none d-sm-table-cell">Bidang</th>
+                            <th class="text-center" style="width: 200px;">Tanggal Upload</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
-                    @empty
-                    @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @forelse($thesisSubmission as $submission)
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td>{{ $submission->student->nim }}</td>
+                                <td>{{ $submission->student->getName() }}</td>
+                                <td>{{ $submission->research_title }}</td>
+                                <td>{{ $submission->scienceField->name }}</td>
+                                <td>{{ $submission->date_of_filling }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="{{ route('leader.thesis-submission.show', $submission->id) }}"
+                                           class="btn btn-primary">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- END Dynamic Table with Export Buttons -->
