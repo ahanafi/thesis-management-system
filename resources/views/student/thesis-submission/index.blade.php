@@ -61,6 +61,7 @@
                                 <th>Judul Penelitian</th>
                                 <th class="d-none d-sm-table-cell">Bidang Ilmu</th>
                                 <th class="text-center" style="width: 200px;">Tanggal Pengajuan</th>
+                                <th class="text-center">Status</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                             </thead>
@@ -71,6 +72,9 @@
                                     <td>{{ $submission->research_title }}</td>
                                     <td>{{ $submission->scienceField->name }}</td>
                                     <td>{{ $submission->created_at }}</td>
+                                    <td class="text-center">
+                                        {!! \App\Status::getLabel($submission->status) !!}
+                                    </td>
                                     <td class="text-center">
                                         <div class="btn-group">
                                             <a href="#"
@@ -101,31 +105,6 @@
                             @endforelse
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">
-                            <i class="fa fa-fw fa-book-open text-muted mr-1"></i>
-                            Panduan
-                        </h3>
-                    </div>
-                    <div class="block-content">
-                        <ol class="list-simple-mini">
-                            <li>Pastikan Anda telah mengunggah persyaratan untuk mengajukan skripsi.</li>
-                            <li>Silahkan buat dokumen proposal penelitian Anda.</li>
-                            <li>Isikan semua form input yang tersedia disamping.</li>
-                            <li>Semua form input <b>wajib</b> diisi.</li>
-                            <li>Format dokumen yang didukung adalah <b>Doc, Docx dan Pdf</b>.</li>
-                            <li>Setelah Anda menekan tombol <b>Upload</b>, dokumen proposal Anda akan diteruskan
-                                kepada masing-masing Program Studi.
-                            </li>
-                            <li>Tunggu informasi selanjutnya via email setelah Prodi memberikan tanggapan proposal
-                                penelitian yang Anda ajukan.
-                            </li>
-                        </ol>
                     </div>
                 </div>
             </div>
