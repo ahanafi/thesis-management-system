@@ -46,38 +46,17 @@
                                 <td>{{ $thesis->created_at }}</td>
                             </tr>
                             <tr>
-                                <td width="180">Dokumen Proposal</td>
-                                <td>:</td>
-                                <td>
-                                    <a href="#"
-                                       onclick="showDocument(
-                                           '{{ Storage::url($thesis->document) }}',
-                                           '{{ File::extension(Storage::url($thesis->document)) }}'
-                                           )"
-                                       data-toggle="modal" data-target="#modal-detail-document"
-                                       class="btn btn-sm btn-primary">
-                                        <i class="fa fa-search"></i>
-                                        <span>Lihat Detail</span>
-                                    </a>
-                                    <a href="{{ route('leader.thesis-submission.download-proposal', $thesis->id) }}"
-                                       class="btn btn-sm btn-secondary">
-                                        <i class="fa fa-file-download"></i>
-                                        <span>Unduh Dokumen</span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td width="180">Pembimbing 1</td>
                                 <td>:</td>
                                 <td>
-                                    {{ $thesis->firstSupervisor->getNameWithDegree() }}
+                                    {{ $thesis->firstSupervisor ? $thesis->firstSupervisor->getNameWithDegree() : '-' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td width="180">Pembimbing 2</td>
                                 <td>:</td>
                                 <td>
-                                    {{ $thesis->secondSupervisor->getNameWithDegree() }}
+                                    {{ $thesis->secondSupervisor ? $thesis->secondSupervisor->getNameWithDegree() : '-' }}
                                 </td>
                             </tr>
                         </table>
