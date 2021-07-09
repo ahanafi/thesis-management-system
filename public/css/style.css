@@ -2,3 +2,7 @@
     display: none !important;
     visibility: hidden !important;
 }
+
+.img-logo{
+    width: 50%;
+}

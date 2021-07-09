@@ -10,8 +10,8 @@
                     <!-- Header -->
                     <div class="mb-3 text-center">
                         <a class="link-fx font-w700 font-size-h1" href="/">
-                            <span class="text-dark">Thesis</span>
-                            <span class="text-primary">App</span>
+                            <span class="text-dark">TMS</span>
+                            <span class="text-primary">UCIC</span>
                         </a>
                         <p class="text-uppercase font-w700 font-size-sm text-muted">Sign In</p>
                     </div>
