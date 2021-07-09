@@ -6,3 +6,13 @@
 .img-logo{
     width: 50%;
 }
+
+#student-widget-tiles > div > .text-center:hover{
+
+}
+#student-widget-tiles > div > a.text-center:disabled,
+#student-widget-tiles > div > a.text-center.disabled
+{
+    opacity: .65 !important;
+    cursor: default !important;
+}

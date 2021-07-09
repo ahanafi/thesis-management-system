@@ -35,6 +35,15 @@ class ThesisSubmission extends Model
 
     public static function getByStudentId($nim)
     {
-        return self::where('nim', $nim)->get();
+        return self::where('nim', $nim)
+            ->latest()
+            ->get();
+    }
+
+    public static function getLatestByStudentId($nim)
+    {
+        return self::where('nim', $nim)
+            ->latest()
+            ->first();
     }
 }
