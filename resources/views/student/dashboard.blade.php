@@ -48,7 +48,6 @@
             >
             </x-student-widget-tiles>
 
-
             <x-student-widget-tiles
                 background="bg-danger"
                 is-done="{{ $isSeminarDone }}"

@@ -77,4 +77,9 @@ class Lecturer extends Model
     {
         return $this->hasOne(User::class, 'registration_number', 'nidn');
     }
+
+    public function scopeStudyProgramCode($query, $code)
+    {
+        return $query->where('study_program_code', $code);
+    }
 }
