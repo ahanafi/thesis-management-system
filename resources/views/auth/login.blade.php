@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="bg-image"
-         style="background-image: url({{ asset('media/photos/photo22@2x.jpg') }});">
+         style="background-image: url({{ secure_asset('media/photos/photo22@2x.jpg') }});">
         <div class="row no-gutters bg-primary-op">
             <!-- Main Section -->
             <div class="hero-static col-md-6 d-flex align-items-center bg-white">

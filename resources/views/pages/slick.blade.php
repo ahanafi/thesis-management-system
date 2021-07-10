@@ -1,13 +1,13 @@
 @extends('layouts.backend')
 
 @section('css_before')
-    <link rel="stylesheet" href="{{ asset('js/plugins/slick-carousel/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('js/plugins/slick-carousel/slick-theme.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('js/plugins/slick-carousel/slick.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('js/plugins/slick-carousel/slick-theme.css') }}">
 @endsection
 
 @section('js_after')
     <!-- Page JS Plugins -->
-    <script src="{{ asset('js/plugins/slick-carousel/slick.min.js') }}"></script>
+    <script src="{{ secure_asset('js/plugins/slick-carousel/slick.min.js') }}"></script>
 
     <!-- Page JS Helpers (Slick Slider Plugin) -->
     <script>jQuery(function(){ Dashmix.helpers('slick'); });</script>
@@ -54,13 +54,13 @@
                     </div>
                     <div class="js-slider" data-dots="true">
                         <div>
-                            <img class="img-fluid" src="{{ asset('media/photos/photo2.jpg')}}" alt="photo">
+                            <img class="img-fluid" src="{{ secure_asset('media/photos/photo2.jpg')}}" alt="photo">
                         </div>
                         <div>
-                            <img class="img-fluid" src="{{ asset('media/photos/photo3.jpg')}}" alt="photo">
+                            <img class="img-fluid" src="{{ secure_asset('media/photos/photo3.jpg')}}" alt="photo">
                         </div>
                         <div>
-                            <img class="img-fluid" src="{{ asset('media/photos/photo4.jpg')}}" alt="photo">
+                            <img class="img-fluid" src="{{ secure_asset('media/photos/photo4.jpg')}}" alt="photo">
                         </div>
                     </div>
                     <!-- END Slider with dots -->

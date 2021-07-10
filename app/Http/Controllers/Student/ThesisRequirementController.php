@@ -52,7 +52,12 @@ class ThesisRequirementController extends Controller
         } else {
             $submission = new SubmissionThesisRequirement();
             $submission->nim = $nim;
-            $submission->status = Status::DRAFT;
+
+            //Just for testing
+            //Default is APPLY || WAITING
+            $submission->status = Status::APPROVE;
+
+
             $submission->date_of_filling = Date::now();
             $submission->response_date = Date::now();
             $submission->save();

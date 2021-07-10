@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 <label>Foto (Opsional)</label>
                                 <div class="push">
-                                    <img class="img-avatar" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
+                                    <img class="img-avatar" src="{{ secure_asset('media/avatars/avatar10.jpg') }}" alt="">
                                 </div>
                                 <div class="custom-file">
                                     <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->

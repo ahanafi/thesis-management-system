@@ -17,7 +17,7 @@
         <h2 class="content-heading">
             <i>Progress</i> Skripsi Kamu
         </h2>
-        <div class="row gutters-tiny mb-4" id="student-widget-tiles">
+        <div class="row row-deck gutters-tiny mb-4" id="student-widget-tiles">
             <x-student-widget-tiles
                 background="bg-primary"
                 is-done="{{ $isThesisRequirementDone }}"
@@ -80,7 +80,7 @@
             </x-student-widget-tiles>
         </div>
         <!-- END Thesis Progress -->
-        <div class="block block-themed bg-image" style="background-image: url({{ asset('/media/photos/photo21.jpg') }});">
+        <div class="block block-themed bg-image" style="background-image: url({{ secure_asset('/media/photos/photo21.jpg') }});">
             <div class="block-header bg-primary-dark-op">
                 <h3 class="block-title">Menu Utama</h3>
             </div>

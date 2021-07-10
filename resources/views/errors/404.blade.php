@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Page Content -->
-    <div class="bg-image" style="background-image: url('{{ asset('media/photos/photo19@2x.jpg') }}');">
+    <div class="bg-image" style="background-image: url('{{ secure_asset('media/photos/photo19@2x.jpg') }}');">
         <div class="hero bg-white-95">
             <div class="hero-inner">
                 <div class="content content-full">
