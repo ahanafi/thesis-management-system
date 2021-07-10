@@ -80,7 +80,7 @@
             </x-student-widget-tiles>
         </div>
         <!-- END Thesis Progress -->
-        <div class="block block-themed bg-image" style="background-image: url({{ secure_asset('/media/photos/photo21.jpg') }});">
+        <div class="block block-themed bg-image" style="background-image: url({{ asset('/media/photos/photo21.jpg') }});">
             <div class="block-header bg-primary-dark-op">
                 <h3 class="block-title">Menu Utama</h3>
             </div>

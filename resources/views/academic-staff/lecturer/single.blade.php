@@ -2,33 +2,33 @@
 
 @section('css_before')
     <!-- Page JS Plugins CSS -->
-    <link rel="stylesheet" href="{{ secure_asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
 @endsection
 
 @section('js_after')
     <!-- Page JS Plugins -->
-    <script src="{{ secure_asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
-    <script src="{{ secure_asset('js/pages/tables_datatables.js') }}"></script>
+    <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
 @endsection
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-image" style="background-image: url('{{ secure_asset('media/photos/photo17@2x.jpg') }}');">
+    <div class="bg-image" style="background-image: url('{{ asset('media/photos/photo17@2x.jpg') }}');">
         <div class="bg-black-75">
             <div class="content content-full">
                 <div class="py-5 text-center">
                     <a class="img-link" href="{{ url()->current() }}">
                         <img class="img-avatar img-avatar96 img-avatar-thumb"
-                             src="{{ secure_asset('media/avatars/avatar10.jpg') }}" alt="">
+                             src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
                     </a>
                     <h1 class="font-w700 my-2 text-white">{{ $lecturer->getShortName() }}</h1>
                     <h2 class="h4 font-w700 text-white-75">
@@ -123,7 +123,7 @@
                                             <label class="custom-control-label" for="dm-project-new-people-{{ $competency->id }}">
                                         <span class="d-flex align-items-center">
                                             <img class="img-avatar img-avatar48"
-                                                 src="{{ secure_asset('media/avatars/avatar8.jpg') }}"
+                                                 src="{{ asset('media/avatars/avatar8.jpg') }}"
                                                  alt="">
                                             <span class="ml-2">
                                                 <span class="font-w700">{{ $competency->name }}</span>

@@ -12,7 +12,7 @@
                         src="{{
                                 Storage::exists($avatar)
                                 ? Storage::url($avatar)
-                                : secure_asset('media/avatars/avatar7.jpg')
+                                : asset('media/avatars/avatar7.jpg')
                             }}"
                         alt="User picture">
                 </td>

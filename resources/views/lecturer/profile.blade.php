@@ -2,12 +2,12 @@
 
 @section('css_before')
     <!-- Page JS Plugins CSS -->
-    <link rel="stylesheet" href="{{ secure_asset('js/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/select2/css/select2.min.css') }}">
 @endsection
 
 @section('js_after')
     <!-- Page JS Plugins -->
-    <script src="{{ secure_asset('js/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>jQuery(function () {
             Dashmix.helpers(['select2']);
         });</script>
@@ -21,13 +21,13 @@
 
 @section('content')
     <!-- Hero -->
-    <div class="bg-image" style="background-image: url('{{ secure_asset('media/photos/photo17@2x.jpg') }}');">
+    <div class="bg-image" style="background-image: url('{{ asset('media/photos/photo17@2x.jpg') }}');">
         <div class="bg-black-75">
             <div class="content content-full">
                 <div class="py-5 text-center">
                     <a class="img-link" href="{{ url()->current() }}">
                         <img class="img-avatar img-avatar96 img-avatar-thumb"
-                             src="{{ secure_asset('media/avatars/avatar10.jpg') }}" alt="">
+                             src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
                     </a>
                     <h1 class="font-w700 my-2 text-white">{{ $lecturer->getShortName() }}</h1>
                     <h2 class="h4 font-w700 text-white-75">
@@ -128,7 +128,7 @@
                                                    for="dm-project-new-people-{{ $competency->id }}">
                                         <span class="d-flex align-items-center">
                                             <img class="img-avatar img-avatar48"
-                                                 src="{{ secure_asset('media/avatars/avatar8.jpg') }}"
+                                                 src="{{ asset('media/avatars/avatar8.jpg') }}"
                                                  alt="">
                                             <span class="ml-2">
                                                 <span class="font-w700">{{ $competency->name }}</span>

@@ -4,7 +4,7 @@
         <div class="content-header bg-white-10">
             <!-- Logo -->
             <a class="font-w600 text-white tracking-wide" href="/">
-                <img class="img-logo" src="{{ secure_asset('media/photos/ucic-yellow.png') }}" alt="TMS UCIC">
+                <img class="img-logo" src="{{ asset('media/photos/ucic-yellow.png') }}" alt="TMS UCIC">
             </a>
             <!-- END Logo -->
 

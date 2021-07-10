@@ -2,22 +2,22 @@
 
 @section('css_before')
     <!-- Page JS Plugins CSS -->
-    <link rel="stylesheet" href="{{ secure_asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
 @endsection
 
 @section('js_after')
     <!-- Page JS Plugins -->
-    <script src="{{ secure_asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ secure_asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
-    <script src="{{ secure_asset('js/pages/tables_datatables.js') }}"></script>
+    <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
 @endsection
 
 @section('content')
