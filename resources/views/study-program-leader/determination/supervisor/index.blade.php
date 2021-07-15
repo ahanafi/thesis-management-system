@@ -69,7 +69,7 @@
                             <td>{{ $thesis->created_at }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('leader.thesis-submission.show', $thesis->id) }}"
+                                    <a href="{{ route('leader.determination.supervisor.lecturer-list', $thesis->id) }}"
                                        class="btn btn-primary">
                                         <i class="fa fa-search"></i>
                                     </a>

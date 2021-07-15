@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Leader\Determination;
 
 use App\Http\Controllers\Controller;
+use App\Models\DataSet;
 use App\Models\Lecturer;
+use App\Models\StudyProgram;
 use App\Models\Thesis;
 use Illuminate\Http\Request;
 
@@ -18,5 +20,28 @@ class SupervisorController extends Controller
         $theses = Thesis::getDoesNotHaveSupervisor($studyProgram->study_program_code);
 
         return viewStudyProgramLeader('determination.supervisor.index', compact('theses'));
+    }
+
+    public function lecturerList(Thesis $thesis)
+    {
+        $thesis->load(['student', 'scienceField']);
+        $lecturers = Lecturer::with('study_program')
+            ->get()
+            ->each(function ($lecturer) {
+                $lecturer->asFirstSupervisorCount = DataSet::where('first_supervisor', 'LIKE', '%'.$lecturer->getFullName().'%')->count();
+                $lecturer->asSecondSupervisorCount = DataSet::where('second_supervisor', $lecturer->getFullName())->count();
+                $lecturer->supervisorType = ($lecturer->asFirstSupervisorCount > $lecturer->asSecondSupervisorCount) ? 1 : 2;
+            });
+
+        $homebaseList = [
+            'study_program' => [],
+            'total' => [],
+            'total_first_supervisor' => [],
+            'total_first_supervisor' => [],
+            'entropy' => [],
+            'gain' => [],
+        ];
+
+        return viewStudyProgramLeader('determination.supervisor.lecturer-list', compact('lecturers','thesis', 'homebaseList'));
     }
 }

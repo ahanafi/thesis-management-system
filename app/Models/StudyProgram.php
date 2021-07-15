@@ -28,7 +28,7 @@ class StudyProgram extends Model
             return $resultName;
         }
 
-        return $names;
+        return $this->name;
     }
 
     public function getComplexName()

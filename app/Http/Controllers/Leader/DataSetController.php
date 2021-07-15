@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Lecturer;
+namespace App\Http\Controllers\Leader;
 
 use App\Http\Controllers\Controller;
 use App\Models\DataSet;
@@ -25,7 +25,7 @@ class DataSetController extends Controller
             'data-set' => 'required|file|mimes:xls,xlsx'
         ]);
 
-        $dataSetFile = $request->file('data-set')->store('public/imports');
+        $dataSetFile = Storage::disk('local')->put('public/imports', $request->file('data-set'));
         $dataSetCollection = (new FastExcel)->import(storage_path('app/' . $dataSetFile));
 
         if($dataSetCollection->count() <= 0) {
@@ -42,7 +42,7 @@ class DataSetController extends Controller
                     'student_name'              => $row['NAMA_MAHASISWA'],
                     'study_program_name'        => $row['PRODI'],
                     'thesis_year'               => $row['TAHUN_SKRIPSI'],
-                    'research_title'            => $row['JUDUL'],
+                    'research_title'            => ($row['JUDUL'] !== '') ? $row['JUDUL'] : '-',
                     'science_field_name'        => $row['BIDANG_ILMU'],
                     'first_supervisor'          => $row['PEMBIMBING_1'],
                     'second_supervisor'         => $row['PEMBIMBING_2'],
@@ -56,8 +56,8 @@ class DataSetController extends Controller
 
         $message = setFlashMessage('success', 'import', 'set');
 
-        if (Storage::exists($dataSetFile)) {
-            Storage::delete($dataSetFile);
+        if (Storage::disk('local')->exists($dataSetFile)) {
+            Storage::disk('local')->delete($dataSetFile);
         }
 
         return redirect()->route('leader.data-set.index')->with('message', $message);

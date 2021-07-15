@@ -3,7 +3,7 @@
 use App\Http\Controllers\Leader\Determination\SupervisorController;
 use App\Http\Controllers\Leader\ThesisSubmissionController;
 
-use App\Http\Controllers\Lecturer\DataSetController;
+use App\Http\Controllers\Leader\DataSetController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -40,5 +40,6 @@ Route::prefix('study-program-leader')
             ->name('determination.')
             ->group(function () {
                 Route::get('supervisor', [SupervisorController::class, 'index'])->name('supervisor.index');
+                Route::get('supervisor/lecturer-list/{thesis}', [SupervisorController::class, 'lecturerList'])->name('supervisor.lecturer-list');
             });
     });
