@@ -33,15 +33,9 @@ class SupervisorController extends Controller
                 $lecturer->supervisorType = ($lecturer->asFirstSupervisorCount > $lecturer->asSecondSupervisorCount) ? 1 : 2;
             });
 
-        $homebaseList = [
-            'study_program' => [],
-            'total' => [],
-            'total_first_supervisor' => [],
-            'total_first_supervisor' => [],
-            'entropy' => [],
-            'gain' => [],
-        ];
+        $homebaseList = [];
+        $filteredLecturers = [];
 
-        return viewStudyProgramLeader('determination.supervisor.lecturer-list', compact('lecturers','thesis', 'homebaseList'));
+        return viewStudyProgramLeader('determination.supervisor.lecturer-list', compact('lecturers','thesis', 'homebaseList', 'filteredLecturers'));
     }
 }

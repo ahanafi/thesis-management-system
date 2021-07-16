@@ -82,7 +82,7 @@
             </ul>
             <div class="block-content tab-content">
                 <!-- Step 1 -->
-                <div class="tab-pane active" id="btabs-step-1" role="tabpanel">
+                <div class="tab-pane" id="btabs-step-1" role="tabpanel">
                     <div
                         class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                         role="alert">
@@ -115,10 +115,6 @@
                             $functionalJobsList = [];
                         @endphp
                         @foreach ($lecturers as $lecturer)
-                            @php
-                                $homebaseList['study_program'][] = $lecturer->study_program->getName();
-                                $functionalJobsList[] = ($lecturer->functional !== null) ? getLecturship($lecturer->functional) : 'NON-JAB';
-                            @endphp
                             <tr>
                                 <td class="text-center">
                                     {{ $loop->iteration }}
@@ -173,40 +169,32 @@
                         <tbody>
                         @php
                             $number = 1;
-
                             $totalCases = 0;
                             $totalFirstSupervisor = 0;
                             $totalSecondSupervisor = 0;
-                            //Unique
-                            $homebaseList['study_program'] = array_values(array_unique($homebaseList['study_program']));
-                            dd($homebaseList);
-                            $functionalJobsList = array_values(array_unique($functionalJobsList));
-
                         @endphp
                         @foreach ($lecturers as $lecturer)
                             @php
                                 $totalCases++;
                                   if($lecturer->asFirstSupervisorCount > 0) {
                                       $totalFirstSupervisor++;
-                                      $indexHomebase = 0;
-                                      foreach ($homebaseList['study_program'] as $homebase) {
-                                          if($homebase === $lecturer->study_program->getName()) {
-                                              $homebase['first_supervisor'] += 1;
-                                          }
-                                          $indexHomebase++;
-                                      }
                                   } else if($lecturer->asSecondSupervisorCount > 0) {
                                       $totalSecondSupervisor++;
-                                      $indexHomebase = 0;
-                                      foreach ($homebaseList as $homebase) {
-                                          if($homebase['study_program'] === $lecturer->study_program->getName()) {
-                                              $homebase[$indexHomebase]['second_supervisor'] += 1;
-                                          }
-                                          $indexHomebase++;
-                                      }
                                   }
                             @endphp
                             @if($lecturer->asFirstSupervisorCount > 0 || $lecturer->asSecondSupervisorCount > 0)
+                                @php
+                                    $homebaseList[] = $lecturer->study_program->getName();
+                                    $functionalJobsList[] = ($lecturer->functional !== null) ? getLecturship($lecturer->functional) : 'NON-JAB';
+                                    $filteredLecturers[] = [
+                                        'name' => $lecturer->getShortName(),
+                                        'homebase' => $lecturer->study_program->getName(),
+                                        'first_supervisor_count' => $lecturer->asFirstSupervisorCount,
+                                        'second_supervisor_count' => $lecturer->asSecondSupervisorCount,
+                                        'functional' => ($lecturer->functional !== null) ? getLecturship($lecturer->functional) : 'NON-JAB',
+                                        'supervisor_type' => $lecturer->supervisorType
+                                    ];
+                                @endphp
                                 <tr>
                                     <td class="text-center">
                                         {{ $number++ }}
@@ -237,7 +225,7 @@
                 </div>
                 <!-- End Step 2 -->
                 <!-- Step 3 -->
-                <div class="tab-pane" id="btabs-step-3" role="tabpanel">
+                <div class="tab-pane active" id="btabs-step-3" role="tabpanel">
                     <div
                         class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                         role="alert">
@@ -267,7 +255,8 @@
                         <tbody>
                         @php
                             $number = 1;
-                            dd($homebaseList);
+                            $homebaseList = array_values(array_unique($homebaseList));
+                            $functionalJobsList = array_values(array_unique($functionalJobsList));
                         @endphp
 
                         @foreach ($lecturers as $lecturer)
@@ -332,26 +321,61 @@
                             <th>Gain</th>
                         </tr>
                         <tr>
-                            <th></th>
+                            <th class="text-center"></th>
                             <th colspan="2">TOTAL</th>
-                            <th>{{ $totalCases }}</th>
-                            <th>{{ $totalFirstSupervisor }}</th>
-                            <th>{{ $totalSecondSupervisor }}</th>
-                            <th>0</th>
-                            <th>0</th>
+                            <th class="text-center">{{ $totalCases }}</th>
+                            <th class="text-center">{{ $totalFirstSupervisor }}</th>
+                            <th class="text-center">{{ $totalSecondSupervisor }}</th>
+                            <th class="text-center">
+                                @php
+                                    $entropyTotal = \App\Services\C45Service::calculateEntropy($totalCases, $totalFirstSupervisor, $totalSecondSupervisor);
+                                    echo $entropyTotal;
+                                    $attributtes = [];
+                                @endphp
+                            </th>
+                            <th class="text-center">-</th>
                         </tr>
                         @foreach($homebaseList as $homebase)
-                            <t>
-                                <td></td>
+                            @php
+                                $totalCriteria = countFromArray($filteredLecturers, ['homebase' => $homebase]);
+                                $totalFirstCriteria = countFromArray($filteredLecturers, [
+                                    'homebase' => $homebase,
+                                    'supervisor_type' => 1
+                                ]);
+                                $totalSecondCriteria = countFromArray($filteredLecturers, [
+                                    'homebase' => $homebase,
+                                    'supervisor_type' => 2
+                                ]);
+                                $entropy = \App\Services\C45Service::calculateEntropy($totalCriteria, $totalFirstCriteria, $totalSecondCriteria);
+                                $attributtes[] = [
+                                    'total_criteria' => $totalCriteria,
+                                    'entropy_criteria' => $entropy,
+                                ];
+                            @endphp
+                            <tr>
+                                <td class="text-center"></td>
                                 <td>HOMEBASE</td>
-                                <td>{{ $homebase['study_program'] }}</td>
-                                <td>
-                                    {{ ($homebase['first_supervisor']+$homebase['second_supervisor']) }}
+                                <td class="text-center">{{ $homebase }}</td>
+                                <td class="text-center">{{ $totalCriteria }}</td>
+                                <td class="text-center">
+                                    {{ $totalFirstCriteria }}
                                 </td>
-                                <td>{{ $homebase['first_supervisor'] }}</td>
-                                <td>{{ $homebase['second_supervisor'] }}</td>
-                            </t>
+                                <td class="text-center">
+                                    {{ $totalSecondCriteria }}
+                                </td>
+                                <td class="text-center">
+                                    {{ $entropy }}
+                                </td>
+                                <td class="text-center"></td>
+                            </tr>
                         @endforeach
+                        <tr>
+                            <td></td>
+                            <td colspan="5">GAIN HOMEBASE</td>
+                            <td>
+                                {{ \App\Services\C45Service::calculateGain($entropyTotal, $totalCases, $attributtes) }}
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <!-- End Step 3 -->
