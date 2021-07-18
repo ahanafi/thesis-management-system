@@ -89,7 +89,6 @@ class SupervisorController extends Controller
 
         /* C45 Calculation Section */
         $entropyTotal = C45Service::calculateEntropy($countFilteredLecturers, $totalFirstSupervisor, $totalSecondSupervisor);
-        $gainResults = [];
 
         /*
          * Section for Hombase calculation
@@ -193,7 +192,9 @@ class SupervisorController extends Controller
             ];
         }
 
-        //Section for second score
+        /*
+         * Section for Second Scores
+         * */
         $secondSupervisorScoreAttributes = [];
         $secondSupervisorScores = [];
         $totalCriteria = 0;
@@ -224,38 +225,45 @@ class SupervisorController extends Controller
             ];
         }
 
-        $gainResults = [
-            'homebase' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $homebaseAttributes),
-            'functional' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $functionalJobAttributes),
-            'first_supervisor_score' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $firstSupervisorScoreAttributes),
-            'second_supervisor_score' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $secondSupervisorScoreAttributes),
-        ];
-
         /* End of C45 Calculation Section */
-        $c45Data = [
-            'homebases' => $homebases,
-            'functionalJobs' => $functionalJobs,
-            'firstSupervisorScores' => $firstSupervisorScores,
-            'secondSupervisorScores' => $secondSupervisorScores,
+
+        $results = [
+            [
+                'name' => 'HOMEBASE',
+                'background' => 'bg-success',
+                'items' => $homebases,
+                'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $homebaseAttributes),
+            ],
+            [
+                'name' => 'JABATAN FUNGSIONAL',
+                'background' => 'bg-info',
+                'items' => $functionalJobs,
+                'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $functionalJobAttributes),
+            ],
+            [
+                'name' => 'SKOR PEMBIMBING 1',
+                'background' => 'bg-warning',
+                'items' => $firstSupervisorScores,
+                'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $firstSupervisorScoreAttributes),
+            ],
+            [
+                'name' => 'SKOR PEMBIMBING 2',
+                'background' => 'bg-danger',
+                'items' => $secondSupervisorScores,
+                'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $secondSupervisorScoreAttributes),
+            ],
         ];
 
         return viewStudyProgramLeader('determination.supervisor.lecturer-list', [
             'thesis' => $thesis,
             'lecturers' => $lecturers,
             'filteredLecturers' => $filteredLecturers,
-
-            'homebases' => $homebases,
-            'functionalJobs' => $functionalJobs,
-            'firstSupervisorScores' => $firstSupervisorScores,
-            'secondSupervisorScores' => $secondSupervisorScores,
-
+            'results' => $results,
             'countFilteredLecturers' => $countFilteredLecturers,
             'totalFirstSupervisor' => $totalFirstSupervisor,
             'totalSecondSupervisor' => $totalSecondSupervisor,
             'number' => 1,
             'entropyTotal' => $entropyTotal,
-            'c45Data' => $c45Data,
-            'gainResults' => $gainResults
         ]);
     }
 }

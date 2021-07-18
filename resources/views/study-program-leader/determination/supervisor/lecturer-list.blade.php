@@ -82,7 +82,7 @@
             </ul>
             <div class="block-content tab-content">
                 <!-- Step 1 -->
-                <div class="tab-pane active" id="btabs-step-1" role="tabpanel">
+                <div class="tab-pane" id="btabs-step-1" role="tabpanel">
                     <div
                         class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                         role="alert">
@@ -122,7 +122,8 @@
                                 <td class="text-center">{{ $lecturer->asSecondSupervisorCount }}</td>
                                 <td class="d-none d-sm-table-cell text-center">
                                     @if($lecturer->functional)
-                                        <span class="badge @if($lecturer->functional === \App\Constants\Functional::LECTURER) badge-success
+                                        <span
+                                            class="badge @if($lecturer->functional === \App\Constants\Functional::LECTURER) badge-success
                                                         @elseif($lecturer->functional === \App\Constants\Functional::EXPERT_ASSISTANT) badge-warning
                                                         @endif">
                                         {{ getLecturship($lecturer->functional) }}
@@ -182,7 +183,7 @@
                 </div>
                 <!-- End Step 2 -->
                 <!-- Step 3 -->
-                <div class="tab-pane" id="btabs-step-3" role="tabpanel">
+                <div class="tab-pane active" id="btabs-step-3" role="tabpanel">
                     <div
                         class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                         role="alert">
@@ -228,8 +229,8 @@
                     </table>
                     <br>
                     <table class="table table-bordered table-striped table-vcenter table-sm">
-                        <tr>
-                            <th>Node</th>
+                        <thead>
+                        <tr class="bg-primary text-white">
                             <th>Atribut</th>
                             <th>Sub Atribut</th>
                             <th>Jumlah Kasus</th>
@@ -237,58 +238,32 @@
                             <th>Pembimbing 2</th>
                             <th>Entropy</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         <tr>
-                            <th class="text-center"></th>
-                            <th colspan="2">TOTAL</th>
+                            <th colspan="2" class="text-center">TOTAL =></th>
                             <th class="text-center">{{ $countFilteredLecturers }}</th>
                             <th class="text-center">{{ $totalFirstSupervisor }}</th>
                             <th class="text-center">{{ $totalSecondSupervisor }}</th>
                             <th class="text-center">{{ $entropyTotal }}</th>
                         </tr>
-                        @foreach($homebases as $homebase)
+                        @foreach($results as $result)
                             <tr>
-                                <td></td>
-                                <td>HOMEBASE</td>
-                                <td>{{ $homebase['name'] }}</td>
-                                <td class="text-center">{{ $homebase['total'] }}</td>
-                                <td class="text-center">{{ $homebase['first_supervisor'] }}</td>
-                                <td class="text-center">{{ $homebase['second_supervisor'] }}</td>
-                                <td class="text-center">{{ $homebase['entropy'] }}</td>
+                                <td class="{{ $result['background'] }} text-white align-middle text-center"
+                                    rowspan="{{ count($result['items']) }}">
+                                    {{ $result['name'] }} <br>
+                                    <b class="text-black">{{ $result['gain'] }}</b>
+                                </td>
+                                @foreach($result['items'] as $item)
+                                    <td>{{ $item['name'] }}</td>
+                                    <td class="text-center">{{ $item['total'] }}</td>
+                                    <td class="text-center">{{ $item['first_supervisor'] }}</td>
+                                    <td class="text-center">{{ $item['second_supervisor'] }}</td>
+                                    <td class="text-center">{{ $item['entropy'] }}</td>
                             </tr>
                         @endforeach
-                        @foreach($functionalJobs as $functional)
-                            <tr>
-                                <td></td>
-                                <td>JABATAN FUNGSIONAL</td>
-                                <td>{{ $functional['name'] }}</td>
-                                <td class="text-center">{{ $functional['total'] }}</td>
-                                <td class="text-center">{{ $functional['first_supervisor'] }}</td>
-                                <td class="text-center">{{ $functional['second_supervisor'] }}</td>
-                                <td class="text-center">{{ $functional['entropy'] }}</td>
-                            </tr>
                         @endforeach
-                        @foreach($firstSupervisorScores as $firstSupervisor)
-                            <tr>
-                                <td></td>
-                                <td>SKOR PENGUJI 1</td>
-                                <td>{{ $firstSupervisor['name'] }}</td>
-                                <td class="text-center">{{ $firstSupervisor['total'] }}</td>
-                                <td class="text-center">{{ $firstSupervisor['first_supervisor'] }}</td>
-                                <td class="text-center">{{ $firstSupervisor['second_supervisor'] }}</td>
-                                <td class="text-center">{{ $firstSupervisor['entropy'] }}</td>
-                            </tr>
-                        @endforeach
-                        @foreach($secondSupervisorScores as $secondSupervisor)
-                            <tr>
-                                <td></td>
-                                <td>SKOR PENGUJI 2</td>
-                                <td>{{ $secondSupervisor['name'] }}</td>
-                                <td class="text-center">{{ $secondSupervisor['total'] }}</td>
-                                <td class="text-center">{{ $secondSupervisor['first_supervisor'] }}</td>
-                                <td class="text-center">{{ $secondSupervisor['second_supervisor'] }}</td>
-                                <td class="text-center">{{ $secondSupervisor['entropy'] }}</td>
-                            </tr>
-                        @endforeach
+                        </tbody>
                     </table>
                 </div>
                 <!-- End Step 3 -->
