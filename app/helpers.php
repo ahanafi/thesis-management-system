@@ -243,7 +243,11 @@ if (!function_exists('countFromArray')) {
         if($countConditions <= 1) {
             $key = array_key_first($conditions);
             $value = $conditions[$key];
-            $count = array_count_values(array_column($array, $key))[$value];
+            foreach ($array as $item) {
+                if(isset($item->{$key}) && $item->{$key} === $value) {
+                    $count++;
+                }
+            }
 
         } else if($countConditions === 2) {
             foreach ($array as $item) {
@@ -253,12 +257,20 @@ if (!function_exists('countFromArray')) {
                 $secondKey = array_keys($conditions)[1];
                 $secondValue = array_values($conditions)[1];
 
-                if((array_key_exists($firstKey, $item) && $item[$firstKey] === $firstValue) &&
-                    (array_key_exists($secondKey, $item) && $item[$secondKey] === $secondValue)) {
+                if(is_array($item) && (array_key_exists($firstKey, $item) && $item[$firstKey] === $firstValue) &&
+                    (array_key_exists($secondKey, $item) && $item[$secondKey] === $secondValue))
+                {
+                    $count++;
+                }
+
+                if(is_object($item) && (property_exists($item, $firstKey) && $item->{$firstKey} === $firstValue) &&
+                    (property_exists($item, $secondKey) && $item->{$secondKey} === $secondValue))
+                {
                     $count++;
                 }
             }
         }
+
         return $count;
     }
 }

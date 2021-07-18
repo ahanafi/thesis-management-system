@@ -82,7 +82,7 @@
             </ul>
             <div class="block-content tab-content">
                 <!-- Step 1 -->
-                <div class="tab-pane" id="btabs-step-1" role="tabpanel">
+                <div class="tab-pane active" id="btabs-step-1" role="tabpanel">
                     <div
                         class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                         role="alert">
@@ -111,9 +111,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php
-                            $functionalJobsList = [];
-                        @endphp
                         @foreach ($lecturers as $lecturer)
                             <tr>
                                 <td class="text-center">
@@ -125,8 +122,8 @@
                                 <td class="text-center">{{ $lecturer->asSecondSupervisorCount }}</td>
                                 <td class="d-none d-sm-table-cell text-center">
                                     @if($lecturer->functional)
-                                        <span class="badge @if($lecturer->functional === \App\Functional::LECTURER) badge-success
-                                                        @elseif($lecturer->functional === \App\Functional::EXPERT_ASSISTANT) badge-warning
+                                        <span class="badge @if($lecturer->functional === \App\Constants\Functional::LECTURER) badge-success
+                                                        @elseif($lecturer->functional === \App\Constants\Functional::EXPERT_ASSISTANT) badge-warning
                                                         @endif">
                                         {{ getLecturship($lecturer->functional) }}
                                     </span>
@@ -167,65 +164,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php
-                            $number = 1;
-                            $totalCases = 0;
-                            $totalFirstSupervisor = 0;
-                            $totalSecondSupervisor = 0;
-                        @endphp
-                        @foreach ($lecturers as $lecturer)
-                            @php
-                                $totalCases++;
-                                  if($lecturer->asFirstSupervisorCount > 0) {
-                                      $totalFirstSupervisor++;
-                                  } else if($lecturer->asSecondSupervisorCount > 0) {
-                                      $totalSecondSupervisor++;
-                                  }
-                            @endphp
-                            @if($lecturer->asFirstSupervisorCount > 0 || $lecturer->asSecondSupervisorCount > 0)
-                                @php
-                                    $homebaseList[] = $lecturer->study_program->getName();
-                                    $functionalJobsList[] = ($lecturer->functional !== null) ? getLecturship($lecturer->functional) : 'NON-JAB';
-                                    $filteredLecturers[] = [
-                                        'name' => $lecturer->getShortName(),
-                                        'homebase' => $lecturer->study_program->getName(),
-                                        'first_supervisor_count' => $lecturer->asFirstSupervisorCount,
-                                        'second_supervisor_count' => $lecturer->asSecondSupervisorCount,
-                                        'functional' => ($lecturer->functional !== null) ? getLecturship($lecturer->functional) : 'NON-JAB',
-                                        'supervisor_type' => $lecturer->supervisorType
-                                    ];
-                                @endphp
-                                <tr>
-                                    <td class="text-center">
-                                        {{ $number++ }}
-                                    </td>
-                                    <td>{{ $lecturer->getShortName() }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $lecturer->study_program->getName()  }}</td>
-                                    <td>{{ $lecturer->asFirstSupervisorCount }}</td>
-                                    <td>{{ $lecturer->asSecondSupervisorCount }}</td>
-                                    <td class="d-none d-sm-table-cell text-center">
-                                        @if($lecturer->functional)
-                                            <span class="badge @if($lecturer->functional === \App\Functional::LECTURER) badge-success
-                                                            @elseif($lecturer->functional === \App\Functional::EXPERT_ASSISTANT) badge-warning
-                                                            @endif">
-                                            {{ getLecturship($lecturer->functional) }}
-                                        </span>
-                                        @else
-                                            <span class="badge badge-danger">NON-JAB</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">
-                                        Pembimbing {{ $lecturer->supervisorType }}
-                                    </td>
-                                </tr>
-                            @endif
+                        @foreach ($filteredLecturers as $lecturer)
+                            <tr>
+                                <td class="text-center">{{ $number++ }}</td>
+                                <td>{{ $lecturer->name }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
+                                <td>{{ $lecturer->asFirstSupervisorCount }}</td>
+                                <td>{{ $lecturer->asSecondSupervisorCount }}</td>
+                                <td class="d-none d-sm-table-cell text-center">{{ $lecturer->functional }}</td>
+                                <td class="text-center">
+                                    Pembimbing {{ $lecturer->supervisorType }}
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
                 <!-- End Step 2 -->
                 <!-- Step 3 -->
-                <div class="tab-pane active" id="btabs-step-3" role="tabpanel">
+                <div class="tab-pane" id="btabs-step-3" role="tabpanel">
                     <div
                         class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                         role="alert">
@@ -253,58 +210,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php
-                            $number = 1;
-                            $homebaseList = array_values(array_unique($homebaseList));
-                            $functionalJobsList = array_values(array_unique($functionalJobsList));
-                        @endphp
-
-                        @foreach ($lecturers as $lecturer)
-                            @if($lecturer->asFirstSupervisorCount > 0 || $lecturer->asSecondSupervisorCount > 0)
-                                <tr>
-                                    <td class="text-center">
-                                        {{ $number++ }}
-                                    </td>
-                                    <td>{{ $lecturer->getShortName() }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $lecturer->study_program->getName()  }}</td>
-                                    <td>
-                                        @if($lecturer->asFirstSupervisorCount >= 14)
-                                            SANGAT TINGGI
-                                        @elseif($lecturer->asFirstSupervisorCount >= 8 && $lecturer->asFirstSupervisorCount <= 13)
-                                            TINGGI
-                                        @elseif($lecturer->asFirstSupervisorCount >= 4 && $lecturer->asFirstSupervisorCount <= 7)
-                                            CUKUP
-                                        @else
-                                            KURANG
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($lecturer->asSecondSupervisorCount >= 12)
-                                            SANGAT TINGGI
-                                        @elseif($lecturer->asSecondSupervisorCount >= 8 && $lecturer->asSecondSupervisorCount <= 11)
-                                            TINGGI
-                                        @elseif($lecturer->asSecondSupervisorCount >= 4 && $lecturer->asSecondSupervisorCount <= 7)
-                                            CUKUP
-                                        @else
-                                            KURANG
-                                        @endif
-                                    </td>
-                                    <td class="d-none d-sm-table-cell text-center">
-                                        @if($lecturer->functional)
-                                            <span class="badge @if($lecturer->functional === \App\Functional::LECTURER) badge-success
-                                                            @elseif($lecturer->functional === \App\Functional::EXPERT_ASSISTANT) badge-warning
-                                                            @endif">
-                                            {{ getLecturship($lecturer->functional) }}
-                                        </span>
-                                        @else
-                                            <span class="badge badge-danger">NON-JAB</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">
-                                        Pembimbing {{ $lecturer->supervisorType }}
-                                    </td>
-                                </tr>
-                            @endif
+                        @php $number = 1; @endphp
+                        @foreach ($filteredLecturers as $lecturer)
+                            <tr>
+                                <td class="text-center">{{ $number++ }}</td>
+                                <td>{{ $lecturer->name }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
+                                <td>{{ $lecturer->firstSupervisorLabel }}</td>
+                                <td>{{ $lecturer->secondSupervisorLabel }}</td>
+                                <td class="d-none d-sm-table-cell text-center">{{ $lecturer->functional }}</td>
+                                <td class="text-center">
+                                    Pembimbing {{ $lecturer->supervisorType }}
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -318,64 +236,59 @@
                             <th>Pembimbing 1</th>
                             <th>Pembimbing 2</th>
                             <th>Entropy</th>
-                            <th>Gain</th>
                         </tr>
                         <tr>
                             <th class="text-center"></th>
                             <th colspan="2">TOTAL</th>
-                            <th class="text-center">{{ $totalCases }}</th>
+                            <th class="text-center">{{ $countFilteredLecturers }}</th>
                             <th class="text-center">{{ $totalFirstSupervisor }}</th>
                             <th class="text-center">{{ $totalSecondSupervisor }}</th>
-                            <th class="text-center">
-                                @php
-                                    $entropyTotal = \App\Services\C45Service::calculateEntropy($totalCases, $totalFirstSupervisor, $totalSecondSupervisor);
-                                    echo $entropyTotal;
-                                    $attributtes = [];
-                                @endphp
-                            </th>
-                            <th class="text-center">-</th>
+                            <th class="text-center">{{ $entropyTotal }}</th>
                         </tr>
-                        @foreach($homebaseList as $homebase)
-                            @php
-                                $totalCriteria = countFromArray($filteredLecturers, ['homebase' => $homebase]);
-                                $totalFirstCriteria = countFromArray($filteredLecturers, [
-                                    'homebase' => $homebase,
-                                    'supervisor_type' => 1
-                                ]);
-                                $totalSecondCriteria = countFromArray($filteredLecturers, [
-                                    'homebase' => $homebase,
-                                    'supervisor_type' => 2
-                                ]);
-                                $entropy = \App\Services\C45Service::calculateEntropy($totalCriteria, $totalFirstCriteria, $totalSecondCriteria);
-                                $attributtes[] = [
-                                    'total_criteria' => $totalCriteria,
-                                    'entropy_criteria' => $entropy,
-                                ];
-                            @endphp
+                        @foreach($homebases as $homebase)
                             <tr>
-                                <td class="text-center"></td>
+                                <td></td>
                                 <td>HOMEBASE</td>
-                                <td class="text-center">{{ $homebase }}</td>
-                                <td class="text-center">{{ $totalCriteria }}</td>
-                                <td class="text-center">
-                                    {{ $totalFirstCriteria }}
-                                </td>
-                                <td class="text-center">
-                                    {{ $totalSecondCriteria }}
-                                </td>
-                                <td class="text-center">
-                                    {{ $entropy }}
-                                </td>
-                                <td class="text-center"></td>
+                                <td>{{ $homebase['name'] }}</td>
+                                <td class="text-center">{{ $homebase['total'] }}</td>
+                                <td class="text-center">{{ $homebase['first_supervisor'] }}</td>
+                                <td class="text-center">{{ $homebase['second_supervisor'] }}</td>
+                                <td class="text-center">{{ $homebase['entropy'] }}</td>
                             </tr>
                         @endforeach
-                        <tr>
-                            <td></td>
-                            <td colspan="5">GAIN HOMEBASE</td>
-                            <td>
-                                {{ \App\Services\C45Service::calculateGain($entropyTotal, $totalCases, $attributtes) }}
-                            </td>
-                        </tr>
+                        @foreach($functionalJobs as $functional)
+                            <tr>
+                                <td></td>
+                                <td>JABATAN FUNGSIONAL</td>
+                                <td>{{ $functional['name'] }}</td>
+                                <td class="text-center">{{ $functional['total'] }}</td>
+                                <td class="text-center">{{ $functional['first_supervisor'] }}</td>
+                                <td class="text-center">{{ $functional['second_supervisor'] }}</td>
+                                <td class="text-center">{{ $functional['entropy'] }}</td>
+                            </tr>
+                        @endforeach
+                        @foreach($firstSupervisorScores as $firstSupervisor)
+                            <tr>
+                                <td></td>
+                                <td>SKOR PENGUJI 1</td>
+                                <td>{{ $firstSupervisor['name'] }}</td>
+                                <td class="text-center">{{ $firstSupervisor['total'] }}</td>
+                                <td class="text-center">{{ $firstSupervisor['first_supervisor'] }}</td>
+                                <td class="text-center">{{ $firstSupervisor['second_supervisor'] }}</td>
+                                <td class="text-center">{{ $firstSupervisor['entropy'] }}</td>
+                            </tr>
+                        @endforeach
+                        @foreach($secondSupervisorScores as $secondSupervisor)
+                            <tr>
+                                <td></td>
+                                <td>SKOR PENGUJI 2</td>
+                                <td>{{ $secondSupervisor['name'] }}</td>
+                                <td class="text-center">{{ $secondSupervisor['total'] }}</td>
+                                <td class="text-center">{{ $secondSupervisor['first_supervisor'] }}</td>
+                                <td class="text-center">{{ $secondSupervisor['second_supervisor'] }}</td>
+                                <td class="text-center">{{ $secondSupervisor['entropy'] }}</td>
+                            </tr>
+                        @endforeach
                     </table>
                 </div>
                 <!-- End Step 3 -->

@@ -8,8 +8,11 @@ class C45Service
 {
     private static function calculateCriteria($total, $criteriaTotal)
     {
-        $division = $criteriaTotal/$total;
-        return (-$division) * log($division, 2);
+        if($total > 0) {
+            $division = $criteriaTotal / $total;
+            return (-$division) * log($division, 2);
+        }
+        return 0;
     }
 
     public static function calculateEntropy($total, $firstCriteriaTotal, $secondCriteriaTotal)
@@ -17,7 +20,7 @@ class C45Service
         $firstCriteria = self::calculateCriteria($total, $firstCriteriaTotal);
         $secondCriteria = self::calculateCriteria($total, $secondCriteriaTotal);
         $summary = $firstCriteria + $secondCriteria;
-        if(!is_nan($summary)) {
+        if (!is_nan($summary)) {
             return number_format($summary, 5);
         }
         return 0;
@@ -28,10 +31,10 @@ class C45Service
         return (($totalCriteria / $totalCases) * $entropy);
     }
 
-    public static function calculateGain($entropyTotal, $totalCases, $attributtes = [])
+    public static function calculateGain($entropyTotal, $totalCases, $attributes = [])
     {
         $totalAllEntropy = 0;
-        foreach ($attributtes as $attributte) {
+        foreach ($attributes as $attributte) {
             $totalCriteria = $attributte['total_criteria'];
             $entropy = $attributte['entropy_criteria'];
 
@@ -39,7 +42,10 @@ class C45Service
         }
 
         return number_format(($entropyTotal - $totalAllEntropy), 5);
-
     }
 
+    public static function showLabel()
+    {
+
+    }
 }
