@@ -230,25 +230,25 @@ class SupervisorController extends Controller
         $results = [
             [
                 'name' => 'HOMEBASE',
-                'background' => 'bg-success',
+                'background' => 'info',
                 'items' => $homebases,
                 'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $homebaseAttributes),
             ],
             [
                 'name' => 'JABATAN FUNGSIONAL',
-                'background' => 'bg-info',
+                'background' => 'success',
                 'items' => $functionalJobs,
                 'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $functionalJobAttributes),
             ],
             [
                 'name' => 'SKOR PEMBIMBING 1',
-                'background' => 'bg-warning',
+                'background' => 'warning',
                 'items' => $firstSupervisorScores,
                 'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $firstSupervisorScoreAttributes),
             ],
             [
                 'name' => 'SKOR PEMBIMBING 2',
-                'background' => 'bg-danger',
+                'background' => 'danger',
                 'items' => $secondSupervisorScores,
                 'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $secondSupervisorScoreAttributes),
             ],

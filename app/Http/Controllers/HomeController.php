@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\AssessmentTypes;
+use App\Constants\AssessmentTypes;
 use App\Models\Lecturer;
 use App\Models\Student;
 use App\Models\StudyProgram;
@@ -11,7 +11,7 @@ use App\Models\SubmissionThesisRequirement;
 use App\Models\Thesis;
 use App\Models\ThesisSubmission;
 use App\Models\User;
-use App\Status;
+use App\Constants\Status;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

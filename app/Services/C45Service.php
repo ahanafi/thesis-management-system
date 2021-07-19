@@ -23,7 +23,7 @@ class C45Service
         if (!is_nan($summary)) {
             return number_format($summary, 5);
         }
-        return 0;
+        return number_format(0, 5);
     }
 
     private static function calculateEachEntropy($totalCases, $totalCriteria, $entropy)

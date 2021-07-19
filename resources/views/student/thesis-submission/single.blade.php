@@ -70,11 +70,11 @@
                                     </a>
                                 </td>
                             </tr>
-                            @if(!in_array($submission->status, [\App\Status::WAITING, \App\Status::APPLY], true))
+                            @if(!in_array($submission->status, [\App\Constants\Status::WAITING, \App\Constants\Status::APPLY], true))
                                 <tr>
                                     <td>Status Proposal</td>
                                     <td>:</td>
-                                    <td>{!! \App\Status::getLabel($submission->status) !!}</td>
+                                    <td>{!! \App\Constants\Status::getLabel($submission->status) !!}</td>
                                 </tr>
                                 <tr>
                                     <td>Tanggal Respons</td>

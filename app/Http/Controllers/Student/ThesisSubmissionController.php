@@ -7,7 +7,7 @@ use App\Models\ScienceField;
 use App\Models\SubmissionThesisRequirement;
 use App\Models\ThesisRequirement;
 use App\Models\ThesisSubmission;
-use App\Status;
+use App\Constants\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 

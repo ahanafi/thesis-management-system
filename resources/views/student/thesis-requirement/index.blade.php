@@ -127,7 +127,7 @@
             </div>
         </div>
 
-        @if($submission !== null && $submission->status === \App\Status::APPLY)
+        @if($submission !== null && $submission->status === \App\Constants\Status::APPLY)
             <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning" role="alert">
                 <div class="flex-fill mr-3">
                     <h3 class="alert-heading font-size-h4 my-2">
@@ -148,7 +148,7 @@
                     <button onclick="applyThesisRequirement()"
                             type="button"
                             class="btn btn-sm btn-primary"
-                            @if(!$submission || $submission->status === \App\Status::APPLY || $submission->details->count() < $thesisRequirements->count())
+                            @if(!$submission || $submission->status === \App\Constants\Status::APPLY || $submission->details->count() < $thesisRequirements->count())
                                 disabled
                             @endif
                     >
@@ -193,7 +193,7 @@
                                            class="btn btn-sm btn-primary">
                                             <i class="fa fa-search"></i>
                                         </a>
-                                        @if($submission->status === \App\Status::DRAFT || $submission->status === \App\Status::REJECT)
+                                        @if($submission->status === \App\Constants\Status::DRAFT || $submission->status === \App\Constants\Status::REJECT)
                                         <a href="#"
                                            onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')"
                                            class="btn btn-sm btn-danger">

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Thesis;
 use App\Models\ThesisSubmission;
 use App\Models\User;
-use App\Status;
+use App\Constants\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 

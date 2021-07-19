@@ -82,7 +82,7 @@
             </ul>
             <div class="block-content tab-content">
                 <!-- Step 1 -->
-                <div class="tab-pane" id="btabs-step-1" role="tabpanel">
+                <div class="tab-pane active" id="btabs-step-1" role="tabpanel">
                     <div
                         class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                         role="alert">
@@ -183,7 +183,7 @@
                 </div>
                 <!-- End Step 2 -->
                 <!-- Step 3 -->
-                <div class="tab-pane active" id="btabs-step-3" role="tabpanel">
+                <div class="tab-pane" id="btabs-step-3" role="tabpanel">
                     <div
                         class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                         role="alert">
@@ -227,7 +227,19 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <br>
+                </div>
+                <!-- End Step 3 -->
+                <!-- Step 4 -->
+                <div class="tab-pane" id="btabs-step-4" role="tabpanel">
+                    <div
+                        class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
+                        role="alert">
+                        <div class="flex-fill mr-3">
+                            <h5 class="alert-heading font-size-h5 my-2">
+                                Step 4 : Konversi data ke dalam tabel perhitungan Algoritma C4.5 dan Perhitungan nilai Entropy dan Gain setiap atribut.
+                            </h5>
+                        </div>
+                    </div>
                     <table class="table table-bordered table-striped table-vcenter table-sm">
                         <thead>
                         <tr class="bg-primary text-white">
@@ -249,13 +261,13 @@
                         </tr>
                         @foreach($results as $result)
                             <tr>
-                                <td class="{{ $result['background'] }} text-white align-middle text-center"
+                                <td class="bg-{{ $result['background'] }} border-{{ $result['background'] }} text-white align-middle text-center"
                                     rowspan="{{ count($result['items']) }}">
                                     {{ $result['name'] }} <br>
                                     <b class="text-black">{{ $result['gain'] }}</b>
                                 </td>
                                 @foreach($result['items'] as $item)
-                                    <td>{{ $item['name'] }}</td>
+                                    <td class="text-center">{{ $item['name'] }}</td>
                                     <td class="text-center">{{ $item['total'] }}</td>
                                     <td class="text-center">{{ $item['first_supervisor'] }}</td>
                                     <td class="text-center">{{ $item['second_supervisor'] }}</td>
@@ -266,17 +278,18 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- End Step 3 -->
-                <!-- Step 4 -->
-                <div class="tab-pane" id="btabs-step-4" role="tabpanel">
-                    <h4 class="font-w400">Step 4</h4>
-                    <p>...</p>
-                </div>
                 <!-- End Step 4 -->
                 <!-- Step 5 -->
                 <div class="tab-pane" id="btabs-step-5" role="tabpanel">
-                    <h4 class="font-w400">Step 5</h4>
-                    <p>...</p>
+                    <div
+                        class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
+                        role="alert">
+                        <div class="flex-fill mr-3">
+                            <h5 class="alert-heading font-size-h5 my-2">
+                                Step 5 : Menghitung nilai Gain untuk setiap atribut.
+                            </h5>
+                        </div>
+                    </div>
                 </div>
                 <!-- End Step 5 -->
             </div>

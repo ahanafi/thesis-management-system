@@ -19,7 +19,7 @@
 
     <!-- Page Content -->
     <div class="content">
-        @if(is_null($submissionThesisRequirement) || ($submissionThesisRequirement->details_count < $thesisRequirementCount) || $submissionThesisRequirement->status === App\Status::REJECT)
+        @if(is_null($submissionThesisRequirement) || ($submissionThesisRequirement->details_count < $thesisRequirementCount) || $submissionThesisRequirement->status === \App\Constants\Status::REJECT)
             <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                  role="alert">
                 <div class="flex-fill mr-3">
@@ -73,7 +73,7 @@
                                     <td>{{ $submission->scienceField->name }}</td>
                                     <td>{{ $submission->created_at }}</td>
                                     <td class="text-center">
-                                        {!! \App\Status::getLabel($submission->status) !!}
+                                        {!! \App\Constants\Status::getLabel($submission->status) !!}
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group">

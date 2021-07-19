@@ -7,7 +7,7 @@ use App\Models\Student;
 use App\Models\SubmissionDetailsThesisRequirement;
 use App\Models\SubmissionThesisRequirement;
 use App\Models\ThesisRequirement;
-use App\Status;
+use App\Constants\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
