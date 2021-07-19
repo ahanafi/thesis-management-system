@@ -30,19 +30,41 @@ class ThesisSubmissionController extends Controller
     public function create()
     {
         $nim = auth()->user()->registration_number;
+        $submissionThesisRequirement = SubmissionThesisRequirement::getByStudentId($nim);
+        $thesisRequirementCount = ThesisRequirement::count();
 
-        //Cek apakah ada pengajuan yang sudah dikirim, yang sedang di review oleh Kaprodi
-        $checkAppliedThesisSubmission = ThesisSubmission::where('nim', $nim)
-            ->where('status', Status::APPLY)
-            ->count();
-
-        if($checkAppliedThesisSubmission > 0) {
+        if (is_null($submissionThesisRequirement) || ($submissionThesisRequirement->details_count < $thesisRequirementCount) || $submissionThesisRequirement->status === Status::REJECT) {
             return redirect()->back()
                 ->with('message', [
-                    'type' => 'warning',
-                    'text' => 'Anda tidak dapat mengajukan proposal selama pengajuan proposal sebelumnya, belum direspon oleh Kaprodi',
+                    'type' => 'info',
+                    'text' => 'Sebelum mengajukan proposal Skripsi, mohon lengkapi dokumen persyaratan terlebih dahulu!',
                     'timer' => 5000,
                 ]);
+        }
+
+        //Cek apakah ada pengajuan yang sudah dikirim, yang sedang di review oleh Kaprodi
+        $appliedThesisSubmission = ThesisSubmission::where('nim', $nim)
+            ->latest()
+            ->first();
+
+        if ($appliedThesisSubmission !== null) {
+            if ($appliedThesisSubmission->status === Status::APPLY) {
+                return redirect()->back()
+                    ->with('message', [
+                        'type' => 'warning',
+                        'text' => 'Anda tidak dapat mengajukan proposal selama pengajuan proposal sebelumnya, belum direspon oleh Kaprodi',
+                        'timer' => 5000,
+                    ]);
+            }
+
+            if ($appliedThesisSubmission->status === Status::APPROVE) {
+                return redirect()->back()
+                    ->with('message', [
+                        'type' => 'warning',
+                        'text' => 'Proposal Anda telah disetujui oleh Kaprodi. Anda tidak dapat melakukan pengajuan proposal Skripsi lagi.',
+                        'timer' => 5000,
+                    ]);
+            }
         }
 
         $scienceFields = ScienceField::Ordered();
@@ -70,7 +92,7 @@ class ThesisSubmissionController extends Controller
             'response_date' => now(),
         ]);
 
-        if($createThesisSubmission) {
+        if ($createThesisSubmission) {
             $message = setFlashMessage('success', 'insert', 'pengajuan proposal');
         } else {
             $message = setFlashMessage('error', 'insert', 'pengajuan proposal');
@@ -91,7 +113,7 @@ class ThesisSubmissionController extends Controller
     {
         $submission->load('student');
 
-        if($submission->document !== null) {
+        if ($submission->document !== null) {
             $splitFileName = explode('.', $submission->document);
             $fileExtension = end($splitFileName);
             $fileName = "Proposal_Skripsi_" . $submission->student->getName() . '.' . $fileExtension;
