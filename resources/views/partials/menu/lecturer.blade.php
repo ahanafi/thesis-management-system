@@ -10,8 +10,8 @@
             </li>
             <li class="nav-main-heading">PEMBIMBINGAN SKRIPSI</li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}"
-                   href="#">
+                <a class="nav-main-link{{ request()->routeIs('lecturer.mentoring.student.*') ? ' active' : '' }}"
+                   href="{{ route('lecturer.mentoring.student.index') }}">
                     <i class="nav-main-link-icon fa fa-building"></i>
                     <span class="nav-main-link-name">DATA MAHASISWA</span>
                 </a>

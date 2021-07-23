@@ -23,6 +23,17 @@ class Student extends Model
         return showName($this->full_name);
     }
 
+    public function scopeStudyProgramCode($query, $code)
+    {
+        return $query->where('study_program_code', $code);
+    }
+
+    /* Relationship */
+    public function thesis()
+    {
+        return $this->hasOne(Thesis::class, 'nim', 'nim');
+    }
+
     public function study_program()
     {
         return $this->hasOne(StudyProgram::class, 'study_program_code', 'study_program_code');
@@ -38,8 +49,4 @@ class Student extends Model
         return $this->hasOne(User::class, 'registration_number', 'nim');
     }
 
-    public function scopeStudyProgramCode($query, $code)
-    {
-        return $query->where('study_program_code', $code);
-    }
 }
