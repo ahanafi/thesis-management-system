@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\AssessmentTypes;
+use App\Models\Guidance;
 use App\Models\Lecturer;
 use App\Models\Student;
 use App\Models\StudyProgram;
@@ -91,7 +92,16 @@ class HomeController extends Controller
         }
 
         if (auth()->user()->level === User::LECTURER) {
-            $data = compact('lecturerCount', 'studentCount', 'studyProgramCount', 'userCount');
+            $nidn = auth()->user()->registration_number;
+
+            $guidedStudentCount = Thesis::where('first_supervisor', $nidn)
+                                    ->orWhere('second_supervisor', $nidn)
+                                    ->count();
+
+            $studentToBeTestCount = 0;
+            $unResponseGuidanceCount = Guidance::where('nidn', $nidn)->whereNull('guide_response')->count();
+
+            return viewLecturer('dashboard', compact('guidedStudentCount', 'studentToBeTestCount', 'unResponseGuidanceCount'));
         }
     }
 }
