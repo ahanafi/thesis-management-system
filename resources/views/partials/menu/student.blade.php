@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
+                <a class="nav-main-link{{ request()->is('student.guidance.*') ? ' active' : '' }}" href="{{ route('student.guidance.index') }}">
                     <i class="nav-main-link-icon fa fa-reply-all"></i>
                     <span class="nav-main-link-name">BIMBINGAN SKRIPSI</span>
                 </a>

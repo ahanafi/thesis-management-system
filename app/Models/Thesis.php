@@ -34,6 +34,14 @@ class Thesis extends Model
             ->get();
     }
 
+    public static function getSupervisorOnly($studentId)
+    {
+        return self::query()
+            ->select('first_supervisor', 'second_supervisor', 'id')
+            ->where('nim', $studentId)
+            ->first();
+    }
+
     public function student()
     {
         return $this->belongsTo(Student::class, 'nim', 'nim')->with(['study_program', 'user']);

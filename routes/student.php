@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Student\GuidanceController;
 use App\Http\Controllers\Student\ThesisController;
 use App\Http\Controllers\Student\ThesisRequirementController;
 use App\Http\Controllers\Student\ThesisSubmissionController;
@@ -18,10 +19,8 @@ Route::prefix('student')
 
         Route::get('thesis-submission/{submission}/download-proposal', [ThesisSubmissionController::class, 'downloadProposal'])->name('thesis-submission.download-proposal');
         Route::resource('thesis-submission', ThesisSubmissionController::class)->except('destroy');
-//        Route::get('thesis-submission', [ThesisSubmissionController::class, 'index'])->name('thesis-submission.index');
-//        Route::get('thesis-submission/create', [ThesisSubmissionController::class, 'create'])->name('thesis-submission.create');
-//        Route::get('thesis-submission/create', [ThesisSubmissionController::class, 'create'])->name('thesis-submission.create');
-//        Route::post('thesis-submission', [ThesisSubmissionController::class, 'upload'])->name('thesis-submission.upload');
 
         Route::resource('thesis', ThesisController::class);
+
+        Route::resource('guidance', GuidanceController::class);
     });
