@@ -176,8 +176,7 @@ const editThesisRequirement = (thesisRequirementId, documentName, documentType, 
     Dashmix.block('open', '#dm-add-server');
 }
 
-
-/* THESIS REQUIREMENT */
+/* ASSESSMENT COMPONENT */
 const addAssessmentComponent = () => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Tambah Data';
@@ -291,10 +290,28 @@ const submitThesisSubmissionResponse = (responseType) => {
 
 const validateNotes = (el) => {
     const notes = el.value;
-    if(notes.length > 1) {
+    if (notes.length > 1) {
         el.classList.remove('is-invalid');
     } else {
         el.classList.add('is-invalid');
         el.focus();
     }
+}
+
+const uploadThesisDocument = () => {
+    Dashmix.block('close', '#upload-app');
+    Dashmix.block('close', '#upload-journal');
+    Dashmix.block('open', '#upload-document');
+}
+
+const uploadApp = () => {
+    Dashmix.block('close', '#upload-document');
+    Dashmix.block('close', '#upload-journal');
+    Dashmix.block('open', '#upload-app');
+}
+
+const uploadJournal = () => {
+    Dashmix.block('close', '#upload-document');
+    Dashmix.block('close', '#upload-app');
+    Dashmix.block('open', '#upload-journal');
 }

@@ -21,8 +21,6 @@ class ThesisSubmissionController extends Controller
             $status = request()->has('status') ? request()->get('status') : Status::APPLY;
         }
 
-
-
         $userId = auth()->user()->id;
         $user = User::with('lecturerProfile')->where('id', $userId)->first();
 

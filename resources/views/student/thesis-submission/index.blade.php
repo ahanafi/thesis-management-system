@@ -1,24 +1,9 @@
 @extends('layouts.backend')
 
 @section('content')
-    <!-- Hero -->
-    <div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Proposal Skripsi</h1>
-                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Examples</li>
-                        <li class="breadcrumb-item active" aria-current="page">Plugin</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- END Hero -->
-
     <!-- Page Content -->
     <div class="content">
+        <h2 class="content-heading">Proposal Skripsi</h2>
         @if(is_null($submissionThesisRequirement) || ($submissionThesisRequirement->details_count < $thesisRequirementCount) || $submissionThesisRequirement->status === \App\Constants\Status::REJECT)
             <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                  role="alert">

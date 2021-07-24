@@ -20,7 +20,9 @@ Route::prefix('student')
         Route::get('thesis-submission/{submission}/download-proposal', [ThesisSubmissionController::class, 'downloadProposal'])->name('thesis-submission.download-proposal');
         Route::resource('thesis-submission', ThesisSubmissionController::class)->except('destroy');
 
-        Route::resource('thesis', ThesisController::class);
+        Route::get('thesis', [ThesisController::class, 'index'])->name('thesis.index');
+        Route::put('thesis/{thesis}', [ThesisController::class, 'update'])->name('thesis.update');
+        Route::get('thesis/download/{type}', [ThesisController::class, 'download'])->name('thesis.download');
 
         Route::resource('guidance', GuidanceController::class);
     });

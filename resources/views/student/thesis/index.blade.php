@@ -1,25 +1,10 @@
 @extends('layouts.backend')
 
 @section('content')
-    <!-- Hero -->
-    <div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Pengajuan Proposal Skripsi</h1>
-                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Examples</li>
-                        <li class="breadcrumb-item active" aria-current="page">Plugin</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- END Hero -->
-
     <!-- Page Content -->
     <div class="content">
-        <div class="row row-deck">
+        <h2 class="content-heading">Data Skripsi</h2>
+        <div class="row">
             <div class="col-sm-8">
                 <!-- Dynamic Table with Export Buttons -->
                 <div class="block block-rounded">
@@ -28,7 +13,7 @@
                     </div>
                     <div class="block-content block-content-full">
 
-                    <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
+                        <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
                         <table class="table table-bordered table-striped table-vcenter">
                             <tr>
                                 <td width="180">Judul Skripsi</td>
@@ -59,8 +44,240 @@
                                     {{ $thesis->secondSupervisor ? $thesis->secondSupervisor->getNameWithDegree() : '-' }}
                                 </td>
                             </tr>
+                            <tr>
+                                <td width="180">Dokumen Laporan</td>
+                                <td>:</td>
+                                <td>
+                                    @if($thesis->document !== null && Storage::exists($thesis->document))
+                                        <a target="_blank" rel="noreferrer"
+                                           href="{{ route('student.thesis.download', 'report') }}"
+                                           class="btn btn-primary btn-sm">
+                                            <i class="fa fa-file-download"></i>
+                                            <span>Unduh Laporan</span>
+                                        </a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="180">Program Aplikasi</td>
+                                <td>:</td>
+                                <td>
+                                    @if($thesis->application !== null)
+                                        @if(Storage::exists($thesis->application))
+                                            <a target="_blank" rel="noreferrer"
+                                               href="{{ route('student.thesis.download', 'app') }}"
+                                               class="btn btn-primary btn-sm">
+                                                <i class="fa fa-file-download"></i>
+                                                <span>Unduh Program</span>
+                                            </a>
+                                        @else
+                                            <a target="_blank" rel="noreferrer"
+                                               href="{{ $thesis->application }}"
+                                               class="btn btn-primary btn-sm">
+                                                <i class="fa fa-file-download"></i>
+                                                <span>Unduh Program</span>
+                                            </a>
+                                        @endif
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="180">Jurnal Penelitian</td>
+                                <td>:</td>
+                                <td>
+                                    @if($thesis->journal !== null && Storage::exists($thesis->journal))
+                                        <a target="_blank" rel="noreferrer"
+                                           href="{{ route('student.thesis.download', 'journal') }}"
+                                           class="btn btn-primary btn-sm">
+                                            <i class="fa fa-file-download"></i>
+                                            <span>Unduh Jurnal</span>
+                                        </a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
                         </table>
-                        <br>
+
+                        <h2 class="content-heading d-flex">
+                            Aksi :
+                            <div class="ml-3">
+                                <button type="button" onclick="uploadThesisDocument()" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-file-alt"></i>
+                                    <span>Unggah Laporan</span>
+                                </button>
+                                <button onclick="uploadApp()" type="button" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-tools"></i>
+                                    <span>Unggah Program</span>
+                                </button>
+                                <button onclick="uploadJournal()" type="button" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-file-pdf"></i>
+                                    <span>Unggah Jurnal</span>
+                                </button>
+                            </div>
+                        </h2>
+
+                        <!-- Start form upload document -->
+                        <div class="overflow-hidden">
+                            <div id="upload-document"
+                                 class="block block-rounded bg-body-dark animated fadeIn {{ $errors->has('document') ? 'd-block' : 'd-none' }}">
+                                <div class="block-header bg-white-25">
+                                    <h3 class="block-title">
+                                        <i class="fa fa-file-alt"></i> Unggah Laporan
+                                    </h3>
+                                    <div class="block-options">
+                                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                                data-action="close">
+                                            <i class="si si-close"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="block-content block-content-full">
+                                    <form id="form-upload-document"
+                                          action="{{ route('student.thesis.update', $thesis) }}" method="POST"
+                                          enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="form-group row gutters-tiny mb-0 items-push">
+                                            <div class="col-md-8">
+                                                <input type="file" class="form-control"
+                                                       name="document" placeholder="Laporan" required>
+                                                <input type="hidden" name="type" value="report">
+
+                                                @error('document')
+                                                <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="submit" class="btn btn-primary btn-block">
+                                                    <i class="fa fa-save mr-1"></i>
+                                                    <span>Simpan</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End form upload document -->
+
+                        <!-- Start form upload app -->
+                        <div class="overflow-hidden">
+                            <div id="upload-app"
+                                 class="block block-rounded bg-body-dark animated fadeIn {{ $errors->has('app') || $errors->has('url') ? 'd-block' : 'd-none' }}">
+                                <div class="block-header bg-white-25">
+                                    <h3 class="block-title">
+                                        <i class="fa fa-tools"></i> Unggah Program
+                                    </h3>
+                                    <div class="block-options">
+                                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                                data-action="close">
+                                            <i class="si si-close"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="block-content block-content-full">
+                                    <form id="form-upload-app" action="{{ route('student.thesis.update', $thesis) }}"
+                                          method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="form-group row gutters-tiny mb-0 items-push">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="url" placeholder="Url program"
+                                                       autocomplete="off">
+
+                                                @error('url')
+                                                <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <input type="file" class="form-control" name="app" placeholder="Program">
+
+                                                @error('app')
+                                                <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="hidden" name="type" value="app">
+                                                <button type="submit" class="btn btn-primary btn-block">
+                                                    <i class="fa fa-save mr-1"></i>
+                                                    <span>Simpan</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End form upload app -->
+
+                        <!-- Start form upload journal -->
+                        <div class="overflow-hidden">
+                            <div id="upload-journal"
+                                 class="block block-rounded bg-body-dark animated fadeIn {{ $errors->has('journal') ? 'd-block' : 'd-none' }}">
+                                <div class="block-header bg-white-25">
+                                    <h3 class="block-title">
+                                        <i class="fa fa-file-pdf"></i> Unggah Jurnal
+                                    </h3>
+                                    <div class="block-options">
+                                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                                data-action="close">
+                                            <i class="si si-close"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="block-content block-content-full">
+                                    <form id="form-upload-journal"
+                                          action="{{ route('student.thesis.update', $thesis) }}" method="POST"
+                                          enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="form-group row gutters-tiny mb-0 items-push">
+                                            <div class="col-md-8">
+                                                <input type="file" class="form-control"
+                                                       name="journal" placeholder="Jurnal" required>
+                                                <input type="hidden" name="type" value="journal">
+
+                                                @error('journal')
+                                                <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="submit" class="btn btn-primary btn-block">
+                                                    <i class="fa fa-save mr-1"></i>
+                                                    <span>Simpan</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End form upload journal -->
+
+                        <div
+                            class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
+                            role="alert">
+                            <div class="flex-fill mr-3">
+                                <p class="mb-0">
+                                    Apabila Anda telah mengunggah laporan/program/jurnal sebelumnya, maka dokumen lama
+                                    tersebut akan <b><u>dihapus dan diganti dengan dokumen terbaru</u></b> yang Anda unggah.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- END Dynamic Table with Export Buttons -->

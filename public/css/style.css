@@ -20,3 +20,7 @@
 textarea{
     resize: none !important;
 }
+
+.invalid-feedback{
+    display: block !important;
+}
