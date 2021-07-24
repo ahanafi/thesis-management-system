@@ -20,10 +20,7 @@ class Guidance extends Model
         'note',
         'document',
         'nidn',
-        'guide_response',
-        'guide_document',
-        'guide_response_date',
-        'guidance_date',
+        'status',
     ];
 
     public function student()

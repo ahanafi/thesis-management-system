@@ -21,24 +21,11 @@
 @endsection
 
 @section('content')
-    <!-- Hero -->
-    <div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Bimbingan Skripsi</h1>
-                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Examples</li>
-                        <li class="breadcrumb-item active" aria-current="page">Plugin</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- END Hero -->
-
     <!-- Page Content -->
     <div class="content">
+        <h2 class="content-heading">
+            Data Bimbingan Skripsi
+        </h2>
         <div class="block block-rounded">
             <ul class="nav nav-tabs nav-tabs-block align-items-center" data-toggle="tabs" role="tablist">
                 <li class="nav-item">
@@ -47,11 +34,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#second-supervisor">Pembimbing 2</a>
                 </li>
-                <li class="nav-item ml-auto pr-2">
-                    <a href="{{ route('student.guidance.create') }}" class="btn btn-primary btn-sm">
-                        <i class="fa fa-fw fa-plus"></i>
-                        <span>Bimbingan</span>
-                    </a>
+                <li class="nav-item ml-auto">
+                    <div class="btn-group btn-group-sm pr-2">
+                        <button type="button" class="btn btn-primary" onclick="event.preventDefault();window.location='{{ route('student.guidance.create') }}'">
+                            <i class="fa fa-fw fa-plus"></i>
+                            <span>Bimbingan</span>
+                        </button>
+                    </div>
                 </li>
             </ul>
             <div class="block-content tab-content">
@@ -62,9 +51,9 @@
                             <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Tanggal</th>
                                 <th>Materi</th>
-                                <th>Keterangan</th>
+                                <th>Tanggal Kirim</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -72,14 +61,22 @@
                             @foreach($guidances['first_supervisor'] as $guidance)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $guidance->guidance_date }}</td>
                                     <td>{{ $guidance->title }}</td>
-                                    <td>{{ $guidance->note }}</td>
+                                    <td>{{ $guidance->created_at->format('d-m-Y H:i:s') }}</td>
+                                    <td>{!! \App\Constants\GuidanceStatus::showLabel($guidance->status) !!}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('student.guidance.show', $guidance->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('student.guidance.show', $guidance->id) }}"
+                                           class="btn btn-primary btn-sm">
                                             <i class="fa fa-eye"></i>
                                             <span>Detail</span>
                                         </a>
+                                        @if($guidance->status === \App\Constants\GuidanceStatus::SENT)
+                                            <a href="{{ route('student.guidance.edit', $guidance->id) }}"
+                                               class="btn btn-primary btn-sm">
+                                                <i class="fa fa-fw fa-pencil-alt"></i>
+                                                <span>Edit</span>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -101,17 +98,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($guidances['second_supervisor'] as $guidance)
+                             @foreach($guidances['second_supervisor'] as $guidance)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $guidance->guidance_date }}</td>
                                     <td>{{ $guidance->title }}</td>
-                                    <td>{{ $guidance->note }}</td>
+                                    <td>{{ $guidance->created_at->format('d-m-Y H:i:s') }}</td>
+                                    <td>{!! \App\Constants\GuidanceStatus::showLabel($guidance->status) !!}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('student.guidance.show', $guidance->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('student.guidance.show', $guidance->id) }}"
+                                           class="btn btn-primary btn-sm">
                                             <i class="fa fa-eye"></i>
                                             <span>Detail</span>
                                         </a>
+                                        @if($guidance->status === \App\Constants\GuidanceStatus::SENT)
+                                            <a href="{{ route('student.guidance.edit', $guidance->id) }}"
+                                               class="btn btn-primary btn-sm">
+                                                <i class="fa fa-fw fa-pencil-alt"></i>
+                                                <span>Edit</span>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
