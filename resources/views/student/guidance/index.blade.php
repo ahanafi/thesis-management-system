@@ -34,12 +34,26 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#second-supervisor">Pembimbing 2</a>
                 </li>
-                <li class="nav-item ml-auto">
-                    <div class="btn-group btn-group-sm pr-2">
-                        <button type="button" class="btn btn-primary" onclick="event.preventDefault();window.location='{{ route('student.guidance.create') }}'">
-                            <i class="fa fa-fw fa-plus"></i>
-                            <span>Bimbingan</span>
+                <li class="nav-item ml-auto pr-2">
+                    <button type="button" class="btn btn-sm btn-primary"
+                            onclick="openLink('{{ route('student.guidance.create') }}', true)">
+                        <i class="fa fa-fw fa-plus"></i>
+                        <span>Bimbingan</span>
+                    </button>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-info dropdown-toggle" id="select-supervisor"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-fw fa-print"></i>
+                            <span>Cetak Kartu</span>
                         </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="select-supervisor">
+                            <a class="dropdown-item" href="#" onclick="openLink('{{ route('student.guidance.export-card', $supervisor->firstSupervisor->id) }}', true)">
+                                <span>Pembimbing 1</span>
+                            </a>
+                            <a class="dropdown-item" href="#" onclick="openLink('{{ route('student.guidance.export-card', $supervisor->secondSupervisor->id) }}', true)">
+                                <span>Pembimbing 2</span>
+                            </a>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -98,7 +112,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                             @foreach($guidances['second_supervisor'] as $guidance)
+                            @foreach($guidances['second_supervisor'] as $guidance)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $guidance->title }}</td>

@@ -24,7 +24,7 @@ class GuidanceController extends Controller
             'second_supervisor' => $secondSupervisorGuidances
         ];
 
-        return viewStudent('guidance.index', compact('guidances'));
+        return viewStudent('guidance.index', compact('guidances', 'supervisor'));
     }
 
     public function create()

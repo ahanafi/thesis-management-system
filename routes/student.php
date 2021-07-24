@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Student\Exam\ColloquiumController;
+use App\Http\Controllers\Student\Exam\FinalTestController;
+use App\Http\Controllers\Student\Exam\SeminarController;
+use App\Http\Controllers\Student\ExportController;
 use App\Http\Controllers\Student\GuidanceController;
 use App\Http\Controllers\Student\ThesisController;
 use App\Http\Controllers\Student\ThesisRequirementController;
@@ -24,5 +28,15 @@ Route::prefix('student')
         Route::put('thesis/{thesis}', [ThesisController::class, 'update'])->name('thesis.update');
         Route::get('thesis/download/{type}', [ThesisController::class, 'download'])->name('thesis.download');
 
+        Route::get('guidance/{lecturer}/export-card', [ExportController::class, 'guidanceCard'])->name('guidance.export-card');
         Route::resource('guidance', GuidanceController::class);
+
+        Route::prefix('exam')
+            ->name('exam.')
+            ->group(function () {
+                Route::resource('seminar', SeminarController::class);
+                Route::resource('colloquium', ColloquiumController::class);
+                Route::resource('final-test', FinalTestController::class);
+            });
+
     });

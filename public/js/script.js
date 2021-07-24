@@ -315,3 +315,11 @@ const uploadJournal = () => {
     Dashmix.block('close', '#upload-app');
     Dashmix.block('open', '#upload-journal');
 }
+
+const openLink = (link, openNewTab = false) => {
+    if(openNewTab) {
+        window.open(link, '_blank');
+    } else {
+        window.location.href = link;
+    }
+}
