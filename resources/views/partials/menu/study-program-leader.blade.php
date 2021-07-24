@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('data-sets') ? ' active' : '' }}"
+                <a class="nav-main-link{{ request()->routeIs('leader.data-set.*') ? ' active' : '' }}"
                    href="{{ route('leader.data-set.index') }}">
                     <i class="nav-main-link-icon fa fa-database"></i>
                     <span class="nav-main-link-name">DATA SET</span>
