@@ -33,12 +33,22 @@ class Guidance extends Model
         return $this->hasOne(Thesis::class, 'id','thesis_id');
     }
 
+    public function response()
+    {
+        return $this->hasOne(SupervisorResponse::class, 'guidance_id', 'id');
+    }
+
     public static function getByStudentId($nim, $lecturerId)
     {
         return self::where('nim', $nim)
             ->where('nidn', $lecturerId)
             ->latest()
             ->get();
+    }
+
+    public function setStatus($status)
+    {
+        return $this->update(['status' => $status]);
     }
 
 }

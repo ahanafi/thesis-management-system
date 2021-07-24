@@ -17,9 +17,9 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}"
-                   href="#">
-                    <i class="nav-main-link-icon fa fa-building"></i>
+                <a class="nav-main-link{{ request()->routeIs('lecturer.mentoring.guidance.*') ? ' active' : '' }}"
+                   href="{{ route('lecturer.mentoring.guidance.index') }}">
+                    <i class="nav-main-link-icon fa fa-reply-all"></i>
                     <span class="nav-main-link-name">DATA BIMBINGAN</span>
                 </a>
             </li>

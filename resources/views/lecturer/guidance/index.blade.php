@@ -21,7 +21,7 @@
 @endsection
 
 @section('content')
-   <!-- Page Content -->
+    <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Data Mahasiswa</h2>
         <!-- Dynamic Table with Export Buttons -->
@@ -30,40 +30,29 @@
                 <h3 class="block-title">Daftar Mahasiswa Bimbingan Skripsi</h3>
             </div>
             <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
                     <tr>
-                        <th class="text-center" style="width: 80px;">
-                            <i class="fa fa-user"></i>
-                        </th>
-                        <th>NIM</th>
-                        <th>Nama Lengkap</th>
-                        <th class="d-none d-sm-table-cell">Program Studi</th>
-                        <th class="d-none d-sm-table-cell">Judul Skripsi</th>
-                        <th class="d-none d-sm-table-cell text-center">Aksi</th>
+                        <th>No.</th>
+                        <th>Materi</th>
+                        <th>Tanggal Kirim</th>
+                        <th>Status</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    @foreach ($theses as $thesis)
+                    @foreach($guidance as $guidance)
                         <tr>
-                            <td class="text-center">
-                                <img
-                                    class="img-avatar img-avatar48"
-                                    src="{{
-                                        Storage::exists($thesis->student->user->avatar)
-                                        ? Storage::url($thesis->student->user->avatar)
-                                        : asset('media/avatars/avatar7.jpg')
-                                    }}"
-                                    alt="User picture">
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $guidance->title }}</td>
+                            <td>{{ $guidance->created_at->format('d-m-Y H:i:s') }}</td>
+                            <td>{!! \App\Constants\GuidanceStatus::showLabel($guidance->status) !!}</td>
+                            <td>
+                                <a href="{{ route('lecturer.mentoring.student.show', $guidance->student->id) }}">{{ $guidance->student->getName() }}</a>
                             </td>
-                            <td class="font-w600">{{ $thesis->nim }}</td>
-                            <td>{{ $thesis->student->getName() }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $thesis->student->study_program->getComplexName() }}</td>
-                            <td class="d-none d-sm-table-cell" style="width: 40%;">{{ $thesis->research_title }}</td>
                             <td class="text-center">
-                                <a href="{{ route('lecturer.mentoring.student.show', $thesis->student->id) }}"
+                                <a href="{{ route('lecturer.mentoring.guidance.show', $guidance->id) }}"
                                    class="btn btn-primary btn-sm">
                                     <i class="fa fa-eye"></i>
                                     <span>Detail</span>
