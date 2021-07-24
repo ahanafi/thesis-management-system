@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\AssessmentTypes;
+use App\Constants\GuidanceStatus;
 use App\Models\Guidance;
 use App\Models\Lecturer;
 use App\Models\Student;
@@ -25,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
 
+        //Academic Staff
         if (auth()->user()->level === User::ACADEMIC_STAFF) {
             $lecturerCount = Lecturer::count();
             $studentCount = Student::count();
@@ -35,6 +37,7 @@ class HomeController extends Controller
 
         }
 
+        //Student
         if (auth()->user()->level === User::STUDENT) {
 
             $nim = auth()->user()->registration_number;
@@ -72,6 +75,7 @@ class HomeController extends Controller
             return viewStudent('dashboard', compact('isThesisRequirementDone', 'isThesisSubmissionDone', 'isThereSupervisor', 'isSeminarDone', 'isColloquiumDone', 'isTrialDone'));
         }
 
+        //Study Program Leader
         if (auth()->user()->level === User::STUDY_PROGRAM_LEADER) {
             $nidn = auth()->user()->id;
             $user = User::with('lecturerProfile')->where('id', $nidn)->first();
@@ -91,6 +95,7 @@ class HomeController extends Controller
             return viewStudyProgramLeader('dashboard', compact('lecturerCount', 'studentCount', 'thesisSubmissionCount', 'thesisCount'));
         }
 
+        //Lecturer
         if (auth()->user()->level === User::LECTURER) {
             $nidn = auth()->user()->registration_number;
 
@@ -99,7 +104,7 @@ class HomeController extends Controller
                                     ->count();
 
             $studentToBeTestCount = 0;
-            $unResponseGuidanceCount = Guidance::where('nidn', $nidn)->whereNull('guide_response')->count();
+            $unResponseGuidanceCount = Guidance::where('nidn', $nidn)->where('status', GuidanceStatus::SENT)->count();
 
             return viewLecturer('dashboard', compact('guidedStudentCount', 'studentToBeTestCount', 'unResponseGuidanceCount'));
         }
