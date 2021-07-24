@@ -16,8 +16,8 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('thesis-requirement') ? ' active' : '' }}"
-                   href="{{ route('home') }}">
+                <a class="nav-main-link{{ request()->routeIs('leader.thesis.*') ? ' active' : '' }}"
+                   href="{{ route('leader.thesis.index') }}">
                     <i class="nav-main-link-icon fa fa-book"></i>
                     <span class="nav-main-link-name">DATA SKRIPSI</span>
                 </a>

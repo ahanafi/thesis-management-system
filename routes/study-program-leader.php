@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Leader\Determination\SupervisorController;
+use App\Http\Controllers\Leader\ThesisController;
 use App\Http\Controllers\Leader\ThesisSubmissionController;
 
 use App\Http\Controllers\Leader\DataSetController;
@@ -24,6 +25,14 @@ Route::prefix('study-program-leader')
                     ->name('download-proposal');
                 Route::post('submit-response/{submission}', [ThesisSubmissionController::class, 'submitResponse'])
                     ->name('submit-response');
+            });
+
+        Route::prefix('thesis')
+            ->name('thesis.')
+            ->group(function() {
+                Route::get('/', [ThesisController::class, 'index'])->name('index');
+                Route::get('{thesis}', [ThesisController::class, 'show'])->name('show');
+                Route::get('{thesis}/download/{type}', [ThesisController::class, 'download'])->name('download');
             });
 
         //Datasets

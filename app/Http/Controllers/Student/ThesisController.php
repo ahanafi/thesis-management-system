@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Thesis;
+use App\Services\DownloadThesisDocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -77,31 +78,8 @@ class ThesisController extends Controller
         $nim = auth()->user()->registration_number;
         $thesis = Thesis::getByStudentId($nim)->with(['student'])->firstOrFail();
 
-        // Report
-        if($documentType === 'report' && $thesis->document !== null && Storage::exists($thesis->document)) {
-            $splitFileName = explode('.', $thesis->document);
-            $fileExtension = end($splitFileName);
-            $fileName = "Laporan_Skripsi_" . $thesis->student->getName() . '.' . $fileExtension;
-
-            return Storage::download($thesis->document, $fileName);
-        }
-
-        // App
-        if($documentType === 'app' && $thesis->application !== null && Storage::exists($thesis->application)) {
-            $splitFileName = explode('.', $thesis->application);
-            $fileExtension = end($splitFileName);
-            $fileName = "Laporan_Skripsi_" . $thesis->student->getName() . '.' . $fileExtension;
-
-            return Storage::download($thesis->application, $fileName);
-        }
-
-        // Journal
-        if($documentType === 'journal' && $thesis->journal !== null && Storage::exists($thesis->journal)) {
-            $splitFileName = explode('.', $thesis->journal);
-            $fileExtension = end($splitFileName);
-            $fileName = "Laporan_Skripsi_" . $thesis->student->getName() . '.' . $fileExtension;
-
-            return Storage::download($thesis->journal, $fileName);
-        }
+        $download = new DownloadThesisDocumentService($thesis);
+        $download->setDocumentTyppe($documentType);
+        return $download->download();
     }
 }
