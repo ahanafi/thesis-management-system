@@ -23,47 +23,84 @@
 @section('content')
     <!-- Page Content -->
     <div class="content">
-        <h2 class="content-heading">Persyaratan Skripsi</h2>
-        <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info" role="alert">
-            <div class="flex-fill mr-3">
-                <h3 class="alert-heading font-size-h4 my-2">
-                    <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
-                </h3>
-                <p class="mb-0">
-                    Silahkan unggah dokumen persyaratan untuk mengajukan Skripsi terlebih dahulu. <br>
-                    <u>Anda dapat mengajukan Skripsi, setelah Anda mengunggah semua dokumen persyaratan Skripsi di bawah ini.</u>
-                </p>
-            </div>
-        </div>
+        <h2 class="content-heading">Pengajuan Seminar Skripsi</h2>
         <div class="row row-deck">
             <div class="col-sm-7">
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
-                            <i class="fa fa-fw fa-upload text-muted mr-1"></i>
-                            Unggah Persyaratan Skripsi
+                            <i class="fa fa-fw fa-paper-plane text-muted mr-1"></i>
+                            Form Pengajuan Seminar Skripsi
                         </h3>
                     </div>
                     <div class="block-content">
-                        <div class="row justify-content-center py-sm-3 py-md-4">
-                            <form action="{{ route('student.thesis-requirement.upload') }}" method="POST"
+                        <div class="row justify-content-center px-lg-7 px-sm-0 py-sm-3 py-md-4">
+                            <form action="{{ route('student.assessment.seminar.apply') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="document">File</label>
+                                    <label for="document">Kartu Bimbingan Dosen Pembimbing 1 (PDF)</label>
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
                                         <input type="file" class="custom-file-input js-custom-file-input-enabled"
-                                               data-toggle="custom-file-input" id="dm-profile-edit-file"
-                                               name="document" required>
-                                        <label class="custom-file-label" for="dm-profile-edit-file">Pilih file</label>
+                                               data-toggle="custom-file-input" name="guidance_card_first_supervisor" required
+                                               id="guidance_card_first_supervisor" accept="application/pdf">
+                                        <label class="custom-file-label" for="guidance_card_first_supervisor">Pilih file</label>
+
+                                        @error('guidance_card_first_supervisor')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="document">Kartu Bimbingan Dosen Pembimbing 2 (PDF)</label>
+                                    <div class="custom-file">
+                                        <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
+                                               data-toggle="custom-file-input" name="guidance_card_second_supervisor" required
+                                               id="guidance_card_second_supervisor" accept="application/pdf">
+                                        <label class="custom-file-label" for="guidance_card_second_supervisor">Pilih file</label>
+
+                                        @error('guidance_card_second_supervisor')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="document">Laporan Skripsi (BAB I s.d. BAB IV)</label>
+                                    <div class="custom-file">
+                                        <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
+                                               data-toggle="custom-file-input" name="report" required>
+                                        <label class="custom-file-label" for="report">Pilih file</label>
+
+                                        @error('report')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="date">Tanggal Pengajuan</label>
+                                    <input type="date" value="{{ date('Y-m-d') }}" class="form-control" readonly>
+                                </div>
+
+                                <div class="form-group d-flex justify-content-between">
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fa fa-save"></i>
-                                        Upload
+                                        <span>Kirim Pengajuan</span>
+                                    </button>
+                                    <button class="btn btn-secondary" type="reset">
+                                        <i class="fa fa-undo-alt"></i>
+                                        <span>Reset</span>
                                     </button>
                                 </div>
                             </form>
@@ -74,11 +111,23 @@
             <div class="col-sm-5">
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
-                        <i class="fa fa-fw fa-check-double text-muted mr-1"></i>
-                        <h3 class="block-title">Status Unggahan Dokumen</h3>
+                        <i class="fa fa-fw fa-info-circle text-muted mr-1"></i>
+                        <h3 class="block-title">Panduan</h3>
                     </div>
                     <div class="block-content">
-
+                        <ol>
+                            <li>Silahkan unduh kartu bimbingan di halaman <a
+                                    href="{{ route('student.guidance.index') }}"><b>Bimbingan Skripsi</b></a>.
+                            </li>
+                            <li>Pastikan Anda telah <b>menyelesaikan Laporan Skripsi Anda dari BAB I s.d. BAB IV</b>
+                            </li>
+                            <li>Unggah Kartu Bimbingan dengan ekstensi <b>.pdf</b> pada form di samping.</li>
+                            <li>Unggah Laporan Skripsi Anda dengan salah satu ekstensi berikut:
+                                <b>pdf,doc/docx,zip/rar.</b></li>
+                            <li>Pengajuan Seminar Anda akan ditinjau oleh Pembimbing terkait, mohon agar sabar menunggu
+                                Pembimbing selesai meninjau pengajuan Seminar Skripsi Anda.
+                            </li>
+                        </ol>
                     </div>
                 </div>
             </div>

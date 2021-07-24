@@ -6,7 +6,7 @@
         <div class="row no-gutters bg-primary-op">
             <!-- Main Section -->
             <div class="hero-static col-md-6 d-flex align-items-center bg-white">
-                <div class="p-3 w-100">
+                <div class="p-4 p-lg-3 w-100">
                     <!-- Header -->
                     <div class="mb-3 text-center">
                         <a class="link-fx font-w700 font-size-h1" href="/">

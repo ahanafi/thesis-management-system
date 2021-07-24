@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Student\Exam\ColloquiumController;
-use App\Http\Controllers\Student\Exam\FinalTestController;
-use App\Http\Controllers\Student\Exam\SeminarController;
+use App\Http\Controllers\Student\Assessment\ColloquiumController;
+use App\Http\Controllers\Student\Assessment\FinalTestController;
+use App\Http\Controllers\Student\Assessment\SeminarController;
 use App\Http\Controllers\Student\ExportController;
 use App\Http\Controllers\Student\GuidanceController;
 use App\Http\Controllers\Student\ThesisController;
@@ -31,10 +31,13 @@ Route::prefix('student')
         Route::get('guidance/{lecturer}/export-card', [ExportController::class, 'guidanceCard'])->name('guidance.export-card');
         Route::resource('guidance', GuidanceController::class);
 
-        Route::prefix('exam')
-            ->name('exam.')
+        Route::prefix('assessment')
+            ->name('assessment.')
             ->group(function () {
-                Route::resource('seminar', SeminarController::class);
+                Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');
+                Route::post('seminar/apply', [SeminarController::class, 'apply'])->name('seminar.apply');
+
+
                 Route::resource('colloquium', ColloquiumController::class);
                 Route::resource('final-test', FinalTestController::class);
             });

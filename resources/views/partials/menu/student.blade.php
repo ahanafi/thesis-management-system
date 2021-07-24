@@ -39,22 +39,22 @@
             <!-- PENGUJIAN SKRIPSI -->
             <li class="nav-main-heading">PENGUJIAN SKRIPSI</li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('student.exam.seminar.*') ? ' active' : '' }}"
-                   href="{{ route('student.exam.seminar.index') }}">
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.seminar.*') ? ' active' : '' }}"
+                   href="{{ route('student.assessment.seminar.index') }}">
                     <i class="nav-main-link-icon fa fa-building"></i>
                     <span class="nav-main-link-name">SEMINAR</span>
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('student.exam.colloquium.*') ? ' active' : '' }}"
-                   href="{{ route('student.exam.colloquium.index') }}">
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.colloquium.*') ? ' active' : '' }}"
+                   href="{{ route('student.assessment.colloquium.index') }}">
                     <i class="nav-main-link-icon fa fa-people-carry"></i>
                     <span class="nav-main-link-name">SIDANG</span>
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('student.exam.final-test.*') ? ' active' : '' }}"
-                   href="{{ route('student.exam.final-test.index') }}">
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.final-test.*') ? ' active' : '' }}"
+                   href="{{ route('student.assessment.final-test.index') }}">
                     <i class="nav-main-link-icon fa fa-tools"></i>
                     <span class="nav-main-link-name">KOLOKIUM</span>
                 </a>
