@@ -20,8 +20,9 @@
         </h2>
         <div class="block block-rounded">
             <div class="block-content">
-                <form action="{{ route('student.guidance.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('student.guidance.update', $guidance->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <!-- User Profile -->
                     <h2 class="content-heading pt-0">
                         <i class="fa fa-fw fa-comments text-muted mr-1"></i> Form Bimbingan
@@ -34,7 +35,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control " name="title"
-                                           placeholder="Masukkan judul bimbingan" value="{{ old('title') }}" autocomplete="off"
+                                           placeholder="Masukkan judul bimbingan" value="{{ $guidance->title }}" autocomplete="off"
                                            required="required">
 
                                     @error('title')
@@ -49,7 +50,7 @@
                                 <label for="note" class="col-sm-3 col-form-label text-right">Keterangan</label>
 
                                 <div class="col-sm-9">
-                                    <textarea name="note" placeholder="Keterangan" required rows="3" class="js-summernote">{{ old('note') }}</textarea>
+                                    <textarea name="note" placeholder="Keterangan" required rows="3" class="js-summernote">{{ $guidance->note }}</textarea>
 
                                     @error('note')
                                         <span class="invalid-feedback" role="alert">
@@ -84,7 +85,7 @@
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
                                         <input type="file" class="custom-file-input js-custom-file-input-enabled"
                                                data-toggle="custom-file-input" id="dm-profile-edit-avatar"
-                                               name="document" required>
+                                               name="document">
                                         <label class="custom-file-label" for="dm-profile-edit-avatar">Pilih dokumen</label>
                                     </div>
 
@@ -101,12 +102,8 @@
                                     Dosen Pembimbing
                                 </label>
                                 <div class="col-sm-9">
-                                    <select name="supervisor" id="supervisor" required class="form-control">
-                                        <option disabled selected>-- Pilih Dosen Pembimbing --</option>
-                                        <option {{ old('supervisor') === $supervisor->first_supervisor ? 'selected' : '' }} value="{{ $supervisor->first_supervisor }}">{{ $supervisor->firstSupervisor->getNameWithDegree() }}</option>
-                                        <option {{ old('supervisor') === $supervisor->second_supervisor ? 'selected' : '' }} value="{{ $supervisor->second_supervisor }}">{{ $supervisor->secondSupervisor->getNameWithDegree() }}</option>
-                                        <option value="all">Pilih Keduanya (Pembimbing 1 dan 2)</option>
-                                    </select>
+                                    <input type="text" name="supervisor_name" value="{{ $supervisorName }}" class="form-control" readonly disabled>
+                                    <input type="hidden" id="supervisor" name="supervisor" value="{{ $guidance->nidn }}">
 
                                     @error('supervisor')
                                         <span class="invalid-feedback" role="alert">
@@ -120,7 +117,7 @@
                                 <div class="col-sm-9 offset-sm-3">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-save mr-1"></i>
-                                        <span>Simpan</span>
+                                        <span>Simpan Perubahan</span>
                                     </button>
                                     <x-button-link extend-class="float-right" type="secondary"
                                        link="{{ route('student.guidance.index') }}" icon="chevron-left"

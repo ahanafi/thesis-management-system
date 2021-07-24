@@ -1,37 +1,23 @@
 @extends('layouts.backend')
 
 @section('content')
-    <!-- Hero -->
-    <div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Pengajuan Proposal Skripsi</h1>
-                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Examples</li>
-                        <li class="breadcrumb-item active" aria-current="page">Plugin</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- END Hero -->
-
     <!-- Page Content -->
     <div class="content">
-        <div class="row row-deck">
+        <h2 class="content-heading">
+            Detail Bimbingan Skripsi
+        </h2>
+        <div class="row">
             <div class="col-sm-8">
                 <!-- Dynamic Table with Export Buttons -->
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
-                        <h3 class="block-title">Pengajuan Proposal Skripsi</h3>
+                        <h3 class="block-title">Data Bimbingan Skripsi</h3>
                         <div class="block-options">
                             <x-button-link link="{{ route('student.guidance.index') }}" text="Kembali"
                                            icon="chevron-left" type="outline-primary btn-sm"></x-button-link>
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-
                         <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
                         <table class="table table-bordered table-striped table-vcenter">
                             <tr>
@@ -40,14 +26,14 @@
                                 <td>{{ $guidance->title }}</td>
                             </tr>
                             <tr>
-                                <td width="180">Keterangan</td>
-                                <td>:</td>
-                                <td>{{ $guidance->note }}</td>
+                                <td width="180" class="align-top">Keterangan</td>
+                                <td class="align-top">:</td>
+                                <td>{!! $guidance->note !!}</td>
                             </tr>
                             <tr>
-                                <td width="180">Tanggal Bimbingan</td>
+                                <td width="180">Tanggal Kirim</td>
                                 <td>:</td>
-                                <td>{{ $guidance->guidance_date }}</td>
+                                <td>{{ $guidance->created_at->format('d-m-Y H:i:s') }}</td>
                             </tr>
                             <tr>
                                 <td width="180">Dokumen</td>
@@ -82,8 +68,16 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Tanggal Respons</td>
+                                <td>Status Bimbingan</td>
                                 <td>:</td>
+                                <td>{!! \App\Constants\GuidanceStatus::showLabel($guidance->status) !!}</td>
+                            </tr>
+                        </table>
+                        <h4 class="content-heading">Respons Pembimbing</h4>
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <td width="180">Tanggal Respons</td>
+                                <td width="10">:</td>
                                 <td>{{ $guidance->guide_response_date ?? '-' }}</td>
                             </tr>
                             <tr>
@@ -115,7 +109,6 @@
                                 </td>
                             </tr>
                         </table>
-                        <br>
                     </div>
                 </div>
                 <!-- END Dynamic Table with Export Buttons -->

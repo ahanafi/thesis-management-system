@@ -7,6 +7,7 @@ use App\Http\Requests\GuidanceRequest;
 use App\Models\Guidance;
 use App\Models\Thesis;
 use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Guid\Guid;
 
 class GuidanceController extends Controller
 {
@@ -73,5 +74,36 @@ class GuidanceController extends Controller
     {
         $guidance->load(['student', 'thesis']);
         return viewStudent('guidance.single', compact('guidance'));
+    }
+
+    public function edit(Guidance $guidance)
+    {
+        $nim = auth()->user()->registration_number;
+        $thesis = Thesis::getSupervisorOnly($nim);
+        $thesis->load(['firstSupervisor', 'secondSupervisor']);
+
+        $supervisorName = $guidance->nidn === $thesis->first_supervisor ? $thesis->firstSupervisor->getNameWithDegree() : $thesis->secondSupervisor->getNameWithDegree();
+
+        return viewStudent('guidance.edit', compact('guidance', 'supervisorName'));
+    }
+
+    public function update(GuidanceRequest $request, Guidance $guidance)
+    {
+        $validated = $request->validated();
+
+        if($request->hasFile('document')) {
+            $guidance->document = $request->file('document')->store('documents/guidance');
+        }
+
+        $guidance->title = $validated['title'];
+        $guidance->note = $validated['note'];
+
+        if($guidance->update()) {
+            $message = setFlashMessage('success', 'update', 'bimbingan skripsi');
+        } else {
+            $message = setFlashMessage('error', 'update', 'bimbingan skripsi');
+        }
+
+        return redirect()->route('student.guidance.index')->with('message', $message);
     }
 }

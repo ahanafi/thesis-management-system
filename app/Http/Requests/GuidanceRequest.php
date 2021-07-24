@@ -23,11 +23,16 @@ class GuidanceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'title' => 'required',
             'note' => 'required',
-            'document' => 'required|mimes:zip,rar,pdf,doc,docx',
             'supervisor' => 'required'
         ];
+
+        if (request()->method() === 'POST') {
+            $rules['document'] = 'required|mimes:zip,rar,pdf,doc,docx';
+        }
+
+        return $rules;
     }
 }
