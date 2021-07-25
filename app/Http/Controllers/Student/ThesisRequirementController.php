@@ -43,34 +43,23 @@ class ThesisRequirementController extends Controller
 
         $nim = Auth::user()->registration_number;
 
-        $checkSubmission = SubmissionThesisRequirement::where('nim', $nim)
+        $submission = SubmissionThesisRequirement::where('nim', $nim)
             ->where('status', 'DRAFT')
+            ->orWhere('status', 'WAITING')
             ->first();
 
-        if ($checkSubmission) {
-            $submissionId = $checkSubmission->id;
-        } else {
-            $submission = new SubmissionThesisRequirement();
-            $submission->nim = $nim;
-
-            //Just for testing
-            //Default is APPLY || WAITING
-            $submission->status = Status::APPROVE;
-
-
-            $submission->date_of_filling = Date::now();
-            $submission->response_date = Date::now();
-            $submission->save();
-
-            //Get submission ID
-            $submissionId = $submission->id;
+        if ($submission === null) {
+            $submission = SubmissionThesisRequirement::create([
+                'nim' => $nim,
+                'status' => Status::DRAFT,
+                'date_of_filling' => now(),
+                'response_date' => now(),
+            ]);
         }
 
-        //Get document
         $document = $request->file('document')->store('documents/thesis-requirement');
 
-        $addDetailSubmission = SubmissionDetailsThesisRequirement::create([
-            'submission_id' => $submissionId,
+        $addDetailSubmission = $submission->details()->create([
             'thesis_requirement_id' => $request->get('thesis_requirement_id'),
             'document' => $document
         ]);
@@ -86,7 +75,7 @@ class ThesisRequirementController extends Controller
 
     public function apply(Request $request, SubmissionThesisRequirement $submission)
     {
-        if($submission) {
+        if ($submission) {
             $submission->update([
                 'status' => Status::APPLY,
                 'date_of_filling' => Date::now(),
@@ -104,7 +93,7 @@ class ThesisRequirementController extends Controller
     {
         $detailSubmission = SubmissionDetailsThesisRequirement::findOrFail($id);
 
-        if(Storage::exists($detailSubmission->documents)) {
+        if (Storage::exists($detailSubmission->documents)) {
             Storage::delete($detailSubmission->documents);
         }
 
