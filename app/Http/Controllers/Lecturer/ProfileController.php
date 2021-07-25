@@ -13,13 +13,13 @@ class ProfileController extends Controller
     public function index()
     {
         $nidn = auth()->user()->registration_number;
-        $lecturer = Lecturer::with(['user', 'competencies','study_program'])
+        $lecturer = Lecturer::with(['user', 'competencies', 'study_program'])
             ->where('nidn', $nidn)
             ->first();
 
         $scienceFields = ($lecturer->hasCompetency())
             ? ScienceField::ordered()->each(function ($field) use ($lecturer) {
-            $field->isSelected = (bool) $lecturer->competencies()->where('science_field_id', $field->id)->count();
+                $field->isSelected = (bool)$lecturer->competencies()->where('science_field_id', $field->id)->count();
             })
             : ScienceField::ordered();
 

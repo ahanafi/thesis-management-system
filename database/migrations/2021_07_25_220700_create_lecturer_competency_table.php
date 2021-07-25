@@ -13,12 +13,13 @@ class CreateLecturerCompetencyTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('lecturer_competency');
+
         Schema::create('lecturer_competency', function (Blueprint $table) {
-            $table->uuid('id');
             $table->uuid('lecturer_id');
             $table->uuid('science_field_id');
 
-            $table->primary('id');
+            $table->primary(['lecturer_id', 'science_field_id']);
 
             $table->foreign('lecturer_id')
                 ->references('id')

@@ -113,33 +113,31 @@
                             <button type="button" data-toggle="modal" data-target="#modal-competency"
                                     class="btn btn-primary">
                                 <i class="fa fa-plus"></i>
-                                Tambah Data
+                                <span>Tambah Data</span>
                             </button>
                         </div>
                         <div class="col-lg-9 col-xl-7">
                             <div class="form-group row items-push mb-0">
                                 @forelse ($lecturer->competencies as $competency)
-                                    <div class="col-md-6 col-xl-4">
+                                    <div class="col-md-6 col-xl-6">
                                         <div class="custom-control custom-block custom-control-primary">
-                                            <input type="checkbox" class="custom-control-input"
+                                            <input type="checkbox" class="custom-control-input" checked
                                                    id="dm-project-new-people-{{ $competency->id }}"
                                                    name="dm-project-new-people-{{ $competency->id }}">
                                             <label class="custom-control-label"
                                                    for="dm-project-new-people-{{ $competency->id }}">
-                                        <span class="d-flex align-items-center">
-                                            <img class="img-avatar img-avatar48"
-                                                 src="{{ asset('media/avatars/avatar8.jpg') }}"
-                                                 alt="">
-                                            <span class="ml-2">
-                                                <span class="font-w700">{{ $competency->name }}</span>
-                                                <span
-                                                    class="d-block font-size-sm text-muted">{{ $competency->code }}</span>
-                                            </span>
-                                        </span>
+                                                <span class="d-flex align-items-center">
+                                                    <i class="fa fa-fw fa-book fa-2x"></i>
+                                                    <span class="ml-2">
+                                                        <span class="font-w700">{{ $competency->name }}</span>
+                                                        <span
+                                                            class="d-block font-size-sm text-muted">{{ $competency->code }}</span>
+                                                    </span>
+                                                </span>
                                             </label>
                                             <span class="custom-block-indicator">
-                                        <i class="fa fa-check"></i>
-                                    </span>
+                                                <i class="fa fa-check"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 @empty

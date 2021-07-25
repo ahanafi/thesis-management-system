@@ -62,10 +62,7 @@ class Lecturer extends Model
 
     public function competencies()
     {
-        return $this->belongsToMany(
-            ScienceField::class,
-            'lecturer_competency'
-        );
+        return $this->belongsToMany(ScienceField::class, 'lecturer_competency');
     }
 
     public function study_program()

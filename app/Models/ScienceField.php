@@ -28,6 +28,6 @@ class ScienceField extends Model
 
     public function lecturers()
     {
-        return $this->belongsToMany(Lecturer::class, LecturerCompetency::class, 'science_field_id', 'nidn');
+        return $this->belongsToMany(Lecturer::class);
     }
 }

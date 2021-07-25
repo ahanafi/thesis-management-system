@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Lecturer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lecturer;
-use App\Models\LecturerCompetency;
-use Dotenv\Util\Str;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Uuid;
 
 class CompetencyController extends Controller
 {
@@ -19,12 +16,7 @@ class CompetencyController extends Controller
 
         $lecturer = Lecturer::where('id', $lecturerId)->first();
 
-        //Delete first
-        LecturerCompetency::where('lecturer_id', $lecturerId)
-            ->whereNotIn('science_field_id', $competencies)
-            ->delete();
-
-        $lecturer->competencies()->syncWithoutDetaching($competencies);
+        $lecturer->competencies()->sync($competencies);
 
         $message = setFlashMessage('success', 'update', 'kompetensi dosen');
 
