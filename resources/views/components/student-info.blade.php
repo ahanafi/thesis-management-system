@@ -1,6 +1,9 @@
 <div class="block block-rounded">
     <div class="block-header block-header-default">
-        <h3 class="block-title">Data Mahasiswa</h3>
+        <h3 class="block-title">
+            <i class="fa fa-fw fa-user text-muted mr-1"></i>
+            Data Mahasiswa
+        </h3>
     </div>
     <div class="block-content block-content-full">
         <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->

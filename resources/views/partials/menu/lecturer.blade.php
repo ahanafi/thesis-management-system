@@ -45,22 +45,22 @@
             <!-- DATA SKRIPSI -->
             <li class="nav-main-heading">KELOLA PENGAJUAN UJIAN</li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('thesis-requirement') ? ' active' : '' }}"
-                   href="#">
+                <a class="nav-main-link{{ request()->routeIs('lecturer.submission.seminar.*') ? ' active' : '' }}"
+                   href="{{ route('lecturer.submission.seminar.index') }}">
                     <i class="nav-main-link-icon fa fa-file-alt"></i>
                     <span class="nav-main-link-name">SEMINAR SKRIPSI</span>
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
-                   href="#">
+                <a class="nav-main-link{{ request()->routeIs('lecturer.submission.colloquium.*') ? ' active' : '' }}"
+                   href="{{ route('lecturer.submission.colloquium.index') }}">
                     <i class="nav-main-link-icon fa fa-calendar-alt"></i>
                     <span class="nav-main-link-name">KOLOKIUM SKRIPSI</span>
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('assessment-component') ? ' active' : '' }}"
-                   href="#">
+                <a class="nav-main-link{{ request()->routeIs('lecturer.submission.final-test.*') ? ' active' : '' }}"
+                   href="{{ route('lecturer.submission.final-test.index') }}">
                     <i class="nav-main-link-icon fa fa-layer-group"></i>
                     <span class="nav-main-link-name">SIDANG SKRIPSI</span>
                 </a>

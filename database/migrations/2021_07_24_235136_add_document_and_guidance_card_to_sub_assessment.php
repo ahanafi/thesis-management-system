@@ -20,7 +20,9 @@ class AddDocumentAndGuidanceCardToSubAssessment extends Migration
             $table->string('guidance_card_first_supervisor')->nullable()->default(null)->after('assessment_type');
             $table->string('guidance_card_second_supervisor')->nullable()->default(null)->after('guidance_card_first_supervisor');
             $table->string('document')->nullable()->default(null)->after('guidance_card_second_supervisor');
-            $table->dateTime('response_date_first_supervisor')->nullable()->default(null)->after('status_second_supervisor');
+            $table->text('note_first_supervisor')->nullable()->default(null)->after('status_second_supervisor');
+            $table->text('note_second_supervisor')->nullable()->default(null)->after('note_first_supervisor');
+            $table->dateTime('response_date_first_supervisor')->nullable()->default(null)->after('note_second_supervisor');
             $table->dateTime('response_date_second_supervisor')->nullable()->default(null)->after('response_date_first_supervisor');
         });
     }
@@ -39,7 +41,8 @@ class AddDocumentAndGuidanceCardToSubAssessment extends Migration
 
             $table->dropColumn([
                 'guidance_card_first_supervisor', 'guidance_card_second_supervisor', 'document',
-                'response_date_first_supervisor', 'response_date_second_supervisor'
+                'response_date_first_supervisor', 'response_date_second_supervisor',
+                'note_first_supervisor', 'note_second_supervisor'
             ]);
         });
     }

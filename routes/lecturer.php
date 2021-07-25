@@ -6,6 +6,9 @@ use App\Http\Controllers\Lecturer\ProfileController;
 use App\Http\Controllers\Lecturer\StudentController;
 use App\Http\Controllers\Lecturer\GuidanceController;
 
+use App\Http\Controllers\Lecturer\Submission\ColloquiumController;
+use App\Http\Controllers\Lecturer\Submission\FinalTestController;
+use App\Http\Controllers\Lecturer\Submission\SeminarController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -33,5 +36,17 @@ Route::prefix('lecturer')
 
                 Route::get('guidance/response/{response}/edit', [GuidanceResponseController::class, 'edit'])->name('guidance.response.edit');
                 Route::put('guidance/response/{response}', [GuidanceResponseController::class, 'update'])->name('guidance.response.update');
+            });
+
+        Route::prefix('submission')
+            ->name('submission.')
+            ->group(function () {
+                Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');
+                Route::get('seminar/{submission}', [SeminarController::class, 'show'])->name('seminar.show');
+                Route::put('seminar/{submission}', [SeminarController::class, 'update'])->name('seminar.update');
+                Route::get('seminar/{submission}/{type}/download', [SeminarController::class, 'download'])->name('seminar.download');
+
+                Route::resource('colloquium', ColloquiumController::class);
+                Route::resource('final-test', FinalTestController::class);
             });
     });

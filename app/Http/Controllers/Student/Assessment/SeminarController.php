@@ -58,7 +58,7 @@ class SeminarController extends Controller
             $message = setFlashMessage('success', 'error', 'pengajuan seminar');
         }
 
-        return redirect()->back()->with('message', $message);
+        return redirect()->route('student.assessment.seminar.index')->with('message', $message);
     }
 
     public function show(SubmissionAssessment $submission)

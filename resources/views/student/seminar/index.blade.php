@@ -63,6 +63,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @isset($submission)
                         <tr>
                             <td class="text-center">{{ $submission->created_at ? $submission->created_at->format('d-m-Y') : '-' }}</td>
                             <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_first_supervisor) : '-'  !!}</td>
@@ -94,6 +95,13 @@
                                 @endif
                             </td>
                         </tr>
+                        @else
+                            <tr>
+                                <td class="text-center font-italic" colspan="7">
+                                    <b>Pengajuan Seminar Skripsi tidak ditemukan.</b>
+                                </td>
+                            </tr>
+                        @endisset
                         </tbody>
                     </table>
                 </div>
@@ -137,7 +145,7 @@
                             </tr>
                         @else
                             <tr>
-                                <td class="text-center" colspan="6">
+                                <td class="text-center font-italic" colspan="6">
                                     <b>Jadwal belum ditemukan.</b>
                                 </td>
                             </tr>

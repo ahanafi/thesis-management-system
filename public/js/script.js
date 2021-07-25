@@ -323,3 +323,11 @@ const openLink = (link, openNewTab = false) => {
         window.location.href = link;
     }
 }
+
+const updateSubmissionAssessmentResponse = () => {
+    const formSupervisorResponse = document.querySelector('#form-supervisor-response');
+    formSupervisorResponse.classList.toggle('d-none');
+    formSupervisorResponse.classList.toggle('invisible');
+    formSupervisorResponse.focus();
+
+}
