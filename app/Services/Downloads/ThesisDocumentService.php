@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\Downloads;
 
 
 use App\Models\Thesis;
 use Illuminate\Support\Facades\Storage;
 
-class DownloadThesisDocumentService
+class ThesisDocumentService
 {
     public $thesis;
     private $documentType;
@@ -27,18 +27,6 @@ class DownloadThesisDocumentService
     public function download()
     {
         return $this->{$this->documentType}();
-
-//        if ($this->documentType === 'report') {
-//            return $this->report();
-//        }
-//
-//        if ($this->documentType === 'application') {
-//            return $this->application();
-//        }
-//
-//        if ($this->documentType === 'journal') {
-//            return $this->journal();
-//        }
     }
 
     private function report()

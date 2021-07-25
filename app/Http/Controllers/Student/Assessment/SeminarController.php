@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AssessmentSchedule;
 use App\Models\SubmissionAssessment;
 use App\Models\Thesis;
+use App\Services\Downloads\SubmissionAssessmentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SeminarController extends Controller
 {
@@ -63,5 +65,22 @@ class SeminarController extends Controller
     {
         $submission->load(['thesis']);
         return viewStudent('seminar.single', compact('submission'));
+    }
+
+    public function download(SubmissionAssessment $submission, $documentType)
+    {
+        $submissionAssessmentService = new SubmissionAssessmentService($submission);
+        $filename = 'Laporan_Skripsi_';
+
+        if(Str::contains($documentType, 'first')) {
+            $filename = 'Kartu_Bimbingan_1';
+        }
+
+        if(Str::contains($documentType, 'second')) {
+            $filename = 'Kartu_Bimbingan_2';
+        }
+
+        return $submissionAssessmentService->setDocumentType($documentType)
+            ->download($filename);
     }
 }

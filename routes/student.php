@@ -40,6 +40,7 @@ Route::prefix('student')
                         Route::get('/', [SeminarController::class, 'index'])->name('index');
                         Route::get('submission', [SeminarController::class, 'submission'])->name('submission');
                         Route::get('submission/{submission}', [SeminarController::class, 'show'])->name('submission.show');
+                        Route::get('submission/{submission}/{type}/download', [SeminarController::class, 'download'])->name('submission.download');
                         Route::post('seminar/apply', [SeminarController::class, 'apply'])->name('apply');
 
                     });

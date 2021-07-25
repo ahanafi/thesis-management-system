@@ -111,7 +111,10 @@
                             <td>
                                 - Pembimbing 1 :
                                 @if(Storage::exists($submission->guidance_card_first_supervisor))
-                                    <a href="{{ $submission->guidance_card_first_supervisor }}"
+                                    <a href="{{ route('student.assessment.seminar.submission.download', [
+                                            'submission' => $submission->id,
+                                            'type' => 'guidance-card-first-supervisor'
+                                        ]) }}"
                                        class="btn btn-sm btn-primary">
                                         <i class="fa fa-file-pdf"></i>
                                         <span>Unduh Kartu Bimbingan</span>
@@ -125,7 +128,10 @@
                             <td>
                                 - Pembimbing 2 :
                                 @if(Storage::exists($submission->guidance_card_second_supervisor))
-                                    <a href="{{ $submission->guidance_card_second_supervisor }}"
+                                    <a href="{{ route('student.assessment.seminar.submission.download', [
+                                            'submission' => $submission->id,
+                                            'type' => 'guidance-card-second-supervisor'
+                                        ]) }}"
                                        class="btn btn-sm btn-primary">
                                         <i class="fa fa-file-pdf"></i>
                                         <span>Unduh Kartu Bimbingan</span>
@@ -139,7 +145,10 @@
                             <td style="width: 15%">Laporan Skripsi</td>
                             <td>
                                 @if(Storage::exists($submission->document))
-                                    <a href="{{ $submission->document }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('student.assessment.seminar.submission.download', [
+                                                    'submission' => $submission->id,
+                                                    'type' => 'report'
+                                    ]) }}" class="btn btn-sm btn-primary">
                                         <i class="fa fa-file-alt"></i>
                                         <span>Unduh Laporan</span>
                                     </a>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Thesis;
-use App\Services\DownloadThesisDocumentService;
+use App\Services\Downloads\ThesisDocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -78,7 +78,7 @@ class ThesisController extends Controller
         $nim = auth()->user()->registration_number;
         $thesis = Thesis::getByStudentId($nim)->with(['student'])->firstOrFail();
 
-        $download = new DownloadThesisDocumentService($thesis);
+        $download = new ThesisDocumentService($thesis);
         $download->setDocumentTyppe($documentType);
         return $download->download();
     }

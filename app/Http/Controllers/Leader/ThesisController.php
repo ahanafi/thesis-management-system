@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Leader;
 use App\Http\Controllers\Controller;
 use App\Models\Lecturer;
 use App\Models\Thesis;
-use App\Services\DownloadThesisDocumentService;
+use App\Services\Downloads\ThesisDocumentService;
 use Illuminate\Http\Request;
 
 class ThesisController extends Controller
@@ -32,7 +32,7 @@ class ThesisController extends Controller
 
     public function download(Thesis $thesis, $documentType)
     {
-        $download = new DownloadThesisDocumentService($thesis);
+        $download = new ThesisDocumentService($thesis);
         $download->setDocumentTyppe($documentType);
         return $download->download();
     }

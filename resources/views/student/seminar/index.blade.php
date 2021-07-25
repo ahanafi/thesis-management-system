@@ -35,8 +35,8 @@
                     </p>
                 </div>
             </div>
-        @endif
-        <!-- Start Card Status Pengajuan Seminar Skripsi -->
+    @endif
+    <!-- Start Card Status Pengajuan Seminar Skripsi -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">
@@ -71,7 +71,10 @@
                             <td class="text-center">{{ $submission->response_date_second_supervisor ? $submission->response_date_second_supervisor->format('d-m-Y H:i:s') : '-' }}</td>
                             <td class="text-center">
                                 @if($submission->document && Storage::exists($submission->document))
-                                    <a href="{{ route('student.assessment.seminar.index') }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('student.assessment.seminar.submission.download', [
+                                        'submission' => $submission->id,
+                                        'type' => 'report'
+                                    ]) }}" class="btn btn-sm btn-primary">
                                         <i class="fa fa-file-download"></i>
                                         <span>Unduh</span>
                                     </a>
@@ -81,7 +84,8 @@
                             </td>
                             <td class="text-center">
                                 @if($submission->id)
-                                    <a href="{{ route('student.assessment.seminar.submission.show', $submission->id) }}" class="btn btn-sm btn-success">
+                                    <a href="{{ route('student.assessment.seminar.submission.show', $submission->id) }}"
+                                       class="btn btn-sm btn-success">
                                         <i class="fa fa-fw fa-search-plus"></i>
                                         <span>Detail</span>
                                     </a>
@@ -123,19 +127,19 @@
                         </thead>
                         <tbody>
                         @isset($submission->schedule)
-                        <tr>
-                            <td class="text-center">{{ optional($submission->schedule)->day }}</td>
-                            <td class="text-center">{{ optional($submission->schedule)->date }}</td>
-                            <td class="text-center">{{ optional($submission->schedule)->start_time . "-" . optional($submission->schedule)->finished_at }}</td>
-                            <td class="text-center">{{ optional($submission->schedule)->room_number }}</td>
-                            <td class="text-center">{{ $submission->first_examiner ? $submission->firstExaminer->getNameWithDegree() : '-' }}</td>
-                            <td class="text-center">{{ $submission->second_examiner ? $submission->secondExaminer->getNameWithDegree() : '-' }}</td>
-                        </tr>
+                            <tr>
+                                <td class="text-center">{{ optional($submission->schedule)->day }}</td>
+                                <td class="text-center">{{ optional($submission->schedule)->date }}</td>
+                                <td class="text-center">{{ optional($submission->schedule)->start_time . "-" . optional($submission->schedule)->finished_at }}</td>
+                                <td class="text-center">{{ optional($submission->schedule)->room_number }}</td>
+                                <td class="text-center">{{ $submission->first_examiner ? $submission->firstExaminer->getNameWithDegree() : '-' }}</td>
+                                <td class="text-center">{{ $submission->second_examiner ? $submission->secondExaminer->getNameWithDegree() : '-' }}</td>
+                            </tr>
                         @else
                             <tr>
-                               <td class="text-center" colspan="6">
-                                   <b>Jadwal belum ditemukan.</b>
-                               </td>
+                                <td class="text-center" colspan="6">
+                                    <b>Jadwal belum ditemukan.</b>
+                                </td>
                             </tr>
                         @endisset
                         </tbody>
