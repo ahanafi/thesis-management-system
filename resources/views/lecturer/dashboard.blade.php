@@ -1,33 +1,23 @@
 @extends('layouts.backend')
 
 @section('content')
-    <!-- Hero -->
-    {{--<div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Dashboard</h1>
-            </div>
-        </div>
-    </div>--}}
-    <!-- END Hero -->
-
     <!-- Page Content -->
     <div class="content content-full">
         <div class="row">
             <x-lecturer-widget-tiles
                 title="Mahasiswa Bimbingan"
-                count="{{ $guidedStudentCount }}"
+                count="{{ count($guidedStudents) }}"
                 icon="fa-users"
                 background="{{ asset('media/photos/photo5.jpg') }}"
-                >
+            >
             </x-lecturer-widget-tiles>
 
             <x-lecturer-widget-tiles
                 title="Pengujian Mahasiswa"
-                count="{{ $studentToBeTestCount }}"
+                count="{{ count($studentToBeTests) }}"
                 icon="fa-user-friends"
                 background="{{ asset('media/photos/photo10.jpg') }}"
-                >
+            >
             </x-lecturer-widget-tiles>
 
             <x-lecturer-widget-tiles
@@ -35,20 +25,111 @@
                 count="{{ $unResponseGuidanceCount }}"
                 icon="fa-book-open"
                 background="{{ asset('media/photos/photo17.jpg') }}"
-                >
+            >
             </x-lecturer-widget-tiles>
         </div>
         <!-- END Weather -->
-        <div class="block block-themed bg-image"
-             style="background-image: url({{ asset('/media/photos/photo21.jpg') }});">
-            <div class="block-header bg-primary-dark-op">
-                <h3 class="block-title">Menu Utama</h3>
+        <h2 class="content-heading">
+            Data Mahasiswa Bimbingan &amp; Pengujian Mahasiswa
+        </h2>
+        <div class="row row-deck">
+            <div class="col-sm-6">
+                <!-- Dynamic Table with Export Buttons -->
+                <div class="block block-rounded">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">
+                            <i class="fa fa-fw fa-users"></i>
+                            Daftar Mahasiswa Bimbingan Skripsi
+                        </h3>
+                        <div class="block-options">
+                            <a href="{{ route('lecturer.mentoring.student.index') }}" class="btn btn-primary btn-sm">
+                                <i class="fa fa-fw fa-search"></i>
+                                <span>Detail</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NIM</th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Program Studi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($guidedStudents as $thesis)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $thesis->nim }}</td>
+                                        <td>{{ $thesis->student->getName() }}</td>
+                                        <td class="text-center">{{ $thesis->student->study_program->getNameWithLevel() }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-center font-italic" colspan="4">
+                                            Tidak ada data.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Dynamic Table with Export Buttons -->
             </div>
-            <div class="block-content text-center bg-primary-dark-op text-white-75 align-middle py-7">
-                <p class="font-weight-bold font-italic font-size-h3">
-                    Selamat datang di Menu Utama Sistem Informasi <br>
-                    Manajemen Skripsi Universitas Catur Insan Cendekia
-                </p>
+            <div class="col-sm-6">
+                <!-- Dynamic Table with Export Buttons -->
+                <div class="block block-rounded">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">
+                            <i class="fa fa-fw fa-users"></i>
+                            Daftar Pengujian Skripsi Mahasiswa
+                        </h3>
+                        <div class="block-options">
+                            <a href="{{ route('lecturer.mentoring.student.index') }}" class="btn btn-primary btn-sm">
+                                <i class="fa fa-fw fa-search"></i>
+                                <span>Detail</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NIM</th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Program Studi</th>
+                                    <th>Jenis Ujian</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($studentToBeTests as $submission)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $submission->nim }}</td>
+                                        <td>{{ $submission->student->getName() }}</td>
+                                        <td class="text-center">{{ $submission->student->study_program->getNameWithLevel() }}</td>
+                                        <td class="text-center">{{ getTypeOfAssessment($submission->assessment_type) }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-center font-italic" colspan="5">
+                                            Tidak ada data.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Dynamic Table with Export Buttons -->
             </div>
         </div>
     </div>

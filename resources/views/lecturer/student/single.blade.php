@@ -10,7 +10,10 @@
                 <!-- Dynamic Table with Export Buttons -->
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
-                        <h3 class="block-title">Data Skripsi</h3>
+                        <h3 class="block-title">
+                            <i class="fa fa-fw fa-book-open"></i>
+                            Data Skripsi
+                        </h3>
                         <div class="block-options">
                             <x-button-link link="{{ route('lecturer.mentoring.student.index') }}" text="Kembali"
                                            icon="chevron-left" type="outline-primary btn-sm"></x-button-link>

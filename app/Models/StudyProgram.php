@@ -31,6 +31,11 @@ class StudyProgram extends Model
         return $this->name;
     }
 
+    public function getNameWithLevel()
+    {
+        return $this->level . " - " . $this->getName();
+    }
+
     public function getComplexName()
     {
         return $this->level . " - " . $this->name;

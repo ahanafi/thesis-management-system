@@ -99,14 +99,19 @@ class HomeController extends Controller
         if (auth()->user()->level === User::LECTURER) {
             $nidn = auth()->user()->registration_number;
 
-            $guidedStudentCount = Thesis::where('first_supervisor', $nidn)
-                                    ->orWhere('second_supervisor', $nidn)
-                                    ->count();
+            $guidedStudents = Thesis::with('student')
+                ->where('first_supervisor', $nidn)
+                ->orWhere('second_supervisor', $nidn)
+                ->get();
 
-            $studentToBeTestCount = 0;
+            $studentToBeTests = SubmissionAssessment::with('student')
+                ->where('first_examiner', $nidn)
+                ->orWhere('second_examiner', $nidn)
+                ->get();
+
             $unResponseGuidanceCount = Guidance::where('nidn', $nidn)->where('status', GuidanceStatus::SENT)->count();
 
-            return viewLecturer('dashboard', compact('guidedStudentCount', 'studentToBeTestCount', 'unResponseGuidanceCount'));
+            return viewLecturer('dashboard', compact('guidedStudents', 'studentToBeTests', 'unResponseGuidanceCount'));
         }
     }
 }
