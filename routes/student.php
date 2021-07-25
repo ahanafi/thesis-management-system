@@ -34,8 +34,14 @@ Route::prefix('student')
         Route::prefix('assessment')
             ->name('assessment.')
             ->group(function () {
-                Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');
-                Route::post('seminar/apply', [SeminarController::class, 'apply'])->name('seminar.apply');
+                Route::prefix('seminar')
+                    ->name('seminar.')
+                    ->group(function () {
+                        Route::get('/', [SeminarController::class, 'index'])->name('index');
+                        Route::get('submission', [SeminarController::class, 'submission'])->name('submission');
+                        Route::post('seminar/apply', [SeminarController::class, 'apply'])->name('apply');
+
+                    });
 
 
                 Route::resource('colloquium', ColloquiumController::class);

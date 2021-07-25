@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student\Assessment;
 
 use App\Constants\AssessmentTypes;
 use App\Http\Controllers\Controller;
+use App\Models\AssessmentSchedule;
 use App\Models\SubmissionAssessment;
 use App\Models\Thesis;
 use Illuminate\Http\Request;
@@ -13,9 +14,17 @@ class SeminarController extends Controller
     public function index()
     {
         $nim = auth()->user()->registration_number;
-        $supervisor = Thesis::getSupervisorOnly($nim);
+        $submission = SubmissionAssessment::with('schedule')
+            ->type(AssessmentTypes::SEMINAR)
+            ->studentId($nim)
+            ->first();
 
-        return viewStudent('seminar.index', compact('supervisor'));
+        return viewStudent('seminar.index', compact('submission'));
+    }
+
+    public function submission()
+    {
+        return viewStudent('seminar.submission-form');
     }
 
     public function apply(Request $request)

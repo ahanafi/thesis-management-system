@@ -24,114 +24,126 @@
     <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Pengajuan Seminar Skripsi</h2>
-        <div class="row row-deck">
-            <div class="col-sm-7">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">
-                            <i class="fa fa-fw fa-paper-plane text-muted mr-1"></i>
-                            Form Pengajuan Seminar Skripsi
-                        </h3>
-                    </div>
-                    <div class="block-content">
-                        <div class="row justify-content-center px-lg-7 px-sm-0 py-sm-3 py-md-4">
-                            <form action="{{ route('student.assessment.seminar.apply') }}" method="POST"
-                                  enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="document">Kartu Bimbingan Dosen Pembimbing 1 (PDF)</label>
-                                    <div class="custom-file">
-                                        <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
-                                               data-toggle="custom-file-input" name="guidance_card_first_supervisor" required
-                                               id="guidance_card_first_supervisor" accept="application/pdf">
-                                        <label class="custom-file-label" for="guidance_card_first_supervisor">Pilih file</label>
-
-                                        @error('guidance_card_first_supervisor')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="document">Kartu Bimbingan Dosen Pembimbing 2 (PDF)</label>
-                                    <div class="custom-file">
-                                        <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
-                                               data-toggle="custom-file-input" name="guidance_card_second_supervisor" required
-                                               id="guidance_card_second_supervisor" accept="application/pdf">
-                                        <label class="custom-file-label" for="guidance_card_second_supervisor">Pilih file</label>
-
-                                        @error('guidance_card_second_supervisor')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="document">Laporan Skripsi (BAB I s.d. BAB IV)</label>
-                                    <div class="custom-file">
-                                        <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
-                                               data-toggle="custom-file-input" name="report" required>
-                                        <label class="custom-file-label" for="report">Pilih file</label>
-
-                                        @error('report')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="date">Tanggal Pengajuan</label>
-                                    <input type="date" value="{{ date('Y-m-d') }}" class="form-control" readonly>
-                                </div>
-
-                                <div class="form-group d-flex justify-content-between">
-                                    <button class="btn btn-primary" type="submit">
-                                        <i class="fa fa-save"></i>
-                                        <span>Kirim Pengajuan</span>
-                                    </button>
-                                    <button class="btn btn-secondary" type="reset">
-                                        <i class="fa fa-undo-alt"></i>
-                                        <span>Reset</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+        @if(is_null($submission))
+            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
+                 role="alert">
+                <div class="flex-fill mr-3">
+                    <p class="mb-0">
+                        Anda belum melakukan pengajuan untuk mengikuti kegiatan Seminar Skripsi. Silahkan klik <a
+                            href="{{ route('student.assessment.seminar.submission') }}"
+                            class="alert-link"><b><u>disini</u></b></a> untuk membuat pengajuan Seminar Skripsi.
+                    </p>
                 </div>
             </div>
-            <div class="col-sm-5">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <i class="fa fa-fw fa-info-circle text-muted mr-1"></i>
-                        <h3 class="block-title">Panduan</h3>
-                    </div>
-                    <div class="block-content">
-                        <ol>
-                            <li>Silahkan unduh kartu bimbingan di halaman <a
-                                    href="{{ route('student.guidance.index') }}"><b>Bimbingan Skripsi</b></a>.
-                            </li>
-                            <li>Pastikan Anda telah <b>menyelesaikan Laporan Skripsi Anda dari BAB I s.d. BAB IV</b>
-                            </li>
-                            <li>Unggah Kartu Bimbingan dengan ekstensi <b>.pdf</b> pada form di samping.</li>
-                            <li>Unggah Laporan Skripsi Anda dengan salah satu ekstensi berikut:
-                                <b>pdf,doc/docx,zip/rar.</b></li>
-                            <li>Pengajuan Seminar Anda akan ditinjau oleh Pembimbing terkait, mohon agar sabar menunggu
-                                Pembimbing selesai meninjau pengajuan Seminar Skripsi Anda.
-                            </li>
-                        </ol>
-                    </div>
+        @endif
+        <!-- Start Card Status Pengajuan Seminar Skripsi -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">
+                    <i class="fa fa-fw fa-info-circle text-muted mr-1"></i>
+                    Status Pengajuan Seminar Skripsi
+                </h3>
+            </div>
+            <div class="block-content">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered table-vcenter table-striped">
+                        <thead>
+                        <tr>
+                            <th class="text-center align-middle" rowspan="2">Tanggal Pengajuan</th>
+                            <th class="text-center align-middle" colspan="2">Status</th>
+                            <th class="text-center align-middle" colspan="2">Tanggal Respons</th>
+                            <th class="text-center align-middle" rowspan="2">Laporan</th>
+                            <th class="text-center align-middle" rowspan="2">Aksi</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center align-middle">Pembimbing 1</th>
+                            <th class="text-center align-middle">Pembimbing 2</th>
+                            <th class="text-center align-middle">Pembimbing 1</th>
+                            <th class="text-center align-middle">Pembimbing 2</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center">{{ $submission->created_at ? $submission->created_at->format('d-m-Y') : '-' }}</td>
+                            <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_first_supervisor) : '-'  !!}</td>
+                            <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_second_supervisor) : '-'  !!}</td>
+                            <td class="text-center">{{ $submission->response_date_first_supervisor ? $submission->response_date_first_supervisor->format('d-m-Y H:i:s') : '-' }}</td>
+                            <td class="text-center">{{ $submission->response_date_second_supervisor ? $submission->response_date_second_supervisor->format('d-m-Y H:i:s') : '-' }}</td>
+                            <td class="text-center">
+                                @if($submission->document && Storage::exists($submission->document))
+                                    <a href="{{ route('student.assessment.seminar.index') }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-file-download"></i>
+                                        <span>Unduh</span>
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($submission->id)
+                                    <a href="{{ route('student.assessment.seminar.index') }}" class="btn btn-sm btn-success">
+                                        <i class="fa fa-eye"></i>
+                                        <span>Detail</span>
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- End Card Status Pengajuan Seminar Skripsi -->
+
+        <!-- Start Card Jadwal Seminar Skripsi -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">
+                    <i class="fa fa-fw fa-calendar-alt text-muted mr-1"></i>
+                    Jadwal Seminar Skripsi
+                </h3>
+            </div>
+            <div class="block-content">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered table-vcenter table-striped">
+                        <thead>
+                        <tr>
+                            <th rowspan="2" class="text-center align-middle">Hari</th>
+                            <th rowspan="2" class="text-center align-middle">Tanggal</th>
+                            <th rowspan="2" class="text-center align-middle">Waktu</th>
+                            <th rowspan="2" class="text-center align-middle">Ruangan</th>
+                            <th colspan="2" class="text-center align-middle">Dosen Penguji</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Penguji 1</th>
+                            <th class="text-center">Penguji 2</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @isset($submission->schedule)
+                        <tr>
+                            <td class="text-center">{{ optional($submission->schedule)->day }}</td>
+                            <td class="text-center">{{ optional($submission->schedule)->date }}</td>
+                            <td class="text-center">{{ optional($submission->schedule)->start_time . "-" . optional($submission->schedule)->finished_at }}</td>
+                            <td class="text-center">{{ optional($submission->schedule)->room_number }}</td>
+                            <td class="text-center">{{ $submission->first_examiner ? $submission->firstExaminer->getNameWithDegree() : '-' }}</td>
+                            <td class="text-center">{{ $submission->second_examiner ? $submission->secondExaminer->getNameWithDegree() : '-' }}</td>
+                        </tr>
+                        @else
+                            <tr>
+                               <td class="text-center" colspan="6">
+                                   <b>Jadwal belum ditemukan.</b>
+                               </td>
+                            </tr>
+                        @endisset
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End Card Jadwal Seminar Skripsi -->
     </div>
     <!-- END Page Content -->
 @endsection
