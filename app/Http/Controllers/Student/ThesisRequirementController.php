@@ -37,11 +37,12 @@ class ThesisRequirementController extends Controller
     public function upload(Request $request)
     {
         $this->validate($request, [
-            'thesis_requirement_id' => 'required',
+            'thesis_requirement_id' => 'required|exists:thesis_requirements,id',
             'document' => 'required'
         ]);
 
         $nim = Auth::user()->registration_number;
+        $thesisRequirementId = $request->get('thesis_requirement_id');
 
         $submission = SubmissionThesisRequirement::where('nim', $nim)
             ->where('status', 'DRAFT')
@@ -59,10 +60,24 @@ class ThesisRequirementController extends Controller
 
         $document = $request->file('document')->store('documents/thesis-requirement');
 
-        $addDetailSubmission = $submission->details()->create([
-            'thesis_requirement_id' => $request->get('thesis_requirement_id'),
-            'document' => $document
-        ]);
+        //Check if document is exists
+        $detailItems = SubmissionDetailsThesisRequirement::where('submission_id', $submission->id)
+            ->where('thesis_requirement_id', $thesisRequirementId)
+            ->first();
+
+        if($detailItems !== null) {
+            if(Storage::exists($detailItems->document)) {
+                Storage::delete($detailItems->document);
+            }
+
+            $detailItems->document = $document;
+            $addDetailSubmission = $detailItems->update();
+        } else {
+            $addDetailSubmission = $submission->details()->create([
+                'thesis_requirement_id' => $request->get('thesis_requirement_id'),
+                'document' => $document
+            ]);
+        }
 
         if ($addDetailSubmission) {
             $message = setFlashMessage('success', 'upload', 'persyaratan skripsi');

@@ -24,14 +24,16 @@
     <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Persyaratan Skripsi</h2>
-        <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info" role="alert">
+        <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
+             role="alert">
             <div class="flex-fill mr-3">
                 <h3 class="alert-heading font-size-h4 my-2">
                     <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
                 </h3>
                 <p class="mb-0">
                     Silahkan unggah dokumen persyaratan untuk mengajukan Skripsi terlebih dahulu. <br>
-                    <u>Anda dapat mengajukan Skripsi, setelah Anda mengunggah semua dokumen persyaratan Skripsi di bawah ini.</u>
+                    <u>Anda dapat mengajukan Skripsi, setelah Anda mengunggah semua dokumen persyaratan Skripsi di bawah
+                        ini.</u>
                 </p>
             </div>
         </div>
@@ -113,19 +115,21 @@
         </div>
 
         @if($submission !== null && $submission->status === \App\Constants\Status::APPLY)
-            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning" role="alert">
+            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
+                 role="alert">
                 <div class="flex-fill mr-3">
                     <h3 class="alert-heading font-size-h4 my-2">
                         <i class="fa fa-fw fa-exclamation-circle"></i> Informasi Pengajuan
                     </h3>
                     <p class="mb-0 font-weight-bold">
-                        Status pengajuan persyaratan Skripsi Anda sedang diproses oleh BAAK. Mohon tunggu informasi selanjutnya via email. Terima kasih.
+                        Pengajuan persyaratan Skripsi Anda sedang diproses oleh BAAK. Mohon tunggu informasi
+                        selanjutnya via email. Terima kasih.
                     </p>
                 </div>
             </div>
-        @endif
+    @endif
 
-        <!-- Dynamic Table with Export Buttons -->
+    <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Daftar Dokumen Persyaratan Skripsi</h3>
@@ -134,68 +138,68 @@
                             type="button"
                             class="btn btn-sm btn-primary"
                             @if(!$submission || $submission->status === \App\Constants\Status::APPLY || $submission->details->count() < $thesisRequirements->count())
-                                disabled
-                            @endif
+                            disabled
+                        @endif
                     >
                         <i class="fa fa-paper-plane"></i>
                         <span>Kirim Pengajuan</span>
                     </button>
                     @if(isset($submission) && $submission->details->count() === $thesisRequirements->count())
-                        <form action="{{ route('student.thesis-requirement.apply', $submission->id) }}" id="form-apply" method="POST">
+                        <form action="{{ route('student.thesis-requirement.apply', $submission->id) }}" id="form-apply"
+                              method="POST">
                             @csrf
                         </form>
                     @endif
                 </div>
             </div>
             <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
-                    <thead>
-                    <tr>
-                        <th class="text-center" style="width: 80px;">#</th>
-                        <th>Nama Dokumen</th>
-                        <th class="d-none d-sm-table-cell">Nama file</th>
-                        <th class="text-center" style="width: 200px;">Tanggal Upload</th>
-                        <th class="text-center">Aksi</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if($submission !== null)
-                        @forelse($submission->details as $submission)
-                            <tr>
-                                <td class="text-center">{{ $loop->iteration }}</td>
-                                <td>{{ optional($submission->thesis_requirement)->document_name }}</td>
-                                <td>{{ str_replace("documents/", "", $submission->document) }}</td>
-                                <td>{{ $submission->created_at }}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                        <thead>
+                        <tr>
+                            <th class="text-center" style="width: 80px;">#</th>
+                            <th>Nama Dokumen</th>
+                            <th class="text-center" style="width: 200px;">Tanggal Upload</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($submission !== null)
+                            @forelse($submission->details as $detail)
+                                <tr>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td>{{ optional($detail->thesis_requirement)->document_name }}</td>
+                                    <td>{{ $detail->created_at }}</td>
+                                    <td class="text-center" width="20%">
                                         <a href="#"
                                            onclick="showDocument(
-                                               '{{ Storage::url($submission->document) }}',
-                                               '{{ File::extension(Storage::url($submission->document)) }}'
+                                               '{{ Storage::url($detail->document) }}',
+                                               '{{ File::extension(Storage::url($detail->document)) }}'
                                                )"
                                            data-toggle="modal" data-target="#modal-detail-document"
                                            class="btn btn-sm btn-primary">
                                             <i class="fa fa-search"></i>
+                                            <span>Detail</span>
                                         </a>
                                         @if($submission->status === \App\Constants\Status::DRAFT || $submission->status === \App\Constants\Status::REJECT)
-                                        <a href="#"
-                                           onclick="confirmDelete('student/thesis-requirement', '{{ $submission->id }}')"
-                                           class="btn btn-sm btn-danger">
-                                            <i class="fa fa-times"></i>
-                                        </a>
+                                            <a href="#"
+                                               onclick="confirmDelete('student/thesis-requirement', '{{ $detail->id }}')"
+                                               class="btn btn-sm btn-danger">
+                                                <i class="fa fa-times"></i>
+                                                <span>Hapus</span>
+                                            </a>
                                         @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center font-italic font-weight-bold">Tidak Ada data.</td>
-                            </tr>
-                        @endforelse
-                    @endif
-                    </tbody>
-                </table>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center font-italic font-weight-bold">Tidak Ada data.</td>
+                                </tr>
+                            @endforelse
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- END Dynamic Table with Export Buttons -->
