@@ -58,4 +58,10 @@ class SeminarController extends Controller
 
         return redirect()->back()->with('message', $message);
     }
+
+    public function show(SubmissionAssessment $submission)
+    {
+        $submission->load(['thesis']);
+        return viewStudent('seminar.single', compact('submission'));
+    }
 }

@@ -10,7 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 class SubmissionAssessment extends Model
 {
     use HasFactory, Uuid;
+    public $incrementing = false;
     protected $table = 'submission_of_assessments';
+
+    public function thesis()
+    {
+        return $this->belongsTo(Thesis::class, 'thesis_id', 'id')->with('student');
+    }
 
     public function schedule()
     {

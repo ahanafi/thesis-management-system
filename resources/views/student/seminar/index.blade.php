@@ -50,7 +50,7 @@
                         <thead>
                         <tr>
                             <th class="text-center align-middle" rowspan="2">Tanggal Pengajuan</th>
-                            <th class="text-center align-middle" colspan="2">Status</th>
+                            <th class="text-center align-middle" colspan="2">Status Pengajuan</th>
                             <th class="text-center align-middle" colspan="2">Tanggal Respons</th>
                             <th class="text-center align-middle" rowspan="2">Laporan</th>
                             <th class="text-center align-middle" rowspan="2">Aksi</th>
@@ -81,8 +81,8 @@
                             </td>
                             <td class="text-center">
                                 @if($submission->id)
-                                    <a href="{{ route('student.assessment.seminar.index') }}" class="btn btn-sm btn-success">
-                                        <i class="fa fa-eye"></i>
+                                    <a href="{{ route('student.assessment.seminar.submission.show', $submission->id) }}" class="btn btn-sm btn-success">
+                                        <i class="fa fa-fw fa-search-plus"></i>
                                         <span>Detail</span>
                                     </a>
                                 @else

@@ -39,6 +39,7 @@ Route::prefix('student')
                     ->group(function () {
                         Route::get('/', [SeminarController::class, 'index'])->name('index');
                         Route::get('submission', [SeminarController::class, 'submission'])->name('submission');
+                        Route::get('submission/{submission}', [SeminarController::class, 'show'])->name('submission.show');
                         Route::post('seminar/apply', [SeminarController::class, 'apply'])->name('apply');
 
                     });
