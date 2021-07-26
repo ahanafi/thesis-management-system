@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\AssessmentTypes;
+use App\Constants\AssessmentTypes;
 use App\Models\AssessmentComponent;
 use Illuminate\Database\Seeder;
 
