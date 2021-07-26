@@ -19,7 +19,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.3",
         "matthewbdaly/laravel-azure-storage": "^1.6",
-        "rap2hpoutre/fast-excel": "^3.0"
+        "rap2hpoutre/fast-excel": "^3.0",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

@@ -46,7 +46,6 @@ class User extends Authenticatable
         return $this->hasOne(Lecturer::class, 'nidn', 'registration_number');
     }
 
-
     /**
      * The attributes that should be hidden for arrays.
      *
