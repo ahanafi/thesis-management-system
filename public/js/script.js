@@ -12,7 +12,7 @@ const addFaculty = () => {
 const editFaculty = (facultyId, facultyCode, facultyName, deanCode) => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    let action = `/master/faculties/${facultyId}`;
+    let action = `/academic-staff/master/faculties/${facultyId}`;
 
     let formFaculty = document.querySelector("#dm-add-server form");
     formFaculty.setAttribute("method", "POST");
@@ -39,7 +39,7 @@ const addStudyProgram = () => {
 
     const formStudyProgram = document.querySelector("#dm-add-server form");
     formStudyProgram.setAttribute("method", "POST");
-    formStudyProgram.setAttribute('action', '/master/study-program');
+    formStudyProgram.setAttribute('action', '/academic-staff/master/study-program');
 
     document.querySelector("#dm-add-server input[name=name]").value = '';
     document.querySelector("#dm-add-server input[name=study_program_code]").value = '';
@@ -60,7 +60,7 @@ const addStudyProgram = () => {
 const editStudyProgram = (studyProgramId, studyProgramCode, name, level, facultyCode, lecturerCode) => {
     const blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    const action = `/master/study-programs/${studyProgramId}`;
+    const action = `/academic-staff/master/study-programs/${studyProgramId}`;
 
     const formStudyProgram = document.querySelector("#dm-add-server form");
     formStudyProgram.setAttribute("method", "POST");
@@ -100,7 +100,7 @@ const addScienceField = () => {
 const editScienceField = (scienceFieldId, scienceFieldCode, scienceFieldName) => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    let action = `/master/science-fields/${scienceFieldId}`;
+    let action = `/academic-staff/master/science-fields/${scienceFieldId}`;
 
     let formScienceField = document.querySelector("#dm-add-server form");
     formScienceField.setAttribute("method", "POST");
@@ -124,7 +124,7 @@ const addThesisRequirement = () => {
 
     let formThesisRequirement = document.querySelector("#dm-add-server form");
     formThesisRequirement.setAttribute("method", "POST");
-    formThesisRequirement.setAttribute("action", '/thesis-requirements');
+    formThesisRequirement.setAttribute("action", '/academic-staff/thesis-requirements');
 
     let inputDocumentName = document.querySelector("#dm-add-server input[name=document_name]");
     let inputNote = document.querySelector("#dm-add-server input[name=note]");
@@ -146,7 +146,7 @@ const addThesisRequirement = () => {
 const editThesisRequirement = (thesisRequirementId, documentName, documentType, isRequired, note) => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    let action = `/thesis-requirements/${thesisRequirementId}`;
+    let action = `/academic-staff/thesis-requirements/${thesisRequirementId}`;
 
     let formThesisRequirement = document.querySelector("#dm-add-server form");
     formThesisRequirement.setAttribute("method", "POST");
@@ -183,7 +183,7 @@ const addAssessmentComponent = () => {
 
     let formAssessmentComponent = document.querySelector("#dm-add-server form");
     formAssessmentComponent.setAttribute("method", "POST");
-    formAssessmentComponent.setAttribute("action", '/assessment-component');
+    formAssessmentComponent.setAttribute("action", '/academic-staff/assessment-components');
 
     let inputName = document.querySelector("#dm-add-server input[name=name]");
     let inputWeight = document.querySelector("#dm-add-server input[name=weight]");
@@ -202,7 +202,7 @@ const addAssessmentComponent = () => {
 const editAssessmentComponent = (assessmentComponentId, name, assessmentType, weight) => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    let action = `/assessment-component/${assessmentComponentId}`;
+    let action = `/academic-staff/assessment-component/${assessmentComponentId}`;
 
     let formAssessmentComponent = document.querySelector("#dm-add-server form");
     formAssessmentComponent.setAttribute("method", "POST");

@@ -10,7 +10,7 @@ let confirmDelete = (dataType, dataId) => {
             cancelButtonText: 'Batalkan',
         }).then((value) => {
             if (value.isConfirmed) {
-                const actionURL = `/${dataType}/${dataId}`;
+                const actionURL = `/academic-staff/${dataType}/${dataId}`;
 
                 const body = document.querySelector("body");
 
