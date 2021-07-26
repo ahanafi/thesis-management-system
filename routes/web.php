@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,7 +52,9 @@ Route::middleware(['auth'])->group(function () {
     include_once('lecturer.php');
 });
 
-
-
-
-
+/* THIS ROUTE FOR IS FOR DEVELOPMENT PURPOSE ONLY */
+Route::get('/account-list', function () {
+    $users = User::all();
+    $number = 1;
+    return view('account-list', compact('users', 'number'));
+});
