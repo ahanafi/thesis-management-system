@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -52,7 +53,24 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+//    protected $redirectTo = $this->redirectTo();
+
+    protected function redirectTo()
+    {
+        $redirectPath = RouteServiceProvider::HOME;
+
+        if (auth()->user()->level === User::STUDENT) {
+            $redirectPath = route('student.index');
+        } else if (auth()->user()->level === User::STUDY_PROGRAM_LEADER) {
+            $redirectPath = route('leader.index');
+        } else if (auth()->user()->level === User::LECTURER) {
+            $redirectPath = route('lecturer.index');
+        } else if (auth()->user()->level === User::ACADEMIC_STAFF) {
+            $redirectPath = route('academic-staff.index');
+        }
+
+        return $redirectPath;
+    }
 
     /**
      * Create a new controller instance.

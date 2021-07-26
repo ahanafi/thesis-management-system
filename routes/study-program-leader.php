@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Leader\Determination\SupervisorController;
 use App\Http\Controllers\Leader\ThesisController;
 use App\Http\Controllers\Leader\ThesisSubmissionController;
@@ -12,6 +13,8 @@ Route::prefix('study-program-leader')
     ->middleware('role:' . User::STUDY_PROGRAM_LEADER)
     ->name('leader.')
     ->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+
 
         //Thesis Submission
         Route::prefix('thesis-submission')

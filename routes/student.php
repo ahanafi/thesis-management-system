@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Student\Assessment\ColloquiumController;
 use App\Http\Controllers\Student\Assessment\FinalTestController;
 use App\Http\Controllers\Student\Assessment\SeminarController;
@@ -16,6 +17,9 @@ Route::prefix('student')
     ->middleware('role:' . User::STUDENT)
     ->name('student.')
     ->group(function () {
+
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+
         Route::get('thesis-requirement', [ThesisRequirementController::class, 'index'])->name('thesis-requirement.index');
         Route::post('thesis-requirement', [ThesisRequirementController::class, 'upload'])->name('thesis-requirement.upload');
         Route::delete('thesis-requirement/{id}', [ThesisRequirementController::class, 'destroy'])->name('thesis-requirement.delete');
