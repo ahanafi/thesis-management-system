@@ -1,31 +1,16 @@
 @extends('layouts.backend')
 
 @section('content')
-    <!-- Hero -->
-    <div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Mahasiswa</h1>
-                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Examples</li>
-                        <li class="breadcrumb-item active" aria-current="page">Plugin</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- END Hero -->
-
-    <!-- Page Content -->
-    <div class="content">
+<!-- Page Content -->
+    <div class="content content-full">
+        <h2 class="content-heading">Data Mahasiswa</h2>
         <div class="row row-deck">
             <div class="col-sm-8">
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
                             <i class="fa fa-fw fa-download text-muted mr-1"></i>
-                            Unggah Persyaratan Skripsi
+                            Impor Data Mahasiswa
                         </h3>
                     </div>
                     <div class="block-content">
@@ -66,7 +51,7 @@
                                         </button>
                                     </div>
                                     <div class="col-sm-6">
-                                        <x-back-button link="lecturers.index" type="btn-secondary btn-block"></x-back-button>
+                                        <x-back-button link="students.index" type="btn-secondary btn-block"></x-back-button>
                                     </div>
                                 </div>
                             </form>

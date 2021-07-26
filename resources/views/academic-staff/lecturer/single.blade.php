@@ -45,7 +45,7 @@
     <!-- END Hero -->
 
     <!-- Page Content -->
-    <div class="content content-full content-boxed">
+    <div class="content content-full">
         <div class="block block-rounded">
             <div class="block-content">
                 <form action="" method="POST" enctype="multipart/form-data"
