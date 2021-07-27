@@ -113,8 +113,8 @@
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $submission->nim }}</td>
-                                        <td>{{ $submission->student->getName() }}</td>
-                                        <td class="text-center">{{ $submission->student->study_program->getNameWithLevel() }}</td>
+                                        <td>{{ $submission->thesis->student->getName() }}</td>
+                                        <td class="text-center">{{ $submission->thesis->student->study_program->getNameWithLevel() }}</td>
                                         <td class="text-center">{{ getTypeOfAssessment($submission->assessment_type) }}</td>
                                     </tr>
                                 @empty

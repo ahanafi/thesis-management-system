@@ -104,7 +104,7 @@ class HomeController extends Controller
                 ->orWhere('second_supervisor', $nidn)
                 ->get();
 
-            $studentToBeTests = SubmissionAssessment::with('student')
+            $studentToBeTests = SubmissionAssessment::with('thesis')
                 ->where('first_examiner', $nidn)
                 ->orWhere('second_examiner', $nidn)
                 ->get();
