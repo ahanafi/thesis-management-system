@@ -51,7 +51,17 @@ Route::middleware('role:' . User::ACADEMIC_STAFF)
         ])->name('thesis-requirement.submit-response');
 
         Route::resource('thesis-requirements', ThesisRequirementController::class);
-        Route::resource('assessment-schedules', AssessmentScheduleController::class);
+
+        //PENJADWALAN
+        Route::prefix('assessment-schedules')
+            ->name('assessment-schedules.')
+            ->group(function () {
+                Route::get('create', [AssessmentScheduleController::class, 'create'])->name('create');
+                Route::get('/{type?}', [AssessmentScheduleController::class, 'index'])->name('index');
+                Route::post('/', [AssessmentScheduleController::class, 'store'])->name('store');
+            });
+
+
         Route::resource('assessment-components', AssessmentComponentController::class);
 
         Route::resource('users', UserController::class);

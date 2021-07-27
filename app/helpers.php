@@ -142,6 +142,7 @@ if (!function_exists('getTypeOfAssessment')) {
         $typeOfAssessment = [
             'SEMINAR' => 'Seminar',
             'TRIAL' => 'Sidang',
+            'FINAL-TEST' => 'Sidang',
             'COLLOQUIUM' => 'Kolokium'
         ];
 

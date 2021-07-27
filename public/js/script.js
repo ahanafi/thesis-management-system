@@ -329,5 +329,25 @@ const updateSubmissionAssessmentResponse = () => {
     formSupervisorResponse.classList.toggle('d-none');
     formSupervisorResponse.classList.toggle('invisible');
     formSupervisorResponse.focus();
+}
 
+const fetchStudentInfo = async (el) => {
+    if(el.value !== '') {
+
+        document.querySelector('#submission_id').value = el.options[el.selectedIndex].getAttribute('data-submission-id');
+
+        const studentId = el.value;
+        const data = await fetch(`/api/students/${studentId}`)
+            .then(res => res.json());
+
+        if(data !== null) {
+            document.querySelector('#std-name').textContent = data.student_name;
+            document.querySelector('#std-nim').textContent = data.nim;
+            document.querySelector('#std-study-program').textContent = data.study_program;
+            document.querySelector('#std-research-title').textContent = data.research_title;
+            document.querySelector('#std-science-field').textContent = data.science_field;
+            document.querySelector('#std-first-supervisor').textContent = data.first_supervisor;
+            document.querySelector('#std-second-supervisor').textContent = data.second_supervisor;
+        }
+    }
 }

@@ -24,3 +24,8 @@ textarea{
 .invalid-feedback{
     display: block !important;
 }
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #fff !important;
+    background-color: #0865d0 !important;
+}

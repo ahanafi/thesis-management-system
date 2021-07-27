@@ -31,7 +31,8 @@ class Student extends Model
     /* Relationship */
     public function thesis()
     {
-        return $this->hasOne(Thesis::class, 'nim', 'nim');
+        return $this->hasOne(Thesis::class, 'nim', 'nim')
+            ->with(['scienceField', 'firstSupervisor', 'secondSupervisor']);
     }
 
     public function study_program()

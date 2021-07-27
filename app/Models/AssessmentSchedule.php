@@ -9,4 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class AssessmentSchedule extends Model
 {
     use HasFactory, Uuid;
+
+    public $incrementing = false;
+    protected $fillable = [
+        'date',
+        'start_at',
+        'finished_at',
+        'room_number',
+        'submission_assessment_id'
+    ];
 }
