@@ -59,7 +59,13 @@ Route::middleware('role:' . User::ACADEMIC_STAFF)
                 Route::get('create', [AssessmentScheduleController::class, 'create'])->name('create');
                 Route::get('/{type?}', [AssessmentScheduleController::class, 'index'])->name('index');
                 Route::post('/', [AssessmentScheduleController::class, 'store'])->name('store');
+                Route::get('{schedule}', [AssessmentScheduleController::class, 'show'])->name('show');
+                Route::get('{schedule}/edit', [AssessmentScheduleController::class, 'edit'])->name('edit');
+                Route::put('{schedule}', [AssessmentScheduleController::class, 'update'])->name('update');
+                Route::delete('{schedule}', [AssessmentScheduleController::class, 'delete'])->name('delete');
             });
+//        Route::resource('assessment-schedules', AssessmentScheduleController::class)
+//        ->except('index');
 
 
         Route::resource('assessment-components', AssessmentComponentController::class);

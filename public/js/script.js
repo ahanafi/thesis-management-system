@@ -334,7 +334,10 @@ const updateSubmissionAssessmentResponse = () => {
 const fetchStudentInfo = async (el) => {
     if(el.value !== '') {
 
-        document.querySelector('#submission_id').value = el.options[el.selectedIndex].getAttribute('data-submission-id');
+        const selectedOption = el.options[el.selectedIndex];
+        document.querySelector('#submission_id').value = selectedOption.getAttribute('data-submission-id');
+        document.querySelector('#first_examiner').value = selectedOption.getAttribute('data-first-examiner');
+        document.querySelector('#second_examiner').value = selectedOption.getAttribute('data-second-examiner');
 
         const studentId = el.value;
         const data = await fetch(`/api/students/${studentId}`)

@@ -96,7 +96,7 @@
                             <td class="text-center">{{ $field->code }}</td>
                             <td class="font-w600">{{ $field->name }}</td>
                             <td class="text-center">
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip" title="" onclick="editScienceField('{{ $field->id }}', '{{ $field->code }}', '{{ $field->name }}')" data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
@@ -105,7 +105,7 @@
                                             data-toggle="tooltip" title="" data-original-title="Delete"
                                             onclick="confirmDelete('master/science-fields', '{{ $field->id }}')"
                                     >
-                                        <i class="fa fa-times"></i>
+                                        <i class="fa fa-fw fa-trash"></i>
                                     </button>
                                 </div>
                             </td>

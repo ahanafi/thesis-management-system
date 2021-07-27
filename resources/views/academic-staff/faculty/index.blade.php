@@ -106,7 +106,7 @@
                             <td class="font-w600">{{ $faculty->faculty_name }}</td>
                             <td class="d-none d-sm-table-cell">{{ $faculty->dean_code }}</td>
                             <td class="text-center">
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip" title="" onclick="editFaculty('{{ $faculty->id }}', '{{ $faculty->faculty_code }}', '{{ $faculty->faculty_name }}', '{{ $faculty->dean_code }}')" data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
@@ -115,7 +115,7 @@
                                             data-toggle="tooltip" title="" data-original-title="Delete"
                                             onclick="confirmDelete('master/faculties', '{{ $faculty->id }}')"
                                     >
-                                        <i class="fa fa-times"></i>
+                                        <i class="fa fa-fw fa-trash"></i>
                                     </button>
                                 </div>
                             </td>

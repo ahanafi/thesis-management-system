@@ -55,8 +55,9 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-                        <form action="{{ route('assessment-schedules.store') }}" method="POST">
+                        <form action="{{ route('assessment-schedules.update', $schedule->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
 
                             <div class="form-group row">
                                 <label for="title" class="col-sm-3 col-form-label text-right">
@@ -77,17 +78,18 @@
                                             data-placeholder="-- Pilih Mahasiswa --">
                                         <option value="" disabled selected>-- Pilih Mahasiswa --</option>
                                         @forelse($submissions as $submission)
-                                            <option value="{{ $submission->nim }}"
-                                                    data-first-examiner="{{ $submission->firstExaminer->getNameWithDegree() }}"
-                                                    data-second-examiner="{{ $submission->secondExaminer->getNameWithDegree() }}"
-                                                    data-submission-id="{{ $submission->id }}">
+                                            <option
+                                                {{ $submission->nim === $schedule->submission->nim ? 'selected' : '' }}
+                                                value="{{ $submission->nim }}"
+                                                data-submission-id="{{ $submission->id }}"
+                                            >
                                                 {{ $submission->thesis->student->getName() }} -
                                                 ( {{ $submission->thesis->student->study_program->getName() }} )
                                             </option>
                                         @empty
                                         @endforelse
                                     </select>
-                                    <input type="hidden" id="submission_id" name="submission_id" required>
+                                    <input type="hidden" id="submission_id" name="submission_id" required value="{{ $schedule->submission->id }}">
 
                                     @error('student_id')
                                         <span class="invalid-feedback" role="alert">
@@ -102,7 +104,8 @@
                                     Tanggal Ujian
                                 </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="js-flatpickr form-control bg-white @error('date') is-invalid @enderror" id="input-date"
+                                    <input type="text" class="js-flatpickr form-control bg-white @error('date') is-invalid @enderror"
+                                           id="input-date" value="{{ $schedule->date }}"
                                            name="date" placeholder="Y-m-d" required>
 
                                     @error('date')
@@ -119,7 +122,8 @@
                                 </label>
                                 <div class="col-sm-7">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-white @error('start_time') is-invalid @enderror" id="start-time"
+                                        <input type="text" class="form-control bg-white @error('start_time') is-invalid @enderror"
+                                               id="start-time" value="{{ $schedule->start_at }}"
                                                name="start_time" placeholder="-- : --">
 
                                         <div class="input-group-append">
@@ -128,7 +132,8 @@
                                             </span>
                                         </div>
 
-                                        <input type="text" class="form-control bg-white @error('finish_time') is-invalid @enderror" id="finish-time"
+                                        <input type="text" class="form-control bg-white @error('finish_time') is-invalid @enderror"
+                                               id="finish-time" value="{{ $schedule->finished_at }}"
                                                name="finish_time" placeholder="-- : --">
                                     </div>
                                     @error('start_time')
@@ -167,7 +172,7 @@
                                     Ruang Ujian
                                 </label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="room_number" class="form-control" placeholder="Nomor Ruangan">
+                                    <input type="text" name="room_number" class="form-control" placeholder="Nomor Ruangan" value="{{ $schedule->room_number }}">
                                     <input type="hidden" name="assessment_type" value="{{ $assessmentType }}">
                                 </div>
                             </div>
@@ -235,7 +240,6 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

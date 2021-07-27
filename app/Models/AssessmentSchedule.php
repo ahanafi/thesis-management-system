@@ -18,4 +18,10 @@ class AssessmentSchedule extends Model
         'room_number',
         'submission_assessment_id'
     ];
+
+    public function submission()
+    {
+        return $this->hasOne(SubmissionAssessment::class, 'id', 'submission_assessment_id')
+            ->with(['thesis', 'firstExaminer', 'secondExaminer']);
+    }
 }

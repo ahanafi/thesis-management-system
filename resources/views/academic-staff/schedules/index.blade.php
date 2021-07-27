@@ -2,17 +2,17 @@
 
 @section('css_before')
     <!-- Page JS Plugins CSS -->
-    <link rel="stylesheet" href="{{ asset('js/plugins/flatpickr/flatpickr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
 @endsection
 
 @section('js_after')
     <!-- Page JS Plugins -->
-    <script src="{{ asset('js/plugins/flatpickr/flatpickr.min.js') }}"></script>
-    <script>
-        jQuery(function () {
-            Dashmix.helpers('flatpickr');
-        });
-    </script>
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!-- Page JS Code -->
+    <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
 @endsection
 
 @section('content')
@@ -27,13 +27,16 @@
                 <div class="block block-rounded">
                     <ul class="nav nav-tabs nav-tabs-block align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link {{ $assessmentType === 'seminar' ? 'active' : '' }}" href="{{ route('assessment-schedules.index', ['type' => 'seminar']) }}">Seminar</a>
+                            <a class="nav-link {{ $assessmentType === 'seminar' ? 'active' : '' }}"
+                               href="{{ url('academic-staff/assessment-schedules/seminar') }}">Seminar Skripsi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $assessmentType === 'colloquium' ? 'active' : '' }}" href="{{ route('assessment-schedules.index', ['type' => 'colloquium']) }}">Kolokium</a>
+                            <a class="nav-link {{ $assessmentType === 'colloquium' ? 'active' : '' }}"
+                               href="{{ url('academic-staff/assessment-schedules/colloquium') }}">Kolokium Skripsi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $assessmentType === 'final-test' ? 'active' : '' }}" href="{{ route('assessment-schedules.index', ['type' => 'final-test']) }}">Sidang</a>
+                            <a class="nav-link {{ $assessmentType === 'final-test' ? 'active' : '' }}"
+                               href="{{ url('academic-staff/assessment-schedules/final-test') }}">Sidang Skripsi</a>
                         </li>
                         <li class="nav-item ml-auto">
                             <div class="btn-group btn-group-sm pr-2">
@@ -45,15 +48,18 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupTabs1"
                                          style="">
-                                        <a class="dropdown-item" href="#" onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=seminar'">
+                                        <a class="dropdown-item" href="#"
+                                           onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=seminar'">
                                             <i class="fa fa-fw fa-arrow-right mr-1"></i>
                                             <span>Seminar</span>
                                         </a>
-                                        <a class="dropdown-item" href="#" onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=colloquium'">
+                                        <a class="dropdown-item" href="#"
+                                           onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=colloquium'">
                                             <i class="fa fa-fw fa-arrow-right mr-1"></i>
                                             <span>Kolokium</span>
                                         </a>
-                                        <a class="dropdown-item" href="#" onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=final-test'">
+                                        <a class="dropdown-item" href="#"
+                                           onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=final-test'">
                                             <i class="fa fa-fw fa-arrow-right mr-1"></i>
                                             <span>Sidang</span>
                                         </a>
@@ -65,19 +71,45 @@
                     <div class="block-content tab-content">
                         <div class="tab-pane active" id="seminar" role="tabpanel">
                             <h4 class="font-w400">Jadwal {{ getTypeOfAssessment(strtoupper($assessmentType)) }}</h4>
-                            <table class="table table-bordered table-striped table-vcenter">
-                                <thead>
-                                <tr>
-                                    <th class="text-center" style="width: 80px;">#</th>
-                                    <th>Nama Mahasiswa</th>
-                                    <th class="text-center">Program Studi</th>
-                                    <th class="text-center">Jenis Ujian</th>
-                                    <th class="text-center">Aksi</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 80px;">#</th>
+                                        <th>Nama Mahasiswa</th>
+                                        <th class="text-center">Program Studi</th>
+                                        <th class="text-center">Tanggal</th>
+                                        <th class="text-center">Waktu</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @forelse($schedules as $schedule)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>{{ $schedule->submission->thesis->student->getName() }}</td>
+                                            <td>{{ $schedule->submission->thesis->student->study_program->getComplexName() }}</td>
+                                            <td class="text-center">{{ $schedule->date }}</td>
+                                            <td class="text-center">{{ $schedule->start_at . " - ". $schedule->finished_at }}</td>
+                                            <td class="text-center">
+                                                <div class="btn-group btn-group-sm">
+                                                    <a href="{{ route('assessment-schedules.edit', $schedule->id) }}" class="btn btn-primary">
+                                                        <i class="fa fa-pencil-alt"></i>
+                                                    </a>
+                                                    <a href="{{ route('assessment-schedules.show', $schedule->id) }}" class="btn btn-secondary">
+                                                        <i class="fa fa-fw fa-search-plus"></i>
+                                                    </a>
+                                                    <a href="#" onclick="confirmDelete('assessment-schedules', '{{ $schedule->id }}')" class="btn btn-danger">
+                                                        <i class="fa fa-fw fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                    @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

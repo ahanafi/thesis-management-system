@@ -78,7 +78,7 @@
                                 <span class="badge badge-success">{{ $student->study_program->name }}</span>
                             </td>
                             <td class="text-center">
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip" title="Edit" data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
@@ -87,7 +87,7 @@
                                             data-toggle="tooltip" title="Delete" data-original-title="Delete"
                                             onclick="confirmDelete('master/students', '{{ $student->id }}')"
                                     >
-                                        <i class="fa fa-times"></i>
+                                        <i class="fa fa-fw fa-trash"></i>
                                     </button>
                                 </div>
                             </td>

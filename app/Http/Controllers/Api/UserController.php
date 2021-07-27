@@ -44,7 +44,7 @@ class UserController extends Controller
                     </a>
                     <button type='button' class='btn btn-danger btn-sm'
                         onclick=confirmDelete('user', '" . $user->id . "')>
-                        <i class='fa fa-times'></i>
+                        <i class='fa fa-fw fa-trash'></i>
                     </button>
                 </div>";
             })

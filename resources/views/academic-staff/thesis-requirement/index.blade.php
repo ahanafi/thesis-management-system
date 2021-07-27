@@ -121,7 +121,7 @@
                             </td>
                             <td class="d-none d-sm-table-cell">{{ $requirement->note }}</td>
                             <td class="text-center">
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip"
                                             title=""
@@ -139,7 +139,7 @@
                                             data-toggle="tooltip" title="" data-original-title="Delete"
                                             onclick="confirmDelete('thesis-requirements', '{{ $requirement->id }}')"
                                     >
-                                        <i class="fa fa-times"></i>
+                                        <i class="fa fa-fw fa-trash"></i>
                                     </button>
                                 </div>
                             </td>
@@ -183,7 +183,7 @@
                                 @endforeach
                             </td>
                             <td class="text-center">
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <x-button-link
                                         link="{{ route('thesis-requirement.submission.show', $submission->id) }}"
                                         icon="search"

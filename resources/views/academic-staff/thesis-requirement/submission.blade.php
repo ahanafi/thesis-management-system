@@ -22,7 +22,7 @@
                                     @csrf
                                     <button type="button" onclick="submitResponse('REJECT')"
                                             class="btn btn-sm btn-danger">
-                                        <i class="fa fa-times"></i>
+                                        <i class="fa fa-fw fa-trash"></i>
                                         <span>Tolak</span>
                                     </button>
                                     <button type="button" onclick="submitResponse('APPROVE')"
@@ -67,7 +67,7 @@
                                     <td>{{ optional($detail->thesis_requirement)->document_name }}</td>
                                     <td>{{ $detail->created_at }}</td>
                                     <td class="text-center">
-                                        <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                             <a href="#"
                                                onclick="showDocument(
                                                    '{{ Storage::url($detail->document) }}',

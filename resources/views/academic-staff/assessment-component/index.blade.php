@@ -105,7 +105,7 @@
                             <td class="font-w600">{!! getTypeOfAssessment($component->assessment_type) !!}</td>
                             <td class="text-center">{{ $component->weight }}</td>
                             <td class="text-center">
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"
                                             data-toggle="tooltip"
                                             title=""
@@ -122,7 +122,7 @@
                                             data-toggle="tooltip" title="" data-original-title="Delete"
                                             onclick="confirmDelete('assessment-components', '{{ $component->id }}')"
                                     >
-                                        <i class="fa fa-times"></i>
+                                        <i class="fa fa-fw fa-trash"></i>
                                     </button>
                                 </div>
                             </td>
