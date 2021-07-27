@@ -57,8 +57,8 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('users/*') ? ' active' : '' }}"
-                   href="{{ route('users.index') }}">
+                <a class="nav-main-link{{ request()->routeIs('assessment-schedules.*') ? ' active' : '' }}"
+                   href="{{ route('assessment-schedules.index') }}">
                     <i class="nav-main-link-icon fa fa-calendar-alt"></i>
                     <span class="nav-main-link-name">JADWAL UJIAN SKRIPSI</span>
                 </a>

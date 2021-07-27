@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\AssessmentTypes;
+use App\Constants\Status;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,6 +37,12 @@ class SubmissionAssessment extends Model
     public function scopeType($query, $type)
     {
         return $query->where('assessment_type', $type);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status_first_supervisor', Status::APPROVE)
+            ->where('status_second_supervisor', Status::APPROVE);
     }
 
     public function scopeStudentId($query, $studentId)

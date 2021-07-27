@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\AcademicStaff;
 
 use App\Http\Controllers\Controller;
+use App\Models\SubmissionAssessment;
 use Illuminate\Http\Request;
 
 class AssessmentScheduleController extends Controller
 {
     public function index()
     {
-        //
+        return viewAcademicStaff('schedules.index');
     }
 
      public function create()
     {
-        //
+        $submissions = SubmissionAssessment::approved()->get();
+
+        return viewAcademicStaff('schedules.create', compact('submissions'));
     }
 
     public function store(Request $request)
