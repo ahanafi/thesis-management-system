@@ -64,24 +64,24 @@
             <!-- PENILAIAN -->
             <li class="nav-main-heading">PENILAIAN</li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('master/faculty') ? ' active' : '' }}"
-                   href="#">
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.seminar.score') ? ' active' : '' }}"
+                   href="{{ route('student.assessment.seminar.score') }}">
                     <i class="nav-main-link-icon fa fa-building"></i>
-                    <span class="nav-main-link-name">SEMINAR</span>
+                    <span class="nav-main-link-name">SEMINAR SKRIPSI</span>
                 </a>
             </li>
             <li class="nav-main-item">
                 <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}"
                    href="#">
                     <i class="nav-main-link-icon fa fa-people-carry"></i>
-                    <span class="nav-main-link-name">SIDANG</span>
+                    <span class="nav-main-link-name">SIDANG SKRIPSI</span>
                 </a>
             </li>
             <li class="nav-main-item">
                 <a class="nav-main-link{{ request()->is('master/lecturer') ? ' active' : '' }}"
                    href="#">
                     <i class="nav-main-link-icon fa fa-tools"></i>
-                    <span class="nav-main-link-name">KOLOKIUM</span>
+                    <span class="nav-main-link-name">KOLOKIUM SKRIPSI</span>
                 </a>
             </li>
             <!-- END PENILAIAN -->

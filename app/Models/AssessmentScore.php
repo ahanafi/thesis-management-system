@@ -5,6 +5,7 @@ namespace App\Models;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class AssessmentScore extends Model
 {
@@ -18,4 +19,14 @@ class AssessmentScore extends Model
         'nidn',
         'score',
     ];
+
+    public function submission()
+    {
+        return $this->belongsTo(SubmissionAssessment::class, 'submission_assessment_id', 'id');
+    }
+
+    public function components()
+    {
+        return $this->belongsTo(AssessmentComponent::class, 'assessment_component_id', 'id');
+    }
 }

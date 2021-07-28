@@ -47,6 +47,7 @@ Route::prefix('student')
                         Route::get('submission/{submission}/{type}/download', [SeminarController::class, 'download'])->name('submission.download');
                         Route::post('seminar/apply', [SeminarController::class, 'apply'])->name('apply');
 
+                        Route::get('score', [SeminarController::class, 'score'])->name('score');
                     });
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student\Assessment;
 use App\Constants\AssessmentTypes;
 use App\Http\Controllers\Controller;
 use App\Models\AssessmentSchedule;
+use App\Models\AssessmentScore;
 use App\Models\SubmissionAssessment;
 use App\Models\Thesis;
 use App\Services\Downloads\SubmissionAssessmentService;
@@ -82,5 +83,17 @@ class SeminarController extends Controller
 
         return $submissionAssessmentService->setDocumentType($documentType)
             ->download($filename);
+    }
+
+    public function score()
+    {
+        $nim = auth()->user()->registration_number;
+        $scores = AssessmentScore::with(['components'])
+            ->whereHas('submission', function ($query) use ($nim) {
+                $query->where('nim', $nim);
+            })
+            ->get();
+
+        return viewStudent('seminar.score', compact('scores'));
     }
 }

@@ -68,8 +68,8 @@
                             <td class="text-center">{{ $submission->created_at ? $submission->created_at->format('d-m-Y') : '-' }}</td>
                             <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_first_supervisor) : '-'  !!}</td>
                             <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_second_supervisor) : '-'  !!}</td>
-                            <td class="text-center">{{ $submission->response_date_first_supervisor ? $submission->response_date_first_supervisor->format('d-m-Y H:i:s') : '-' }}</td>
-                            <td class="text-center">{{ $submission->response_date_second_supervisor ? $submission->response_date_second_supervisor->format('d-m-Y H:i:s') : '-' }}</td>
+                            <td class="text-center">{{ $submission->response_date_first_supervisor ?: '-' }}</td>
+                            <td class="text-center">{{ $submission->response_date_second_supervisor ?: '-' }}</td>
                             <td class="text-center">
                                 @if($submission->document && Storage::exists($submission->document))
                                     <a href="{{ route('student.assessment.seminar.submission.download', [
@@ -122,7 +122,6 @@
                     <table class="table table-sm table-bordered table-vcenter table-striped">
                         <thead>
                         <tr>
-                            <th rowspan="2" class="text-center align-middle">Hari</th>
                             <th rowspan="2" class="text-center align-middle">Tanggal</th>
                             <th rowspan="2" class="text-center align-middle">Waktu</th>
                             <th rowspan="2" class="text-center align-middle">Ruangan</th>
@@ -136,9 +135,8 @@
                         <tbody>
                         @isset($submission->schedule)
                             <tr>
-                                <td class="text-center">{{ optional($submission->schedule)->day }}</td>
                                 <td class="text-center">{{ optional($submission->schedule)->date }}</td>
-                                <td class="text-center">{{ optional($submission->schedule)->start_time . "-" . optional($submission->schedule)->finished_at }}</td>
+                                <td class="text-center">{{ optional($submission->schedule)->getAssessmentTime() }}</td>
                                 <td class="text-center">{{ optional($submission->schedule)->room_number }}</td>
                                 <td class="text-center">{{ $submission->first_examiner ? $submission->firstExaminer->getNameWithDegree() : '-' }}</td>
                                 <td class="text-center">{{ $submission->second_examiner ? $submission->secondExaminer->getNameWithDegree() : '-' }}</td>
