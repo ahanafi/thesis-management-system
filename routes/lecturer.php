@@ -66,8 +66,6 @@ Route::prefix('lecturer')
                         Route::get('/', [ColloquiumController::class, 'index'])->name('index');
                         Route::get('{submission}', [ColloquiumController::class, 'show'])->name('show');
                         Route::put('{submission}', [ColloquiumController::class, 'update'])->name('update');
-
-                        Route::get('{submission}/{type}/download', [ColloquiumController::class, 'download'])->name('download');
                     });
 
                 //Final Test
@@ -84,8 +82,6 @@ Route::prefix('lecturer')
         Route::prefix('exam')
             ->name('exam.')
             ->group(function () {
-                Route::get('{submission}/score', [ColloquiumController::class, 'score'])->name('score');
-                Route::post('{submission}/score', [ColloquiumController::class, 'inputScore'])->name('score');
 
                 //Seminar
                 Route::prefix('seminar')
@@ -93,8 +89,8 @@ Route::prefix('lecturer')
                     ->group(function () {
                         Route::get('/', [ExamSeminarController::class, 'index'])->name('index');
                         Route::get('{submission}', [ExamSeminarController::class, 'show'])->name('show');
-                        Route::get('{submission}/score', [ExamSeminarController::class, 'score'])->name('score');
                         Route::post('{submission}', [ExamSeminarController::class, 'inputScore'])->name('score');
+                        Route::get('{submission}/score', [ExamSeminarController::class, 'score'])->name('score');
                     });
 
                 //Colloquium
@@ -111,8 +107,8 @@ Route::prefix('lecturer')
                     ->group(function () {
                         Route::get('/', [ExamFinalTestController::class, 'index'])->name('index');
                         Route::get('{submission}', [ExamFinalTestController::class, 'show'])->name('show');
-                        Route::get('{submission}/score', [ExamFinalTestController::class, 'score'])->name('score');
                         Route::post('{submission}', [ExamFinalTestController::class, 'inputScore'])->name('score');
+                        Route::get('{submission}/score', [ExamFinalTestController::class, 'score'])->name('score');
                     });
             });
     });
