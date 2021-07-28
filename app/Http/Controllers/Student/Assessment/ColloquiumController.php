@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssessmentScore;
 use App\Models\SubmissionAssessment;
 use App\Models\Thesis;
+use App\Services\Downloads\SubmissionAssessmentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
