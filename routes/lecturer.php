@@ -67,13 +67,18 @@ Route::prefix('lecturer')
                         Route::get('{submission}', [ColloquiumController::class, 'show'])->name('show');
                         Route::put('{submission}', [ColloquiumController::class, 'update'])->name('update');
 
-//                        Route::get('{submission}/score', [ColloquiumController::class, 'score'])->name('score');
-//                        Route::post('{submission}/score', [ColloquiumController::class, 'inputScore'])->name('score');
-
                         Route::get('{submission}/{type}/download', [ColloquiumController::class, 'download'])->name('download');
                     });
 
-                Route::resource('final-test', FinalTestController::class);
+                //Final Test
+                Route::prefix('final-test')
+                    ->name('final-test.')
+                    ->group(function () {
+                        Route::get('/', [FinalTestController::class, 'index'])->name('index');
+                        Route::get('{submission}', [FinalTestController::class, 'show'])->name('show');
+                        Route::put('{submission}', [FinalTestController::class, 'update'])->name('update');
+                        Route::get('{submission}/{type}/download', [FinalTestController::class, 'download'])->name('download');
+                    });
             });
 
         Route::prefix('exam')

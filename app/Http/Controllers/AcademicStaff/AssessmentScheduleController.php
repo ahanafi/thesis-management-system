@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AcademicStaff;
 
+use App\Constants\AssessmentTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubmitAssessmentScheduleRequest;
 use App\Models\AssessmentSchedule;
@@ -13,6 +14,10 @@ class AssessmentScheduleController extends Controller
     {
         if(!array_key_exists(strtoupper($assessmentType), getTypeOfAssessment())) {
             return $this->show($assessmentType);
+        }
+
+        if($assessmentType === 'final-test') {
+            $assessmentType = AssessmentTypes::TRIAL;
         }
 
         $schedules = AssessmentSchedule::whereHas('submission', function ($query) use ($assessmentType) {
@@ -30,6 +35,7 @@ class AssessmentScheduleController extends Controller
             ->type($assessmentType)
             ->approved()
             ->get();
+
 
         return viewAcademicStaff('schedules.create', compact('submissions', 'assessmentType'));
     }

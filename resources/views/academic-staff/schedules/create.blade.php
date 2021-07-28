@@ -78,8 +78,8 @@
                                         <option value="" disabled selected>-- Pilih Mahasiswa --</option>
                                         @forelse($submissions as $submission)
                                             <option value="{{ $submission->nim }}"
-                                                    data-first-examiner="{{ $submission->firstExaminer->getNameWithDegree() }}"
-                                                    data-second-examiner="{{ $submission->secondExaminer->getNameWithDegree() }}"
+                                                    data-first-examiner="{{ optional($submission->firstExaminer)->getNameWithDegree() }}"
+                                                    data-second-examiner="{{ optional($submission->secondExaminer)->getNameWithDegree() }}"
                                                     data-submission-id="{{ $submission->id }}">
                                                 {{ $submission->thesis->student->getName() }} -
                                                 ( {{ $submission->thesis->student->study_program->getName() }} )

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\AssessmentTypes;
+use App\Constants\AssessmentTypes;
 use App\Constants\Status;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,6 +41,9 @@ class SubmissionAssessment extends Model
 
     public function scopeType($query, $type)
     {
+        if($type === 'final-test') {
+            $type = AssessmentTypes::TRIAL;
+        }
         return $query->where('assessment_type', $type);
     }
 

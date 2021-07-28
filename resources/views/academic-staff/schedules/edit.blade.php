@@ -74,7 +74,8 @@
                                 </label>
                                 <div class="col-sm-7">
                                     <select onchange="fetchStudentInfo(this)" name="student_id"
-                                            class="js-select2 form-control @error('student_id') is-invalid @enderror" required
+                                            class="js-select2 form-control @error('student_id') is-invalid @enderror"
+                                            required
                                             data-placeholder="-- Pilih Mahasiswa --">
                                         <option value="" disabled selected>-- Pilih Mahasiswa --</option>
                                         @forelse($submissions as $submission)
@@ -89,10 +90,11 @@
                                         @empty
                                         @endforelse
                                     </select>
-                                    <input type="hidden" id="submission_id" name="submission_id" required value="{{ $schedule->submission->id }}">
+                                    <input type="hidden" id="submission_id" name="submission_id" required
+                                           value="{{ $schedule->submission->id }}">
 
                                     @error('student_id')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -104,12 +106,13 @@
                                     Tanggal Ujian
                                 </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="js-flatpickr form-control bg-white @error('date') is-invalid @enderror"
+                                    <input type="text"
+                                           class="js-flatpickr form-control bg-white @error('date') is-invalid @enderror"
                                            id="input-date" value="{{ $schedule->date }}"
                                            name="date" placeholder="Y-m-d" required>
 
                                     @error('date')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -122,7 +125,8 @@
                                 </label>
                                 <div class="col-sm-7">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-white @error('start_time') is-invalid @enderror"
+                                        <input type="text"
+                                               class="form-control bg-white @error('start_time') is-invalid @enderror"
                                                id="start-time" value="{{ $schedule->start_at }}"
                                                name="start_time" placeholder="-- : --">
 
@@ -132,17 +136,18 @@
                                             </span>
                                         </div>
 
-                                        <input type="text" class="form-control bg-white @error('finish_time') is-invalid @enderror"
+                                        <input type="text"
+                                               class="form-control bg-white @error('finish_time') is-invalid @enderror"
                                                id="finish-time" value="{{ $schedule->finished_at }}"
                                                name="finish_time" placeholder="-- : --">
                                     </div>
                                     @error('start_time')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                     @error('finish_time')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -172,7 +177,8 @@
                                     Ruang Ujian
                                 </label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="room_number" class="form-control" placeholder="Nomor Ruangan" value="{{ $schedule->room_number }}">
+                                    <input type="text" name="room_number" class="form-control"
+                                           placeholder="Nomor Ruangan" value="{{ $schedule->room_number }}">
                                     <input type="hidden" name="assessment_type" value="{{ $assessmentType }}">
                                 </div>
                             </div>
@@ -205,37 +211,41 @@
                             <tr>
                                 <td width="140">Nama Lengkap</td>
                                 <td width="10">:</td>
-                                <td id="std-name"></td>
+                                <td id="std-name">{{ $schedule->submission->thesis->student->getName() }}</td>
                             </tr>
                             <tr>
                                 <td>NIM</td>
                                 <td>:</td>
-                                <td id="std-nim"></td>
+                                <td id="std-nim">{{ $schedule->submission->nim }}</td>
                             </tr>
                             <tr>
                                 <td>Program Studi</td>
                                 <td>:</td>
-                                <td id="std-study-program"></td>
+                                <td id="std-study-program">{{ $schedule->submission->thesis->student->study_program->getName() }}</td>
                             </tr>
                             <tr>
                                 <td>Judul Skripsi</td>
                                 <td>:</td>
-                                <td id="std-research-title"></td>
+                                <td id="std-research-title">{{ $schedule->submission->thesis->research_title }}</td>
                             </tr>
                             <tr>
                                 <td>Bidang Ilmu</td>
                                 <td>:</td>
-                                <td id="std-science-field"></td>
+                                <td id="std-science-field">{{ $schedule->submission->thesis->scienceField->name }}</td>
                             </tr>
                             <tr>
                                 <td>Pembimbing 1</td>
                                 <td>:</td>
-                                <td id="std-first-supervisor"></td>
+                                <td id="std-first-supervisor">
+                                    {{ $schedule->submission->thesis->firstSupervisor->getNameWithDegree() }}
+                                </td>
                             </tr>
                             <tr>
                                 <td>Pembimbing 2</td>
                                 <td>:</td>
-                                <td id="std-second-supervisor"></td>
+                                <td id="std-second-supervisor">
+                                    {{ $schedule->submission->thesis->secondSupervisor->getNameWithDegree() }}
+                                </td>
                             </tr>
                         </table>
                     </div>
