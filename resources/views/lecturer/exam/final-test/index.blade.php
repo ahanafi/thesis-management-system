@@ -17,11 +17,11 @@
 @section('content')
     <!-- Page Content -->
     <div class="content">
-        <h2 class="content-heading">Data Pengujian Seminar Skripsi</h2>
+        <h2 class="content-heading">Data Pengujian Sidang Skripsi</h2>
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Daftar Mahasiswa Peserta Seminar Skripsi</h3>
+                <h3 class="block-title">Daftar Mahasiswa Peserta Sidang Skripsi</h3>
             </div>
             <div class="block-content block-content-full">
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
@@ -49,12 +49,12 @@
                             <td class="text-center">{{ $submission->schedule->getAssessmentTime() }}</td>
                             <td class="text-center">{{ $submission->schedule->room_number }}</td>
                             <td class="text-center">
-                                <a href="{{ route('lecturer.exam.seminar.show', $submission->id) }}"
+                                <a href="{{ route('lecturer.exam.final-test.show', $submission->id) }}"
                                    class="btn btn-primary btn-sm">
                                     <i class="fa fa-fw fa-search-plus"></i>
                                     <span>Detail</span>
                                 </a>
-                                <a href="{{ route('lecturer.exam.seminar.score', $submission->id) }}"
+                                <a href="{{ route('lecturer.exam.final-test.score', $submission->id) }}"
                                    class="btn btn-success btn-sm">
                                     <i class="fa fa-fw fa-pencil-alt"></i>
                                     <span>Nilai</span>

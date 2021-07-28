@@ -11,9 +11,9 @@ use App\Http\Controllers\Lecturer\Submission\ColloquiumController;
 use App\Http\Controllers\Lecturer\Submission\FinalTestController;
 use App\Http\Controllers\Lecturer\Submission\SeminarController;
 
-use App\Http\Controllers\Lecturer\Exam\FinalTestController as ExamFinalTestController;
 use App\Http\Controllers\Lecturer\Exam\SeminarController as ExamSeminarController;
 use App\Http\Controllers\Lecturer\Exam\ColloquiumController as ExamColloquiumController;
+use App\Http\Controllers\Lecturer\Exam\FinalTestController as ExamFinalTestController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -105,10 +105,14 @@ Route::prefix('lecturer')
                         Route::post('{submission}/score', [ExamColloquiumController::class, 'inputScore'])->name('score');
                     });
 
+                //Final Test
                 Route::prefix('final-test')
                     ->name('final-test.')
                     ->group(function () {
                         Route::get('/', [ExamFinalTestController::class, 'index'])->name('index');
+                        Route::get('{submission}', [ExamFinalTestController::class, 'show'])->name('show');
+                        Route::get('{submission}/score', [ExamFinalTestController::class, 'score'])->name('score');
+                        Route::post('{submission}', [ExamFinalTestController::class, 'inputScore'])->name('score');
                     });
             });
     });

@@ -55,7 +55,7 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('student.assessment.final-test.*') ? ' active' : '' }}"
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.final-test.*') && lastUriSegment() !== 'score' ? ' active' : '' }}"
                    href="{{ route('student.assessment.final-test.index') }}">
                     <i class="nav-main-link-icon fa fa-people-carry"></i>
                     <span class="nav-main-link-name">SIDANG</span>
@@ -80,8 +80,8 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}"
-                   href="#">
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.final-test.score') ? ' active' : '' }}"
+                   href="{{ route('student.assessment.final-test.score') }}">
                     <i class="nav-main-link-icon fa fa-people-carry"></i>
                     <span class="nav-main-link-name">SIDANG SKRIPSI</span>
                 </a>

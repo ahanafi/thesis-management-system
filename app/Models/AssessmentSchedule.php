@@ -25,10 +25,21 @@ class AssessmentSchedule extends Model
             ->with(['thesis', 'firstExaminer', 'secondExaminer']);
     }
 
+    public static function getBySubmissionId($submissionId)
+    {
+        return self::where('submission_assessment_id', $submissionId)
+            ->first();
+    }
+
     public function getAssessmentTime()
     {
         $startTime = date('H:i', strtotime($this->start_at));
         $finishTime = date('H:i', strtotime($this->finished_at));
         return $startTime . "-" . $finishTime;
+    }
+
+    public function setIsDone(bool $isDone)
+    {
+        return $this->update(['is_done' => $isDone]);
     }
 }

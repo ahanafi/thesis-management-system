@@ -7,6 +7,7 @@ use App\Constants\Status;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\AssessmentSchedule;
 
 class SubmissionAssessment extends Model
 {
@@ -26,7 +27,7 @@ class SubmissionAssessment extends Model
 
     public function schedule()
     {
-        return $this->hasOne(AssessmentSchedule::class, 'submission_assessment_id', 'id');
+        return $this->hasOne(AssessmentSchedule::class, 'submission_assessment_id');
     }
 
     public function firstExaminer()
