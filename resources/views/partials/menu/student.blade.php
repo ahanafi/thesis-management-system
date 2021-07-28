@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('student.assessment.colloquium.*') ? ' active' : '' }}"
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.colloquium.*') && lastUriSegment() !== 'score' ? ' active' : '' }}"
                    href="{{ route('student.assessment.colloquium.index') }}">
                     <i class="nav-main-link-icon fa fa-tools"></i>
                     <span class="nav-main-link-name">KOLOKIUM</span>
@@ -73,17 +73,17 @@
                 </a>
             </li>
             <li class="nav-main-item">
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.colloquium.score') ? ' active' : '' }}"
+                   href="{{ route('student.assessment.colloquium.score') }}">
+                    <i class="nav-main-link-icon fa fa-tools"></i>
+                    <span class="nav-main-link-name">KOLOKIUM SKRIPSI</span>
+                </a>
+            </li>
+            <li class="nav-main-item">
                 <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}"
                    href="#">
                     <i class="nav-main-link-icon fa fa-people-carry"></i>
                     <span class="nav-main-link-name">SIDANG SKRIPSI</span>
-                </a>
-            </li>
-            <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('master/lecturer') ? ' active' : '' }}"
-                   href="#">
-                    <i class="nav-main-link-icon fa fa-tools"></i>
-                    <span class="nav-main-link-name">KOLOKIUM SKRIPSI</span>
                 </a>
             </li>
             <!-- END PENILAIAN -->
