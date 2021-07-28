@@ -89,7 +89,7 @@ Route::prefix('lecturer')
                     ->group(function () {
                         Route::get('/', [ExamSeminarController::class, 'index'])->name('index');
                         Route::get('{submission}', [ExamSeminarController::class, 'show'])->name('show');
-                        Route::post('{submission}', [ExamSeminarController::class, 'inputScore'])->name('score');
+                        Route::post('{submission}/score', [ExamSeminarController::class, 'inputScore'])->name('score');
                         Route::get('{submission}/score', [ExamSeminarController::class, 'score'])->name('score');
                     });
 
@@ -107,8 +107,8 @@ Route::prefix('lecturer')
                     ->group(function () {
                         Route::get('/', [ExamFinalTestController::class, 'index'])->name('index');
                         Route::get('{submission}', [ExamFinalTestController::class, 'show'])->name('show');
-                        Route::post('{submission}', [ExamFinalTestController::class, 'inputScore'])->name('score');
                         Route::get('{submission}/score', [ExamFinalTestController::class, 'score'])->name('score');
+                        Route::post('{submission}/score', [ExamFinalTestController::class, 'inputScore'])->name('score');
                     });
             });
     });
