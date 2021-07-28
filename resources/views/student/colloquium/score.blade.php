@@ -3,7 +3,7 @@
 @section('content')
     <!-- Page Content -->
     <div class="content">
-        <h2 class="content-heading">Penilaian Seminar Skripsi</h2>
+        <h2 class="content-heading">Penilaian Kolokium Skripsi</h2>
 
         <div class="row">
             <div class="col-xl-12">
@@ -12,7 +12,7 @@
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
                             <i class="fa fa-fw fa-pencil-alt text-muted mr-1"></i>
-                            Data Nilai Seminar Skripsi
+                            Data Nilai Kolokium Skripsi
                         </h3>
                     </div>
                     <div class="block-content block-content-full">

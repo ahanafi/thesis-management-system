@@ -51,7 +51,7 @@ class HomeController extends Controller
             $isThesisSubmissionDone = ($thesisSubmission && $thesisSubmission->status === Status::APPROVE) ?? false;
 
             //Supervisor
-            $thesis = Thesis::getByStudentId($nim)->first();
+            $thesis = Thesis::studentId($nim)->first();
             $isThereSupervisor = ($thesis && ($thesis->first_supervisor !== null && $thesis->second_supervisor !== null));
 
             //Seminar

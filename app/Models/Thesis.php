@@ -16,9 +16,9 @@ class Thesis extends Model
         'application', 'journal', 'first_guide', 'second_guide'
     ];
 
-    public static function getByStudentId($nim)
+    public static function scopeStudentId($query, $nim)
     {
-        return self::where('nim', $nim);
+        return $query->where('nim', $nim);
     }
 
     public static function getDoesNotHaveSupervisor(string $studyProgramCode)
@@ -60,5 +60,10 @@ class Thesis extends Model
     public function secondSupervisor()
     {
         return $this->hasOne(Lecturer::class, 'nidn', 'second_supervisor');
+    }
+
+    public function assessmentSubmission()
+    {
+        return $this->hasMany(SubmissionAssessment::class, 'thesis_id', 'id');
     }
 }

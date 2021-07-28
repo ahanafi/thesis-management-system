@@ -28,6 +28,7 @@
                     </h2>
                     <div class="row push">
                         <div class="col-lg-10 col-xl-10">
+
                             <div class="form-group row">
                                 <label for="title" class="col-sm-3 col-form-label text-right">
                                     Judul Bimbingan

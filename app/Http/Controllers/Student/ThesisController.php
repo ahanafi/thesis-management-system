@@ -13,7 +13,7 @@ class ThesisController extends Controller
     public function index()
     {
         $nim = auth()->user()->registration_number;
-        $thesis = Thesis::getByStudentId($nim)->with([
+        $thesis = Thesis::studentId($nim)->with([
             'student', 'scienceField', 'firstSupervisor', 'secondSupervisor'
         ])->first();
 
@@ -76,7 +76,7 @@ class ThesisController extends Controller
     public function download($documentType)
     {
         $nim = auth()->user()->registration_number;
-        $thesis = Thesis::getByStudentId($nim)->with(['student'])->firstOrFail();
+        $thesis = Thesis::studentId($nim)->with(['student'])->firstOrFail();
 
         $download = new ThesisDocumentService($thesis);
         $download->setDocumentTyppe($documentType);

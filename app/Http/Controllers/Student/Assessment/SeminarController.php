@@ -64,7 +64,7 @@ class SeminarController extends Controller
         ]);
 
         $nim = auth()->user()->registration_number;
-        $thesis = Thesis::getByStudentId($nim)->select('id')->first();
+        $thesis = Thesis::studentId($nim)->select('id')->first();
 
         $guidanceCardFirstSupervisor = $request->file('guidance_card_first_supervisor')->store('documents/guidance-cards');
         $guidanceCardSecondSupervisor = $request->file('guidance_card_second_supervisor')->store('documents/guidance-cards');
@@ -115,7 +115,8 @@ class SeminarController extends Controller
         $nim = auth()->user()->registration_number;
         $scores = AssessmentScore::with(['components'])
             ->whereHas('submission', function ($query) use ($nim) {
-                $query->where('nim', $nim);
+                $query->where('nim', $nim)
+                    ->where('assessment_type', AssessmentTypes::SEMINAR);
             })
             ->get();
 

@@ -38,6 +38,8 @@ Route::prefix('student')
         Route::prefix('assessment')
             ->name('assessment.')
             ->group(function () {
+
+                //Seminar
                 Route::prefix('seminar')
                     ->name('seminar.')
                     ->group(function () {
@@ -50,8 +52,21 @@ Route::prefix('student')
                         Route::get('score', [SeminarController::class, 'score'])->name('score');
                     });
 
+                //Colloquium
+                Route::prefix('colloquium')
+                    ->name('colloquium.')
+                    ->group(function () {
+                        Route::get('/', [ColloquiumController::class, 'index'])->name('index');
+                        Route::get('submission', [ColloquiumController::class, 'submission'])->name('submission');
+                        Route::get('submission/{submission}', [ColloquiumController::class, 'show'])->name('submission.show');
+                        Route::get('submission/{submission}/{type}/download', [ColloquiumController::class, 'download'])->name('submission.download');
+                        Route::post('colloquium/apply', [ColloquiumController::class, 'apply'])->name('apply');
 
-                Route::resource('colloquium', ColloquiumController::class);
+                        Route::get('score', [ColloquiumController::class, 'score'])->name('score');
+                    });
+
+
+                //Route::resource('colloquium', ColloquiumController::class);
                 Route::resource('final-test', FinalTestController::class);
             });
 

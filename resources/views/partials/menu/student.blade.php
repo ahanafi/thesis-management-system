@@ -3,7 +3,8 @@
     <div class="content-side content-side-full">
         <ul class="nav-main">
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('student.index') ? ' active' : '' }}" href="{{ route('student.index') }}">
+                <a class="nav-main-link{{ request()->routeIs('student.index') ? ' active' : '' }}"
+                   href="{{ route('student.index') }}">
                     <i class="nav-main-link-icon fa fa-home"></i>
                     <span class="nav-main-link-name">DASHBOARD</span>
                 </a>
@@ -30,7 +31,8 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('student.guidance.*') ? ' active' : '' }}" href="{{ route('student.guidance.index') }}">
+                <a class="nav-main-link{{ request()->is('student.guidance.*') ? ' active' : '' }}"
+                   href="{{ route('student.guidance.index') }}">
                     <i class="nav-main-link-icon fa fa-reply-all"></i>
                     <span class="nav-main-link-name">BIMBINGAN SKRIPSI</span>
                 </a>
@@ -48,15 +50,15 @@
             <li class="nav-main-item">
                 <a class="nav-main-link{{ request()->routeIs('student.assessment.colloquium.*') ? ' active' : '' }}"
                    href="{{ route('student.assessment.colloquium.index') }}">
-                    <i class="nav-main-link-icon fa fa-people-carry"></i>
-                    <span class="nav-main-link-name">SIDANG</span>
+                    <i class="nav-main-link-icon fa fa-tools"></i>
+                    <span class="nav-main-link-name">KOLOKIUM</span>
                 </a>
             </li>
             <li class="nav-main-item">
                 <a class="nav-main-link{{ request()->routeIs('student.assessment.final-test.*') ? ' active' : '' }}"
                    href="{{ route('student.assessment.final-test.index') }}">
-                    <i class="nav-main-link-icon fa fa-tools"></i>
-                    <span class="nav-main-link-name">KOLOKIUM</span>
+                    <i class="nav-main-link-icon fa fa-people-carry"></i>
+                    <span class="nav-main-link-name">SIDANG</span>
                 </a>
             </li>
             <!-- END PENGUJIAN SKRIPSI -->
