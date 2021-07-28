@@ -64,6 +64,8 @@ Route::prefix('lecturer')
                     ->group(function () {
                         Route::get('/', [ExamSeminarController::class, 'index'])->name('index');
                         Route::get('{submission}', [ExamSeminarController::class, 'show'])->name('show');
+                        Route::get('{submission}/score', [ExamSeminarController::class, 'score'])->name('score');
+                        Route::post('{submission}', [ExamSeminarController::class, 'inputScore'])->name('score');
                     });
 
                 Route::prefix('final-test')

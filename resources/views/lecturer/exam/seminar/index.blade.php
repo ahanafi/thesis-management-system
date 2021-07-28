@@ -54,6 +54,11 @@
                                     <i class="fa fa-fw fa-search-plus"></i>
                                     <span>Detail</span>
                                 </a>
+                                <a href="{{ route('lecturer.exam.seminar.score', $submission->id) }}"
+                                   class="btn btn-success btn-sm">
+                                    <i class="fa fa-fw fa-pencil-alt"></i>
+                                    <span>Nilai</span>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

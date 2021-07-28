@@ -9,4 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class AssessmentScore extends Model
 {
     use HasFactory, Uuid;
+
+    public $incrementing = false;
+
+    protected $fillable = [
+        'submission_assessment_id',
+        'assessment_component_id',
+        'nidn',
+        'score',
+    ];
 }

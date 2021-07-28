@@ -17,4 +17,9 @@ class AssessmentComponent extends Model
     ];
 
     public $timestamps = false;
+
+    public function scopeType($query, $type)
+    {
+        return $query->where('assessment_type', $type);
+    }
 }
