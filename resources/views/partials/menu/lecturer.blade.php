@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('lecturer.submission.colloquium.*') ? ' active' : '' }}"
+                <a class="nav-main-link{{ request()->routeIs('lecturer.submission.colloquium.*') || request()->routeIs('lecturer.exam.colloquium.*') ? ' active' : '' }}"
                    href="{{ route('lecturer.submission.colloquium.index') }}">
                     <i class="nav-main-link-icon fa fa-calendar-alt"></i>
                     <span class="nav-main-link-name">KOLOKIUM SKRIPSI</span>

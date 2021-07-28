@@ -13,6 +13,7 @@ use App\Http\Controllers\Lecturer\Submission\SeminarController;
 
 use App\Http\Controllers\Lecturer\Exam\FinalTestController as ExamFinalTestController;
 use App\Http\Controllers\Lecturer\Exam\SeminarController as ExamSeminarController;
+use App\Http\Controllers\Lecturer\Exam\ColloquiumController as ExamColloquiumController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -47,18 +48,41 @@ Route::prefix('lecturer')
         Route::prefix('submission')
             ->name('submission.')
             ->group(function () {
-                Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');
-                Route::get('seminar/{submission}', [SeminarController::class, 'show'])->name('seminar.show');
-                Route::put('seminar/{submission}', [SeminarController::class, 'update'])->name('seminar.update');
-                Route::get('seminar/{submission}/{type}/download', [SeminarController::class, 'download'])->name('seminar.download');
 
-                Route::resource('colloquium', ColloquiumController::class);
+                //Seminar
+                Route::prefix('seminar')
+                    ->name('seminar.')
+                    ->group(function () {
+                        Route::get('/', [SeminarController::class, 'index'])->name('index');
+                        Route::get('{submission}', [SeminarController::class, 'show'])->name('show');
+                        Route::put('{submission}', [SeminarController::class, 'update'])->name('update');
+                        Route::get('{submission}/{type}/download', [SeminarController::class, 'download'])->name('download');
+                    });
+
+                //Colloquium
+                Route::prefix('colloquium')
+                    ->name('colloquium.')
+                    ->group(function () {
+                        Route::get('/', [ColloquiumController::class, 'index'])->name('index');
+                        Route::get('{submission}', [ColloquiumController::class, 'show'])->name('show');
+                        Route::put('{submission}', [ColloquiumController::class, 'update'])->name('update');
+
+//                        Route::get('{submission}/score', [ColloquiumController::class, 'score'])->name('score');
+//                        Route::post('{submission}/score', [ColloquiumController::class, 'inputScore'])->name('score');
+
+                        Route::get('{submission}/{type}/download', [ColloquiumController::class, 'download'])->name('download');
+                    });
+
                 Route::resource('final-test', FinalTestController::class);
             });
 
         Route::prefix('exam')
             ->name('exam.')
             ->group(function () {
+                Route::get('{submission}/score', [ColloquiumController::class, 'score'])->name('score');
+                Route::post('{submission}/score', [ColloquiumController::class, 'inputScore'])->name('score');
+
+                //Seminar
                 Route::prefix('seminar')
                     ->name('seminar.')
                     ->group(function () {
@@ -66,6 +90,14 @@ Route::prefix('lecturer')
                         Route::get('{submission}', [ExamSeminarController::class, 'show'])->name('show');
                         Route::get('{submission}/score', [ExamSeminarController::class, 'score'])->name('score');
                         Route::post('{submission}', [ExamSeminarController::class, 'inputScore'])->name('score');
+                    });
+
+                //Colloquium
+                Route::prefix('colloquium')
+                    ->name('colloquium.')
+                    ->group(function () {
+                        Route::get('{submission}/score', [ExamColloquiumController::class, 'score'])->name('score');
+                        Route::post('{submission}/score', [ExamColloquiumController::class, 'inputScore'])->name('score');
                     });
 
                 Route::prefix('final-test')
