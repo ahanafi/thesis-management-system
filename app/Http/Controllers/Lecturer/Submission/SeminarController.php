@@ -27,7 +27,7 @@ class SeminarController extends Controller
                     : $submission->status_second_supervisor;
             });
 
-        return viewLecturer('seminar.submissions', compact('submissions'));
+        return viewLecturer('submission.seminar.submissions', compact('submissions'));
     }
 
     public function show(SubmissionAssessment $submission)
@@ -52,7 +52,7 @@ class SeminarController extends Controller
             $submission->supervisor_response = $submission->status_second_supervisor;
         }
 
-        return viewLecturer('seminar.single', compact('submission'));
+        return viewLecturer('submission.seminar.single', compact('submission'));
     }
 
     public function update(Request $request, SubmissionAssessment $submission)

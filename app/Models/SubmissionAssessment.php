@@ -19,6 +19,11 @@ class SubmissionAssessment extends Model
         return $this->belongsTo(Thesis::class, 'thesis_id', 'id')->with('student');
     }
 
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'nim', 'nim')->with(['study_program', 'user']);
+    }
+
     public function schedule()
     {
         return $this->hasOne(AssessmentSchedule::class, 'submission_assessment_id', 'id');

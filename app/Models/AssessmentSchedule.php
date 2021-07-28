@@ -24,4 +24,11 @@ class AssessmentSchedule extends Model
         return $this->hasOne(SubmissionAssessment::class, 'id', 'submission_assessment_id')
             ->with(['thesis', 'firstExaminer', 'secondExaminer']);
     }
+
+    public function getAssessmentTime()
+    {
+        $startTime = date('H:i', strtotime($this->start_at));
+        $finishTime = date('H:i', strtotime($this->finished_at));
+        return $startTime . "-" . $finishTime;
+    }
 }

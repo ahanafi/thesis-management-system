@@ -27,15 +27,15 @@
             <!-- DATA MASTER -->
             <li class="nav-main-heading">DATA PENGUJIAN SKRIPSI</li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('master/study-program') ? ' active' : '' }}"
-                   href="#">
+                <a class="nav-main-link{{ request()->routeIs('lecturer.exam.seminar.*') ? ' active' : '' }}"
+                   href="{{ route('lecturer.exam.seminar.index') }}">
                     <i class="nav-main-link-icon fa fa-list-alt"></i>
                     <span class="nav-main-link-name">SEMINAR SKRIPSI</span>
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('master/lecturer') ? ' active' : '' }}"
-                   href="#">
+                <a class="nav-main-link{{ request()->routeIs('lecturer.exam.final-test.*') ? ' active' : '' }}"
+                   href="{{ route('lecturer.exam.final-test.index') }}">
                     <i class="nav-main-link-icon fa fa-users"></i>
                     <span class="nav-main-link-name">SIDANG SKRIPSI</span>
                 </a>

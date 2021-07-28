@@ -38,7 +38,7 @@
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
-                            <i class="fa fa-fw fa-users"></i>
+                            <i class="fa fa-fw fa-users text-muted mr-1"></i>
                             Daftar Mahasiswa Bimbingan Skripsi
                         </h3>
                         <div class="block-options">
@@ -86,11 +86,11 @@
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
-                            <i class="fa fa-fw fa-users"></i>
+                            <i class="fa fa-fw fa-users text-muted mr-1"></i>
                             Daftar Pengujian Skripsi Mahasiswa
                         </h3>
                         <div class="block-options">
-                            <a href="{{ route('lecturer.mentoring.student.index') }}" class="btn btn-primary btn-sm">
+                            <a href="{{ route('lecturer.exam.seminar.index') }}" class="btn btn-primary btn-sm">
                                 <i class="fa fa-fw fa-search"></i>
                                 <span>Detail</span>
                             </a>

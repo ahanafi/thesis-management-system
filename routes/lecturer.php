@@ -10,6 +10,9 @@ use App\Http\Controllers\Lecturer\GuidanceController;
 use App\Http\Controllers\Lecturer\Submission\ColloquiumController;
 use App\Http\Controllers\Lecturer\Submission\FinalTestController;
 use App\Http\Controllers\Lecturer\Submission\SeminarController;
+
+use App\Http\Controllers\Lecturer\Exam\FinalTestController as ExamFinalTestController;
+use App\Http\Controllers\Lecturer\Exam\SeminarController as ExamSeminarController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -51,5 +54,22 @@ Route::prefix('lecturer')
 
                 Route::resource('colloquium', ColloquiumController::class);
                 Route::resource('final-test', FinalTestController::class);
+            });
+
+        Route::prefix('exam')
+            ->name('exam.')
+            ->group(function () {
+                Route::prefix('seminar')
+                    ->name('seminar.')
+                    ->group(function () {
+                        Route::get('/', [ExamSeminarController::class, 'index'])->name('index');
+                        Route::get('{submission}', [ExamSeminarController::class, 'show'])->name('show');
+                    });
+
+                Route::prefix('final-test')
+                    ->name('final-test.')
+                    ->group(function () {
+                        Route::get('/', [ExamFinalTestController::class, 'index'])->name('index');
+                    });
             });
     });
