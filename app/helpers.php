@@ -275,3 +275,10 @@ if (!function_exists('countFromArray')) {
         return $count;
     }
 }
+
+if(!function_exists('lastUriSegment')) {
+    function lastUriSegment() {
+        $index = count(request()->segments());
+        return request()->segment($index);
+    }
+}

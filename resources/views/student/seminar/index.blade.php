@@ -43,6 +43,12 @@
                     <i class="fa fa-fw fa-info-circle text-muted mr-1"></i>
                     Status Pengajuan Seminar Skripsi
                 </h3>
+                <div class="block-options">
+                    <a href="{{ route('student.assessment.seminar.submission') }}" class="btn btn-primary btn-sm @if(!is_null($submission)) disabled @endif">
+                        <i class="fa fa-plus"></i>
+                        <span>Buat Pengajuan</span>
+                    </a>
+                </div>
             </div>
             <div class="block-content">
                 <div class="table-responsive">
@@ -64,37 +70,37 @@
                         </thead>
                         <tbody>
                         @isset($submission)
-                        <tr>
-                            <td class="text-center">{{ $submission->created_at ? $submission->created_at->format('d-m-Y') : '-' }}</td>
-                            <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_first_supervisor) : '-'  !!}</td>
-                            <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_second_supervisor) : '-'  !!}</td>
-                            <td class="text-center">{{ $submission->response_date_first_supervisor ?: '-' }}</td>
-                            <td class="text-center">{{ $submission->response_date_second_supervisor ?: '-' }}</td>
-                            <td class="text-center">
-                                @if($submission->document && Storage::exists($submission->document))
-                                    <a href="{{ route('student.assessment.seminar.submission.download', [
+                            <tr>
+                                <td class="text-center">{{ $submission->created_at ? $submission->created_at->format('d-m-Y') : '-' }}</td>
+                                <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_first_supervisor) : '-'  !!}</td>
+                                <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_second_supervisor) : '-'  !!}</td>
+                                <td class="text-center">{{ $submission->response_date_first_supervisor ?: '-' }}</td>
+                                <td class="text-center">{{ $submission->response_date_second_supervisor ?: '-' }}</td>
+                                <td class="text-center">
+                                    @if($submission->document && Storage::exists($submission->document))
+                                        <a href="{{ route('student.assessment.seminar.submission.download', [
                                         'submission' => $submission->id,
                                         'type' => 'report'
                                     ]) }}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-file-download"></i>
-                                        <span>Unduh</span>
-                                    </a>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($submission->id)
-                                    <a href="{{ route('student.assessment.seminar.submission.show', $submission->id) }}"
-                                       class="btn btn-sm btn-success">
-                                        <i class="fa fa-fw fa-search-plus"></i>
-                                        <span>Detail</span>
-                                    </a>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                        </tr>
+                                            <i class="fa fa-file-download"></i>
+                                            <span>Unduh</span>
+                                        </a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if($submission->id)
+                                        <a href="{{ route('student.assessment.seminar.submission.show', $submission->id) }}"
+                                           class="btn btn-sm btn-success">
+                                            <i class="fa fa-fw fa-search-plus"></i>
+                                            <span>Detail</span>
+                                        </a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
                         @else
                             <tr>
                                 <td class="text-center font-italic" colspan="7">

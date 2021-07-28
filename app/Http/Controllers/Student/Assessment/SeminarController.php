@@ -27,6 +27,31 @@ class SeminarController extends Controller
 
     public function submission()
     {
+        $nim = auth()->user()->registration_number;
+        $submission = SubmissionAssessment::type(AssessmentTypes::SEMINAR)
+            ->studentId($nim);
+
+        $approvedSubmission = $submission->approved()->first();
+        $appliedSubmission = $submission->first();
+
+        if ($approvedSubmission) {
+            return redirect()->back()
+                ->with('message', [
+                    'type' => 'warning',
+                    'text' => 'Pengajuan seminar Anda telah disetujui oleh Pembimbing. Anda tidak dapat mengajukan seminar kembali.',
+                    'timer' => 5000,
+                ]);
+        }
+
+        if ($appliedSubmission && !$submission->isApplied()) {
+            return redirect()->back()
+                ->with('message', [
+                    'type' => 'warning',
+                    'text' => 'Anda tidak dapat melakukan pengajuan seminar lagi selama pengajuan seminar sebelumnya, belum direspon oleh kedua Dosen Pembibming',
+                    'timer' => 5000,
+                ]);
+        }
+
         return viewStudent('seminar.submission-form');
     }
 
@@ -53,7 +78,7 @@ class SeminarController extends Controller
         $submissionAssessment->guidance_card_second_supervisor = $guidanceCardSecondSupervisor;
         $submissionAssessment->document = $report;
 
-        if($submissionAssessment->save()) {
+        if ($submissionAssessment->save()) {
             $message = setFlashMessage('success', 'create', 'pengajuan seminar');
         } else {
             $message = setFlashMessage('success', 'error', 'pengajuan seminar');
@@ -73,11 +98,11 @@ class SeminarController extends Controller
         $submissionAssessmentService = new SubmissionAssessmentService($submission);
         $filename = 'Laporan_Skripsi_';
 
-        if(Str::contains($documentType, 'first')) {
+        if (Str::contains($documentType, 'first')) {
             $filename = 'Kartu_Bimbingan_1';
         }
 
-        if(Str::contains($documentType, 'second')) {
+        if (Str::contains($documentType, 'second')) {
             $filename = 'Kartu_Bimbingan_2';
         }
 

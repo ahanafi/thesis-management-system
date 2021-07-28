@@ -39,7 +39,7 @@
             <!-- PENGUJIAN SKRIPSI -->
             <li class="nav-main-heading">PENGUJIAN SKRIPSI</li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('student.assessment.seminar.*') ? ' active' : '' }}"
+                <a class="nav-main-link{{ request()->routeIs('student.assessment.seminar.*') && lastUriSegment() !== 'score' ? ' active' : '' }}"
                    href="{{ route('student.assessment.seminar.index') }}">
                     <i class="nav-main-link-icon fa fa-building"></i>
                     <span class="nav-main-link-name">SEMINAR</span>

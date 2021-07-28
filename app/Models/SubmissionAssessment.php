@@ -54,4 +54,14 @@ class SubmissionAssessment extends Model
     {
         return $query->where('nim', $studentId);
     }
+
+    public function isApplied()
+    {
+        return $this->status_first_supervisor === Status::APPLY && $this->status_second_supervisor === Status::APPLY;
+    }
+
+    public function isApproved()
+    {
+        return $this->status_first_supervisor === Status::APPROVE && $this->status_second_supervisor === Status::APPROVE;
+    }
 }
