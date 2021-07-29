@@ -18,3 +18,9 @@ jobs:
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         server-dir: ${{ secrets.ftp_directory }}
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: Migrating database
+      run: php artisan migrate --force
