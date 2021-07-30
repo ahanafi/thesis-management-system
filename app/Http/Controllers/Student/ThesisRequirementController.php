@@ -52,7 +52,7 @@ class ThesisRequirementController extends Controller
         if ($submission === null) {
             $submission = SubmissionThesisRequirement::create([
                 'nim' => $nim,
-                'status' => Status::DRAFT,
+                'status' => Status::APPROVE,
                 'date_of_filling' => now(),
                 'response_date' => now(),
             ]);

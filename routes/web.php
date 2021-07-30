@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 
@@ -29,6 +30,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    Route::prefix('account')
+        ->name('account.')
+        ->group(function () {
+            Route::get('profile', [AccountController::class, 'profile'])->name('profile');
+
+
+        });
 
     //---------------------------------------------------------------------------------------------------- //
     //                                          ACADEMIC_STAFF

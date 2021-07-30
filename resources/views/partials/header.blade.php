@@ -35,28 +35,22 @@
                                    User Options
                                 </div>
                                 <div class="p-2">
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="far fa-fw fa-user mr-1"></i> Profile
+                                    <a class="dropdown-item" href="{{ route('account.profile') }}">
+                                        <i class="far fa-fw fa-user mr-1"></i>
+                                        <span>Profil Akun</span>
                                     </a>
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">
-                                        <span><i class="far fa-fw fa-envelope mr-1"></i> Inbox</span>
-                                        <span class="badge badge-primary">3</span>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="far fa-fw fa-file-alt mr-1"></i> Invoices
-                                    </a>
-                                    <div role="separator" class="dropdown-divider"></div>
-
                                     <!-- Toggle Side Overlay -->
                                     <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                                    <a class="dropdown-item" href="javascript:void(0)" data-toggle="layout" data-action="side_overlay_toggle">
-                                        <i class="far fa-fw fa-building mr-1"></i> Settings
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="fa fa-fw fa-key mr-1"></i>
+                                        <span>Ubah Password</span>
                                     </a>
                                     <!-- END Side Overlay -->
 
                                     <div role="separator" class="dropdown-divider"></div>
                                     <a class="dropdown-item bg-danger text-white" href="javascript:void(0)" onclick="confirmLogout()">
-                                        <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i> Sign Out
+                                        <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i>
+                                        <span>Sign Out</span>
                                     </a>
                                 </div>
                             </div>
