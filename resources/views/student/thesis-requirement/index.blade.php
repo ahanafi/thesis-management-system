@@ -114,19 +114,35 @@
             </div>
         </div>
 
-        @if($submission !== null && $submission->status === \App\Constants\Status::APPLY)
-            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
-                 role="alert">
-                <div class="flex-fill mr-3">
-                    <h3 class="alert-heading font-size-h4 my-2">
-                        <i class="fa fa-fw fa-exclamation-circle"></i> Informasi Pengajuan
-                    </h3>
-                    <p class="mb-0 font-weight-bold">
-                        Pengajuan persyaratan Skripsi Anda sedang diproses oleh BAAK. Mohon tunggu informasi
-                        selanjutnya via email. Terima kasih.
-                    </p>
+        @if($submission !== null)
+            @if($submission->status === \App\Constants\Status::APPLY)
+                <div
+                    class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
+                    role="alert">
+                    <div class="flex-fill mr-3">
+                        <h3 class="alert-heading font-size-h4 my-2">
+                            <i class="fa fa-fw fa-exclamation-circle"></i> Informasi Pengajuan
+                        </h3>
+                        <p class="mb-0 font-weight-bold">
+                            Pengajuan persyaratan Skripsi Anda sedang diproses oleh BAAK. Mohon tunggu informasi
+                            selanjutnya via email. Terima kasih.
+                        </p>
+                    </div>
                 </div>
-            </div>
+            @elseif($submission->status === \App\Constants\Status::APPROVE)
+                <div
+                    class="alert alert-success d-flex align-items-center justify-content-between border-3x border-success"
+                    role="alert">
+                    <div class="flex-fill mr-3">
+                        <h3 class="alert-heading font-size-h4 my-2">
+                            <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
+                        </h3>
+                        <p class="mb-0 font-weight-bold">
+                            Selamat! dokumen persyaratan Skripsi yang Anda unggah telah diverifikasi oleh BAAK. Saat ini Andadapat mengajukan porposal Skripsi.
+                        </p>
+                    </div>
+                </div>
+        @endif
     @endif
 
     <!-- Dynamic Table with Export Buttons -->
@@ -137,7 +153,7 @@
                     <button onclick="applyThesisRequirement()"
                             type="button"
                             class="btn btn-sm btn-primary"
-                            @if(!$submission || $submission->status === \App\Constants\Status::APPLY || $submission->details->count() < $thesisRequirements->count())
+                            @if(!$submission || ($submission->status === \App\Constants\Status::APPLY || \App\Constants\Status::APPROVE) || $submission->details->count() < $thesisRequirements->count())
                             disabled
                         @endif
                     >
@@ -193,7 +209,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center font-italic font-weight-bold">Tidak Ada data.</td>
+                                    <td colspan="5" class="text-center font-italic font-weight-bold">Tidak Ada data.
+                                    </td>
                                 </tr>
                             @endforelse
                         @endif
