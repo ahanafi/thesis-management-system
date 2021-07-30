@@ -17,7 +17,9 @@ class ThesisController extends Controller
             'student', 'scienceField', 'firstSupervisor', 'secondSupervisor'
         ])->first();
 
-        return viewStudent('thesis.index', compact('thesis'));
+        $user = auth()->user()->load('studentProfile');
+
+        return viewStudent('thesis.index', compact('thesis', 'user'));
     }
 
     public function update(Request $request, Thesis $thesis)
