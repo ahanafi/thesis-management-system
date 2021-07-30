@@ -1,14 +1,14 @@
 @extends('layouts.backend')
 
 @section('content')
-<!-- Page Content -->
+    <!-- Page Content -->
     <div class="content content-full">
         <h2 class="content-heading">Data Mahasiswa</h2>
         <div class="block block-rounded">
             <div class="block-content">
                 <form action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+                @csrf
+                @method('PUT')
                 <!-- User Profile -->
                     <h2 class="content-heading pt-0">
                         <i class="fa fa-fw fa-user text-muted mr-1"></i>
@@ -16,19 +16,24 @@
                     </h2>
                     <div class="row push">
                         <div class="col-lg-6 col-xl-6">
-                            <x-input-horizontal type="text" field="nim" value="{{ $student->nim }}" placeholder="Masukkan nomor induk" label="NIM"
+                            <x-input-horizontal type="text" field="nim" value="{{ $student->nim }}"
+                                                placeholder="Masukkan nomor induk" label="NIM"
                                                 is-required="true"></x-input-horizontal>
 
-                            <x-input-horizontal type="text" field="full_name" value="{{ $student->full_name }}" placeholder="Masukkan nama lengkap..."
+                            <x-input-horizontal type="text" field="full_name" value="{{ $student->full_name }}"
+                                                placeholder="Masukkan nama lengkap..."
                                                 label="Nama Lengkap" is-required="true"></x-input-horizontal>
 
-                            <x-input-horizontal type="text" field="place_of_birth" value="{{ $student->place_of_birth }}" placeholder="Tempat Lahir"
+                            <x-input-horizontal type="text" field="place_of_birth"
+                                                value="{{ $student->place_of_birth }}" placeholder="Tempat Lahir"
                                                 label="Tempat Lahir"></x-input-horizontal>
 
-                            <x-input-horizontal type="date" field="date_of_birth" value="{{ $student->date_of_birth }}" placeholder="Tanggal Lahir"
+                            <x-input-horizontal type="date" field="date_of_birth" value="{{ $student->date_of_birth }}"
+                                                placeholder="Tanggal Lahir"
                                                 label="Tanggal Lahir"></x-input-horizontal>
 
-                            <x-input-horizontal type="textarea" field="address" value="{{ $student->address }}" placeholder="Alamat"
+                            <x-input-horizontal type="textarea" field="address" value="{{ $student->address }}"
+                                                placeholder="Alamat"
                                                 label="Alamat"></x-input-horizontal>
 
                             <div class="form-group row">
@@ -36,8 +41,10 @@
                                     Jenis Kelamin
                                 </label>
                                 <div class="col-sm-7">
-                                    <x-input-radio label="Laki-laki" name="gender" checked="{{ $student->gender }}" value="M"></x-input-radio>
-                                    <x-input-radio label="Perempuan" name="gender" checked="{{ $student->gender }}" value="F"></x-input-radio>
+                                    <x-input-radio label="Laki-laki" name="gender"
+                                                   checked="{{ $student->gender === 'M' }}" value="M"></x-input-radio>
+                                    <x-input-radio label="Perempuan" name="gender"
+                                                   checked="{{ $student->gender ===  'F' }}" value="F"></x-input-radio>
                                 </div>
                             </div>
                         </div>
@@ -53,12 +60,14 @@
                                             </span>
                                         </div>
                                         <input type="telp" class="form-control" id="phone" name="phone"
-                                               autocomplete="off" placeholder="812345xxx..." value="{{ $student->phone }}">
+                                               autocomplete="off" placeholder="812345xxx..."
+                                               value="{{ $student->phone }}">
                                     </div>
                                 </div>
                             </div>
 
-                            <x-input-horizontal type="email" field="email" value="{{ $student->email }}" placeholder="Alamat email" label="Email"
+                            <x-input-horizontal type="email" field="email" value="{{ $student->email }}"
+                                                placeholder="Alamat email" label="Email"
                                                 is-required="true"></x-input-horizontal>
 
                             <div class="form-group row">
@@ -88,7 +97,7 @@
                                         @for($i=1; $i<=8; $i++)
                                             <option
                                                 @if($i == $student->semester) selected="selected" @endif
-                                                value="{{ $i }}">
+                                            value="{{ $i }}">
                                                 Semester {{ $i }}
                                             </option>
                                         @endfor
@@ -119,7 +128,9 @@
                                         <i class="fa fa-save mr-1"></i>
                                         <span>Simpan</span>
                                     </button>
-                                    <x-button-link extend-class="float-right" type="secondary" link="{{ route('students.index') }}" icon="chevron-left" text="Kembali"></x-button-link>
+                                    <x-button-link extend-class="float-right" type="secondary"
+                                                   link="{{ route('students.index') }}" icon="chevron-left"
+                                                   text="Kembali"></x-button-link>
                                 </div>
                             </div>
 

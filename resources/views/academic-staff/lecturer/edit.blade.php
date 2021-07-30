@@ -46,8 +46,8 @@
                                     Jenis Kelamin
                                 </label>
                                 <div class="col-sm-7">
-                                    <x-input-radio label="Laki-laki" name="gender" checked="{{ $lecturer->gender }}" value="M"></x-input-radio>
-                                    <x-input-radio label="Perempuan" name="gender" checked="{{ $lecturer->gender }}" value="F"></x-input-radio>
+                                    <x-input-radio label="Laki-laki" name="gender" checked="{{ $lecturer->gender === 'M' }}" value="M"></x-input-radio>
+                                    <x-input-radio label="Perempuan" name="gender" checked="{{ $lecturer->gender === 'F' }}" value="F"></x-input-radio>
                                 </div>
                             </div>
 
@@ -74,7 +74,7 @@
                                     Jabtan Fungsional
                                 </label>
                                 <div class="col-sm-7">
-                                    <select class="custom-select" name="functional" required>
+                                    <select class="custom-select" name="functional">
                                         <option value="">-- Pilih Jabtan Fungsional --</option>
                                         @foreach(getLecturship() as $code => $label)
                                             <option

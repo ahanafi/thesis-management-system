@@ -14,10 +14,9 @@ class InputRadio extends Component
      * @param $name
      * @param $label
      * @param $value
-     * @param bool $isChecked
-     * @param string $checked
+     * @param bool $checked
      */
-    public function __construct($name, $label, $value, $checked = '')
+    public function __construct($name, $label, $value, $checked = false)
     {
         $this->name = $name;
         $this->label = $label;

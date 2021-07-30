@@ -50,7 +50,6 @@ class LecturerController extends Controller
             'email' => 'required|unique:lecturers,email',
             'gender' => 'required',
             'study_program_code' => 'required',
-            'functional' => 'required',
         ]);
 
         $nidn = $request->get('nidn');
@@ -135,7 +134,6 @@ class LecturerController extends Controller
             'email' => 'required|unique:lecturers,email,'.$id,
             'gender' => 'required',
             'study_program_code' => 'required',
-            'functional' => 'required',
         ]);
 
         $nidn = $request->get('nidn');

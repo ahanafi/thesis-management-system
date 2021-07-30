@@ -77,7 +77,7 @@
                                     Jabtan Fungsional
                                 </label>
                                 <div class="col-sm-7">
-                                    <select class="custom-select" name="functional" required>
+                                    <select class="custom-select" name="functional">
                                         <option value="">-- Pilih Jabtan Fungsional --</option>
                                         @foreach(getLecturship() as $code => $label)
                                             <option value="{{ $code }}">

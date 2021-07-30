@@ -20,7 +20,7 @@ jobs:
         server-dir: ${{ secrets.ftp_directory }}
 
     - name: Install dependencies
-      run: composer install
+      run: composer install --ignore-platform-reqs
 
     - name: Migrating database
       run: php artisan migrate --force

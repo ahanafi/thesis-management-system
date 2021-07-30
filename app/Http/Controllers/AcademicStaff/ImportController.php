@@ -42,7 +42,7 @@ class ImportController extends Controller
                     'registration_number' => $row['NIDN']
                 ]);
 
-                $gender = strtolower($row['JENIS_KELAMIN']) === 'L' ? 'M' : 'F';
+                $gender = strtoupper($row['JENIS_KELAMIN']) === 'L' ? 'M' : 'F';
                 $studyProgramName = ucwords(strtolower($row['PROGRAM_STUDI']));
                 $studyProgram = StudyProgram::where('name', $studyProgramName)->first();
                 $studyProgramCode = $studyProgram->study_program_code ?? null;
@@ -98,7 +98,7 @@ class ImportController extends Controller
                     'registration_number' => $row['NIM'],
                 ]);
 
-                $gender = strtolower($row['JENIS_KELAMIN']) === 'L' ? 'M' : 'F';
+                $gender = strtoupper($row['JENIS_KELAMIN']) === 'L' ? 'M' : 'F';
                 $studyProgramName = ucwords(strtolower($row['PROGRAM_STUDI']));
                 $studyProgram = StudyProgram::where('name', $studyProgramName)->first();
                 $studyProgramCode = $studyProgram->study_program_code ?? null;
