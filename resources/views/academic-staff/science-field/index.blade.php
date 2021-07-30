@@ -103,7 +103,7 @@
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('master/science-fields', '{{ $field->id }}')"
+                                            onclick="confirmDelete('academic-staff/master/science-fields', '{{ $field->id }}')"
                                     >
                                         <i class="fa fa-fw fa-trash"></i>
                                     </button>

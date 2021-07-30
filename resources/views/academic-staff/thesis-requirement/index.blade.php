@@ -137,7 +137,7 @@
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"
                                             data-toggle="tooltip" title="" data-original-title="Delete"
-                                            onclick="confirmDelete('thesis-requirements', '{{ $requirement->id }}')"
+                                            onclick="confirmDelete('academic-staff/thesis-requirements', '{{ $requirement->id }}')"
                                     >
                                         <i class="fa fa-fw fa-trash"></i>
                                     </button>

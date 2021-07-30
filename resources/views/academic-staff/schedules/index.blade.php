@@ -99,7 +99,7 @@
                                                     <a href="{{ route('assessment-schedules.show', $schedule->id) }}" class="btn btn-secondary">
                                                         <i class="fa fa-fw fa-search-plus"></i>
                                                     </a>
-                                                    <a href="#" onclick="confirmDelete('assessment-schedules', '{{ $schedule->id }}')" class="btn btn-danger">
+                                                    <a href="#" onclick="confirmDelete('academic-staff/assessment-schedules', '{{ $schedule->id }}')" class="btn btn-danger">
                                                         <i class="fa fa-fw fa-trash"></i>
                                                     </a>
                                                 </div>
