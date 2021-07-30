@@ -11,15 +11,10 @@ use Illuminate\Http\Request;
 
 class StudyProgramController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $studyPrograms = StudyProgram::with('leader')->get();
-        $lecturers = Lecturer::all()->each(function ($lecturer) use ($studyPrograms){
+        $studyPrograms = StudyProgram::with('leader')->orderBy('study_program_code')->get();
+        $lecturers = Lecturer::all()->each(function ($lecturer){
             $lecturer->isLeader = (bool) StudyProgram::where('lecturer_code', $lecturer->id)->count();
         });
 
@@ -27,22 +22,6 @@ class StudyProgramController extends Controller
         return viewAcademicStaff('study-program.index', compact('studyPrograms', 'lecturers', 'faculties'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -68,36 +47,7 @@ class StudyProgramController extends Controller
         return redirect()->route('study-programs.index')->with('message', $message);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, StudyProgram $studyProgram)
     {
         $this->validate($request, [
             'study_program_code' => 'required',
@@ -108,12 +58,14 @@ class StudyProgramController extends Controller
 
         $lecturerCode = $request->get('lecturer_code');
         if($lecturerCode !== '') {
-            $user = User::where('username', $lecturerCode)->first();
-            $user->level = User::STUDY_PROGRAM_LEADER;
-            $user->save();
+            if ($studyProgram->lecturer_code !== null) {
+                $oldLecturerCode = $studyProgram->lecturer_code;
+                User::where('username', $oldLecturerCode)->update(['level' => User::LECTURER]);
+            }
+
+            User::where('username', $lecturerCode)->update(['level' => User::STUDY_PROGRAM_LEADER]);
         }
 
-        $studyProgram = StudyProgram::where('id', $id)->firstOrFail();
         $studyProgram->study_program_code = $request->get('study_program_code');
         $studyProgram->name = $request->get('name');
         $studyProgram->level = $request->get('level');
@@ -129,16 +81,8 @@ class StudyProgramController extends Controller
         return redirect()->route('study-programs.index')->with('message', $message);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(StudyProgram $studyProgram)
     {
-        $studyProgram = StudyProgram::where('id', $id)->firstOrFail();
-
         if($studyProgram->delete()) {
             $message = setFlashMessage('success', 'delete', 'program studi');
         } else {

@@ -25,8 +25,8 @@ Route::middleware('role:' . User::ACADEMIC_STAFF)
         Route::group([
             'prefix' => 'master',
         ], function () {
-            Route::resource('faculties', FacultyController::class);
-            Route::resource('study-programs', StudyProgramController::class);
+            Route::resource('faculties', FacultyController::class)->except(['create', 'edit', 'show']);
+            Route::resource('study-programs', StudyProgramController::class)->except(['create', 'edit', 'show']);
 
             Route::get('lecturers/import', [ImportController::class, 'getImportLecturer'])->name('lecturers.import');
             Route::post('lecturers/import', [ImportController::class, 'processImportLecturer'])->name('lecturers.import');
@@ -38,7 +38,7 @@ Route::middleware('role:' . User::ACADEMIC_STAFF)
 
             Route::get('science-fields/import', [ImportController::class, 'getImportScienceField'])->name('science-fields.import');
             Route::post('science-fields/import', [ImportController::class, 'processImportScienceField'])->name('science-fields.import');
-            Route::resource('science-fields', ScienceFieldController::class);
+            Route::resource('science-fields', ScienceFieldController::class)->except(['create', 'edit', 'show']);
         });
 
         //DATA SKRIPSI
