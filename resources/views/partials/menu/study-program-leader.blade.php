@@ -47,8 +47,8 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
-                   href="{{ route('home') }}">
+                <a class="nav-main-link{{ request()->routeIs('leader.determination.trial-examiner.*') ? ' active' : '' }}"
+                   href="{{ route('leader.determination.trial-examiner.index') }}">
                     <i class="nav-main-link-icon fa fa-users-cog"></i>
                     <span class="nav-main-link-name">PENGUJI SIDANG</span>
                 </a>

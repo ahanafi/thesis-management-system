@@ -29,4 +29,9 @@ class AssessmentScore extends Model
     {
         return $this->belongsTo(AssessmentComponent::class, 'assessment_component_id', 'id');
     }
+
+    public function scopeLecturerId($query, $lecturerId)
+    {
+        return $query->where('nidn', $lecturerId);
+    }
 }

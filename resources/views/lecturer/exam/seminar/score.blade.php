@@ -31,47 +31,69 @@
                         </div>
                     </div>
                     <div class="block-content block-content-full">
-                        <form action="{{ route('lecturer.exam.seminar.score', $submission->id) }}"
-                              method="POST">
-                            @csrf
-                            @method('POST')
-                            <div class="row push">
-                                <div class="col-lg-10 col-xl-10">
+                        @if(count($scores) > 0)
+                            <table class="table table-bordered table-striped table-vcenter table-sm">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="text-center">#</th>
+                                    <th>Komponen Nilai</th>
+                                    <th class="text-center">Nilai</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($scores as $score)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration  }}</td>
+                                        <td class="font-weight-bold">{{ $score->components->name }}</td>
+                                        <td class="text-center">{{ $score->score }}</td>
+                                    </tr>
+                                @empty
+                                @endforelse
+                                </tbody>
+                            </table>
+                        @else
+                            <form action="{{ route('lecturer.exam.seminar.score', $submission->id) }}"
+                                  method="POST">
+                                @csrf
+                                @method('POST')
+                                <div class="row push">
+                                    <div class="col-lg-10 col-xl-10">
+                                        @forelse($components as $component)
+                                            <div class="form-group row">
+                                                <label for="date" class="col-sm-4 col-form-label text-right">
+                                                    {{ ucwords($component->name) }}
+                                                </label>
 
-                                    @forelse($components as $component)
-                                        <div class="form-group row">
-                                            <label for="date" class="col-sm-4 col-form-label text-right">
-                                                {{ ucwords($component->name) }}
-                                            </label>
+                                                <div class="col-sm-8">
+                                                    <input type="number" class="form-control "
+                                                           name="scores[{{ $loop->iteration }}]"
+                                                           placeholder="{{ ucwords($component->name) }}"
+                                                           required="required" max="{{ $component->weight }}">
+                                                    <input type="hidden" name="component_ids[{{ $loop->iteration }}]"
+                                                           value="{{ $component->id }}">
 
-                                            <div class="col-sm-8">
-                                                <input type="number" class="form-control " name="scores[{{ $loop->iteration }}]"
-                                                      placeholder="{{ ucwords($component->name) }}" required="required">
-                                                <input type="hidden" name="component_ids[{{ $loop->iteration }}]" value="{{ $component->id }}">
-
-                                                @error($component->name)
+                                                    @error($component->name)
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
-                                                @enderror
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        @empty
+                                        @endforelse
+                                        <div class="form-group row">
+                                            <div class="col-sm-8 offset-sm-4">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fa fa-save mr-1"></i>
+                                                    <span>Simpan</span>
+                                                </button>
                                             </div>
                                         </div>
-                                    @empty
-                                    @endforelse
-
-                                    <div class="form-group row">
-                                        <div class="col-sm-8 offset-sm-4">
-                                            <button type="submit" class="btn btn-primary">
-                                                <i class="fa fa-save mr-1"></i>
-                                                <span>Simpan</span>
-                                            </button>
-                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
-                            <!-- END User Profile -->
-                        </form>
+                                <!-- END User Profile -->
+                            </form>
+                        @endif
                     </div>
                 </div>
                 <!-- END Dynamic Table with Export Buttons -->

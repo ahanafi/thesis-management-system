@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student\Assessment;
 
 use App\Constants\AssessmentTypes;
 use App\Http\Controllers\Controller;
+use App\Models\AssessmentComponent;
 use App\Models\AssessmentScore;
 use App\Models\SubmissionAssessment;
 use App\Models\Thesis;
@@ -111,13 +112,20 @@ class ColloquiumController extends Controller
     public function score()
     {
         $nim = auth()->user()->registration_number;
-        $scores = AssessmentScore::with(['components'])
-            ->whereHas('submission', function ($query) use ($nim) {
-                $query->where('nim', $nim)
-                    ->where('assessment_type', AssessmentTypes::COLLOQUIUM);
-            })
-            ->get();
+//        $scores = AssessmentScore::with(['components'])
+//            ->whereHas('submission', function ($query) use ($nim) {
+//                $query->where('nim', $nim)
+//                    ->where('assessment_type', AssessmentTypes::COLLOQUIUM);
+//            })
+//            ->get();
 
-        return viewStudent('colloquium.score', compact('scores'));
+        $submission = SubmissionAssessment::type(AssessmentTypes::COLLOQUIUM)
+            ->studentId($nim)
+            ->with(['scores', 'thesis'])
+            ->first();
+        $countAssessmentComponent = AssessmentComponent::type(AssessmentTypes::COLLOQUIUM)->count();
+        $index = 1;
+
+        return viewStudent('colloquium.score', compact('submission','index', 'countAssessmentComponent'));
     }
 }

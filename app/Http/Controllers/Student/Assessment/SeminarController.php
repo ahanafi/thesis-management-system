@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student\Assessment;
 
 use App\Constants\AssessmentTypes;
 use App\Http\Controllers\Controller;
+use App\Models\AssessmentComponent;
 use App\Models\AssessmentSchedule;
 use App\Models\AssessmentScore;
 use App\Models\SubmissionAssessment;
@@ -113,13 +114,12 @@ class SeminarController extends Controller
     public function score()
     {
         $nim = auth()->user()->registration_number;
-        $scores = AssessmentScore::with(['components'])
-            ->whereHas('submission', function ($query) use ($nim) {
-                $query->where('nim', $nim)
-                    ->where('assessment_type', AssessmentTypes::SEMINAR);
-            })
-            ->get();
-
-        return viewStudent('seminar.score', compact('scores'));
+        $submission = SubmissionAssessment::type(AssessmentTypes::SEMINAR)
+            ->studentId($nim)
+            ->with('scores')
+            ->first();
+        $countAssessmentComponent = AssessmentComponent::type(AssessmentTypes::SEMINAR)->count();
+        $index = 1;
+        return viewStudent('seminar.score', compact('submission','index', 'countAssessmentComponent'));
     }
 }

@@ -77,7 +77,7 @@
                                             data-placeholder="-- Pilih Mahasiswa --">
                                         <option value="" disabled selected>-- Pilih Mahasiswa --</option>
                                         @forelse($submissions as $submission)
-                                            <option value="{{ $submission->nim }}"
+                                            <option {{ old('student_id') === $submission->nim ? 'selected' : '' }} value="{{ $submission->nim }}"
                                                     data-first-examiner="{{ optional($submission->firstExaminer)->getNameWithDegree() }}"
                                                     data-second-examiner="{{ optional($submission->secondExaminer)->getNameWithDegree() }}"
                                                     data-submission-id="{{ $submission->id }}">
@@ -103,7 +103,7 @@
                                 </label>
                                 <div class="col-sm-7">
                                     <input type="text" class="js-flatpickr form-control bg-white @error('date') is-invalid @enderror" id="input-date"
-                                           name="date" placeholder="Y-m-d" required>
+                                           name="date" placeholder="Y-m-d" required value="{{ old('date') }}">
 
                                     @error('date')
                                         <span class="invalid-feedback" role="alert">
@@ -120,7 +120,7 @@
                                 <div class="col-sm-7">
                                     <div class="input-group">
                                         <input type="text" class="form-control bg-white @error('start_time') is-invalid @enderror" id="start-time"
-                                               name="start_time" placeholder="-- : --">
+                                               name="start_time" placeholder="-- : --" value="{{ old('start_time') }}">
 
                                         <div class="input-group-append">
                                             <span class="input-group-text">
@@ -129,7 +129,7 @@
                                         </div>
 
                                         <input type="text" class="form-control bg-white @error('finish_time') is-invalid @enderror" id="finish-time"
-                                               name="finish_time" placeholder="-- : --">
+                                               name="finish_time" placeholder="-- : --" value="{{ old('finish_time') }}">
                                     </div>
                                     @error('start_time')
                                         <span class="invalid-feedback" role="alert">

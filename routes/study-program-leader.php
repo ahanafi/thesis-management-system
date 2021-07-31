@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Leader\Determination\SeminarExaminerController;
 use App\Http\Controllers\Leader\Determination\SupervisorController;
+use App\Http\Controllers\Leader\Determination\TrialExaminerController;
 use App\Http\Controllers\Leader\ThesisController;
 use App\Http\Controllers\Leader\ThesisSubmissionController;
 
@@ -62,12 +63,22 @@ Route::prefix('study-program-leader')
                         //Route::get('lecturer-list/{thesis}', [SupervisorController::class, 'lecturerList'])->name('supervisor.lecturer-list');
                     });
 
+                //Seminar Tester
                 Route::prefix('seminar-examiner')
                     ->name('seminar-examiner.')
                     ->group(function () {
                         Route::get('/', [SeminarExaminerController::class, 'index'])->name('index');
                         Route::get('set-examiner/{submission}', [SeminarExaminerController::class, 'setExaminer'])->name('set-examiner');
                         Route::post('set-examiner/{submission}', [SeminarExaminerController::class, 'save'])->name('save');
+                    });
+
+                //Trial
+                Route::prefix('trial-examiner')
+                    ->name('trial-examiner.')
+                    ->group(function () {
+                        Route::get('/', [TrialExaminerController::class, 'index'])->name('index');
+                        Route::get('set-examiner/{submission}', [TrialExaminerController::class, 'setExaminer'])->name('set-examiner');
+                        Route::post('set-examiner/{submission}', [TrialExaminerController::class, 'save'])->name('save');
                     });
             });
     });

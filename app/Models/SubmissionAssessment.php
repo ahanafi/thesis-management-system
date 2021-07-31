@@ -40,6 +40,12 @@ class SubmissionAssessment extends Model
         return $this->hasOne(Lecturer::class, 'nidn', 'second_examiner');
     }
 
+    public function scores()
+    {
+        return $this->hasMany(AssessmentScore::class, 'submission_assessment_id', 'id')
+            ->with(['components']);
+    }
+
     public function scopeType($query, $type)
     {
         if($type === 'final-test') {

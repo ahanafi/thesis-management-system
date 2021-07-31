@@ -12,11 +12,19 @@ class ColloquiumController extends Controller
 {
     public function score(SubmissionAssessment $submission)
     {
+        $nidn = auth()->user()->registration_number;
+
         $submission->load(['student', 'thesis']);
         $assessmentType = $submission->assessment_type;
         $components = AssessmentComponent::type($assessmentType)->get();
+        $scores = AssessmentScore::lecturerId($nidn)
+            ->with('components')
+            ->whereHas('submission', function ($q) use ($submission) {
+                $q->where('submission_assessment_id', $submission->id);
+            })
+            ->get();
 
-        return viewLecturer('exam.colloquium.score', compact('submission', 'components'));
+        return viewLecturer('exam.colloquium.score', compact('submission', 'components', 'scores'));
     }
 
     public function inputScore(Request $request, SubmissionAssessment $submission)
