@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Leader\Determination\SeminarExaminerController;
 use App\Http\Controllers\Leader\Determination\SupervisorController;
 use App\Http\Controllers\Leader\ThesisController;
 use App\Http\Controllers\Leader\ThesisSubmissionController;
@@ -51,7 +52,22 @@ Route::prefix('study-program-leader')
         Route::prefix('determination')
             ->name('determination.')
             ->group(function () {
-                Route::get('supervisor', [SupervisorController::class, 'index'])->name('supervisor.index');
-                Route::get('supervisor/lecturer-list/{thesis}', [SupervisorController::class, 'lecturerList'])->name('supervisor.lecturer-list');
+                //Supervisor
+                Route::prefix('supervisor')
+                    ->name('supervisor.')
+                    ->group(function () {
+                        Route::get('/', [SupervisorController::class, 'index'])->name('index');
+                        Route::get('set-supervisor/{thesis}', [SupervisorController::class, 'setSupervisor'])->name('set-supervisor');
+                        Route::post('set-supervisor/{thesis}', [SupervisorController::class, 'save'])->name('save');
+                        //Route::get('lecturer-list/{thesis}', [SupervisorController::class, 'lecturerList'])->name('supervisor.lecturer-list');
+                    });
+
+                Route::prefix('seminar-examiner')
+                    ->name('seminar-examiner.')
+                    ->group(function () {
+                        Route::get('/', [SeminarExaminerController::class, 'index'])->name('index');
+                        Route::get('set-examiner/{submission}', [SeminarExaminerController::class, 'setExaminer'])->name('set-examiner');
+                        Route::post('set-examiner/{submission}', [SeminarExaminerController::class, 'save'])->name('save');
+                    });
             });
     });

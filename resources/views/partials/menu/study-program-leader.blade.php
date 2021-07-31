@@ -40,8 +40,8 @@
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is('user/*') ? ' active' : '' }}"
-                   href="{{ route('home') }}">
+                <a class="nav-main-link{{ request()->routeIs('leader.determination.seminar-examiner.*') ? ' active' : '' }}"
+                   href="{{ route('leader.determination.seminar-examiner.index') }}">
                     <i class="nav-main-link-icon fa fa-user-friends"></i>
                     <span class="nav-main-link-name">PENGUJI SEMINAR</span>
                 </a>

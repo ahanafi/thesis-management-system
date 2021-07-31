@@ -24,6 +24,36 @@ class SupervisorController extends Controller
         return viewStudyProgramLeader('determination.supervisor.index', compact('theses'));
     }
 
+    public function setSupervisor(Thesis $thesis)
+    {
+        $thesis->load(['student', 'scienceField']);
+
+        $studyProgramCode = $thesis->student->study_program_code;
+        $firstSupervisorCandidates = Lecturer::studyProgramCode($studyProgramCode)->get();
+        $lecturers = Lecturer::select('full_name', 'nidn', 'degree')->get();
+
+        return viewStudyProgramLeader('determination.supervisor.single', compact('thesis', 'lecturers', 'firstSupervisorCandidates'));
+    }
+
+    public function save(Request $request, Thesis $thesis)
+    {
+        $this->validate($request, [
+            'first_supervisor' => 'required|exists:lecturers,nidn',
+            'second_supervisor' => 'required|exists:lecturers,nidn|different:first_supervisor',
+        ]);
+
+        $thesis->first_supervisor = $request->get('first_supervisor');
+        $thesis->second_supervisor = $request->get('second_supervisor');
+
+        if($thesis->save()) {
+            $message = setFlashMessage('success', 'custom', 'Data pembimbing skripsi berhasil ditentukan.');
+        } else {
+            $message = setFlashMessage('error', 'custom', 'Gagal menyimpan data pembimbing skripsi.');
+        }
+
+        return redirect()->route('leader.determination.supervisor.index')->with('message', $message);
+    }
+
     public function lecturerList(Thesis $thesis)
     {
         //Load relations

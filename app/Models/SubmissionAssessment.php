@@ -48,6 +48,12 @@ class SubmissionAssessment extends Model
         return $query->where('assessment_type', $type);
     }
 
+    public function scopeEmptyTester($query)
+    {
+        return $query->whereNull('first_examiner')
+            ->whereNull('second_examiner');
+    }
+
     public function scopeApproved($query)
     {
         return $query->where('status_first_supervisor', Status::APPROVE)

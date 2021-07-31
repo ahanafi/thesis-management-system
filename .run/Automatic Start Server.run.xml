@@ -1,10 +1,5 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Automatic Start Server" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="serve">
-    <CommandLine>
-      <PhpTestInterpreterSettings>
-        <option name="interpreterName" value="PHP 7.4" />
-      </PhpTestInterpreterSettings>
-    </CommandLine>
     <method v="2" />
   </configuration>
 </component>
