@@ -35,7 +35,7 @@
                                    User Options
                                 </div>
                                 <div class="p-2">
-                                    <a class="dropdown-item" href="{{ route('account.profile') }}">
+                                    <a class="dropdown-item" href="{{ auth()->user()->level === App\Models\User::LECTURER || auth()->user()->level === App\Models\User::STUDY_PROGRAM_LEADER ? route('lecturer.profile') : route('account.profile')}}">
                                         <i class="far fa-fw fa-user mr-1"></i>
                                         <span>Profil Akun</span>
                                     </a>
