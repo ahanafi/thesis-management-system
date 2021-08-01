@@ -18,7 +18,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('lecturer')
-    ->middleware('role:' . User::LECTURER)
+    ->middleware('role:' . User::LECTURER .'|'. User::STUDY_PROGRAM_LEADER)
     ->name('lecturer.')
     ->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('index');

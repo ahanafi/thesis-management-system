@@ -15,8 +15,9 @@ class DataSetController extends Controller
         $dataSets = DataSet::orderBy('nim', 'ASC')
             ->orderBy('thesis_year', 'ASC')
             ->get();
+        $studyProgram = DataSet::select('study_program_name')->distinct()->get();
 
-        return viewStudyProgramLeader('data-set.index', compact('dataSets'));
+        return viewStudyProgramLeader('data-set.index', compact('dataSets', 'studyProgram'));
     }
 
     public function import(Request $request)

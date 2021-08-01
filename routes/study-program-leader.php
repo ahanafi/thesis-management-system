@@ -60,7 +60,7 @@ Route::prefix('study-program-leader')
                         Route::get('/', [SupervisorController::class, 'index'])->name('index');
                         Route::get('set-supervisor/{thesis}', [SupervisorController::class, 'setSupervisor'])->name('set-supervisor');
                         Route::post('set-supervisor/{thesis}', [SupervisorController::class, 'save'])->name('save');
-                        //Route::get('lecturer-list/{thesis}', [SupervisorController::class, 'lecturerList'])->name('supervisor.lecturer-list');
+                        Route::get('lecturer-list/{thesis}', [SupervisorController::class, 'lecturerList'])->name('supervisor.lecturer-list');
                     });
 
                 //Seminar Tester
@@ -77,6 +77,7 @@ Route::prefix('study-program-leader')
                     ->name('trial-examiner.')
                     ->group(function () {
                         Route::get('/', [TrialExaminerController::class, 'index'])->name('index');
+                        Route::get('lecturer-list/{submission}', [TrialExaminerController::class, 'lecturerList'])->name('lecturer-list');
                         Route::get('set-examiner/{submission}', [TrialExaminerController::class, 'setExaminer'])->name('set-examiner');
                         Route::post('set-examiner/{submission}', [TrialExaminerController::class, 'save'])->name('save');
                     });

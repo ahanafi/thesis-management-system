@@ -21,59 +21,53 @@
 @endsection
 
 @section('content')
-   <!-- Page Content -->
+        <!-- Page Content -->
     <div class="content">
-        <h2 class="content-heading">Data Skripsi Mahasiswa</h2>
+        <h2 class="content-heading">
+            Daftar Pengajuan Sidang Skripsi
+        </h2>
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Daftar Skripsi Mahasiswa</h3>
+                <h3 class="block-title">
+                    <i class="fa fa-fw fa-users text-muted mr-1"></i>
+                    Daftar Mahasiswa Yang Mengajukan Sidang Skripsi
+                </h3>
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
                     <tr>
-                        <th class="text-center" style="width: 80px;">
-                            <i class="fa fa-user"></i>
-                        </th>
+                        <th class="text-center" style="width: 80px;">#</th>
                         <th>NIM</th>
-                        <th>Nama Lengkap</th>
+                        <th>Nama Mahasiswa</th>
                         <th class="d-none d-sm-table-cell">Judul Skripsi</th>
-                        <th class="d-none d-sm-table-cell">Dosen Pembimbing</th>
-                        <th class="d-none d-sm-table-cell text-center">Aksi</th>
+                        <th class="d-none d-sm-table-cell">Bidang</th>
+                        <th class="text-center" style="width: 200px;">Tanggal <i>Acc.</i></th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    @foreach ($theses as $thesis)
+                    @forelse($submissions as $submission)
                         <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $submission->thesis->student->nim }}</td>
+                            <td>{{ $submission->thesis->student->getName() }}</td>
+                            <td>{{ $submission->thesis->research_title }}</td>
+                            <td>{{ $submission->thesis->scienceField->name }}</td>
+                            <td>{{ $submission->thesis->created_at }}</td>
                             <td class="text-center">
-                                <img
-                                    class="img-avatar img-avatar48"
-                                    src="{{
-                                        Storage::exists($thesis->student->user->avatar)
-                                        ? Storage::url($thesis->student->user->avatar)
-                                        : asset('media/avatars/avatar7.jpg')
-                                    }}"
-                                    alt="User picture">
-                            </td>
-                            <td class="font-w600">{{ $thesis->nim }}</td>
-                            <td>{{ $thesis->student->getName() }}</td>
-                            <td class="d-none d-sm-table-cell" style="width: 40%;">{{ $thesis->research_title }}</td>
-                            <td class="d-none d-sm-table-cell">
-                                - {{ $thesis->first_supervisor !== null ? $thesis->firstSupervisor->getNameWithDegree() : '' }} <br>
-                                - {{ $thesis->second_supervisor !== null ? $thesis->secondSupervisor->getNameWithDegree() : '' }}
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('leader.thesis.show', $thesis->id) }}"
-                                   class="btn btn-primary btn-sm">
-                                    <i class="fa fa-eye"></i>
-                                    <span>Detail</span>
-                                </a>
+                                <div class="btn-group">
+                                    <a href="{{ route('leader.determination.trial-examiner.lecturer-list', $submission->id) }}"
+                                       class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                    @endforelse
                     </tbody>
                 </table>
             </div>

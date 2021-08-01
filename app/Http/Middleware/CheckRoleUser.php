@@ -13,12 +13,12 @@ class CheckRoleUser
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
-     * @param $role
+     * @param $userRoles
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, $userRoles)
     {
-        if(Auth::user()->level !== $role) {
+        if(!in_array(Auth::user()->level, explode('|', $userRoles), true)){
             abort(403);
         }
 

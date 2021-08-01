@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Leader\Determination;
 
 use App\Constants\AssessmentTypes;
+use App\Constants\ScoreTag;
 use App\Http\Controllers\Controller;
 use App\Models\DataSet;
 use App\Models\Lecturer;
@@ -19,7 +20,7 @@ class TrialExaminerController extends Controller
         $nidn = auth()->user()->registration_number;
 
         $studyProgram = Lecturer::where('nidn', $nidn)->select('study_program_code')->first();
-        $submissionSeminarAssessment = SubmissionAssessment::with(['thesis', 'student'])
+        $submissions =  SubmissionAssessment::with(['thesis', 'student'])
             ->whereHas('student', function ($query) use ($studyProgram) {
                 $query->where('study_program_code', $studyProgram->study_program_code);
             })
@@ -27,54 +28,13 @@ class TrialExaminerController extends Controller
             ->emptyTester()
             ->get();
 
-        return viewStudyProgramLeader('determination.seminar-examiner.index', compact('submissionSeminarAssessment'));
+        return viewStudyProgramLeader('determination.trial-examiner.index', compact('submissions'));
     }
 
-    public function setExaminer(SubmissionAssessment $submission)
-    {
-        $submission->load(['student', 'thesis']);
-
-        $studyProgramCode = $submission->student->study_program_code;
-        $firstExaminerCandidates = Lecturer::studyProgramCode($studyProgramCode)
-            ->whereNotIn('nidn', [
-                $submission->thesis->first_supervisor,
-                $submission->thesis->second_supervisor
-            ])
-            ->get();
-
-        $lecturers = Lecturer::select('full_name', 'nidn', 'degree')
-            ->whereNotIn('nidn', [
-                $submission->thesis->first_supervisor,
-                $submission->thesis->second_supervisor
-            ])
-            ->get();
-
-        return viewStudyProgramLeader('determination.seminar-examiner.single', compact('submission', 'lecturers', 'firstExaminerCandidates'));
-    }
-
-    public function save(Request $request, SubmissionAssessment $submission)
-    {
-        $this->validate($request, [
-            'first_examiner' => 'required|exists:lecturers,nidn',
-            'second_examiner' => 'required|exists:lecturers,nidn|different:first_examiner',
-        ]);
-
-        $submission->first_examiner = $request->get('first_examiner');
-        $submission->second_examiner = $request->get('second_examiner');
-
-        if ($submission->save()) {
-            $message = setFlashMessage('success', 'custom', 'Data penguji seminar skripsi berhasil ditentukan.');
-        } else {
-            $message = setFlashMessage('error', 'custom', 'Gagal menyimpan data penguji seminar skripsi.');
-        }
-
-        return redirect()->route('leader.determination.seminar-examiner.index')->with('message', $message);
-    }
-
-    public function lecturerList(Thesis $thesis)
+    public function lecturerList(SubmissionAssessment $submission)
     {
         //Load relations
-        $thesis->load(['student', 'scienceField']);
+        $submission->load(['student', 'thesis']);
 
         $filteredLecturers = [];
 
@@ -82,48 +42,48 @@ class TrialExaminerController extends Controller
         $lecturers = Lecturer::with('study_program')
             ->get()
             ->each(function ($lecturer) {
-                $lecturer->asFirstSupervisorCount = DataSet::where('first_supervisor', 'LIKE', '%' . $lecturer->getFullName() . '%')->count();
-                $lecturer->asSecondSupervisorCount = DataSet::where('second_supervisor', $lecturer->getFullName())->count();
-                $lecturer->supervisorType = ($lecturer->asFirstSupervisorCount > $lecturer->asSecondSupervisorCount) ? 1 : 2;
+                $lecturer->asFirstExaminerCount = DataSet::where('first_trial_examiner', 'LIKE', '%' . $lecturer->getFullName() . '%')->count();
+                $lecturer->asSecondExaminerCount = DataSet::where('second_trial_examiner', 'LIKE', '%' . $lecturer->getFullName() . '%')->count();
+                $lecturer->supervisorType = ($lecturer->asFirstExaminerCount > $lecturer->asSecondExaminerCount) ? 1 : 2;
             });
 
         // Criteria
         $homebases = [];
         $functionalJobs = [];
-        $firstSupervisorScores = [];
-        $secondSupervisorScores = [];
+        $firstExaminerScores = [];
+        $secondExaminerScores = [];
 
-        $totalFirstSupervisor = 0;
-        $totalSecondSupervisor = 0;
+        $totalFirstExaminer = 0;
+        $totalSecondExaminer = 0;
 
         //Filter lecturers
         foreach ($lecturers as $lecturer) {
-            if ($lecturer->asFirstSupervisorCount > 0 || $lecturer->asSecondSupervisorCount > 0) {
+            if ($lecturer->asFirstExaminerCount > 0 || $lecturer->asSecondExaminerCount > 0) {
                 $lectureship = ($lecturer->functional !== null) ? getLecturship($lecturer->functional) : 'NON-JAB';
 
-                $firstSupervisorLabel = ScoreTag::getFirstLabel($lecturer->asFirstSupervisorCount);
-                $secondSupervisorLabel = ScoreTag::getSecondLabel($lecturer->asSecondSupervisorCount);
+                $firstExaminerLabel = ScoreTag::getFirstLabel($lecturer->asFirstExaminerCount);
+                $secondExaminerLabel = ScoreTag::getSecondLabel($lecturer->asSecondExaminerCount);
 
                 $filteredLecturers[] = (object)[
                     'name' => $lecturer->getShortName(),
                     'homebase' => $lecturer->study_program->getName(),
-                    'asFirstSupervisorCount' => $lecturer->asFirstSupervisorCount,
-                    'asSecondSupervisorCount' => $lecturer->asSecondSupervisorCount,
-                    'firstSupervisorLabel' => $firstSupervisorLabel,
-                    'secondSupervisorLabel' => $secondSupervisorLabel,
+                    'asFirstExaminerCount' => $lecturer->asFirstExaminerCount,
+                    'asSecondExaminerCount' => $lecturer->asSecondExaminerCount,
+                    'firstExaminerLabel' => $firstExaminerLabel,
+                    'secondExaminerLabel' => $secondExaminerLabel,
                     'functional' => $lectureship,
                     'supervisorType' => $lecturer->supervisorType
                 ];
 
                 $homebases[] = $lecturer->study_program->getName();
                 $functionalJobs[] = $lectureship;
-                $firstSupervisorScores[] = $firstSupervisorLabel;
-                $secondSupervisorScores[] = $secondSupervisorLabel;
+                $firstExaminerScores[] = $firstExaminerLabel;
+                $secondExaminerScores[] = $secondExaminerLabel;
 
-                if ($lecturer->asFirstSupervisorCount > 0) {
-                    $totalFirstSupervisor++;
-                } else if ($lecturer->asSecondSupervisorCount > 0) {
-                    $totalSecondSupervisor++;
+                if ($lecturer->asFirstExaminerCount > 0) {
+                    $totalFirstExaminer++;
+                } else if ($lecturer->asSecondExaminerCount > 0) {
+                    $totalSecondExaminer++;
                 }
             }
         }
@@ -135,7 +95,7 @@ class TrialExaminerController extends Controller
         $uniqueFunctional = array_values(array_unique($functionalJobs));
 
         /* C45 Calculation Section */
-        $entropyTotal = C45Service::calculateEntropy($countFilteredLecturers, $totalFirstSupervisor, $totalSecondSupervisor);
+        $entropyTotal = C45Service::calculateEntropy($countFilteredLecturers, $totalFirstExaminer, $totalSecondExaminer);
 
         /*
          * Section for Hombase calculation
@@ -209,28 +169,28 @@ class TrialExaminerController extends Controller
         /*
          * Section for First Scores
          * */
-        $firstSupervisorScoreAttributes = [];
-        $firstSupervisorScores = [];
+        $firstExaminerScoreAttributes = [];
+        $firstExaminerScores = [];
         $totalCriteria = 0;
         foreach ($scoreLabels as $label) {
-            $totalCriteria = countFromArray($filteredLecturers, ['firstSupervisorLabel' => $label]);
+            $totalCriteria = countFromArray($filteredLecturers, ['firstExaminerLabel' => $label]);
             $totalFirstCriteria = countFromArray($filteredLecturers, [
-                'firstSupervisorLabel' => $label,
+                'firstExaminerLabel' => $label,
                 'supervisorType' => 1
             ]);
 
             $totalSecondCriteria = countFromArray($filteredLecturers, [
-                'firstSupervisorLabel' => $label,
+                'firstExaminerLabel' => $label,
                 'supervisorType' => 2
             ]);
 
             $entropy = C45Service::calculateEntropy($totalCriteria, $totalFirstCriteria, $totalSecondCriteria);
-            $firstSupervisorScoreAttributes[] = [
+            $firstExaminerScoreAttributes[] = [
                 'total_criteria' => $totalCriteria,
                 'entropy_criteria' => $entropy,
             ];
 
-            $firstSupervisorScores[] = [
+            $firstExaminerScores[] = [
                 'name' => $label,
                 'total' => $totalCriteria,
                 'first_supervisor' => $totalFirstCriteria,
@@ -242,28 +202,28 @@ class TrialExaminerController extends Controller
         /*
          * Section for Second Scores
          * */
-        $secondSupervisorScoreAttributes = [];
-        $secondSupervisorScores = [];
+        $secondExaminerScoreAttributes = [];
+        $secondExaminerScores = [];
         $totalCriteria = 0;
         foreach ($scoreLabels as $label) {
-            $totalCriteria = countFromArray($filteredLecturers, ['secondSupervisorLabel' => $label]);
+            $totalCriteria = countFromArray($filteredLecturers, ['secondExaminerLabel' => $label]);
             $totalFirstCriteria = countFromArray($filteredLecturers, [
-                'secondSupervisorLabel' => $label,
+                'secondExaminerLabel' => $label,
                 'supervisorType' => 1
             ]);
 
             $totalSecondCriteria = countFromArray($filteredLecturers, [
-                'secondSupervisorLabel' => $label,
+                'secondExaminerLabel' => $label,
                 'supervisorType' => 2
             ]);
 
             $entropy = C45Service::calculateEntropy($totalCriteria, $totalFirstCriteria, $totalSecondCriteria);
-            $secondSupervisorScoreAttributes[] = [
+            $secondExaminerScoreAttributes[] = [
                 'total_criteria' => $totalCriteria,
                 'entropy_criteria' => $entropy,
             ];
 
-            $secondSupervisorScores[] = [
+            $secondExaminerScores[] = [
                 'name' => $label,
                 'total' => $totalCriteria,
                 'first_supervisor' => $totalFirstCriteria,
@@ -288,29 +248,70 @@ class TrialExaminerController extends Controller
                 'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $functionalJobAttributes),
             ],
             [
-                'name' => 'SKOR PEMBIMBING 1',
+                'name' => 'SKOR PENGUJI 1',
                 'background' => 'warning',
-                'items' => $firstSupervisorScores,
-                'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $firstSupervisorScoreAttributes),
+                'items' => $firstExaminerScores,
+                'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $firstExaminerScoreAttributes),
             ],
             [
-                'name' => 'SKOR PEMBIMBING 2',
+                'name' => 'SKOR PENGUJI 2',
                 'background' => 'danger',
-                'items' => $secondSupervisorScores,
-                'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $secondSupervisorScoreAttributes),
+                'items' => $secondExaminerScores,
+                'gain' => C45Service::calculateGain($entropyTotal, $countFilteredLecturers, $secondExaminerScoreAttributes),
             ],
         ];
 
-        return viewStudyProgramLeader('determination.supervisor.lecturer-list', [
-            'thesis' => $thesis,
+        return viewStudyProgramLeader('determination.trial-examiner.lecturer-list', [
+            'submission' => $submission,
             'lecturers' => $lecturers,
             'filteredLecturers' => $filteredLecturers,
             'results' => $results,
             'countFilteredLecturers' => $countFilteredLecturers,
-            'totalFirstSupervisor' => $totalFirstSupervisor,
-            'totalSecondSupervisor' => $totalSecondSupervisor,
+            'totalFirstExaminer' => $totalFirstExaminer,
+            'totalSecondExaminer' => $totalSecondExaminer,
             'number' => 1,
             'entropyTotal' => $entropyTotal,
         ]);
+    }
+
+    public function setExaminer(SubmissionAssessment $submission)
+    {
+        $submission->load(['student', 'thesis']);
+
+        $studyProgramCode = $submission->student->study_program_code;
+        $firstExaminerCandidates = Lecturer::studyProgramCode($studyProgramCode)
+            ->whereNotIn('nidn', [
+                $submission->thesis->first_supervisor,
+                $submission->thesis->second_supervisor
+            ])
+            ->get();
+
+        $lecturers = Lecturer::select('full_name', 'nidn', 'degree')
+            ->whereNotIn('nidn', [
+                $submission->thesis->first_supervisor,
+                $submission->thesis->second_supervisor
+            ])
+            ->get();
+
+        return viewStudyProgramLeader('determination.trial-examiner.single', compact('submission', 'lecturers', 'firstExaminerCandidates'));
+    }
+
+    public function save(Request $request, SubmissionAssessment $submission)
+    {
+        $this->validate($request, [
+            'first_examiner' => 'required|exists:lecturers,nidn',
+            'second_examiner' => 'required|exists:lecturers,nidn|different:first_examiner',
+        ]);
+
+        $submission->first_examiner = $request->get('first_examiner');
+        $submission->second_examiner = $request->get('second_examiner');
+
+        if ($submission->save()) {
+            $message = setFlashMessage('success', 'custom', 'Data penguji seminar skripsi berhasil ditentukan.');
+        } else {
+            $message = setFlashMessage('error', 'custom', 'Gagal menyimpan data penguji seminar skripsi.');
+        }
+
+        return redirect()->route('leader.determination.trial-examiner.index')->with('message', $message);
     }
 }

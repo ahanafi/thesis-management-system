@@ -15,35 +15,22 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
+    <script>
+        jQuery(function () {
+            $("#data-sets").DataTable({
+                paging: false,
+            });
+            $("#data-sets_wrapper > .row:first-child > .col-sm-12:first-child")
+        });
+    </script>
 @endsection
 
-@section('content')
-    <!-- Hero -->
-    <div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Data Set</h1>
-                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">App</li>
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- END Hero -->
-
-    <!-- Page Content -->
+@section('content')<!-- Page Content -->
     <div class="content">
+        <h2 class="content-heading">Data Set Skripsi</h2>
         @if($dataSets->count() <= 0)
             <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                  role="alert">
@@ -52,9 +39,8 @@
                         <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
                     </h3>
                     <p class="mb-0">
-                        Silahkan unggah <i>data set</i> terlebih dahulu agar penentuan Dosen Pembimbing dan Dosen
-                        Penguji
-                        dapat dilakukan. <br>
+                        Silahkan unggah <i>data set</i> terlebih dahulu agar penentuan Dosen
+                        Penguji Sidang dapat dilakukan. <br>
                     </p>
                 </div>
             </div>
@@ -104,11 +90,11 @@
         @endif
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Persyaratan Skripsi</h3>
+                <h3 class="block-title">Data Set Skripsi Mahasiswa</h3>
             </div>
             <div class="block-content block-content-full">
                 <div class="table-responsive table-responsive-sm">
-                    <table class="table table-sm table-bordered table-striped table-vcenter js-dataTable-full">
+                    <table class="table table-sm table-bordered table-striped table-vcenter" id="data-sets">
                         <thead>
                         <tr>
                             <th class="text-center" style="width: 80px;">#</th>
