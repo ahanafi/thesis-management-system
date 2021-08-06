@@ -104,10 +104,10 @@
                             <th>Tahun Skripsi</th>
                             <th>Judul</th>
                             <th>Bidang Ilmu</th>
-                            <th>Pembimbing 1</th>
+                            {{--<th>Pembimbing 1</th>
                             <th>Pembimbing 2</th>
                             <th>Penguji Seminar 1</th>
-                            <th>Penguji Seminar 2</th>
+                            <th>Penguji Seminar 2</th>--}}
                             <th>Penguji Sidang 1</th>
                             <th>Penguji Sidang 2</th>
                         </tr>
@@ -118,8 +118,8 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $dataSet->nim }}</td>
                                 <td>{{ showName($dataSet->student_name) }}</td>
-                                <td>{{ studyProgramShortName($dataSet->study_program_name) }}</td>
-                                <td>{{ $dataSet->thesis_year }}</td>
+                                <td class="text-center">{{ studyProgramShortName($dataSet->study_program_name) }}</td>
+                                <td class="text-center">{{ $dataSet->thesis_year }}</td>
                                 <td>
                                     @if($dataSet->research_title !== '-')
                                         <span class="badge badge-info js-popover"
@@ -133,10 +133,10 @@
                                     @endif
                                 </td>
                                 <td>{{ $dataSet->science_field_name }}</td>
-                                <td>{{ showName($dataSet->first_supervisor) }}</td>
-                                <td>{{ showName($dataSet->second_supervisor) }}</td>
-                                <td>{{ showName($dataSet->first_seminar_examiner) }}</td>
-                                <td>{{ showName($dataSet->second_seminar_examiner) }}</td>
+{{--                                <td>{{ showName($dataSet->first_supervisor) }}</td>--}}
+{{--                                <td>{{ showName($dataSet->second_supervisor) }}</td>--}}
+{{--                                <td>{{ showName($dataSet->first_seminar_examiner) }}</td>--}}
+{{--                                <td>{{ showName($dataSet->second_seminar_examiner) }}</td>--}}
                                 <td>{{ showName($dataSet->first_trial_examiner) }}</td>
                                 <td>{{ showName($dataSet->second_trial_examiner) }}</td>
                             </tr>

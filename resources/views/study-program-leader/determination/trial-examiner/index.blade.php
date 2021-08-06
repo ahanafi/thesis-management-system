@@ -59,7 +59,7 @@
                             <td>{{ $submission->thesis->created_at }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('leader.determination.trial-examiner.lecturer-list', $submission->id) }}"
+                                    <a href="{{ route('leader.determination.trial-examiner.root-node', $submission->id) }}"
                                        class="btn btn-primary">
                                         <i class="fa fa-search"></i>
                                     </a>

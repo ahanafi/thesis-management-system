@@ -14,7 +14,9 @@ class CreateRulesTable extends Migration
     public function up()
     {
         Schema::create('rules', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
+            $table->string('rule');
+            $table->string('index');
             $table->timestamps();
         });
     }

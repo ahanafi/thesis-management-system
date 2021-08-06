@@ -77,9 +77,9 @@ class HomeController extends Controller
 
         //Study Program Leader
         if (auth()->user()->level === User::STUDY_PROGRAM_LEADER) {
-            $nidn = auth()->user()->id;
-            $user = User::with('lecturerProfile')->where('id', $nidn)->first();
-            $studyProgramCode = $user->lecturerProfile->study_program_code;
+            $nidn = auth()->user()->registration_number;
+            $lecturer = Lecturer::with(['user', 'study_program'])->where('nidn', $nidn)->first();
+            $studyProgramCode = $lecturer->study_program_code;
 
             $lecturerCount = Lecturer::studyProgramCode($studyProgramCode)->count();
             $studentCount = Student::studyProgramCode($studyProgramCode)->count();
@@ -92,7 +92,7 @@ class HomeController extends Controller
                 $q->where('study_program_code', $studyProgramCode);
             })->count();
 
-            return viewStudyProgramLeader('dashboard', compact('lecturerCount', 'studentCount', 'thesisSubmissionCount', 'thesisCount'));
+            return viewStudyProgramLeader('dashboard', compact('lecturer','lecturerCount', 'studentCount', 'thesisSubmissionCount', 'thesisCount'));
         }
 
         //Lecturer

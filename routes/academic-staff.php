@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcademicStaff\AssessmentComponentController;
 use App\Http\Controllers\AcademicStaff\AssessmentScheduleController;
+use App\Http\Controllers\AcademicStaff\ExportController;
 use App\Http\Controllers\AcademicStaff\ThesisRequirementController;
 use App\Http\Controllers\AcademicStaff\UserController;
 use App\Http\Controllers\HomeController;
@@ -30,6 +31,7 @@ Route::middleware('role:' . User::ACADEMIC_STAFF)
 
             Route::get('lecturers/import', [ImportController::class, 'getImportLecturer'])->name('lecturers.import');
             Route::post('lecturers/import', [ImportController::class, 'processImportLecturer'])->name('lecturers.import');
+            Route::get('lecturers/export', [ExportController::class, 'lecturer'])->name('lecturers.export');
             Route::resource('lecturers', LecturerController::class);
 
             Route::get('students/import', [ImportController::class, 'getImportStudent'])->name('students.import');

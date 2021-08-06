@@ -67,6 +67,17 @@
             </div>
         </div>
         <!-- END Weather -->
+        <div class="block block-themed bg-image" style="background-image: url({{ asset('/media/photos/photo21.jpg') }});">
+            <div class="block-header bg-primary-dark-op">
+                <h3 class="block-title">Menu Utama</h3>
+            </div>
+            <div class="block-content text-center bg-primary-dark-op text-white-75 align-middle py-7" style="height: 50vh">
+                <p class="font-weight-bold font-italic font-size-h3">
+                    Selamat datang di Menu Utama Sistem Informasi <br>
+                    Manajemen Skripsi Universitas Catur Insan Cendekia
+                </p>
+            </div>
+        </div>
     </div>
     <!-- END Page Content -->
 @endsection

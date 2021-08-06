@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\LecturerController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::name('api.')
     ->group(function() {
         Route::get('users', [UserController::class, 'data'])->name('users.data');
-
+        Route::get('lecturers', [LecturerController::class, 'data'])->name('lecturers.data');
         Route::get('students/{student:nim}', [StudentController::class, 'show'])->name('student.show');
     });
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Lecturer extends Model
 {
@@ -53,6 +54,35 @@ class Lecturer extends Model
     public function getFullName()
     {
         return ucwords(strtolower($this->full_name));
+    }
+
+    public function getLecturship()
+    {
+        if($this->functional !== null) {
+            return getLecturship($this->functional);
+        }
+
+        return 'NON-JAB';
+    }
+
+    public function getTrialExaminerQuotas($typeOfExaminer = null)
+    {
+        $queries = DB::table('submission_of_assessments');
+
+        if ($typeOfExaminer === 1) {
+            $queries->where('first_examiner', $this->nidn);
+        }
+
+        if ($typeOfExaminer === 2) {
+            $queries->where('second_examiner', $this->nidn);
+        }
+
+        if ($typeOfExaminer === null) {
+            $queries->where('first_examiner', $this->nidn)
+                ->orWhere('second_examiner', $this->nidn);
+        }
+
+        return $this->quota - $queries->count('*');
     }
 
     public function hasCompetency(): bool

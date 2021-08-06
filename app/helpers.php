@@ -1,4 +1,7 @@
 <?php
+
+use App\Models\Lecturer;
+
 if (!function_exists('educationLevel')) {
     function educationLevel($key = null)
     {
@@ -264,10 +267,14 @@ if (!function_exists('countFromArray')) {
                     $count++;
                 }
 
-                if(is_object($item) && (property_exists($item, $firstKey) && $item->{$firstKey} === $firstValue) &&
-                    (property_exists($item, $secondKey) && $item->{$secondKey} === $secondValue))
+                if(is_object($item))
                 {
-                    $count++;
+                    if($item instanceof Lecturer && $item->{$firstKey} === $firstValue && $item->{$secondKey} === $secondValue) {
+                        $count++;
+                    } else if((property_exists($item, $firstKey) && $item->{$firstKey} === $firstValue) &&
+                    (property_exists($item, $secondKey) && $item->{$secondKey} === $secondValue)) {
+                        $count++;
+                    }
                 }
             }
         }

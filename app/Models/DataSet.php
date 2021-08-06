@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class DataSet extends Model
 {
     use HasFactory, Uuid;
+    public $incrementing = false;
 
     protected $fillable = [
         'nim',
@@ -24,4 +25,24 @@ class DataSet extends Model
         'first_trial_examiner',
         'second_trial_examiner',
     ];
+
+    public function scopeCheckHaveTestedInRelatedStudyProgram($query, $studyProgramName, $lecturerName): bool
+    {
+        return (bool)$query->where(function ($q) use ($lecturerName) {
+            $q->where('first_trial_examiner', 'LIKE', '%' . $lecturerName . '%')
+                ->orWhere('second_trial_examiner', 'LIKE', '%' . $lecturerName . '%');
+        })
+            ->where('study_program_name', $studyProgramName)
+            ->count();
+    }
+
+    public function scopeCountAsFirstExaminer($query, $lecturerName)
+    {
+        return $query->where('first_trial_examiner', 'LIKE', '%' . $lecturerName . '%')->count();
+    }
+
+    public function scopeCountAsSecondExaminer($query, $lecturerName)
+    {
+        return $query->where('second_trial_examiner', 'LIKE', '%' . $lecturerName . '%')->count();
+    }
 }

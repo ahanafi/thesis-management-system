@@ -12,8 +12,7 @@ class DataSetController extends Controller
 {
     public function index()
     {
-        $dataSets = DataSet::orderBy('nim', 'ASC')
-            ->orderBy('thesis_year', 'ASC')
+        $dataSets = DataSet::orderBy('thesis_year', 'ASC')
             ->get();
         $studyProgram = DataSet::select('study_program_name')->distinct()->get();
 

@@ -8,10 +8,6 @@ use App\Models\ScienceField;
 use App\Models\Student;
 use App\Models\StudyProgram;
 use App\Models\User;
-use Box\Spout\Common\Exception\IOException;
-use Box\Spout\Common\Exception\UnsupportedTypeException;
-use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
-use Box\Spout\Reader\Exception\ReaderNotOpenedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -47,7 +43,7 @@ class ImportController extends Controller
                 $studyProgram = StudyProgram::where('name', $studyProgramName)->first();
                 $studyProgramCode = $studyProgram->study_program_code ?? null;
 
-                $functionalCode = ($row['JABATAN_FUNGSIONAL'] !== '')
+                $functionalCode = ($row['JABATAN_FUNGSIONAL'] !== '' & $row['JABATAN_FUNGSIONAL'] !== 'NON-JAB')
                     ? array_search(ucwords(strtolower($row['JABATAN_FUNGSIONAL'])), getLecturship(), true)
                     : null;
 

@@ -11,7 +11,7 @@
                 icon="fa-users"
                 text-color="text-white"
                 data-count="{{ $lecturerCount }}"
-                data-name="Dosen"
+                data-name="Dosen Homebase {{ $lecturer->study_program->getName() }}"
             >
             </x-leader-widget-tiles>
 
@@ -32,7 +32,7 @@
                 icon="fa-users"
                 text-color="text-white"
                 data-count="{{ $studentCount }}"
-                data-name="Mahasiswa"
+                data-name="Mahasiswa Prodi {{ $lecturer->study_program->getName() }}"
             >
             </x-leader-widget-tiles>
 

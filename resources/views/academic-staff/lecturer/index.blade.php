@@ -17,7 +17,68 @@
     <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
-    <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
+    <script>
+        jQuery(function () {
+            const lecturerData = $("#lecturer-data").DataTable({
+                ajax: {
+                    url: "{{ route('api.lecturers.data') }}",
+                    data: function (d) {
+                        d.filterHomebase = $('#filter-homebase').val();
+                        d.filterLecturship = $("#filter-lecturship").val();
+                    }
+                },
+                serverSide: true,
+                processing: true,
+                iDisplayLength: 10,
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                columns: [
+                    {
+                        data: 'id',
+                        name: "No.",
+                        className: 'text-center',
+                        orderable: false,
+                        searchable: false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {data: 'nidn'},
+                    {data: 'full_name'},
+                    {
+                        data: 'homebase',
+                        searchable: false,
+                    },
+                    {data: 'functional'},
+                    {
+                        data: 'action',
+                        orderable: false,
+                        searchable: false,
+                    },
+                ]
+            });
+
+            let filterByStudyProgram = `<select id='filter-homebase' class='ml-4 form-control form-control-sm'><option value='all'>-- Semua Program Studi --</option>`;
+            @foreach($studyPrograms as $studyProgram)
+                filterByStudyProgram += `<option value='{{ $studyProgram->study_program_code }}'>{{ $studyProgram->name }}</option>`;
+            @endforeach
+                filterByStudyProgram += `</select>`;
+
+            let filterByLecturship = `<select id='filter-lecturship' class='form-control form-control-sm w-auto d-inline mr-4'><option value='all'>-- Semua Jab. Fungsional --</option>`;
+            @foreach(getLecturship() as $key => $name)
+                filterByLecturship += `<option value='{{ $key }}'>{{ $name }}</option>`;
+            @endforeach
+                filterByLecturship += `<option value='NON-JAB'>NON-JAB</option>`;
+
+            $("#lecturer-data_length").append(filterByStudyProgram);
+            $("#lecturer-data_filter").prepend(filterByLecturship)
+            $("#filter-homebase").change(function () {
+                lecturerData.draw();
+            });
+            $("#filter-lecturship").change(function (){
+                lecturerData.draw();
+            });
+        })
+    </script>
 @endsection
 
 @section('content')
@@ -42,11 +103,15 @@
                         <i class="fa fa-download"></i>
                         <span>Import Data</span>
                     </a>
+                    <a href="{{ route('lecturers.export') }}" class="btn btn-sm btn-success" target="_blank" rel="noreferrer">
+                        <i class="fa fa-file-export"></i>
+                        <span>Export Data</span>
+                    </a>
                 </div>
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                <table id="lecturer-data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
                     <tr>
                         <th class="text-center" style="width: 80px;">
@@ -60,40 +125,6 @@
                     </tr>
                     </thead>
                     <tbody>
-
-                    @foreach ($lecturers as $lecturer)
-                        <tr>
-                            <td class="text-center">
-                                <img class="img-avatar img-avatar48" src="{{ asset('media/avatars/avatar7.jpg') }}" alt="">
-                            </td>
-                            <td class="font-w600">{{ $lecturer->nidn }}</td>
-                            <td>
-                                <a href="{{ route('lecturers.show', $lecturer->id) }}">{{ $lecturer->getNameWithDegree() }}</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">{{ $lecturer->study_program->name }}</td>
-                            <td class="d-none d-sm-table-cell">
-                                @if($lecturer->functional)
-                                    <span class="badge badge-success">{{ getLecturship($lecturer->functional) }}</span>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('lecturers.edit', $lecturer->id) }}" class="btn btn-primary js-tooltip-enabled"
-                                            data-toggle="tooltip" title="Edit" data-original-title="Edit">
-                                        <i class="fa fa-pencil-alt"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-danger js-tooltip-enabled"
-                                            data-toggle="tooltip" title="Delete" data-original-title="Delete"
-                                            onclick="confirmDelete('academic-staff/master/lecturers', '{{ $lecturer->id }}')"
-                                    >
-                                        <i class="fa fa-fw fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
                     </tbody>
                 </table>
             </div>

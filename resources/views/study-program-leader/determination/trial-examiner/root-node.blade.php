@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
-   <!-- Page Content -->
+    <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">
             Penentuan Dosen Penguji Sidang Skripsi
@@ -32,7 +32,10 @@
                     <a class="nav-link" href="#btabs-step-4">Step 4</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#btabs-step-5">Step 5</a>
+                    <a
+                        class="nav-link"
+                        href="#rules"
+                    >Hasil Rule</a>
                 </li>
             </ul>
             <div class="block-content tab-content">
@@ -59,10 +62,11 @@
                             <th class="text-center">No.</th>
                             <th>Nama Lengkap</th>
                             <th class="d-none d-sm-table-cell font-italic">Homebase</th>
+                            <th class="d-none d-sm-table-cell">Jab. Fungsional</th>
+                            <th class="d-none d-sm-table-cell">Kompetensi</th>
                             <th class="d-none d-sm-table-cell">JRP 1</th>
                             <th class="d-none d-sm-table-cell">JRP 2</th>
-                            <th class="d-none d-sm-table-cell">Jab. Fungsional</th>
-                            <th class="d-none d-sm-table-cell text-center">Dominan Jenis Penguji</th>
+                            <th class="d-none d-sm-table-cell">Kuota</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -73,23 +77,16 @@
                                 </td>
                                 <td>{{ $lecturer->getShortName() }}</td>
                                 <td class="d-none d-sm-table-cell">{{ $lecturer->study_program->getName()  }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
+                                <td class="font-size-sm">
+                                    @forelse($lecturer->competencies as $competency)
+                                        - {{ $competency->name  }} <br>
+                                    @empty
+                                    @endforelse
+                                </td>
                                 <td class="text-center">{{ $lecturer->asFirstExaminerCount }}</td>
                                 <td class="text-center">{{ $lecturer->asSecondExaminerCount }}</td>
-                                <td class="d-none d-sm-table-cell text-center">
-                                    @if($lecturer->functional)
-                                        <span
-                                            class="badge @if($lecturer->functional === \App\Constants\Functional::LECTURER) badge-success
-                                                        @elseif($lecturer->functional === \App\Constants\Functional::EXPERT_ASSISTANT) badge-warning
-                                                        @endif">
-                                        {{ getLecturship($lecturer->functional) }}
-                                    </span>
-                                    @else
-                                        <span class="badge badge-danger">NON-JAB</span>
-                                    @endif
-                                </td>
-                                <td class="text-center">
-                                    Penguji {{ $lecturer->supervisorType }}
-                                </td>
+                                <td class="text-center">{{ $lecturer->quota }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -103,7 +100,8 @@
                         role="alert">
                         <div class="flex-fill mr-3">
                             <h5 class="alert-heading font-size-h5 my-2">
-                                Step 2 : Filter hanya Dosen yang pernah menjadi Penguji 1 dan Penguji 2 saja.
+                                Step 2 : Filter hanya Dosen yang pernah menjadi Penguji 1 dan Penguji 2 saja yang
+                                terdapat pada data set.
                             </h5>
                         </div>
                     </div>
@@ -113,9 +111,11 @@
                             <th class="text-center">No.</th>
                             <th>Nama Lengkap</th>
                             <th class="d-none d-sm-table-cell font-italic">Homebase</th>
+                            <th class="d-none d-sm-table-cell">Jab. Fung.</th>
+                            <th class="d-none d-sm-table-cell">Kompetensi</th>
                             <th class="d-none d-sm-table-cell">JRP 1</th>
                             <th class="d-none d-sm-table-cell">JRP 2</th>
-                            <th class="d-none d-sm-table-cell">Jab. Fungsional</th>
+                            <th class="d-none d-sm-table-cell">Kuota</th>
                             <th class="d-none d-sm-table-cell text-center">Jenis Penguji</th>
                         </tr>
                         </thead>
@@ -125,11 +125,18 @@
                                 <td class="text-center">{{ $number++ }}</td>
                                 <td>{{ $lecturer->name }}</td>
                                 <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
+                                <td class="font-size-sm">
+                                    @forelse($lecturer->competencies as $competency)
+                                        - {{ optional($competency)->name  }} <br>
+                                    @empty
+                                    @endforelse
+                                </td>
                                 <td>{{ $lecturer->asFirstExaminerCount }}</td>
                                 <td>{{ $lecturer->asSecondExaminerCount }}</td>
-                                <td class="d-none d-sm-table-cell text-center">{{ $lecturer->functional }}</td>
+                                <td class="text-center">{{ $lecturer->quota }}</td>
                                 <td class="text-center">
-                                    Penguji {{ $lecturer->supervisorType }}
+                                    Penguji {{ $lecturer->examinerType }}
                                 </td>
                             </tr>
                         @endforeach
@@ -144,7 +151,7 @@
                         role="alert">
                         <div class="flex-fill mr-3">
                             <h5 class="alert-heading font-size-h5 my-2">
-                                Step 3 : Pengelomompokkan Jumlah Riwayat Dosen sebagai Penguji 1 dan 2.
+                                Step 3 : Pengelompokkan Jumlah Riwayat Dosen sebagai Penguji 1 dan 2.
                             </h5>
                             <p class="mb-0">
                                 <b>Keterangan:</b> <br>
@@ -159,26 +166,37 @@
                             <th class="text-center">No.</th>
                             <th>Nama Lengkap</th>
                             <th class="d-none d-sm-table-cell font-italic">Homebase</th>
+                            <th class="d-none d-sm-table-cell">Jab. Fung.</th>
+                            <th class="d-none d-sm-table-cell">Kompetensi</th>
                             <th class="d-none d-sm-table-cell">SRP 1</th>
                             <th class="d-none d-sm-table-cell">SRP 2</th>
-                            <th class="d-none d-sm-table-cell">Jab. Fungsional</th>
+                            <th class="d-none d-sm-table-cell">Kuota</th>
                             <th class="d-none d-sm-table-cell text-center">Jenis Penguji</th>
                         </tr>
                         </thead>
                         <tbody>
                         @php $number = 1; @endphp
                         @foreach ($filteredLecturers as $lecturer)
-                            <tr>
-                                <td class="text-center">{{ $number++ }}</td>
-                                <td>{{ $lecturer->name }}</td>
-                                <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
-                                <td>{{ $lecturer->firstExaminerLabel }}</td>
-                                <td>{{ $lecturer->secondExaminerLabel }}</td>
-                                <td class="d-none d-sm-table-cell text-center">{{ $lecturer->functional }}</td>
-                                <td class="text-center">
-                                    Penguji {{ $lecturer->supervisorType }}
-                                </td>
-                            </tr>
+                            @if($lecturer->haveTestedInRelatedStudyProgram)
+                                <tr>
+                                    <td class="text-center">{{ $number++ }}</td>
+                                    <td>{{ $lecturer->name }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
+                                    <td class="font-size-sm">
+                                        @forelse($lecturer->competencies as $competency)
+                                            - {{ $competency->name  }} <br>
+                                        @empty
+                                        @endforelse
+                                    </td>
+                                    <td class="font-size-sm">{{ $lecturer->firstExaminerLabel }}</td>
+                                    <td class="font-size-sm">{{ $lecturer->secondExaminerLabel }}</td>
+                                    <td class="text-center">{{ $lecturer->quota }}</td>
+                                    <td class="text-center">
+                                        Penguji {{ $lecturer->examinerType }}
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                         </tbody>
                     </table>
@@ -191,7 +209,8 @@
                         role="alert">
                         <div class="flex-fill mr-3">
                             <h5 class="alert-heading font-size-h5 my-2">
-                                Step 4 : Konversi data ke dalam tabel perhitungan Algoritma C4.5 dan Perhitungan nilai Entropy dan Gain setiap atribut.
+                                Step 5 : Konversi data ke dalam tabel perhitungan Algoritma C4.5 dan Perhitungan nilai
+                                Entropy dan Gain setiap atribut.
                             </h5>
                         </div>
                     </div>
@@ -219,13 +238,13 @@
                                 <td class="bg-{{ $result['background'] }} border-{{ $result['background'] }} text-white align-middle text-center"
                                     rowspan="{{ count($result['items']) }}">
                                     {{ $result['name'] }} <br>
-                                    <b class="text-black">{{ $result['gain'] }}</b>
+                                    GAIN => <b class="text-black">{{ $result['gain'] }}</b>
                                 </td>
                                 @foreach($result['items'] as $item)
                                     <td class="text-center">{{ $item['name'] }}</td>
                                     <td class="text-center">{{ $item['total'] }}</td>
-                                    <td class="text-center">{{ $item['first_supervisor'] }}</td>
-                                    <td class="text-center">{{ $item['second_supervisor'] }}</td>
+                                    <td class="text-center">{{ $item['first_examiner'] }}</td>
+                                    <td class="text-center">{{ $item['second_examiner'] }}</td>
                                     <td class="text-center">{{ $item['entropy'] }}</td>
                             </tr>
                         @endforeach
@@ -234,19 +253,6 @@
                     </table>
                 </div>
                 <!-- End Step 4 -->
-                <!-- Step 5 -->
-                <div class="tab-pane" id="btabs-step-5" role="tabpanel">
-                    <div
-                        class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
-                        role="alert">
-                        <div class="flex-fill mr-3">
-                            <h5 class="alert-heading font-size-h5 my-2">
-                                Step 5 : Menghitung nilai Gain untuk setiap atribut.
-                            </h5>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Step 5 -->
             </div>
         </div>
         <!-- END Dynamic Table with Export Buttons -->
