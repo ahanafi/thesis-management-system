@@ -31,7 +31,7 @@
 @section('content')<!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Data Set Skripsi</h2>
-        @if($dataSets->count() <= 0)
+        @if(is_null($dataSets) || count($dataSets) <= 0)
             <div class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
                  role="alert">
                 <div class="flex-fill mr-3">

@@ -3,7 +3,7 @@
 @section('content')
     <!-- Page Content -->
     <div class="content">
-        <h2 class="content-heading">Jadwal Pengujian Skripsi</h2>
+        <h2 class="content-heading">Pengajuan Ujian Kolokium Skripsi</h2>
         <x-student-thesis-info
             name="{{ $submission->thesis->student->getName() }}"
             nim="{{ $submission->thesis->student->nim }}"

@@ -24,6 +24,8 @@ class ColloquiumController extends Controller
             })
             ->get();
 
+        $scores = [];
+
         return viewLecturer('exam.colloquium.score', compact('submission', 'components', 'scores'));
     }
 

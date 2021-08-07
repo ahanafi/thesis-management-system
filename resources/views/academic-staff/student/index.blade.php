@@ -75,7 +75,7 @@
                             <td>{{ $student->getName() }}</td>
                             <td class="d-none d-sm-table-cell">{{ $student->email }}</td>
                             <td class="d-none d-sm-table-cell">
-                                <span class="badge badge-success">{{ $student->study_program->name }}</span>
+                                <span class="badge badge-success">{{ optional($student->study_program)->name }}</span>
                             </td>
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm">
