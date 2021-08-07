@@ -3,18 +3,12 @@
 @section('css_before')
     <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
 @endsection
 
 @section('js_after')
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
@@ -41,7 +35,7 @@
                 </div>
             </div>
             <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
-                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none">
+                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn @if($errors->has('faculty_code') || $errors->has('faculty_name')) @else d-none @endif">
                     <div class="block-header bg-white-25">
                         <h3 class="block-title">Tambah Data</h3>
                         <div class="block-options">
@@ -60,9 +54,21 @@
                             <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-2">
                                     <input type="text" class="form-control" name="faculty_code" value="{{ old('faculty_code') }}" placeholder="Kode Fakultas" autocomplete="off">
+
+                                    @error('faculty_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <input type="text" class="form-control" id="example-hosting-name" name="faculty_name" placeholder="Nama Fakultas">
+
+                                    @error('faculty_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-4">
                                     <select class="custom-select" id="example-hosting-vps" name="dean_code">
@@ -73,6 +79,12 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    @error('dean_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-primary btn-block">
