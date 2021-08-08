@@ -74,10 +74,10 @@
                                                 </button>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-xs-12">
-                                                <button type="submit" class="btn btn-sm btn-success btn-block">
+                                                <a href="{{ route('download.format.import.data-set') }}" class="btn btn-success btn-sm btn-block" target="_blank" rel="noreferrer">
                                                     <i class="fa fa-file-download"></i>
                                                     <span>Unduh Format</span>
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

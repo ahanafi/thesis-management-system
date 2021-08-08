@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HomeController;
 
 use App\Models\User;
@@ -35,6 +36,20 @@ Route::middleware(['auth'])->group(function () {
             Route::get('profile', [AccountController::class, 'profile'])->name('profile');
 
 
+        });
+
+    //Download
+    Route::prefix('download')
+        ->name('download.')
+        ->group(function (){
+            Route::prefix('format')
+                ->name('format.')
+                ->group(function () {
+                    Route::get('lecturer-data', [DownloadController::class, 'sampleLecturerDataFormat'])->name('import.lecturer');
+                    Route::get('student-data', [DownloadController::class, 'sampleStudentDataFormat'])->name('import.student');
+                    Route::get('science-field-data', [DownloadController::class, 'sampleScienceFieldDataFormat'])->name('import.science-field');
+                     Route::get('data-set', [DownloadController::class, 'sampleDataSetFormat'])->name('import.data-set');
+                });
         });
 
     //---------------------------------------------------------------------------------------------------- //

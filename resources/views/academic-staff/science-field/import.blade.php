@@ -5,7 +5,7 @@
     <div class="content content-full">
         <h2 class="content-heading">Data Bidang Ilmu</h2>
         <div class="row row-deck">
-            <div class="col-sm-8">
+            <div class="col-12">
                 <div class="block block-rounded">
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
@@ -20,7 +20,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="import-data-example">Sample Import Data</label>
-                                    <a href="" class="btn btn-success btn-block">
+                                    <a href="{{ route('download.format.import.science-field') }}" class="btn btn-success btn-block" target="_blank" rel="noreferrer">
                                         <i class="fa fa-download"></i>
                                         <span>Download Template</span>
                                     </a>
@@ -59,18 +59,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <i class="fa fa-fw fa-info-circle text-muted mr-1"></i>
-                        <h3 class="block-title">Panduan</h3>
-                    </div>
-                    <div class="block-content">
-
-                    </div>
-                </div>
-            </div>
-        </div>
+         </div>
 
     </div>
     <!-- END Page Content -->

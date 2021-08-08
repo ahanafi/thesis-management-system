@@ -70,6 +70,7 @@
                             <div class="form-group row">
                                 <label for="title" class="col-sm-3 col-form-label text-right">
                                     Mahasiswa
+                                    <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-sm-7">
                                     <select onchange="fetchStudentInfo(this)" name="student_id"
@@ -100,6 +101,7 @@
                             <div class="form-group row">
                                 <label for="title" class="col-sm-3 col-form-label text-right">
                                     Tanggal Ujian
+                                    <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-sm-7">
                                     <input type="text" class="js-flatpickr form-control bg-white @error('date') is-invalid @enderror" id="input-date"
@@ -116,6 +118,7 @@
                             <div class="form-group row">
                                 <label for="title" class="col-sm-3 col-form-label text-right">
                                     Waktu Ujian
+                                    <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-sm-7">
                                     <div class="input-group">
