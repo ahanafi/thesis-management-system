@@ -62,7 +62,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="example-hosting-name" name="faculty_name" placeholder="Nama Fakultas">
+                                    <input type="text" class="form-control" id="example-hosting-name" name="faculty_name" placeholder="Nama Fakultas" value="{{ old('faculty_name') }}">
 
                                     @error('faculty_name')
                                         <span class="invalid-feedback" role="alert">

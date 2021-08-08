@@ -42,15 +42,17 @@
                     </a>
                 </div>
             </div>
-            <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
-                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none">
+            <div class="overflow-hidden"
+                 style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
+                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn @if($errors->has('name')) d-block @else d-none @endif">
                     <div class="block-header bg-white-25">
                         <h3 class="block-title">Tambah Data</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option">
                                 <i class="si si-question"></i>
                             </button>
-                            <button type="button" class="btn-block-option" data-toggle="block-option" data-action="close">
+                            <button type="button" class="btn-block-option" data-toggle="block-option"
+                                    data-action="close">
                                 <i class="si si-close"></i>
                             </button>
                         </div>
@@ -61,10 +63,18 @@
                             @method('POST')
                             <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" name="code" value="{{ $code }}" placeholder="Kode Bidang Ilmu" autocomplete="off" readonly>
+                                    <input type="text" class="form-control" name="code" value="{{ $code }}"
+                                           placeholder="Kode Bidang Ilmu" autocomplete="off" readonly required>
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" id="example-hosting-name" name="name" placeholder="Nama Bidang Ilmu">
+                                    <input type="text" class="form-control" id="example-hosting-name"
+                                           value="{{ old('name') }}" name="name" placeholder="Nama Bidang Ilmu">
+
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" class="btn btn-primary btn-block">
@@ -98,7 +108,9 @@
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm">
                                     <button type="button" class="btn btn-primary js-tooltip-enabled"
-                                            data-toggle="tooltip" title="" onclick="editScienceField('{{ $field->id }}', '{{ $field->code }}', '{{ $field->name }}')" data-original-title="Edit">
+                                            data-toggle="tooltip" title=""
+                                            onclick="editScienceField('{{ $field->id }}', '{{ $field->code }}', '{{ $field->name }}')"
+                                            data-original-title="Edit">
                                         <i class="fa fa-pencil-alt"></i>
                                     </button>
                                     <button type="button" class="btn btn-danger js-tooltip-enabled"

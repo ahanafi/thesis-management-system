@@ -20,25 +20,12 @@ class ScienceFieldController extends Controller
         return viewAcademicStaff('science-field.index', compact('scienceFields', 'code'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $this->validate($request, ['code' => 'required|unique:science_fields,code']);
+        $this->validate($request, [
+            'code' => 'required|unique:science_fields,code',
+            'name' => 'required|unique:science_fields,name',
+        ]);
 
         $scienceField = new ScienceField();
         $scienceField->code = $request->get('code');
@@ -53,35 +40,6 @@ class ScienceFieldController extends Controller
         return redirect()->route('science-fields.index')->with('message', $message);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, ['code' => 'required|unique:science_fields,code,' . $id]);
@@ -99,12 +57,6 @@ class ScienceFieldController extends Controller
         return redirect()->route('science-fields.index')->with('message', $message);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $scienceField = ScienceField::where('id', $id)->firstOrFail();
