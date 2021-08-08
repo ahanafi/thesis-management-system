@@ -142,10 +142,13 @@ if (!function_exists('setFlashMessage')) {
 if (!function_exists('getTypeOfAssessment')) {
     function getTypeOfAssessment($key = null)
     {
+        if(strtoupper($key) === 'FINAL-TEST') {
+            $key = 'TRIAL';
+        }
+
         $typeOfAssessment = [
             'SEMINAR' => 'Seminar',
             'TRIAL' => 'Sidang',
-            'FINAL-TEST' => 'Sidang',
             'COLLOQUIUM' => 'Kolokium'
         ];
 

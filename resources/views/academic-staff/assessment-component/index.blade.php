@@ -10,11 +10,6 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
@@ -41,7 +36,7 @@
                 </div>
             </div>
             <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
-                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none">
+                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn {{ $errors->has('name') || $errors->has('assessment_type') || $errors->has('weight') ? 'd-block' : 'd-none' }}">
                     <div class="block-header bg-white-25">
                         <h3 class="block-title">Tambah Data</h3>
                         <div class="block-options">
@@ -60,19 +55,37 @@
                             <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-3">
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama komponen nilai" autocomplete="off" required>
+
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <select class="custom-select" id="example-hosting-vps" name="assessment_type" required>
                                         <option value="">-- Pilih Jenis Pengujain --</option>
                                         @foreach(getTypeOfAssessment() as $type => $label)
-                                            <option value="{{ $type }}">
+                                            <option {{ old('assessment_type') === $type ? 'selected' : '' }} value="{{ $type }}">
                                                 {{ strtoupper($label) }} SKRIPSI
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    @error('assessment_type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="number" class="form-control" name="weight" value="{{ old('weight') }}" placeholder="Bobot nilai" autocomplete="off" required>
+                                    <input type="number" class="form-control" name="weight" value="{{ old('weight') }}" placeholder="Bobot nilai" autocomplete="off" required min="5">
+
+                                    @error('weight')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-primary btn-block">
