@@ -10,11 +10,6 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
@@ -42,7 +37,7 @@
                 </div>
             </div>
             <div class="overflow-hidden" style="padding-left: 1.25rem;padding-right: 1.25rem;margin-bottom: 0;padding-top: 1.25rem;">
-                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn d-none">
+                <div id="dm-add-server" class="block block-rounded bg-body-dark animated fadeIn {{ $errors->has('document_name') || $errors->has('document_type') ? 'd-block' : 'd-none' }}">
                     <div class="block-header bg-white-25">
                         <h3 class="block-title">Tambah Data</h3>
                         <div class="block-options">
@@ -61,6 +56,12 @@
                             <div class="form-group row gutters-tiny mb-0 items-push">
                                 <div class="col-md-2">
                                     <input type="text" class="form-control" name="document_name" value="{{ old('document_name') }}" placeholder="Nama dokumen..." autocomplete="off">
+
+                                    @error('document_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <select class="custom-select" id="example-hosting-vps" name="document_type" required>
@@ -71,6 +72,12 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    @error('document_type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" name="note" value="{{ old('note') }}" placeholder="Keterangan tambahan (opsional)" autocomplete="off">

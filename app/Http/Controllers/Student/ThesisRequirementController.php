@@ -36,9 +36,11 @@ class ThesisRequirementController extends Controller
 
     public function upload(Request $request)
     {
+        $documentMimes = $request->get('document_mimes');
         $this->validate($request, [
             'thesis_requirement_id' => 'required|exists:thesis_requirements,id',
-            'document' => 'required'
+            'document_mimes' => 'required',
+            'document' => "required|mimes:$documentMimes"
         ]);
 
         $nim = Auth::user()->registration_number;

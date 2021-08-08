@@ -10,14 +10,18 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
+    <script>
+        const selectDocumentType = (el) => {
+            if (el.value !== '' && el.value !== null) {
+                const selectedOption = el.options[el.selectedIndex];
+                const documentMimes = selectedOption.getAttribute('data-mimes');
+                document.querySelector('input[name=document_mimes]').value = documentMimes;
+            }
+        }
+    </script>
 @endsection
 
 @section('content')
@@ -52,20 +56,35 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="thesis_requirement_id">Jenis Dokumen</label>
-                                    <select class="custom-select" name="thesis_requirement_id" required>
+                                    <label for="thesis_requirement_id">
+                                        Jenis Dokumen <span class="text-danger">*</span>
+                                    </label>
+                                    <select onchange="selectDocumentType(this)" class="custom-select" name="thesis_requirement_id" required>
                                         <option value="">-- Pilih Jenis Dokumen --</option>
                                         @foreach($thesisRequirements as $requirement)
-                                            <option value="{{ $requirement->id }}">
+                                            <option
+                                                {{ old('thesis_requirement_id') === $requirement->id ? 'selected' : '' }}
+                                                value="{{ $requirement->id }}"
+                                                data-mimes="{{ strtolower(str_replace(' ', '', documentTypes($requirement->document_type))) }}"
+                                            >
                                                 {{ $requirement->document_name }}
                                                 ({{ documentTypes($requirement->document_type) }})
                                             </option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="document_mimes" required value="{{ old('document_mimes') }}">
+
+                                    @error('thesis_requirement_id')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="document">File</label>
+                                    <label for="document">
+                                        File <span class="text-danger">*</span>
+                                    </label>
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
                                         <input type="file" class="custom-file-input js-custom-file-input-enabled"
@@ -73,6 +92,12 @@
                                                name="document" required>
                                         <label class="custom-file-label" for="dm-profile-edit-file">Pilih file</label>
                                     </div>
+
+                                    @error('document')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -138,7 +163,8 @@
                             <i class="fa fa-fw fa-exclamation-circle"></i> Informasi
                         </h3>
                         <p class="mb-0 font-weight-bold">
-                            Selamat! dokumen persyaratan Skripsi yang Anda unggah telah diverifikasi oleh BAAK. Saat ini Andadapat mengajukan porposal Skripsi.
+                            Selamat! dokumen persyaratan Skripsi yang Anda unggah telah diverifikasi oleh BAAK. Saat ini
+                            Andadapat mengajukan porposal Skripsi.
                         </p>
                     </div>
                 </div>
