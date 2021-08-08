@@ -150,7 +150,7 @@
                         </h3>
                         <p class="mb-0 font-weight-bold">
                             Pengajuan persyaratan Skripsi Anda sedang diproses oleh BAAK. Mohon tunggu informasi
-                            selanjutnya via email. Terima kasih.
+                            selanjutnya. Terima kasih.
                         </p>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                     <button onclick="applyThesisRequirement()"
                             type="button"
                             class="btn btn-sm btn-primary"
-                            @if(!$submission || ($submission->status === \App\Constants\Status::APPLY || \App\Constants\Status::APPROVE) || $submission->details->count() < $thesisRequirements->count())
+                            @if(!$submission || ($submission->status === \App\Constants\Status::APPLY || $submission->status === \App\Constants\Status::APPROVE) || $submission->details->count() < $thesisRequirements->count())
                             disabled
                         @endif
                     >

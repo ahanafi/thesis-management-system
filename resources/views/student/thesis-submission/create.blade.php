@@ -22,7 +22,7 @@
                                 @csrf
                                 @method('POST')
 
-                                <x-input type="textarea" field="title" label="judul"
+                                <x-input type="textarea" field="title" label="judul penelitian"
                                          placeholder="Judul penelitian..." value="{{ old('title') }}"
                                          is-required="true"></x-input>
 
@@ -41,7 +41,7 @@
                                     </select>
 
                                     @error('science_field_id')
-                                    <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -60,9 +60,9 @@
                                             file</label>
                                     </div>
                                     @error('file')
-                                    <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
 
                                     <x-alert type="info" icon="fa-exclamation-circle"
