@@ -264,7 +264,7 @@
                                 <thead>
                                 <tr class="font-weight-bold">
                                     <th>#</th>
-                                    <th>Lecturer Name</th>
+                                    <th>Full Name</th>
                                     <th>Username</th>
                                     <th>Password</th>
                                     <th>Action</th>

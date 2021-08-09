@@ -3,7 +3,8 @@
     <div class="content-side content-side-full">
         <ul class="nav-main">
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->routeIs('academic-staff.index') ? ' active' : '' }}" href="{{ route('academic-staff.index') }}">
+                <a class="nav-main-link{{ request()->routeIs('academic-staff.index') ? ' active' : '' }}"
+                   href="{{ route('academic-staff.index') }}">
                     <i class="nav-main-link-icon fa fa-home"></i>
                     <span class="nav-main-link-name">DASHBOARD</span>
                 </a>
@@ -82,6 +83,13 @@
                 </a>
             </li>
             <!-- END PENGATURAN -->
+
+            <li class="nav-main-item">
+                <a class="nav-main-link" href="#" onclick="confirmLogout()">
+                    <i class="nav-main-link-icon fa fa-sign-out-alt"></i>
+                    <span class="nav-main-link-name">LOGOUT</span>
+                </a>
+            </li>
         </ul>
     </div>
     <!-- END Side Navigation -->
