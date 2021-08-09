@@ -28,28 +28,33 @@ class DataSetController extends Controller
         $dataSetFile = Storage::disk('local')->put('public/imports', $request->file('data-set'));
         $dataSetCollection = (new FastExcel)->import(storage_path('app/' . $dataSetFile));
 
-        if($dataSetCollection->count() <= 0) {
+        if ($dataSetCollection->count() <= 0) {
+            if (Storage::disk('local')->exists($dataSetFile)) {
+                Storage::disk('local')->delete($dataSetFile);
+            }
+
             return redirect()->back()->with('message', [
                 'type' => 'error',
-                'text' => 'Pastikan Anda telah mengisi format data set tersebut!',
+                'text' => 'Pastikan Anda telah mengisi format data set tersebut dengan benar!',
+                'times' => 5000
             ]);
         }
 
         $dataSetCollection->each(function ($row) {
-            if($row['NIM'] !== '') {
+            if ($row['NIM'] !== '') {
                 DataSet::create([
-                    'nim'                       => $row['NIM'],
-                    'student_name'              => $row['NAMA_MAHASISWA'],
-                    'study_program_name'        => $row['PRODI'],
-                    'thesis_year'               => $row['TAHUN_SKRIPSI'],
-                    'research_title'            => ($row['JUDUL'] !== '') ? $row['JUDUL'] : '-',
-                    'science_field_name'        => $row['BIDANG_ILMU'],
-                    'first_supervisor'          => $row['PEMBIMBING_1'],
-                    'second_supervisor'         => $row['PEMBIMBING_2'],
-                    'first_seminar_examiner'    => $row['PENGUJI_1_SEMINAR'],
-                    'second_seminar_examiner'   => $row['PENGUJI_2_SEMINAR'],
-                    'first_trial_examiner'      => $row['PENGUJI_1_SIDANG'],
-                    'second_trial_examiner'     => $row['PENGUJI_2_SIDANG'],
+                    'nim' => $row['NIM'],
+                    'student_name' => $row['NAMA_MAHASISWA'],
+                    'study_program_name' => $row['PRODI'],
+                    'thesis_year' => $row['TAHUN_SKRIPSI'],
+                    'research_title' => ($row['JUDUL'] !== '') ? $row['JUDUL'] : '-',
+                    'science_field_name' => $row['BIDANG_ILMU'],
+                    'first_supervisor' => $row['PEMBIMBING_1'],
+                    'second_supervisor' => $row['PEMBIMBING_2'],
+                    'first_seminar_examiner' => $row['PENGUJI_1_SEMINAR'],
+                    'second_seminar_examiner' => $row['PENGUJI_2_SEMINAR'],
+                    'first_trial_examiner' => $row['PENGUJI_1_SIDANG'],
+                    'second_trial_examiner' => $row['PENGUJI_2_SIDANG'],
                 ]);
             }
         });
@@ -61,5 +66,17 @@ class DataSetController extends Controller
         }
 
         return redirect()->route('leader.data-set.index')->with('message', $message);
+    }
+
+    public function destroy(Request $request)
+    {
+        $this->validate($request, ['action' => 'required|in:DESTROY']);
+
+        DataSet::query()->truncate();
+        return redirect()->back()
+            ->with('message', [
+                'type' => 'success',
+                'text' => 'Data set telah berhasil dikosongkan.',
+            ]);
     }
 }

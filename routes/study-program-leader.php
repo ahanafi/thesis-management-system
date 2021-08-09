@@ -46,6 +46,7 @@ Route::prefix('study-program-leader')
             ->group(function() {
                 Route::get('/', [DataSetController::class, 'index'])->name('index');
                 Route::post('/', [DataSetController::class, 'import'])->name('import');
+                Route::post('/destroy', [DataSetController::class, 'destroy'])->name('destroy');
             });
 
 

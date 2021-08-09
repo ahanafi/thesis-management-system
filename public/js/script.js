@@ -302,18 +302,55 @@ const uploadThesisDocument = () => {
     Dashmix.block('close', '#upload-app');
     Dashmix.block('close', '#upload-journal');
     Dashmix.block('open', '#upload-document');
+
+    const uploadApp = document.querySelector('#upload-app');
+    uploadApp.classList.add('d-none');
+    uploadApp.classList.remove('d-block');
+
+    const uploadJournal = document.querySelector('#upload-journal');
+    uploadJournal.classList.add('d-none');
+    uploadJournal.classList.remove('d-block');
+
+    const uploadDocument = document.querySelector('#upload-document');
+    uploadDocument.classList.add('d-block');
+    uploadDocument.classList.remove('d-none');
 }
 
 const uploadApp = () => {
     Dashmix.block('close', '#upload-document');
     Dashmix.block('close', '#upload-journal');
     Dashmix.block('open', '#upload-app');
+
+
+    const uploadDocument = document.querySelector('#upload-document');
+    uploadDocument.classList.add('d-none');
+    uploadDocument.classList.remove('d-block');
+
+    const uploadJournal = document.querySelector('#upload-journal');
+    uploadJournal.classList.add('d-none');
+    uploadJournal.classList.remove('d-block');
+
+    const uploadApp = document.querySelector('#upload-app');
+    uploadApp.classList.add('d-block');
+    uploadApp.classList.remove('d-none');
 }
 
 const uploadJournal = () => {
     Dashmix.block('close', '#upload-document');
     Dashmix.block('close', '#upload-app');
     Dashmix.block('open', '#upload-journal');
+
+    const uploadApp = document.querySelector('#upload-app');
+    uploadApp.classList.add('d-none');
+    uploadApp.classList.remove('d-block');
+
+    const uploadDocument = document.querySelector('#upload-document');
+    uploadDocument.classList.add('d-none');
+    uploadDocument.classList.remove('d-block');
+
+    const uploadJournal = document.querySelector('#upload-journal');
+    uploadJournal.classList.add('d-block');
+    uploadJournal.classList.remove('d-none');
 }
 
 const openLink = (link, openNewTab = false) => {

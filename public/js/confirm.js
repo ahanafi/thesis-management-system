@@ -97,3 +97,19 @@ let applyThesisRequirement = () => {
         }
     });
 }
+
+let truncateDataSet = () => {
+    Swal.fire({
+        title: 'Konfirmasi!',
+        text: 'Apakah Anda yakin akan menghapus seluruh data set skripsi? Data tidak dapat dikembalikan.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3544',
+        confirmButtonText: 'Ya, Hapus.',
+        cancelButtonText: 'Batal',
+    }).then((value) => {
+        if (value.isConfirmed) {
+            document.querySelector("#form-destroy").submit();
+        }
+    });
+}

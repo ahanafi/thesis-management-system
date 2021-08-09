@@ -292,6 +292,7 @@
                                 role="alert">
                                 <div class="flex-fill mr-3">
                                     <p class="mb-0">
+                                        <b>Format yang didukung adalah: <i>pdf, doc, docx, zip, rar.</i></b> <br>
                                         Apabila Anda telah mengunggah laporan/program/jurnal sebelumnya, maka dokumen
                                         lama
                                         tersebut akan <b><u>dihapus dan diganti dengan dokumen terbaru</u></b> yang Anda
