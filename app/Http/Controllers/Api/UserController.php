@@ -13,13 +13,17 @@ class UserController extends Controller
     {
         $users = User::orderBy('full_name', 'ASC');
 
-        if ($request->has('search')) {
+        if ($request->has('search') && $request->get('search')['value'] !== null) {
             $search = $request->get('search');
             $keyword = $search['value'];
 
             $users->where('username', 'LIKE', $keyword . '%')
                 ->orWhere('full_name', 'LIKE', $keyword . '%')
                 ->orWhere('email', 'LIKE', $keyword . '%');
+        }
+
+        if($request->has('level') && $request->get('level') !== null && strtolower($request->get('level')) !== 'all') {
+            $users->where('level', $request->get('level'));
         }
 
         $users->get();

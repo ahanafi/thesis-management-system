@@ -12,11 +12,16 @@
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
-        <script>
+    <script>
         jQuery(function () {
 
-            jQuery("#users").DataTable({
-                ajax: "{{ route('api.users.data') }}",
+            const usersData = jQuery("#users").DataTable({
+                ajax: {
+                    url: "{{ route('api.users.data') }}",
+                    data: function (d) {
+                        d.level = jQuery("#filter-level").val();
+                    }
+                },
                 serverSide: true,
                 processing: true,
                 iDisplayLength: 5,
@@ -48,7 +53,19 @@
                         searchable: false,
                     },
                 ]
-            })
+            });
+
+            let filterByUserLevel = `<label class="ml-4" for="filter-level">Filter :</label><select id='filter-level' class='ml-2 form-control'><option value='all'>-- Semua Pengguna --</option>`;
+            @foreach(userLevel() as $key => $value)
+                filterByUserLevel += `<option value='{{ $key }}'>{{ $value }}</option>`;
+            @endforeach
+                filterByUserLevel += `</select>`;
+
+            jQuery("#users_length").append(filterByUserLevel);
+
+            jQuery("#filter-level").change(function (){
+                usersData.draw()
+            });
         });
     </script>
 @endsection
