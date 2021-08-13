@@ -19,18 +19,21 @@ class GuidanceController extends Controller
         $firstSupervisorGuidances = Guidance::getByStudentId($nim, $supervisor->first_supervisor);
         $secondSupervisorGuidances = Guidance::getByStudentId($nim, $supervisor->second_supervisor);
 
-        $guidances = [
-            'first_supervisor' => $firstSupervisorGuidances,
-            'second_supervisor' => $secondSupervisorGuidances
-        ];
-
-        return viewStudent('guidance.index', compact('guidances', 'supervisor'));
+        return viewStudent('guidance.index', compact('supervisor', 'firstSupervisorGuidances', 'secondSupervisorGuidances'));
     }
 
     public function create()
     {
         $nim = auth()->user()->registration_number;
         $supervisor = Thesis::getSupervisorOnly($nim);
+        if($supervisor->first_supervisor === null && $supervisor->second_supervisor === null) {
+            return redirect()->back()->with('message', [
+                'type' => 'info',
+                'text' => 'Anda belum dapat melakukan bimbingan, karena Pembimbing belum ditetapkan oleh Program Studi.',
+                'timer' => 5000
+            ]);
+        }
+
         $supervisor->load(['firstSupervisor', 'secondSupervisor']);
 
         return viewStudent('guidance.create', compact('supervisor'));
@@ -73,12 +76,21 @@ class GuidanceController extends Controller
     public function show(Guidance $guidance)
     {
         $guidance->load(['student', 'thesis']);
+        $nim = auth()->user()->registration_number;
+        if($guidance->nim !== $nim) {
+            abort(403);
+        }
+
         return viewStudent('guidance.single', compact('guidance'));
     }
 
     public function edit(Guidance $guidance)
     {
         $nim = auth()->user()->registration_number;
+        if($guidance->nim !== $nim) {
+            abort(403);
+        }
+
         $thesis = Thesis::getSupervisorOnly($nim);
         $thesis->load(['firstSupervisor', 'secondSupervisor']);
 

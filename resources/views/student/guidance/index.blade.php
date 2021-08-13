@@ -10,11 +10,6 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
@@ -36,25 +31,29 @@
                 </li>
                 <li class="nav-item ml-auto pr-2">
                     <button type="button" class="btn btn-sm btn-primary"
-                            onclick="openLink('{{ route('student.guidance.create') }}', true)">
+                            onclick="openLink('{{ route('student.guidance.create') }}')">
                         <i class="fa fa-fw fa-plus"></i>
                         <span>Bimbingan</span>
                     </button>
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-info dropdown-toggle" id="select-supervisor"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-fw fa-print"></i>
-                            <span>Cetak Kartu</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="select-supervisor">
-                            <a class="dropdown-item" href="#" onclick="openLink('{{ route('student.guidance.export-card', $supervisor->firstSupervisor->id) }}', true)">
-                                <span>Pembimbing 1</span>
-                            </a>
-                            <a class="dropdown-item" href="#" onclick="openLink('{{ route('student.guidance.export-card', $supervisor->secondSupervisor->id) }}', true)">
-                                <span>Pembimbing 2</span>
-                            </a>
+                    @if($supervisor->first_supervisor !== null && $supervisor->second_supervisor !== null)
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-info dropdown-toggle" id="select-supervisor"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-fw fa-print"></i>
+                                <span>Cetak Kartu</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="select-supervisor">
+                                <a class="dropdown-item" href="#"
+                                   onclick="openLink('{{ route('student.guidance.export-card', $supervisor->firstSupervisor->id) }}', true)">
+                                    <span>Pembimbing 1</span>
+                                </a>
+                                <a class="dropdown-item" href="#"
+                                   onclick="openLink('{{ route('student.guidance.export-card', $supervisor->secondSupervisor->id) }}', true)">
+                                    <span>Pembimbing 2</span>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </li>
             </ul>
             <div class="block-content tab-content">
@@ -72,7 +71,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($guidances['first_supervisor'] as $guidance)
+                            @forelse($firstSupervisorGuidances as $guidance)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $guidance->title }}</td>
@@ -93,7 +92,8 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -112,7 +112,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($guidances['second_supervisor'] as $guidance)
+                            @forelse($secondSupervisorGuidances as $guidance)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $guidance->title }}</td>
@@ -133,7 +133,8 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                            @endforelse
                             </tbody>
                         </table>
                     </div>

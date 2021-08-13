@@ -103,6 +103,10 @@ class ThesisSubmissionController extends Controller
 
     public function show(ThesisSubmission $thesisSubmission)
     {
+        $nim = auth()->user()->registration_number;
+        if($thesisSubmission->nim !== $nim) {
+            abort(403);
+        }
         $thesisSubmission->load(['scienceField', 'student']);
         return viewStudent('thesis-submission.single', [
             'submission' => $thesisSubmission
