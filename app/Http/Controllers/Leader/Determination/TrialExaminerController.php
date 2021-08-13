@@ -31,6 +31,7 @@ class TrialExaminerController extends Controller
             ->emptyTester()
             ->get();
 
+
         return viewStudyProgramLeader('determination.trial-examiner.index', compact('submissions'));
     }
 
