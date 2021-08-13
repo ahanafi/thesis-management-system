@@ -12,12 +12,12 @@ class AssessmentScheduleController extends Controller
 {
     public function index($assessmentType = 'seminar')
     {
-        if(!array_key_exists(strtoupper($assessmentType), getTypeOfAssessment())) {
-            return $this->show($assessmentType);
-        }
-
         if($assessmentType === 'final-test') {
             $assessmentType = AssessmentTypes::TRIAL;
+        }
+
+        if(!array_key_exists(strtoupper($assessmentType), getTypeOfAssessment())) {
+            return $this->show($assessmentType);
         }
 
         $schedules = AssessmentSchedule::whereHas('submission', function ($query) use ($assessmentType) {

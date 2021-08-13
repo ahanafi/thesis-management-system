@@ -46,6 +46,13 @@ class SubmissionAssessment extends Model
             ->with(['components']);
     }
 
+    public function scopeStudyProgramOfStudent($query, $studyProgramId)
+    {
+        return $query->whereHas('student', function ($q) use ($studyProgramId) {
+            $q->where('study_program_code', $studyProgramId);
+        });
+    }
+
     public function scopeType($query, $type)
     {
         if($type === 'final-test') {
