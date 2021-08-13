@@ -23,6 +23,7 @@ class SeminarExaminerController extends Controller
             })
             ->type(AssessmentTypes::SEMINAR)
             ->emptyTester()
+            ->approved()
             ->get();
 
         return viewStudyProgramLeader('determination.seminar-examiner.index', compact('submissionSeminarAssessment'));

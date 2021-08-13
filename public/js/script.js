@@ -223,13 +223,21 @@ const editAssessmentComponent = (assessmentComponentId, name, assessmentType, we
 }
 
 const showDocument = (path, documentType) => {
-    let elType = documentType.toLowerCase() === 'pdf' ? 'iframe' : 'img';
-    let element = document.createElement(elType);
-    element.setAttribute('src', path);
-    element.setAttribute("width", '100%');
-    if (documentType.toLowerCase() === 'pdf') {
-        element.setAttribute("height", '550px');
+    let element = null;
+    if(documentType.toLowerCase() === 'doc' || documentType.toLowerCase() === 'docx' || documentType.toLowerCase() === 'zip' || documentType.toLowerCase() === 'rar') {
+        element = document.createElement('h3');
+        element.setAttribute('class', 'font-size-h3');
+        element.textContent = 'Pratinjau dokumen tidak dapat dilakukan dengan format dokumen doc/docx, zip, atau rar.';
+    } else {
+        let elType = documentType.toLowerCase() === 'pdf' ? 'iframe' : 'img';
+        element = document.createElement(elType);
+        element.setAttribute('src', path);
+        element.setAttribute("width", '100%');
+        if (documentType.toLowerCase() === 'pdf') {
+            element.setAttribute("height", '550px');
+        }
     }
+
     let view = document.querySelector("#view");
 
     while (view.lastElementChild) {
