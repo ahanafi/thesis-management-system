@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Leader\Determination;
 
+use App\Constants\Functional;
 use App\Constants\ScoreTag;
 use App\Http\Controllers\Controller;
 use App\Models\DataSet;
@@ -29,7 +30,12 @@ class SupervisorController extends Controller
         $thesis->load(['student', 'scienceField']);
 
         $studyProgramCode = $thesis->student->study_program_code;
-        $firstSupervisorCandidates = Lecturer::studyProgramCode($studyProgramCode)->get();
+        $firstSupervisorCandidates = Lecturer::studyProgramCode($studyProgramCode)
+            ->where(function ($query) {
+                $query->where('functional', Functional::LECTURER)
+                    ->orWhere('functional', Functional::EXPERT_ASSISTANT);
+            })
+            ->get();
         $lecturers = Lecturer::select('full_name', 'nidn', 'degree')->get();
 
         return viewStudyProgramLeader('determination.supervisor.single', compact('thesis', 'lecturers', 'firstSupervisorCandidates'));

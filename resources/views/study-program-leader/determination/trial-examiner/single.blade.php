@@ -24,7 +24,7 @@
         <x-student-thesis-info
             name="{{ $thesis->student->getName() }}"
             nim="{{ $thesis->student->nim }}"
-            study-program-name="{{ $thesis->student->getName() }}"
+            study-program-name="{{ $thesis->student->study_program->getComplexName() }}"
             semester="{{ $thesis->student->semester }}"
             avatar="{{ $thesis->student->user->avatar }}"
             research-title="{{ $thesis->research_title }}"
