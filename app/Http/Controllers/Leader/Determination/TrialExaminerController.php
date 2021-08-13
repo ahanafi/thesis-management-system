@@ -379,7 +379,6 @@ class TrialExaminerController extends Controller
                 'entropy' => $entropy
             ];
         }
-        dd($dataTesting);
 
         /*
          * Section for First Scores
@@ -472,8 +471,6 @@ class TrialExaminerController extends Controller
                 'gain' => C45Service::calculateGain($secondEntropyTotal, $countDataTesting, $secondNodeSecondExaminerScoreAttributes),
             ],
         ];
-
-        dd($resultSecondNode);
 
 
         /* END NEXT NODE */
