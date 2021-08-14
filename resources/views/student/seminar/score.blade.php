@@ -4,7 +4,7 @@
     <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Penilaian Hasil Seminar Skripsi</h2>
-        @if(!isset($submission->score) || count($submission->scores) !== ($countAssessmentComponent * 2))
+        @if(!isset($submission->scores) || count($submission->scores) !== ($countAssessmentComponent * 2))
             <div
                 class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
                 role="alert">

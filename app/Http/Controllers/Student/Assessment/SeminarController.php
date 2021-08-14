@@ -118,6 +118,7 @@ class SeminarController extends Controller
             ->studentId($nim)
             ->with('scores')
             ->first();
+
         $countAssessmentComponent = AssessmentComponent::type(AssessmentTypes::SEMINAR)->count();
         $index = 1;
         return viewStudent('seminar.score', compact('submission','index', 'countAssessmentComponent'));

@@ -76,7 +76,6 @@ class SeminarController extends Controller
             $message = setFlashMessage('error', 'insert', 'nilai ujian seminar skripsi');
         }
 
-        return redirect()->route('lecturer.exam.seminar.show', $submission->id)
-            ->with('message', $message);
+        return redirect()->back()->with('message', $message);
     }
 }
