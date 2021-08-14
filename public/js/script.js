@@ -202,7 +202,7 @@ const addAssessmentComponent = () => {
 const editAssessmentComponent = (assessmentComponentId, name, assessmentType, weight) => {
     let blockTitle = document.querySelector("#dm-add-server h3.block-title");
     blockTitle.textContent = 'Edit Data';
-    let action = `/academic-staff/assessment-component/${assessmentComponentId}`;
+    let action = `/academic-staff/assessment-components/${assessmentComponentId}`;
 
     let formAssessmentComponent = document.querySelector("#dm-add-server form");
     formAssessmentComponent.setAttribute("method", "POST");
