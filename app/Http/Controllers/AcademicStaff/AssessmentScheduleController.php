@@ -34,6 +34,7 @@ class AssessmentScheduleController extends Controller
 
         $submissions = SubmissionAssessment::with(['thesis', 'firstExaminer', 'secondExaminer'])
             ->type($assessmentType)
+            ->whereDoesntHave('schedule')
             ->approved()
             ->get();
 

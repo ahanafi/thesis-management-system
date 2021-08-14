@@ -10,6 +10,10 @@ class LecturerCompetency extends Model
 {
     use HasFactory;
     protected $table = 'lecturer_competency';
+    public $incrementing = false;
+    public $timestamps = false;
+
+    protected $fillable = ['lecturer_id', 'science_field_id'];
 
     public function scienceField()
     {

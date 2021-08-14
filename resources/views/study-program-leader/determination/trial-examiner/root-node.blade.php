@@ -32,10 +32,10 @@
                     <a class="nav-link" href="#btabs-step-4">Step 4</a>
                 </li>
                 <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        href="#rules"
-                    >Hasil Rule</a>
+                    <a class="nav-link" href="#first-examiner">Penguji 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#second-examiner">Penguji 2</a>
                 </li>
             </ul>
             <div class="block-content tab-content">
@@ -253,6 +253,14 @@
                     </table>
                 </div>
                 <!-- End Step 4 -->
+
+                <!-- Penguji 1 -->
+                <div class="tab-pane" id="first-examiner" role="tabpanel">Penguji 1 adalah ...</div>
+                <!-- End Penguji 1 -->
+
+                <!-- Penguji 2 -->
+                <div class="tab-pane" id="second-examiner" role="tabpanel">Penguji 2 adalah ...</div>
+                <!-- End Penguji 2 -->
             </div>
         </div>
         <!-- END Dynamic Table with Export Buttons -->
