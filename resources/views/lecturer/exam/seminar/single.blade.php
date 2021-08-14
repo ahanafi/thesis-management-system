@@ -4,6 +4,22 @@
     <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Jadwal Pengujian Skripsi</h2>
+
+        @if(is_null($submission->schedule))
+            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
+                 role="alert">
+                <div class="flex-fill mr-3">
+                    <p class="mb-0">
+                        Jadwal ujian Skripsi ini belum ditentukan oleh BAAK.
+                        @if (auth()->user()->level === \App\Models\User::STUDY_PROGRAM_LEADER && $submission->student->study_program_code === auth()->user()->lecturerProfile->study_program_code)
+                            Mohon agar <i>follow-up</i> BAAK agar jadwal segera dibuatkan.
+                        @elseif(auth()->user()->level === \App\Models\User::LECTURER)
+                            Jadwl ujian akan segera dibuat.
+                        @endif
+                    </p>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-xl-6">
                 <!-- Dynamic Table with Export Buttons -->
@@ -30,12 +46,17 @@
                             <tr>
                                 <td width="180">Tanggal Ujian</td>
                                 <td>:</td>
-                                <td>{{ $submission->schedule->date }}</td>
+                                <td>{{ $submission->schedule->date ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <td width="180">Waktu</td>
                                 <td>:</td>
-                                <td>{{ $submission->schedule->getAssessmentTime() }}</td>
+                                <td>{{ ($submission->schedule) ? $submission->schedule->getAssessmentTime() : '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td width="180">Ruang Ujian</td>
+                                <td>:</td>
+                                <td>{{ $submission->schedule->room_number ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <td width="180">Penguji 1</td>
@@ -46,13 +67,6 @@
                                 <td width="180">Penguji 2</td>
                                 <td>:</td>
                                 <td>{{ $submission->secondExaminer->getNameWithDegree() }}</td>
-                            </tr>
-                            <tr>
-                                <td width="180">Ruang Ujian</td>
-                                <td>:</td>
-                                <td>
-                                    {{ $submission->schedule->room_number }}
-                                </td>
                             </tr>
                         </table>
                     </div>

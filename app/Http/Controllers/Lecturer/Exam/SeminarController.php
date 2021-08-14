@@ -27,7 +27,7 @@ class SeminarController extends Controller
 
     public function show(SubmissionAssessment $submission)
     {
-        $submission->load(['student', 'thesis']);
+        $submission->load(['student', 'thesis', 'schedule']);
         return viewLecturer('exam.seminar.single', compact('submission'));
     }
 

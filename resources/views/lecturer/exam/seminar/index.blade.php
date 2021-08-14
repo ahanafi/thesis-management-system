@@ -45,20 +45,28 @@
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $submission->nim }}</td>
                             <td>{{ $submission->thesis->student->getName() }}</td>
-                            <td class="text-center">{{ $submission->schedule->date }}</td>
-                            <td class="text-center">{{ $submission->schedule->getAssessmentTime() }}</td>
-                            <td class="text-center">{{ $submission->schedule->room_number }}</td>
+                            @if($submission->schedule)
+                                <td class="text-center">{{ optional($submission->schedule)->date }}</td>
+                                <td class="text-center">{{ optional($submission->schedule)->getAssessmentTime() }}</td>
+                                <td class="text-center">{{ optional($submission->schedule)->room_number }}</td>
+                            @else
+                                <td class="text-center font-italic" colspan="3">
+                                    Jadwal belum ditentukan oleh BAAK.
+                                </td>
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('lecturer.exam.seminar.show', $submission->id) }}"
                                    class="btn btn-primary btn-sm">
                                     <i class="fa fa-fw fa-search-plus"></i>
                                     <span>Detail</span>
                                 </a>
-                                <a href="{{ route('lecturer.exam.seminar.score', $submission->id) }}"
-                                   class="btn btn-success btn-sm">
-                                    <i class="fa fa-fw fa-pencil-alt"></i>
-                                    <span>Nilai</span>
-                                </a>
+                                @if($submission->schedule)
+                                    <a href="{{ route('lecturer.exam.seminar.score', $submission->id) }}"
+                                       class="btn btn-success btn-sm">
+                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                        <span>Nilai</span>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
