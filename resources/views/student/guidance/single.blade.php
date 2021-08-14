@@ -78,18 +78,18 @@
                             <tr>
                                 <td width="180">Tanggal Respons</td>
                                 <td width="10">:</td>
-                                <td>{{ $guidance->guide_response_date ?? '-' }}</td>
+                                <td>{{ $guidance->created_at->format('d-m-Y H:i:s') ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <td>Catatan</td>
                                 <td>:</td>
-                                <td>{{ $guidance->guide_response ?? '-' }}</td>
+                                <td>{!! $guidance->response->response ?? '-' !!}</td>
                             </tr>
                             <tr>
                                 <td>Dokumen Balasan</td>
                                 <td>:</td>
                                 <td>
-                                    @if($guidance->guide_document !== '' && Storage::exists($guidance->guide_document))
+                                    @if($guidance->response->document !== '' && Storage::exists($guidance->guide_document))
                                         <a href="#"
                                            onclick="showDocument(
                                                '{{ Storage::url($guidance->guide_document) }}',

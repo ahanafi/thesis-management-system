@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Student;
 
+use App\Constants\GuidanceStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GuidanceRequest;
 use App\Models\Guidance;
@@ -75,7 +76,7 @@ class GuidanceController extends Controller
 
     public function show(Guidance $guidance)
     {
-        $guidance->load(['student', 'thesis']);
+        $guidance->load(['student', 'thesis', 'response']);
         $nim = auth()->user()->registration_number;
         if($guidance->nim !== $nim) {
             abort(403);
@@ -89,6 +90,16 @@ class GuidanceController extends Controller
         $nim = auth()->user()->registration_number;
         if($guidance->nim !== $nim) {
             abort(403);
+        }
+
+        if($guidance->status === GuidanceStatus::REPLIED) {
+            return redirect()
+                ->back()
+                ->with('message', [
+                    'type' => 'warning',
+                    'text' => 'Data bimbingan yang telah dibalas oleh Pembimbing tidak dapat diubah.',
+                    'timer' => 3000
+                ]);
         }
 
         $thesis = Thesis::getSupervisorOnly($nim);

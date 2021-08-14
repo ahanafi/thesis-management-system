@@ -10,11 +10,6 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
@@ -27,18 +22,18 @@
         <!-- Dynamic Table with Export Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Daftar Mahasiswa Bimbingan Skripsi</h3>
+                <h3 class="block-title">Daftar Data Bimbingan Skripsi</h3>
             </div>
             <div class="block-content block-content-full">
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
                     <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Materi</th>
-                        <th>Tanggal Kirim</th>
-                        <th>Status</th>
-                        <th>Nama Mahasiswa</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No.</th>
+                        <th class="text-center">Materi</th>
+                        <th class="text-center">Tanggal Kirim</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Nama Mahasiswa</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,7 +42,7 @@
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $guidance->title }}</td>
                             <td>{{ $guidance->created_at->format('d-m-Y H:i:s') }}</td>
-                            <td>{!! \App\Constants\GuidanceStatus::showLabel($guidance->status) !!}</td>
+                            <td class="text-center">{!! \App\Constants\GuidanceStatus::showLabel($guidance->status) !!}</td>
                             <td>
                                 <a href="{{ route('lecturer.mentoring.student.show', $guidance->student->id) }}">{{ $guidance->student->getName() }}</a>
                             </td>

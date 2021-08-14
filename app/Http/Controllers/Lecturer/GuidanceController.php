@@ -15,7 +15,9 @@ class GuidanceController extends Controller
     public function index()
     {
         $nidn = auth()->user()->registration_number;
-        $guidance = Guidance::where('nidn', $nidn)->get();
+        $guidance = Guidance::where('nidn', $nidn)
+            ->orderByDesc('created_at')
+            ->get();
 
         return viewLecturer('guidance.index', compact('guidance'));
     }
