@@ -78,6 +78,7 @@
                                         <th class="text-center" style="width: 80px;">#</th>
                                         <th>Nama Mahasiswa</th>
                                         <th class="text-center">Program Studi</th>
+                                        <th class="text-center">Penguji</th>
                                         <th class="text-center">Tanggal</th>
                                         <th class="text-center">Waktu</th>
                                         <th class="text-center">Aksi</th>
@@ -88,9 +89,13 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $schedule->submission->thesis->student->getName() }}</td>
-                                            <td>{{ $schedule->submission->thesis->student->study_program->getComplexName() }}</td>
-                                            <td class="text-center">{{ $schedule->date }}</td>
-                                            <td class="text-center">{{ $schedule->start_at . " - ". $schedule->finished_at }}</td>
+                                            <td>{{ $schedule->submission->thesis->student->study_program->name }}</td>
+                                            <td>
+                                                1) {{ $schedule->submission->firstExaminer->getNameWithDegree() }} <br>
+                                                2) {{ $schedule->submission->secondExaminer->getNameWithDegree() }} <br>
+                                            </td>
+                                            <td class="text-center">{{ idDateFormat($schedule->date) }}</td>
+                                            <td class="text-center">{{ $schedule->getAssessmentTime() }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group btn-group-sm">
                                                     <a href="{{ route('assessment-schedules.edit', $schedule->id) }}" class="btn btn-primary">

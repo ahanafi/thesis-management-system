@@ -57,17 +57,17 @@
                                 @csrf
                                 @method('POST')
                                 <div class="row push">
-                                    <div class="col-lg-10 col-xl-10">
+                                    <div class="col-lg-12 col-xl-12">
                                         @forelse($components as $component)
                                             <div class="form-group row">
                                                 <label for="date" class="col-sm-4 col-form-label text-right">
                                                     {{ ucwords($component->name) }}
                                                 </label>
 
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-6">
                                                     <input type="number" class="form-control "
                                                            name="scores[{{ $loop->iteration }}]"
-                                                           placeholder="{{ ucwords($component->name) }}"
+                                                           placeholder="Max. Nilai : {{ $component->weight }}"
                                                            required="required" max="{{ $component->weight }}">
                                                     <input type="hidden" name="component_ids[{{ $loop->iteration }}]"
                                                            value="{{ $component->id }}">

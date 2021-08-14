@@ -35,7 +35,7 @@ class AssessmentSchedule extends Model
     {
         $startTime = date('H:i', strtotime($this->start_at));
         $finishTime = date('H:i', strtotime($this->finished_at));
-        return $startTime . "-" . $finishTime;
+        return $startTime . " - " . $finishTime;
     }
 
     public function setIsDone(bool $isDone)

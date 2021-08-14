@@ -292,3 +292,11 @@ if(!function_exists('lastUriSegment')) {
         return request()->segment($index);
     }
 }
+
+if(!function_exists('idDateFormat')) {
+    function idDateFormat($date) {
+        $tempDate = explode("-", $date);
+        $tempDate = array_reverse($tempDate);
+        return implode("-", $tempDate);
+    }
+}

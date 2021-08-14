@@ -30,12 +30,19 @@
                             <tr>
                                 <td width="180">Tanggal Ujian</td>
                                 <td>:</td>
-                                <td>{{ $schedule->date }}</td>
+                                <td>{{ idDateFormat($schedule->date) }}</td>
                             </tr>
                             <tr>
                                 <td width="180">Waktu</td>
                                 <td>:</td>
-                                <td>{{ $schedule->start_at }} - {{ $schedule->finished_at }}</td>
+                                <td>{{ $schedule->getAssessmentTime() }}</td>
+                            </tr>
+                            <tr>
+                                <td width="180">Ruang Ujian</td>
+                                <td>:</td>
+                                <td>
+                                    {{ $schedule->room_number }}
+                                </td>
                             </tr>
                             <tr>
                                 <td width="180">Penguji 1</td>
@@ -46,13 +53,6 @@
                                 <td width="180">Penguji 2</td>
                                 <td>:</td>
                                 <td>{{ $schedule->submission->secondExaminer->getNameWithDegree() }}</td>
-                            </tr>
-                            <tr>
-                                <td width="180">Ruang Ujian</td>
-                                <td>:</td>
-                                <td>
-                                    {{ $schedule->room_number }}
-                                </td>
                             </tr>
                         </table>
                     </div>

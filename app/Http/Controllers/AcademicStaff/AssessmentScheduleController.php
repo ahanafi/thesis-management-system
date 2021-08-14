@@ -20,7 +20,8 @@ class AssessmentScheduleController extends Controller
             return $this->show($assessmentType);
         }
 
-        $schedules = AssessmentSchedule::whereHas('submission', function ($query) use ($assessmentType) {
+        $schedules = AssessmentSchedule::with('submission')
+            ->whereHas('submission', function ($query) use ($assessmentType) {
             $query->where('assessment_type', strtoupper($assessmentType));
         })->get();
 
