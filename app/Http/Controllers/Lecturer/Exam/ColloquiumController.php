@@ -24,8 +24,6 @@ class ColloquiumController extends Controller
             })
             ->get();
 
-        $scores = [];
-
         return viewLecturer('exam.colloquium.score', compact('submission', 'components', 'scores'));
     }
 
@@ -55,7 +53,6 @@ class ColloquiumController extends Controller
             $message = setFlashMessage('error', 'insert', 'nilai ujian kolokium skripsi');
         }
 
-        return redirect()->route('lecturer.submission.colloquium.show', $submission->id)
-            ->with('message', $message);
+        return redirect()->back()->with('message', $message);
     }
 }

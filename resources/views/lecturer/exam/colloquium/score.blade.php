@@ -68,7 +68,7 @@
                                                 <div class="col-sm-5">
                                                     <input type="number" class="form-control "
                                                            name="scores[{{ $loop->iteration }}]"
-                                                           placeholder="{{ ucwords($component->name) }}"
+                                                           placeholder="Max. Nilai : {{ $component->weight }}"
                                                            required="required" max="{{ $component->weight }}">
                                                     <input type="hidden" name="component_ids[{{ $loop->iteration }}]"
                                                            value="{{ $component->id }}">
