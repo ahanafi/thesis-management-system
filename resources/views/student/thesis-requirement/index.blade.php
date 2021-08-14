@@ -164,7 +164,7 @@
                         </h3>
                         <p class="mb-0 font-weight-bold">
                             Selamat! dokumen persyaratan Skripsi yang Anda unggah telah diverifikasi oleh BAAK. Saat ini
-                            Andadapat mengajukan porposal Skripsi.
+                            Anda dapat mengajukan porposal Skripsi.
                         </p>
                     </div>
                 </div>

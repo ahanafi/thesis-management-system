@@ -13,7 +13,7 @@ class Status
     const REJECT = 'REJECT';
     const REVISION = 'REVISION';
 
-    public static function getLabel($status): string
+    public static function getLabel($status, $textOnly = false): string
     {
         $labelText = '';
         $labelType = '';
@@ -32,6 +32,10 @@ class Status
         } else if($status === self::REVISION) {
             $labelText = 'REVISI';
             $labelType = 'warning';
+        }
+
+        if($textOnly) {
+            return $labelText;
         }
 
         return "<span class='badge badge-$labelType'>$labelText</span>";

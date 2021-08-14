@@ -18,9 +18,7 @@ class ThesisRequirementController extends Controller
     public function index()
     {
         $nim = auth()->user()->registration_number;
-        $submission = SubmissionThesisRequirement::with('details')
-            ->where('nim', $nim)
-            ->first();
+        $submission = SubmissionThesisRequirement::with('details')->where('nim', $nim)->first();
 
         $thesisRequirements = ($submission)
             ? ThesisRequirement::all()->each(function ($requirement) use ($submission) {
@@ -87,7 +85,7 @@ class ThesisRequirementController extends Controller
             $message = setFlashMessage('error', 'upload', 'persyaratan skripsi');
         }
 
-        return redirect()->route('student.thesis-requirement.index')->with('message', $message);
+        return redirect()->back()->with('message', $message);
     }
 
     public function apply(Request $request, SubmissionThesisRequirement $submission)

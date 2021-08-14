@@ -105,7 +105,7 @@
                 <x-student-info
                     name="{{ $submission->student->getName() }}"
                     nim="{{ $submission->student->nim }}"
-                    study-program-name="{{ $submission->student->getName() }}"
+                    study-program-name="{{ $submission->student->study_program->name }}"
                     semester="{{ $submission->student->semester }}"
                     avatar="{{ $submission->student->user->avatar }}"
                 ></x-student-info>

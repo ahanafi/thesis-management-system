@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AcademicStaff;
 
+use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Models\SubmissionThesisRequirement;
 use App\Models\ThesisRequirement;
@@ -9,12 +10,25 @@ use Illuminate\Http\Request;
 
 class ThesisRequirementController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $thesisRequirements = ThesisRequirement::all();
-        $submissionThesisRequirements = SubmissionThesisRequirement::with(['student', 'details'])->get();
+        if($request->has('status')) {
+            if($request->get('status') === 'unresponse' || $request->get('status') === 'approve' || $request->get('status') === 'reject') {
+                $status = $request->get('status') === 'unresponse' ? Status::APPLY : $request->get('status');
+            } else {
+                abort(404);
+            }
+        } else {
+            $status = Status::APPLY;
+        }
 
-        return viewAcademicStaff('thesis-requirement.index', compact('thesisRequirements', 'submissionThesisRequirements'));
+        $thesisRequirements = ThesisRequirement::all();
+        $submissionThesisRequirements = SubmissionThesisRequirement::with(['student', 'details'])
+            ->status([$status])
+            ->orderByDesc('date_of_filling')
+            ->get();
+
+        return viewAcademicStaff('thesis-requirement.index', compact('thesisRequirements', 'submissionThesisRequirements', 'status'));
     }
 
     public function store(Request $request)

@@ -29,6 +29,11 @@ class SubmissionThesisRequirement extends Model
             ->with(['study_program', 'user']);
     }
 
+    public function scopeStatus($query, array $status)
+    {
+        return $query->whereIn('status', $status);
+    }
+
     public static function getByStudentId($nim)
     {
         return self::where('nim', $nim)->withCount('details')->first();

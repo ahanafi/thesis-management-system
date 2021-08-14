@@ -117,7 +117,7 @@
                 <x-student-info
                     name="{{ $guidance->student->getName() }}"
                     nim="{{ $guidance->student->nim }}"
-                    study-program-name="{{ $guidance->student->getName() }}"
+                    study-program-name="{{ $guidance->student->study_program->name }}"
                     semester="{{ $guidance->student->semester }}"
                     avatar="{{ $guidance->student->user->avatar }}"
                 ></x-student-info>
