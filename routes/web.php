@@ -6,6 +6,7 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HomeController;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/topsis', function () {
+    $nilaiSidang = DB::table('topsis')->get();
+    return view('topsis', [
+        'nilaiSidang' => $nilaiSidang
+    ]);
+});
+
+
+
 
 /* Auth Routes */
 Route::get('/', [HomeController::class, 'index'])->name('/');

@@ -32,6 +32,9 @@
                     <a class="nav-link" href="#btabs-step-4">Step 4</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="#btabs-step-5">Step 5</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#first-examiner">Penguji 1</a>
                 </li>
                 <li class="nav-item">
@@ -254,12 +257,171 @@
                 </div>
                 <!-- End Step 4 -->
 
+                <!-- Step 5 -->
+                <div class="tab-pane" id="btabs-step-5" role="tabpanel">
+                    <div
+                        class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
+                        role="alert">
+                        <div class="flex-fill mr-3">
+                            <h5 class="alert-heading font-size-h5 my-2">
+                                Step 3 : Pengelompokkan Jumlah Riwayat Dosen sebagai Penguji 1 dan 2.
+                            </h5>
+                            <p class="mb-0">
+                                <b>Keterangan:</b> <br>
+                                <b>SRP1</b> : Score Riwayat sebagai Dosen Penguji 1 <br>
+                                <b>SRP2</b> : Score Riwayat sebagai Dosen Penguji 2
+                            </p>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-vcenter table-sm">
+                        <thead>
+                        <tr>
+                            <th class="text-center">No.</th>
+                            <th>Nama Lengkap</th>
+                            <th class="d-none d-sm-table-cell font-italic">Homebase</th>
+                            <th class="d-none d-sm-table-cell">Jab. Fung.</th>
+                            <th class="d-none d-sm-table-cell">Kompetensi</th>
+                            <th class="d-none d-sm-table-cell">SRP 1</th>
+                            <th class="d-none d-sm-table-cell">SRP 2</th>
+                            <th class="d-none d-sm-table-cell">Kuota</th>
+                            <th class="d-none d-sm-table-cell text-center">Jenis Penguji</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @php $number = 1; @endphp
+                        @foreach ($filteredLecturers as $lecturer)
+                            @if($lecturer->homebase === $submission->thesis->student->study_program->getName())
+                                <tr>
+                                    <td class="text-center">{{ $number++ }}</td>
+                                    <td>{{ $lecturer->name }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
+                                    <td class="font-size-sm">
+                                        @forelse($lecturer->competencies as $competency)
+                                            - {{ $competency->name  }} <br>
+                                        @empty
+                                        @endforelse
+                                    </td>
+                                    <td class="font-size-sm">{{ $lecturer->firstExaminerLabel }}</td>
+                                    <td class="font-size-sm">{{ $lecturer->secondExaminerLabel }}</td>
+                                    <td class="text-center">{{ $lecturer->quota }}</td>
+                                    <td class="text-center">
+                                        Penguji {{ $lecturer->examinerType }}
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Step 5 -->
+
                 <!-- Penguji 1 -->
-                <div class="tab-pane" id="first-examiner" role="tabpanel">Penguji 1 adalah ...</div>
+                <div class="tab-pane" id="first-examiner" role="tabpanel">
+                    <div
+                        class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
+                        role="alert">
+                        <div class="flex-fill mr-3">
+                            <h5 class="alert-heading font-size-h5 my-2">
+                                Rekomendasi Penguji 1
+                            </h5>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-vcenter table-sm">
+                        <thead>
+                        <tr>
+                            <th class="text-center">No.</th>
+                            <th>Nama Lengkap</th>
+                            <th class="d-none d-sm-table-cell font-italic">Homebase</th>
+                            <th class="d-none d-sm-table-cell">Jab. Fung.</th>
+                            <th class="d-none d-sm-table-cell">Kompetensi</th>
+                            <th class="d-none d-sm-table-cell">SRP 1</th>
+                            <th class="d-none d-sm-table-cell">SRP 2</th>
+                            <th class="d-none d-sm-table-cell">Kuota</th>
+                            <th class="d-none d-sm-table-cell text-center">Jenis Penguji</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @php $number = 1; @endphp
+                        @foreach ($filteredLecturers as $lecturer)
+                            @if($lecturer->homebase === $submission->thesis->student->study_program->getName() && strtolower($lecturer->functional) === 'lektor')
+                                <tr>
+                                    <td class="text-center">{{ $number++ }}</td>
+                                    <td>{{ $lecturer->name }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
+                                    <td class="font-size-sm">
+                                        @forelse($lecturer->competencies as $competency)
+                                            - {{ $competency->name  }} <br>
+                                        @empty
+                                        @endforelse
+                                    </td>
+                                    <td class="font-size-sm">{{ $lecturer->firstExaminerLabel }}</td>
+                                    <td class="font-size-sm">{{ $lecturer->secondExaminerLabel }}</td>
+                                    <td class="text-center">{{ $lecturer->quota }}</td>
+                                    <td class="text-center">
+                                        Penguji {{ $lecturer->examinerType }}
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <!-- End Penguji 1 -->
 
                 <!-- Penguji 2 -->
-                <div class="tab-pane" id="second-examiner" role="tabpanel">Penguji 2 adalah ...</div>
+                <div class="tab-pane" id="second-examiner" role="tabpanel">
+                    <div
+                        class="alert alert-info d-flex align-items-center justify-content-between border-3x border-info"
+                        role="alert">
+                        <div class="flex-fill mr-3">
+                            <h5 class="alert-heading font-size-h5 my-2">
+                                Rekomendasi Penguji 2
+                            </h5>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-vcenter table-sm">
+                        <thead>
+                        <tr>
+                            <th class="text-center">No.</th>
+                            <th>Nama Lengkap</th>
+                            <th class="d-none d-sm-table-cell font-italic">Homebase</th>
+                            <th class="d-none d-sm-table-cell">Jab. Fung.</th>
+                            <th class="d-none d-sm-table-cell">Kompetensi</th>
+                            <th class="d-none d-sm-table-cell">SRP 1</th>
+                            <th class="d-none d-sm-table-cell">SRP 2</th>
+                            <th class="d-none d-sm-table-cell">Kuota</th>
+                            <th class="d-none d-sm-table-cell text-center">Jenis Penguji</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @php $number = 1; @endphp
+                        @foreach ($filteredLecturers as $lecturer)
+                            @if($lecturer->homebase === $submission->thesis->student->study_program->getName())
+                                <tr>
+                                    <td class="text-center">{{ $number++ }}</td>
+                                    <td>{{ $lecturer->name }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
+                                    <td class="font-size-sm">
+                                        @forelse($lecturer->competencies as $competency)
+                                            - {{ $competency->name  }} <br>
+                                        @empty
+                                        @endforelse
+                                    </td>
+                                    <td class="font-size-sm">{{ $lecturer->firstExaminerLabel }}</td>
+                                    <td class="font-size-sm">{{ $lecturer->secondExaminerLabel }}</td>
+                                    <td class="text-center">{{ $lecturer->quota }}</td>
+                                    <td class="text-center">
+                                        Penguji {{ $lecturer->examinerType }}
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <!-- End Penguji 2 -->
             </div>
         </div>
