@@ -359,15 +359,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td width="50%">MAX</td>
-                                        <td>{{ max($arrMatrixC1) }}</td>
-                                        <td>{{ max($arrMatrixC2) }}</td>
-                                        <td>{{ max($arrMatrixC3) }}</td>
-                                        <td>{{ max($arrMatrixC4) }}</td>
-                                        <td>{{ max($arrMatrixC5) }}</td>
-                                        <td>{{ max($arrMatrixC6) }}</td>
-                                    </tr>
+                                <tr>
+                                    <td width="50%">MAX</td>
+                                    <td>{{ $maxMatrixC1 = max($arrMatrixC1) }}</td>
+                                    <td>{{ $maxMatrixC2 = max($arrMatrixC2) }}</td>
+                                    <td>{{ $maxMatrixC3 = max($arrMatrixC3) }}</td>
+                                    <td>{{ $maxMatrixC4 = max($arrMatrixC4) }}</td>
+                                    <td>{{ $maxMatrixC5 = max($arrMatrixC5) }}</td>
+                                    <td>{{ $maxMatrixC6 = max($arrMatrixC6) }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -399,15 +399,75 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tr>
+                                    <td width="50%">MIN</td>
+                                    <td>{{ $minMatrix1 = min($arrMatrixC1) }}</td>
+                                    <td>{{ $minMatrix2 = min($arrMatrixC2) }}</td>
+                                    <td>{{ $minMatrix3 = min($arrMatrixC3) }}</td>
+                                    <td>{{ $minMatrix4 = min($arrMatrixC4) }}</td>
+                                    <td>{{ $minMatrix5 = min($arrMatrixC5) }}</td>
+                                    <td>{{ $minMatrix6 = min($arrMatrixC6) }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Nilai Asli -->
+                </div>
+
+                <div class="col-12">
+                    <!-- Nilai Asli -->
+                    <div class="block block-rounded block-mode-loading-refresh">
+                        <div class="block-header bg-gray-light block-header-default">
+                            <h3 class="block-title">
+                                <i class="fa fa-fw fa-user-friends"></i>
+                                MENCARI MATRIX NILAI TERNORMALISASI Y * BOBOT
+                            </h3>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <table
+                                class="table table-striped table-sm table-bordered table-vcenter font-size-sm js-dataTable-full">
+                                <thead>
+                                <tr class="font-weight-bold">
+                                    <th rowspan="2">#</th>
+                                    <th rowspan="2">NIM</th>
+                                    <th rowspan="2">Nama Mahasiswa</th>
+                                    <th rowspan="2">Prodi</th>
+                                    <th colspan="6">Kriteria</th>
+                                </tr>
+                                <tr>
+                                    <th>C1</th>
+                                    <th>C2</th>
+                                    <th>C3</th>
+                                    <th>C4</th>
+                                    <th>C5</th>
+                                    <th>C6</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($nilaiSidang as $nilai)
+                                    @php
+                                        $matrixBobot1 = number_format($nilai->c1/$sqrt1 * 20, 4);
+                                        $matrixBobot2 = number_format($nilai->c2/$sqrt2 * 10, 4);
+                                        $matrixBobot3 = number_format($nilai->c3/$sqrt3 * 20, 4);
+                                        $matrixBobot4 = number_format($nilai->c4/$sqrt4 * 20, 4);
+                                        $matrixBobot5 = number_format($nilai->c5/$sqrt5 * 10, 4);
+                                        $matrixBobot6 = number_format($nilai->c6/$sqrt6 * 20, 4);
+                                    @endphp
+
                                     <tr>
-                                        <td width="50%">MIN</td>
-                                        <td>{{ min($arrMatrixC1) }}</td>
-                                        <td>{{ min($arrMatrixC2) }}</td>
-                                        <td>{{ min($arrMatrixC3) }}</td>
-                                        <td>{{ min($arrMatrixC4) }}</td>
-                                        <td>{{ min($arrMatrixC5) }}</td>
-                                        <td>{{ min($arrMatrixC6) }}</td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $nilai->nim }}</td>
+                                        <td>{{ $nilai->nama }}</td>
+                                        <td>{{ $nilai->prodi }}</td>
+                                        <td>{{ $matrixBobot1 }}</td>
+                                        <td>{{ $matrixBobot2 }}</td>
+                                        <td>{{ $matrixBobot3 }}</td>
+                                        <td>{{ $matrixBobot4 }}</td>
+                                        <td>{{ $matrixBobot5 }}</td>
+                                        <td>{{ $matrixBobot6 }}</td>
                                     </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

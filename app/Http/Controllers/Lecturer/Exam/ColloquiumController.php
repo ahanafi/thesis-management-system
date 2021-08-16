@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Lecturer\Exam;
 
+use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Models\AssessmentComponent;
 use App\Models\AssessmentScore;
@@ -13,8 +14,21 @@ class ColloquiumController extends Controller
     public function score(SubmissionAssessment $submission)
     {
         $nidn = auth()->user()->registration_number;
-
         $submission->load(['student', 'thesis']);
+
+        $checkFirstSupervisorStatus = $submission->thesis->first_supervisor === $nidn && $submission->status_first_supervisor !== Status::APPROVE;
+        $checkSecondSupervisorStatus = $submission->thesis->second_supervisor === $nidn && $submission->status_second_supervisor !== Status::APPROVE;
+
+        if ($checkFirstSupervisorStatus || $checkSecondSupervisorStatus) {
+            return redirect()->back()
+                ->with('message', [
+                    'type' => 'warning',
+                    'text' => 'Mohon tanggapi pengajuan kolokium terlebih dahulu pada halaman detail.',
+                    'timer' => 5000
+                ]);
+        }
+
+
         $assessmentType = $submission->assessment_type;
         $components = AssessmentComponent::type($assessmentType)->get();
         $scores = AssessmentScore::lecturerId($nidn)
