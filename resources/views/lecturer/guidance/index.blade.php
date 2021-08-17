@@ -52,6 +52,10 @@
                                     <i class="fa fa-eye"></i>
                                     <span>Detail</span>
                                 </a>
+                                <a target="_blank" rel="noreferrer" href="{{ route('lecturer.mentoring.guidance.export-card', $guidance->student->id) }}" class="btn btn-sm btn-secondary">
+                                    <i class="fa fa-fw fa-print"></i>
+                                    <span>Cetak Kartu</span>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

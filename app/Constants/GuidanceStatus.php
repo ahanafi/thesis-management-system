@@ -4,6 +4,8 @@
 namespace App\Constants;
 
 
+use App\Models\User;
+
 class GuidanceStatus
 {
     const SENT = 'SENT';
@@ -31,6 +33,10 @@ class GuidanceStatus
 
         if($textOnly === true) {
             return $text;
+        }
+
+        if(auth()->user()->level !== User::STUDENT && $label === self::SENT) {
+            $text = 'BELUM DITANGGAPI';
         }
 
         return "<label class='badge badge-$className'>$text</label>";

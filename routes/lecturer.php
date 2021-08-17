@@ -14,6 +14,7 @@ use App\Http\Controllers\Lecturer\Submission\SeminarController;
 use App\Http\Controllers\Lecturer\Exam\SeminarController as ExamSeminarController;
 use App\Http\Controllers\Lecturer\Exam\ColloquiumController as ExamColloquiumController;
 use App\Http\Controllers\Lecturer\Exam\FinalTestController as ExamFinalTestController;
+use App\Http\Controllers\Student\ExportController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::prefix('lecturer')
                 Route::get('students', [StudentController::class, 'index'])->name('student.index');
                 Route::get('students/{student}', [StudentController::class, 'show'])->name('student.show');
 
+                Route::get('guidance/{student}/export-card', [ExportController::class, 'lecturerGuidanceCard'])->name('guidance.export-card');
                 Route::get('guidance', [GuidanceController::class, 'index'])->name('guidance.index');
                 Route::get('guidance/{guidance}', [GuidanceController::class, 'show'])->name('guidance.show');
                 Route::get('guidance/{guidance}/download', [GuidanceController::class, 'download'])->name('guidance.download');

@@ -32,7 +32,7 @@ Route::prefix('student')
         Route::put('thesis/{thesis}', [ThesisController::class, 'update'])->name('thesis.update');
         Route::get('thesis/download/{type}', [ThesisController::class, 'download'])->name('thesis.download');
 
-        Route::get('guidance/{lecturer}/export-card', [ExportController::class, 'guidanceCard'])->name('guidance.export-card');
+        Route::get('guidance/{lecturer}/export-card', [ExportController::class, 'studentGuidanceCard'])->name('guidance.export-card');
         Route::resource('guidance', GuidanceController::class);
 
         Route::prefix('assessment')
