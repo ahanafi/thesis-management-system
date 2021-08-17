@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/topsis', function () {
-    $nilaiSidang = DB::table('topsis')->get();
+    $nilaiSidang = DB::table('topsis')
+        ->get();
     return view('topsis', [
         'nilaiSidang' => $nilaiSidang
     ]);

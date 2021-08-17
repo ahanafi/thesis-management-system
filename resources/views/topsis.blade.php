@@ -74,7 +74,7 @@
                         <div class="block-header bg-gray-light block-header-default">
                             <h3 class="block-title">
                                 <i class="fa fa-fw fa-user-friends"></i>
-                                Nilai Asli
+                                Nilai Mahasiswa
                             </h3>
                         </div>
                         <div class="block-content block-content-full">
@@ -191,12 +191,12 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">SQRT</td>
-                                    <td class="text-center">{{ $sqrt1 = number_format(sqrt($totalC1), 5) }}</td>
-                                    <td class="text-center">{{ $sqrt2 = number_format(sqrt($totalC2), 5) }}</td>
-                                    <td class="text-center">{{ $sqrt3 = number_format(sqrt($totalC3), 5) }}</td>
-                                    <td class="text-center">{{ $sqrt4 = number_format(sqrt($totalC4), 5) }}</td>
-                                    <td class="text-center">{{ $sqrt5 = number_format(sqrt($totalC5), 5) }}</td>
-                                    <td class="text-center">{{ $sqrt6 = number_format(sqrt($totalC6), 5) }}</td>
+                                    <td class="text-center">{{ $sqrt1 = number_format(sqrt($totalC1), 4) }}</td>
+                                    <td class="text-center">{{ $sqrt2 = number_format(sqrt($totalC2), 4) }}</td>
+                                    <td class="text-center">{{ $sqrt3 = number_format(sqrt($totalC3), 4) }}</td>
+                                    <td class="text-center">{{ $sqrt4 = number_format(sqrt($totalC4), 4) }}</td>
+                                    <td class="text-center">{{ $sqrt5 = number_format(sqrt($totalC5), 4) }}</td>
+                                    <td class="text-center">{{ $sqrt6 = number_format(sqrt($totalC6), 4) }}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -401,12 +401,12 @@
                                 <tbody>
                                 <tr>
                                     <td width="50%">MIN</td>
-                                    <td>{{ $minMatrix1 = min($arrMatrixC1) }}</td>
-                                    <td>{{ $minMatrix2 = min($arrMatrixC2) }}</td>
-                                    <td>{{ $minMatrix3 = min($arrMatrixC3) }}</td>
-                                    <td>{{ $minMatrix4 = min($arrMatrixC4) }}</td>
-                                    <td>{{ $minMatrix5 = min($arrMatrixC5) }}</td>
-                                    <td>{{ $minMatrix6 = min($arrMatrixC6) }}</td>
+                                    <td>{{ $minMatrixC1 = min($arrMatrixC1) }}</td>
+                                    <td>{{ $minMatrixC2 = min($arrMatrixC2) }}</td>
+                                    <td>{{ $minMatrixC3 = min($arrMatrixC3) }}</td>
+                                    <td>{{ $minMatrixC4 = min($arrMatrixC4) }}</td>
+                                    <td>{{ $minMatrixC5 = min($arrMatrixC5) }}</td>
+                                    <td>{{ $minMatrixC6 = min($arrMatrixC6) }}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -421,7 +421,7 @@
                         <div class="block-header bg-gray-light block-header-default">
                             <h3 class="block-title text-uppercase">
                                 <i class="fa fa-fw fa-user-friends"></i>
-                                Mencari Jarak Antara Nilai terbobot setiap terhadapa Solusi Ideal Positif (A+)
+                                Mencari Jarak Antara Nilai terbobot setiap terhadap Solusi Ideal Positif (A+)
                             </h3>
                         </div>
                         <div class="block-content block-content-full">
@@ -446,6 +446,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @php
+                                    $arrPositiveValue = [];
+                                @endphp
                                 @foreach($nilaiSidang as $nilai)
                                     @php
                                         $matrixBobot1 = number_format($nilai->c1/$sqrt1 * 20, 4);
@@ -461,6 +464,9 @@
                                         $matBobotXMaxC4 = number_format(pow(($matrixBobot4-$maxMatrixC4), 2), 4);
                                         $matBobotXMaxC5 = number_format(pow(($matrixBobot5-$maxMatrixC5), 2), 4);
                                         $matBobotXMaxC6 = number_format(pow(($matrixBobot6-$maxMatrixC6), 2), 4);
+
+                                        $sumJarakPositive = number_format(sqrt($matBobotXMaxC1 + $matBobotXMaxC2 + $matBobotXMaxC3 + $matBobotXMaxC4 + $matBobotXMaxC5 + $matBobotXMaxC6), 4);
+                                        $arrPositiveValue[] = $sumJarakPositive;
                                     @endphp
 
                                     <tr>
@@ -475,8 +481,133 @@
                                         <td>{{ $matBobotXMaxC5 }}</td>
                                         <td>{{ $matBobotXMaxC6 }}</td>
                                         <td>
-                                            {{ number_format(sqrt($matBobotXMaxC1 + $matBobotXMaxC2 + $matBobotXMaxC3 + $matBobotXMaxC4 + $matBobotXMaxC5 + $matBobotXMaxC6), 4) }}
+                                            {{ $sumJarakPositive }}
                                         </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Nilai Asli -->
+                </div>
+
+                <div class="col-12">
+                    <!-- Nilai Asli -->
+                    <div class="block block-rounded block-mode-loading-refresh">
+                        <div class="block-header bg-gray-light block-header-default">
+                            <h3 class="block-title text-uppercase">
+                                <i class="fa fa-fw fa-user-friends"></i>
+                                Mencari Jarak Antara Nilai terbobot setiap terhadap Solusi Ideal Negatif (A-)
+                            </h3>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <table
+                                class="table table-striped table-sm table-bordered table-vcenter font-size-sm js-dataTable-full">
+                                <thead>
+                                <tr class="font-weight-bold">
+                                    <th rowspan="2">#</th>
+                                    <th rowspan="2">NIM</th>
+                                    <th rowspan="2">Nama Mahasiswa</th>
+                                    <th rowspan="2">Prodi</th>
+                                    <th colspan="6">Kriteria</th>
+                                </tr>
+                                <tr>
+                                    <th>C1</th>
+                                    <th>C2</th>
+                                    <th>C3</th>
+                                    <th>C4</th>
+                                    <th>C5</th>
+                                    <th>C6</th>
+                                    <th>SUM</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $arrNegativeValue = [];
+                                @endphp
+                                @foreach($nilaiSidang as $nilai)
+                                    @php
+                                        $matrixBobot1 = number_format($nilai->c1/$sqrt1 * 20, 4);
+                                        $matrixBobot2 = number_format($nilai->c2/$sqrt2 * 10, 4);
+                                        $matrixBobot3 = number_format($nilai->c3/$sqrt3 * 20, 4);
+                                        $matrixBobot4 = number_format($nilai->c4/$sqrt4 * 20, 4);
+                                        $matrixBobot5 = number_format($nilai->c5/$sqrt5 * 10, 4);
+                                        $matrixBobot6 = number_format($nilai->c6/$sqrt6 * 20, 4);
+
+                                        $matBobotXMinC1 = number_format(pow(($matrixBobot1-$minMatrixC1), 2), 4);
+                                        $matBobotXMinC2 = number_format(pow(($matrixBobot2-$minMatrixC2), 2), 4);
+                                        $matBobotXMinC3 = number_format(pow(($matrixBobot3-$minMatrixC3), 2), 4);
+                                        $matBobotXMinC4 = number_format(pow(($matrixBobot4-$minMatrixC4), 2), 4);
+                                        $matBobotXMinC5 = number_format(pow(($matrixBobot5-$minMatrixC5), 2), 4);
+                                        $matBobotXMinC6 = number_format(pow(($matrixBobot6-$minMatrixC6), 2), 4);
+
+                                        $sumJarakNegative = number_format(sqrt($matBobotXMinC1 + $matBobotXMinC2 + $matBobotXMinC3 + $matBobotXMinC4 + $matBobotXMinC5 + $matBobotXMinC6), 4);
+                                        $arrNegativeValue[] = $sumJarakNegative;
+                                    @endphp
+
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $nilai->nim }}</td>
+                                        <td>{{ $nilai->nama }}</td>
+                                        <td>{{ $nilai->prodi }}</td>
+                                        <td>{{ $matBobotXMinC1 }}</td>
+                                        <td>{{ $matBobotXMinC2 }}</td>
+                                        <td>{{ $matBobotXMinC3 }}</td>
+                                        <td>{{ $matBobotXMinC4 }}</td>
+                                        <td>{{ $matBobotXMinC5 }}</td>
+                                        <td>{{ $matBobotXMinC6 }}</td>
+                                        <td>
+                                            {{ $sumJarakNegative }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Nilai Asli -->
+                </div>
+
+                <div class="col-12">
+                    <!-- Nilai Asli -->
+                    <div class="block block-rounded block-mode-loading-refresh">
+                        <div class="block-header bg-gray-light block-header-default">
+                            <h3 class="block-title text-uppercase">
+                                <i class="fa fa-fw fa-user-friends"></i>
+                                Mencari Kedekatan Setiap Alternatif terhadap Solusi ideal
+                            </h3>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <table
+                                class="table table-striped table-sm table-bordered table-vcenter font-size-sm js-dataTable-full">
+                                <thead>
+                                <tr class="font-weight-bold">
+                                    <th>#</th>
+                                    <th>NIM</th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Prodi</th>
+                                    <th>Nilai Sidang</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $index = 0;
+                                @endphp
+                                @foreach($nilaiSidang as $nilai)
+                                    @php
+                                        $solusiIdealNegative = $arrNegativeValue[$index];
+                                        $solusiIdealPositive = $arrPositiveValue[$index];
+                                        $sumNegativePositive = ($solusiIdealNegative+$solusiIdealPositive);
+                                        $nilaiAkhir = ($solusiIdealNegative / ($sumNegativePositive));
+                                        $index++;
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $nilai->nim }}</td>
+                                        <td>{{ $nilai->nama }}</td>
+                                        <td class="text-center">{{ $nilai->prodi }}</td>
+                                        <td class="text-center">{{ number_format($nilaiAkhir, 2) * 100 }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
