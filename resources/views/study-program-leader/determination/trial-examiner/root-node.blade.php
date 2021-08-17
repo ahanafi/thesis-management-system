@@ -398,7 +398,7 @@
                         <tbody>
                         @php $number = 1; @endphp
                         @foreach ($filteredLecturers as $lecturer)
-                            @if($lecturer->homebase === $submission->thesis->student->study_program->getName())
+                            @if($lecturer->homebase === $submission->thesis->student->study_program->getName() && $lecturer->examinerType === 2)
                                 <tr>
                                     <td class="text-center">{{ $number++ }}</td>
                                     <td>{{ $lecturer->name }}</td>
