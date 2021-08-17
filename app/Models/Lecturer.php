@@ -109,4 +109,9 @@ class Lecturer extends Model
     {
         return $query->where('study_program_code', $code);
     }
+
+    public function scopeNidn($query, $nidn)
+    {
+        return $query->where('nidn', $nidn);
+    }
 }

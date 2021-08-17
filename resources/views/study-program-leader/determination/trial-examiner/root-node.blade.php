@@ -40,6 +40,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#second-examiner">Penguji 2</a>
                 </li>
+                <li class="nav-item ml-auto mt-2">
+                    <div class="pr-2">
+                        <button onclick="submitForm('first')" type="button" class="btn btn-success btn-sm">
+                            <i class="fa fa-fw fa-pencil-alt"></i>
+                            <span>Ubah Penguji 1</span>
+                        </button>
+                        <button onclick="submitForm('second')" type="button" class="btn btn-info btn-sm">
+                            <i class="fa fa-fw fa-pencil-alt"></i>
+                            <span>Ubah Penguji 2</span>
+                        </button>
+                        <button onclick="submitForm('done')" type="button" class="btn btn-primary btn-sm">
+                            <i class="fa fa-fw fa-check-double"></i>
+                            <span>Selesai</span>
+                        </button>
+                    </div>
+                </li>
             </ul>
             <div class="block-content tab-content">
                 <!-- Step 1 -->
@@ -264,7 +280,7 @@
                         role="alert">
                         <div class="flex-fill mr-3">
                             <h5 class="alert-heading font-size-h5 my-2">
-                                Step 3 : Pengelompokkan Jumlah Riwayat Dosen sebagai Penguji 1 dan 2.
+                                Step 5 : Filter hanya Dosen yang Homebase-nya sama dengan prodi Mahasiswa.
                             </h5>
                             <p class="mb-0">
                                 <b>Keterangan:</b> <br>
@@ -343,28 +359,26 @@
                         </thead>
                         <tbody>
                         @php $number = 1; @endphp
-                        @foreach ($filteredLecturers as $lecturer)
-                            @if($lecturer->homebase === $submission->thesis->student->study_program->getName() && strtolower($lecturer->functional) === 'lektor')
-                                <tr>
-                                    <td class="text-center">{{ $number++ }}</td>
-                                    <td>{{ $lecturer->name }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
-                                    <td class="font-size-sm">
-                                        @forelse($lecturer->competencies as $competency)
-                                            - {{ $competency->name  }} <br>
-                                        @empty
-                                        @endforelse
-                                    </td>
-                                    <td class="font-size-sm">{{ $lecturer->firstExaminerLabel }}</td>
-                                    <td class="font-size-sm">{{ $lecturer->secondExaminerLabel }}</td>
-                                    <td class="text-center">{{ $lecturer->quota }}</td>
-                                    <td class="text-center">
-                                        Penguji {{ $lecturer->examinerType }}
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
+                        @if($firstExaminerCandidate !== null)
+                            <tr>
+                                <td class="text-center">{{ $number++ }}</td>
+                                <td>{{ $firstExaminerCandidate->name }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $firstExaminerCandidate->homebase  }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $firstExaminerCandidate->functional }}</td>
+                                <td class="font-size-sm">
+                                    @forelse($firstExaminerCandidate->competencies as $competency)
+                                        - {{ $competency->name  }} <br>
+                                    @empty
+                                    @endforelse
+                                </td>
+                                <td class="font-size-sm">{{ $firstExaminerCandidate->firstExaminerLabel }}</td>
+                                <td class="font-size-sm">{{ $firstExaminerCandidate->secondExaminerLabel }}</td>
+                                <td class="text-center">{{ $firstExaminerCandidate->quota }}</td>
+                                <td class="text-center">
+                                    Penguji {{ $firstExaminerCandidate->examinerType }}
+                                </td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>
@@ -397,28 +411,52 @@
                         </thead>
                         <tbody>
                         @php $number = 1; @endphp
-                        @foreach ($filteredLecturers as $lecturer)
-                            @if($lecturer->homebase === $submission->thesis->student->study_program->getName() && $lecturer->examinerType === 2)
-                                <tr>
-                                    <td class="text-center">{{ $number++ }}</td>
-                                    <td>{{ $lecturer->name }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
-                                    <td class="font-size-sm">
-                                        @forelse($lecturer->competencies as $competency)
-                                            - {{ $competency->name  }} <br>
-                                        @empty
-                                        @endforelse
-                                    </td>
-                                    <td class="font-size-sm">{{ $lecturer->firstExaminerLabel }}</td>
-                                    <td class="font-size-sm">{{ $lecturer->secondExaminerLabel }}</td>
-                                    <td class="text-center">{{ $lecturer->quota }}</td>
-                                    <td class="text-center">
-                                        Penguji {{ $lecturer->examinerType }}
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
+                        @if($secondExaminerCandidate !== null)
+                            <tr>
+                                <td class="text-center">{{ $number++ }}</td>
+                                <td>{{ $secondExaminerCandidate->name }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $secondExaminerCandidate->homebase  }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $secondExaminerCandidate->functional }}</td>
+                                <td class="font-size-sm">
+                                    @forelse($secondExaminerCandidate->competencies as $competency)
+                                        - {{ $competency->name  }} <br>
+                                    @empty
+                                    @endforelse
+                                </td>
+                                <td class="font-size-sm">{{ $secondExaminerCandidate->firstExaminerLabel }}</td>
+                                <td class="font-size-sm">{{ $secondExaminerCandidate->secondExaminerLabel }}</td>
+                                <td class="text-center">{{ $secondExaminerCandidate->quota }}</td>
+                                <td class="text-center">
+                                    Penguji 2
+                                </td>
+                            </tr>
+                        @else
+                            @foreach ($filteredLecturers as $lecturer)
+                                @if( ( $lecturer->examinerType === 2 ||
+                                       strtolower($lecturer->secondExaminerLabel) === 'sangat tinggi' ||
+                                       strtolower($lecturer->secondExaminerLabel) === 'tinggi') &&
+                                       ($lecturer->nidn !== $firstExaminerCandidate->nidn))
+                                    <tr>
+                                        <td class="text-center">{{ $number++ }}</td>
+                                        <td>{{ $lecturer->name }}</td>
+                                        <td class="d-none d-sm-table-cell">{{ $lecturer->homebase  }}</td>
+                                        <td class="d-none d-sm-table-cell">{{ $lecturer->functional }}</td>
+                                        <td class="font-size-sm">
+                                            @forelse($lecturer->competencies as $competency)
+                                                - {{ $competency->name  }} <br>
+                                            @empty
+                                            @endforelse
+                                        </td>
+                                        <td class="font-size-sm">{{ $lecturer->firstExaminerLabel }}</td>
+                                        <td class="font-size-sm">{{ $lecturer->secondExaminerLabel }}</td>
+                                        <td class="text-center">{{ $lecturer->quota }}</td>
+                                        <td class="text-center">
+                                            Penguji 2
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>
@@ -427,5 +465,23 @@
         </div>
         <!-- END Dynamic Table with Export Buttons -->
     </div>
+    <form action="{{ route('leader.determination.trial-examiner.save', $submission->id) }}" method="POST" id="submit-examiner">
+        @csrf
+        @method('POST')
+        <input type="hidden" name="status" required id="status-change">
+        <input type="hidden" name="first_examiner" value="{{ $firstExaminerCandidate->nidn }}" required>
+        <input type="hidden" name="second_examiner" value="{{ $secondExaminerCandidate->nidn }}" required>
+    </form>
     <!-- END Page Content -->
+@endsection
+
+@section('js_after')
+    <script type="text/javascript">
+        const submitForm = (status) => {
+            if(status !== null) {
+                document.getElementById('status-change').value = status;
+                document.getElementById('submit-examiner').submit();
+            }
+        }
+    </script>
 @endsection

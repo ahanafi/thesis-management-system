@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\Functional;
 use App\Models\Lecturer;
 
 if (!function_exists('educationLevel')) {
@@ -142,7 +143,7 @@ if (!function_exists('setFlashMessage')) {
 if (!function_exists('getTypeOfAssessment')) {
     function getTypeOfAssessment($key = null)
     {
-        if(strtoupper($key) === 'FINAL-TEST') {
+        if (strtoupper($key) === 'FINAL-TEST') {
             $key = 'TRIAL';
         }
 
@@ -244,19 +245,20 @@ if (!function_exists('super_unique')) {
 }
 
 if (!function_exists('countFromArray')) {
-    function countFromArray($array, $conditions = []) {
+    function countFromArray($array, $conditions = [])
+    {
         $count = 0;
         $countConditions = count($conditions);
-        if($countConditions <= 1) {
+        if ($countConditions <= 1) {
             $key = array_key_first($conditions);
             $value = $conditions[$key];
             foreach ($array as $item) {
-                if(isset($item->{$key}) && $item->{$key} === $value) {
+                if (isset($item->{$key}) && $item->{$key} === $value) {
                     $count++;
                 }
             }
 
-        } else if($countConditions === 2) {
+        } else if ($countConditions === 2) {
             foreach ($array as $item) {
                 $firstKey = array_keys($conditions)[0];
                 $firstValue = array_values($conditions)[0];
@@ -264,18 +266,16 @@ if (!function_exists('countFromArray')) {
                 $secondKey = array_keys($conditions)[1];
                 $secondValue = array_values($conditions)[1];
 
-                if(is_array($item) && (array_key_exists($firstKey, $item) && $item[$firstKey] === $firstValue) &&
-                    (array_key_exists($secondKey, $item) && $item[$secondKey] === $secondValue))
-                {
+                if (is_array($item) && (array_key_exists($firstKey, $item) && $item[$firstKey] === $firstValue) &&
+                    (array_key_exists($secondKey, $item) && $item[$secondKey] === $secondValue)) {
                     $count++;
                 }
 
-                if(is_object($item))
-                {
-                    if($item instanceof Lecturer && $item->{$firstKey} === $firstValue && $item->{$secondKey} === $secondValue) {
+                if (is_object($item)) {
+                    if ($item instanceof Lecturer && $item->{$firstKey} === $firstValue && $item->{$secondKey} === $secondValue) {
                         $count++;
-                    } else if((property_exists($item, $firstKey) && $item->{$firstKey} === $firstValue) &&
-                    (property_exists($item, $secondKey) && $item->{$secondKey} === $secondValue)) {
+                    } else if ((property_exists($item, $firstKey) && $item->{$firstKey} === $firstValue) &&
+                        (property_exists($item, $secondKey) && $item->{$secondKey} === $secondValue)) {
                         $count++;
                     }
                 }
@@ -286,17 +286,112 @@ if (!function_exists('countFromArray')) {
     }
 }
 
-if(!function_exists('lastUriSegment')) {
-    function lastUriSegment() {
+if (!function_exists('lastUriSegment')) {
+    function lastUriSegment()
+    {
         $index = count(request()->segments());
         return request()->segment($index);
     }
 }
 
-if(!function_exists('idDateFormat')) {
-    function idDateFormat($date) {
+if (!function_exists('idDateFormat')) {
+    function idDateFormat($date)
+    {
         $tempDate = explode("-", $date);
         $tempDate = array_reverse($tempDate);
         return implode("-", $tempDate);
+    }
+}
+
+if (!function_exists('getFirstExaminer')) {
+
+    /*
+     * First examiner must be have homebase equals with study Program of student
+     *
+     * */
+    function getFirstExaminer(array $lecturers, $studyProgramOfStudent)
+    {
+        $countFunctionalLecturer = 0;
+        $firstExaminer = null;
+        foreach ($lecturers as $lecturer) {
+            if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
+                $countFunctionalLecturer++;
+            }
+        }
+
+        if ($countFunctionalLecturer === 1) {
+            foreach ($lecturers as $lecturer) {
+                if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
+                    $firstExaminer = $lecturer;
+                    break;
+                }
+            }
+        } else {
+
+            foreach ($lecturers as $lecturer) {
+                if (($lecturer->homebase === $studyProgramOfStudent) &&
+                    (strtolower($lecturer->functional) === 'lektor') &&
+                    (strtolower($lecturer->firstExaminerLabel) === 'sangat tinggi') &&
+                    (strtolower($lecturer->secondExaminerLabel) === 'sangat tinggi')
+                ) {
+                    $firstExaminer = $lecturer;
+                    break;
+                }
+            }
+        }
+
+        return $firstExaminer;
+    }
+}
+
+if (!function_exists('getSecondExaminer')) {
+    function getSecondExaminer(array $lecturers, $scienceFieldCode, $firstExaminerCandidate)
+    {
+        $foundByScienceField = false;
+        $secondExaminer = null;
+
+        $foundByFunctionalAsLecturer = false;
+        $foundByFunctionalAsExpertAssisstant = false;
+        foreach ($lecturers as $lecturer) {
+            if ($lecturer->competencies !== null) {
+                foreach ($lecturer->competencies as $competency) {
+                    if ($competency->code === $scienceFieldCode) {
+                        $foundByScienceField = true;
+                        $secondExaminer = $lecturer;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if ($foundByScienceField) {
+            return $secondExaminer;
+        } else {
+            foreach ($lecturers as $lecturer) {
+                if ($lecturer->nidn !== $firstExaminerCandidate && strtolower($lecturer->functional) === 'lektor' && (strtolower($lecturer->secondExaminerLabel) === 'sangat tinggi' || strtolower($lecturer->secondExaminerLabel) === 'tinggi')) {
+                    $foundByFunctionalAsLecturer = true;
+                    $secondExaminer = $lecturer;
+                    break;
+                }
+            }
+
+            if ($foundByFunctionalAsLecturer) {
+                return $secondExaminer;
+            } else {
+                foreach ($lecturers as $lecturer) {
+                    if ($lecturer->nidn !== $firstExaminerCandidate && strtolower($lecturer->functional) === 'asisten ahli' && (strtolower($lecturer->secondExaminerLabel) === 'sangat tinggi' || strtolower($lecturer->secondExaminerLabel) === 'tinggi')) {
+                        $foundByFunctionalAsExpertAssisstant = true;
+                        $secondExaminer = $lecturer;
+                        break;
+                    }
+                }
+
+                if($foundByFunctionalAsExpertAssisstant) {
+                    return $secondExaminer;
+                } else {
+                    return null;
+                }
+            }
+        }
     }
 }
