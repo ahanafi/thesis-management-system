@@ -419,9 +419,9 @@
                     <!-- Nilai Asli -->
                     <div class="block block-rounded block-mode-loading-refresh">
                         <div class="block-header bg-gray-light block-header-default">
-                            <h3 class="block-title">
+                            <h3 class="block-title text-uppercase">
                                 <i class="fa fa-fw fa-user-friends"></i>
-                                MENCARI MATRIX NILAI TERNORMALISASI Y * BOBOT
+                                Mencari Jarak Antara Nilai terbobot setiap terhadapa Solusi Ideal Positif (A+)
                             </h3>
                         </div>
                         <div class="block-content block-content-full">
@@ -442,6 +442,7 @@
                                     <th>C4</th>
                                     <th>C5</th>
                                     <th>C6</th>
+                                    <th>SUM</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -453,6 +454,13 @@
                                         $matrixBobot4 = number_format($nilai->c4/$sqrt4 * 20, 4);
                                         $matrixBobot5 = number_format($nilai->c5/$sqrt5 * 10, 4);
                                         $matrixBobot6 = number_format($nilai->c6/$sqrt6 * 20, 4);
+
+                                        $matBobotXMaxC1 = number_format(pow(($matrixBobot1-$maxMatrixC1), 2), 4);
+                                        $matBobotXMaxC2 = number_format(pow(($matrixBobot2-$maxMatrixC2), 2), 4);
+                                        $matBobotXMaxC3 = number_format(pow(($matrixBobot3-$maxMatrixC3), 2), 4);
+                                        $matBobotXMaxC4 = number_format(pow(($matrixBobot4-$maxMatrixC4), 2), 4);
+                                        $matBobotXMaxC5 = number_format(pow(($matrixBobot5-$maxMatrixC5), 2), 4);
+                                        $matBobotXMaxC6 = number_format(pow(($matrixBobot6-$maxMatrixC6), 2), 4);
                                     @endphp
 
                                     <tr>
@@ -460,12 +468,15 @@
                                         <td>{{ $nilai->nim }}</td>
                                         <td>{{ $nilai->nama }}</td>
                                         <td>{{ $nilai->prodi }}</td>
-                                        <td>{{ $matrixBobot1 }}</td>
-                                        <td>{{ $matrixBobot2 }}</td>
-                                        <td>{{ $matrixBobot3 }}</td>
-                                        <td>{{ $matrixBobot4 }}</td>
-                                        <td>{{ $matrixBobot5 }}</td>
-                                        <td>{{ $matrixBobot6 }}</td>
+                                        <td>{{ $matBobotXMaxC1 }}</td>
+                                        <td>{{ $matBobotXMaxC2 }}</td>
+                                        <td>{{ $matBobotXMaxC3 }}</td>
+                                        <td>{{ $matBobotXMaxC4 }}</td>
+                                        <td>{{ $matBobotXMaxC5 }}</td>
+                                        <td>{{ $matBobotXMaxC6 }}</td>
+                                        <td>
+                                            {{ number_format(sqrt($matBobotXMaxC1 + $matBobotXMaxC2 + $matBobotXMaxC3 + $matBobotXMaxC4 + $matBobotXMaxC5 + $matBobotXMaxC6), 4) }}
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -38,7 +38,7 @@
     <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">
-            Jadwal Pengujian Skripsi
+            Jadwal {{ getTypeOfAssessment(strtoupper($assessmentType)) }}
         </h2>
         <div class="row">
             <div class="col-xl-7">
@@ -47,7 +47,7 @@
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
                             <i class="fa fa-fw fa-calendar-alt text-muted mr-1"></i>
-                            Form Jadwal Ujian Skripsi
+                            Form Jadwal {{ getTypeOfAssessment(strtoupper($assessmentType)) }}
                         </h3>
                         <div class="block-options">
                             <x-button-link link="{{ route('assessment-schedules.index') }}" text="Kembali"

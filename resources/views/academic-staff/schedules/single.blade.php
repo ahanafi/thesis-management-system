@@ -11,7 +11,7 @@
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
                             <i class="fa fa-fw fa-calendar-alt"></i>
-                            Detail Jadwal Ujian
+                            Detail Jadwal {{ getTypeOfAssessment(strtoupper($schedule->submission->assessment_type)) }}
                         </h3>
                         <div class="block-options">
                             <x-button-link link="{{ route('assessment-schedules.index') }}" text="Kembali"

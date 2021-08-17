@@ -47,7 +47,7 @@
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
                             <i class="fa fa-fw fa-calendar-alt text-muted mr-1"></i>
-                            Form Jadwal Ujian Skripsi
+                            Jadwal {{ getTypeOfAssessment(strtoupper($assessmentType)) }}
                         </h3>
                         <div class="block-options">
                             <x-button-link link="{{ route('assessment-schedules.index') }}" text="Kembali"

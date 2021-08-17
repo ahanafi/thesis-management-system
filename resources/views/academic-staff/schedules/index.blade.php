@@ -31,10 +31,6 @@
                                href="{{ url('academic-staff/assessment-schedules/seminar') }}">Seminar Skripsi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $assessmentType === 'colloquium' ? 'active' : '' }}"
-                               href="{{ url('academic-staff/assessment-schedules/colloquium') }}">Kolokium Skripsi</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link {{ $assessmentType === 'final-test' ? 'active' : '' }}"
                                href="{{ url('academic-staff/assessment-schedules/final-test') }}">Sidang Skripsi</a>
                         </li>
@@ -52,11 +48,6 @@
                                            onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=seminar'">
                                             <i class="fa fa-fw fa-arrow-right mr-1"></i>
                                             <span>Seminar</span>
-                                        </a>
-                                        <a class="dropdown-item" href="#"
-                                           onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=colloquium'">
-                                            <i class="fa fa-fw fa-arrow-right mr-1"></i>
-                                            <span>Kolokium</span>
                                         </a>
                                         <a class="dropdown-item" href="#"
                                            onclick="window.location.href='{{ route('assessment-schedules.create') }}?type=final-test'">
