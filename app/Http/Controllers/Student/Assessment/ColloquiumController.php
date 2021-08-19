@@ -17,12 +17,15 @@ class ColloquiumController extends Controller
     public function index()
     {
         $nim = auth()->user()->registration_number;
-        $submission = SubmissionAssessment::with('schedule')
-            ->type(AssessmentTypes::COLLOQUIUM)
+        $colloquiumSubmission = SubmissionAssessment::type(AssessmentTypes::COLLOQUIUM)
             ->studentId($nim)
             ->first();
 
-        return viewStudent('colloquium.index', compact('submission'));
+        $seminarSubmission = SubmissionAssessment::type(AssessmentTypes::SEMINAR)
+            ->studentId($nim)
+            ->first();
+
+        return viewStudent('colloquium.index', compact('colloquiumSubmission', 'seminarSubmission'));
     }
 
     public function submission()

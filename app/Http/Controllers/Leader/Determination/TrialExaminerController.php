@@ -119,7 +119,6 @@ class TrialExaminerController extends Controller
         $uniqueHombase = array_values(array_unique($homebases));
         $uniqueFunctional = array_values(array_unique($functionalJobs));
 
-
         /* C45 Calculation Section */
         $entropyTotal = C45Service::calculateEntropy($countFilteredLecturers, $totalFirstExaminer, $totalSecondExaminer);
 

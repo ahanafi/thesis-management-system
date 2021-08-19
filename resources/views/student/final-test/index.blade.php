@@ -10,11 +10,6 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
@@ -24,7 +19,7 @@
     <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Pengajuan Sidang Skripsi</h2>
-        @if(is_null($submission))
+        @if(is_null($trialSubmission) && !is_null($colloquiumSubmission) && $colloquiumSubmission->isApproved())
             <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
                  role="alert">
                 <div class="flex-fill mr-3">
@@ -32,6 +27,17 @@
                         Anda belum melakukan pengajuan untuk mengikuti kegiatan Sidang Skripsi. Silahkan klik <a
                             href="{{ route('student.assessment.final-test.submission') }}"
                             class="alert-link"><b><u>disini</u></b></a> untuk membuat pengajuan Sidang Skripsi.
+                    </p>
+                </div>
+            </div>
+        @endif
+
+        @if(is_null($colloquiumSubmission) || !$colloquiumSubmission->isApproved())
+            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
+                 role="alert">
+                <div class="flex-fill mr-3">
+                    <p class="mb-0">
+                        Anda belum melaksanakan kegiatan Kolokium Skripsi. Anda tidak dapat mengajukan untuk Sidang Skripsi.
                     </p>
                 </div>
             </div>
@@ -44,7 +50,8 @@
                     Status Pengajuan Sidang Skripsi
                 </h3>
                 <div class="block-options">
-                    <a href="{{ route('student.assessment.final-test.submission') }}" class="btn btn-primary btn-sm @if(!is_null($submission)) disabled @endif">
+                    <a href="{{ route('student.assessment.final-test.submission') }}"
+                       class="btn btn-primary btn-sm @if(is_null($trialSubmission) && !is_null($colloquiumSubmission) && $colloquiumSubmission->isApproved()) @else disabled @endif">
                         <i class="fa fa-plus"></i>
                         <span>Buat Pengajuan</span>
                     </a>
@@ -69,17 +76,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @isset($submission)
+                        @isset($trialSubmission)
                             <tr>
-                                <td class="text-center">{{ $submission->created_at ? $submission->created_at->format('d-m-Y') : '-' }}</td>
-                                <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_first_supervisor) : '-'  !!}</td>
-                                <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_second_supervisor) : '-'  !!}</td>
-                                <td class="text-center">{{ $submission->response_date_first_supervisor ?: '-' }}</td>
-                                <td class="text-center">{{ $submission->response_date_second_supervisor ?: '-' }}</td>
+                                <td class="text-center">{{ $trialSubmission->created_at ? $trialSubmission->created_at->format('d-m-Y') : '-' }}</td>
+                                <td class="text-center">{!! $trialSubmission ? \App\Constants\Status::getLabel($trialSubmission->status_first_supervisor) : '-'  !!}</td>
+                                <td class="text-center">{!! $trialSubmission ? \App\Constants\Status::getLabel($trialSubmission->status_second_supervisor) : '-'  !!}</td>
+                                <td class="text-center">{{ $trialSubmission->response_date_first_supervisor ?: '-' }}</td>
+                                <td class="text-center">{{ $trialSubmission->response_date_second_supervisor ?: '-' }}</td>
                                 <td class="text-center">
-                                    @if($submission->document && Storage::exists($submission->document))
+                                    @if($trialSubmission->document && Storage::exists($trialSubmission->document))
                                         <a href="{{ route('student.assessment.final-test.submission.download', [
-                                        'submission' => $submission->id,
+                                        'submission' => $trialSubmission->id,
                                         'type' => 'report'
                                     ]) }}" class="btn btn-sm btn-primary">
                                             <i class="fa fa-file-download"></i>
@@ -90,8 +97,8 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    @if($submission->id)
-                                        <a href="{{ route('student.assessment.final-test.submission.show', $submission->id) }}"
+                                    @if($trialSubmission->id)
+                                        <a href="{{ route('student.assessment.final-test.submission.show', $trialSubmission->id) }}"
                                            class="btn btn-sm btn-success">
                                             <i class="fa fa-fw fa-search-plus"></i>
                                             <span>Detail</span>
@@ -139,13 +146,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @isset($submission->schedule)
+                        @isset($trialSubmission->schedule)
                             <tr>
-                                <td class="text-center">{{ optional($submission->schedule)->date }}</td>
-                                <td class="text-center">{{ optional($submission->schedule)->getAssessmentTime() }}</td>
-                                <td class="text-center">{{ optional($submission->schedule)->room_number }}</td>
-                                <td class="text-center">{{ $submission->first_examiner ? $submission->firstExaminer->getNameWithDegree() : '-' }}</td>
-                                <td class="text-center">{{ $submission->second_examiner ? $submission->secondExaminer->getNameWithDegree() : '-' }}</td>
+                                <td class="text-center">{{ optional($trialSubmission->schedule)->date }}</td>
+                                <td class="text-center">{{ optional($trialSubmission->schedule)->getAssessmentTime() }}</td>
+                                <td class="text-center">{{ optional($trialSubmission->schedule)->room_number }}</td>
+                                <td class="text-center">{{ $trialSubmission->first_examiner ? $trialSubmission->firstExaminer->getNameWithDegree() : '-' }}</td>
+                                <td class="text-center">{{ $trialSubmission->second_examiner ? $trialSubmission->secondExaminer->getNameWithDegree() : '-' }}</td>
                             </tr>
                         @else
                             <tr>

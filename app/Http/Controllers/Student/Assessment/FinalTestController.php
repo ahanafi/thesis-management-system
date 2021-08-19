@@ -16,12 +16,16 @@ class FinalTestController extends Controller
     public function index()
     {
         $nim = auth()->user()->registration_number;
-        $submission = SubmissionAssessment::with('schedule')
+        $trialSubmission = SubmissionAssessment::with('schedule')
             ->type(AssessmentTypes::TRIAL)
             ->studentId($nim)
             ->first();
 
-        return viewStudent('final-test.index', compact('submission'));
+        $colloquiumSubmission = SubmissionAssessment::type(AssessmentTypes::COLLOQUIUM)
+            ->studentId($nim)
+            ->first();
+
+        return viewStudent('final-test.index', compact('trialSubmission', 'colloquiumSubmission'));
     }
 
     public function submission()

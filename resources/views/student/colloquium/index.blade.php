@@ -10,11 +10,6 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
@@ -24,7 +19,7 @@
     <!-- Page Content -->
     <div class="content">
         <h2 class="content-heading">Pengajuan Kolokium Skripsi</h2>
-        @if(is_null($submission))
+        @if(is_null($colloquiumSubmission) && !is_null($seminarSubmission) && $seminarSubmission->isApproved())
             <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
                  role="alert">
                 <div class="flex-fill mr-3">
@@ -32,6 +27,17 @@
                         Anda belum melakukan pengajuan untuk mengikuti kegiatan Kolokium Skripsi. Silahkan klik <a
                             href="{{ route('student.assessment.colloquium.submission') }}"
                             class="alert-link"><b><u>disini</u></b></a> untuk membuat pengajuan Kolokium Skripsi.
+                    </p>
+                </div>
+            </div>
+        @endif
+
+        @if(is_null($seminarSubmission) || !$seminarSubmission->isApproved())
+            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
+                 role="alert">
+                <div class="flex-fill mr-3">
+                    <p class="mb-0">
+                        Anda belum melaksanakan kegiatan Seminar Skripsi. Anda tidak dapat mengajukan untuk kolokium Skripsi.
                     </p>
                 </div>
             </div>
@@ -45,7 +51,7 @@
                 </h3>
                 <div class="block-options">
                     <a href="{{ route('student.assessment.colloquium.submission') }}"
-                       class="btn btn-primary btn-sm @if(!is_null($submission)) disabled @endif">
+                       class="btn btn-primary btn-sm @if(is_null($colloquiumSubmission) && !is_null($seminarSubmission) && $seminarSubmission->isApproved()) @else disabled @endif">
                         <i class="fa fa-plus"></i>
                         <span>Buat Pengajuan</span>
                     </a>
