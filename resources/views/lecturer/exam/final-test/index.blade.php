@@ -41,26 +41,28 @@
                     </thead>
                     <tbody>
                     @foreach($submissions as $submission)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $submission->nim }}</td>
-                            <td>{{ $submission->thesis->student->getName() }}</td>
-                            <td class="text-center">{{ $submission->schedule->date }}</td>
-                            <td class="text-center">{{ $submission->schedule->getAssessmentTime() }}</td>
-                            <td class="text-center">{{ $submission->schedule->room_number }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('lecturer.exam.final-test.show', $submission->id) }}"
-                                   class="btn btn-primary btn-sm">
-                                    <i class="fa fa-fw fa-search-plus"></i>
-                                    <span>Detail</span>
-                                </a>
-                                <a href="{{ route('lecturer.exam.final-test.score', $submission->id) }}"
-                                   class="btn btn-success btn-sm">
-                                    <i class="fa fa-fw fa-pencil-alt"></i>
-                                    <span>Nilai</span>
-                                </a>
-                            </td>
-                        </tr>
+                        @if ($submission->schedule !== null)
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td>{{ $submission->nim }}</td>
+                                <td>{{ $submission->thesis->student->getName() }}</td>
+                                <td class="text-center">{{ $submission->schedule->date }}</td>
+                                <td class="text-center">{{ $submission->schedule->getAssessmentTime() }}</td>
+                                <td class="text-center">{{ $submission->schedule->room_number }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('lecturer.exam.final-test.show', $submission->id) }}"
+                                       class="btn btn-primary btn-sm">
+                                        <i class="fa fa-fw fa-search-plus"></i>
+                                        <span>Detail</span>
+                                    </a>
+                                    <a href="{{ route('lecturer.exam.final-test.score', $submission->id) }}"
+                                       class="btn btn-success btn-sm">
+                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                        <span>Nilai</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                     </tbody>
                 </table>
