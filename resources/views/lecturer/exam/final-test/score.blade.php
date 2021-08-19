@@ -23,7 +23,7 @@
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
                             <i class="fa fa-fw fa-pencil-alt text-muted mr-1"></i>
-                            Form Input Nilai
+                            Form Input Nilai {!! \App\Constants\AssessmentTypes::getLabel($submission->assessment_type, true) !!}
                         </h3>
                         <div class="block-options">
                             <x-button-link link="{{ route('lecturer.exam.final-test.index') }}" text="Kembali"
@@ -40,13 +40,13 @@
 
                                     @forelse($components as $component)
                                         <div class="form-group row">
-                                            <label for="date" class="col-sm-4 col-form-label text-right">
+                                            <label for="date" class="col-sm-6 col-form-label text-right">
                                                 {{ ucwords($component->name) }}
                                             </label>
 
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-6">
                                                 <input type="number" class="form-control " name="scores[{{ $loop->iteration }}]"
-                                                      placeholder="{{ ucwords($component->name) }}" required="required">
+                                                      placeholder="Nilai Max : {{ $component->weight }}" required="required">
                                                 <input type="hidden" name="component_ids[{{ $loop->iteration }}]" value="{{ $component->id }}">
 
                                                 @error($component->name)
@@ -60,7 +60,7 @@
                                     @endforelse
 
                                     <div class="form-group row">
-                                        <div class="col-sm-8 offset-sm-4">
+                                        <div class="col-sm-6 offset-sm-6">
                                             <button type="submit" class="btn btn-primary">
                                                 <i class="fa fa-save mr-1"></i>
                                                 <span>Simpan</span>

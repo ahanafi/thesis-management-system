@@ -23,7 +23,7 @@
                     <div class="block-header block-header-default">
                         <h3 class="block-title">
                             <i class="fa fa-fw fa-pencil-alt text-muted mr-1"></i>
-                            Form Input Nilai
+                            Form Input Nilai {!! \App\Constants\AssessmentTypes::getLabel($submission->assessment_type, true) !!}
                         </h3>
                         <div class="block-options">
                             <x-button-link link="{{ route('lecturer.submission.colloquium.index') }}" text="Kembali"
