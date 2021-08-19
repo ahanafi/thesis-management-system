@@ -11,6 +11,7 @@ class AssessmentComponent extends Model
     use HasFactory, Uuid;
 
     public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'name', 'assessment_type', 'weight'

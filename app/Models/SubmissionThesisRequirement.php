@@ -12,6 +12,7 @@ class SubmissionThesisRequirement extends Model
     protected $table = 'submission_of_thesis_requirements';
 
     public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'nim', 'date_of_filling', 'response_date', 'status'

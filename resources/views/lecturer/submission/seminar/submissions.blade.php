@@ -40,9 +40,15 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $submission->nim }}</td>
-                            <td>{{ $submission->thesis->student->getName() }}</td>
+                            <td>{{ $submission->student->getName() }}</td>
                             <td>{{ $submission->created_at->format('d-m-Y H:i:s') }}</td>
-                            <td>{!! \App\Constants\Status::getLabel($submission->status) !!}</td>
+                            <td>
+                                @php
+                                    $status = ($submission->thesis && $submission->thesis->first_supervisor === auth()->user()->registration_number)
+                                        ? $submission->status_first_supervisor
+                                        : $submission->status_second_supervisor;
+                                @endphp
+                                {!! \App\Constants\Status::getLabel($status) !!}</td>
                             <td class="text-center">
                                 <a href="{{ route('lecturer.submission.seminar.show', $submission->id) }}"
                                    class="btn btn-primary btn-sm">

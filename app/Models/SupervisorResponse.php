@@ -10,6 +10,7 @@ class SupervisorResponse extends Model
 {
     use HasFactory, Uuid;
     public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = ['guidance_id', 'response', 'document'];
 

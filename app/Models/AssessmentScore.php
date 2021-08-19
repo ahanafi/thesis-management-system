@@ -12,6 +12,7 @@ class AssessmentScore extends Model
     use HasFactory, Uuid;
 
     public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'submission_assessment_id',

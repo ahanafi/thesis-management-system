@@ -11,6 +11,8 @@ class AssessmentSchedule extends Model
     use HasFactory, Uuid;
 
     public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
         'date',
         'start_at',

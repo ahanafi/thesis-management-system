@@ -14,18 +14,14 @@ class SeminarController extends Controller
     {
         $nidn = auth()->user()->registration_number;
 
-        $submissions = SubmissionAssessment::with('thesis')
+        $submissions = SubmissionAssessment::with('thesis', 'student')
             ->whereHas('thesis', function ($query) use ($nidn) {
                 $query->where('first_supervisor', $nidn)
                     ->orWhere('second_supervisor', $nidn);
             })
             ->type(AssessmentTypes::SEMINAR)
-            ->get()
-            ->each(function ($submission) use ($nidn) {
-                $submission->status = ($submission->thesis->first_supervisor === $nidn)
-                    ? $submission->status_first_supervisor
-                    : $submission->status_second_supervisor;
-            });
+            ->get();
+
 
         return viewLecturer('submission.seminar.submissions', compact('submissions'));
     }

@@ -11,6 +11,7 @@ class DataTesting extends Model
     use HasFactory, Uuid;
 
     public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'full_name',

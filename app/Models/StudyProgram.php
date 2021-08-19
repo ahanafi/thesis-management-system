@@ -11,6 +11,7 @@ class StudyProgram extends Model
     use HasFactory, Uuid;
 
     public $incrementing = false;
+    protected $keyType = 'string';
 
     public function leader()
     {

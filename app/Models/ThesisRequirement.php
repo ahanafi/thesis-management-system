@@ -11,6 +11,7 @@ class ThesisRequirement extends Model
     use HasFactory, Uuid;
 
     public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'document_name',

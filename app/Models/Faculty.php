@@ -10,9 +10,11 @@ class Faculty extends Model
 {
     use HasFactory, Uuid;
 
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
         'id', 'faculty_code', 'faculty_name', 'dean_code'
     ];
 
-    public $incrementing = false;
 }

@@ -10,6 +10,7 @@ class Thesis extends Model
 {
     use HasFactory, Uuid;
     public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'nim', 'research_title', 'science_field_id', 'document',

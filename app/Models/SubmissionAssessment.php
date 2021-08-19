@@ -14,10 +14,12 @@ class SubmissionAssessment extends Model
     use HasFactory, Uuid;
     public $incrementing = false;
     protected $table = 'submission_of_assessments';
+    protected $keyType = 'string';
 
     public function thesis()
     {
-        return $this->belongsTo(Thesis::class, 'thesis_id', 'id')->with('student');
+        return $this->belongsTo(Thesis::class)
+            ->with('student');
     }
 
     public function student()

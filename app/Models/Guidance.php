@@ -12,6 +12,7 @@ class Guidance extends Model
 
     protected $table = 'guidance';
     public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'thesis_id',

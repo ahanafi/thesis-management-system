@@ -10,6 +10,7 @@ class SubmissionDetailsThesisRequirement extends Model
 {
     use HasFactory, Uuid;
     protected $table = 'submission_details_thesis_requirements';
+    protected $keyType = 'string';
 
     public $incrementing = false;
 
