@@ -80,10 +80,8 @@ Route::prefix('study-program-leader')
                         Route::get('/', [TrialExaminerController::class, 'index'])->name('index');
 
                         //C45
-                        Route::get('root-node/{submission}', [TrialExaminerController::class, 'rootNode'])->name('root-node');
-                        Route::get('second-node/{submission}', [TrialExaminerController::class, 'secondNode'])->name('second-node');
+                        Route::get('set-examiner/{submission}', [TrialExaminerController::class, 'setExaminer'])->name('set-examiner');
 
-                        //Route::get('set-examiner/{submission}', [TrialExaminerController::class, 'setExaminer'])->name('set-examiner');
                         Route::post('set-examiner/{submission}', [TrialExaminerController::class, 'save'])->name('save');
                     });
             });

@@ -35,7 +35,7 @@ class TrialExaminerController extends Controller
         return viewStudyProgramLeader('determination.trial-examiner.index', compact('submissions'));
     }
 
-    public function rootNode(SubmissionAssessment $submission)
+    public function setExaminer(SubmissionAssessment $submission)
     {
         //Load relations
         $submission->load(['student', 'thesis']);
@@ -304,7 +304,7 @@ class TrialExaminerController extends Controller
         $firstExaminerCandidate = getFirstExaminer($filteredLecturers, $submission->student->study_program->getName());
         $secondExaminerCandidate = getSecondExaminer($filteredLecturers, $submission->thesis->scienceField->code, $firstExaminerCandidate->nidn);
 
-        return viewStudyProgramLeader('determination.trial-examiner.root-node', [
+        return viewStudyProgramLeader('determination.trial-examiner.set-examiner', [
             'submission' => $submission,
             'lecturers' => $lecturers,
             'filteredLecturers' => $filteredLecturers,
@@ -367,28 +367,6 @@ class TrialExaminerController extends Controller
         ]);
     }
 
-    public function setExaminer(SubmissionAssessment $submission)
-    {
-        $submission->load(['student', 'thesis']);
-
-        $studyProgramCode = $submission->student->study_program_code;
-        $firstExaminerCandidates = Lecturer::studyProgramCode($studyProgramCode)
-            ->whereNotIn('nidn', [
-                $submission->thesis->first_examiner,
-                $submission->thesis->second_examiner
-            ])
-            ->get();
-
-        $lecturers = Lecturer::select('full_name', 'nidn', 'degree')
-            ->whereNotIn('nidn', [
-                $submission->thesis->first_examiner,
-                $submission->thesis->second_examiner
-            ])
-            ->get();
-
-        return viewStudyProgramLeader('determination.trial-examiner.single', compact('submission', 'lecturers', 'firstExaminerCandidates'));
-    }
-
     public function save(Request $request, SubmissionAssessment $submission)
     {
         $this->validate($request, [
@@ -397,10 +375,17 @@ class TrialExaminerController extends Controller
             'second_examiner' => 'required|exists:lecturers,nidn|different:first_examiner',
         ]);
 
+        $firstExaminer = $request->get('first_examiner');
+        $secondExaminer = $request->get('second_examiner');
+
         // Use all recomendations
         if (strtolower($request->get('status')) === 'done') {
-            $submission->first_examiner = $request->get('first_examiner');
-            $submission->second_examiner = $request->get('second_examiner');
+            $submission->first_examiner = $firstExaminer;
+            $submission->second_examiner = $secondExaminer;
+
+            //Update quota
+            Lecturer::whereIn('nidn', [$firstExaminer, $secondExaminer])
+                ->decrement('quota');
 
             if ($submission->save()) {
                 $message = setFlashMessage('success', 'custom', 'Data penguji sidang skripsi berhasil ditentukan.');
@@ -416,13 +401,13 @@ class TrialExaminerController extends Controller
         $submission->load('thesis');
 
         if (strtolower($request->get('status')) === 'first') {
-            $submission->second_examiner = $request->get('second_examiner');
-            $fixExaminer = $request->get('second_examiner');
+            $submission->second_examiner = $secondExaminer;
+            $fixExaminer = $secondExaminer;
         }
 
         if (strtolower($request->get('status')) === 'second') {
-            $submission->first_examiner = $request->get('first_examiner');
-            $fixExaminer = $request->get('first_examiner');
+            $submission->first_examiner = $firstExaminer;
+            $fixExaminer = $firstExaminer;
         }
 
         //Load all lecturer except supervisor and first examiner

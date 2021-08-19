@@ -313,9 +313,11 @@ if (!function_exists('getFirstExaminer')) {
     {
         $countFunctionalLecturer = 0;
         $firstExaminer = null;
+        $filteredLecturers = [];
         foreach ($lecturers as $lecturer) {
             if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
                 $countFunctionalLecturer++;
+                $filteredLecturers[] = $lecturer;
             }
         }
 
@@ -328,16 +330,21 @@ if (!function_exists('getFirstExaminer')) {
             }
         } else {
 
-            foreach ($lecturers as $lecturer) {
-                if (($lecturer->homebase === $studyProgramOfStudent) &&
-                    (strtolower($lecturer->functional) === 'lektor') &&
-                    (strtolower($lecturer->firstExaminerLabel) === 'sangat tinggi') &&
-                    (strtolower($lecturer->secondExaminerLabel) === 'sangat tinggi')
-                ) {
-                    $firstExaminer = $lecturer;
-                    break;
-                }
-            }
+            usort($filteredLecturers, function ($a, $b) {
+                return $b->quota <=> $a->quota;
+            });
+
+//            foreach ($lecturers as $lecturer) {
+//                if (($lecturer->homebase === $studyProgramOfStudent) &&
+//                    (strtolower($lecturer->functional) === 'lektor') &&
+//                    (strtolower($lecturer->firstExaminerLabel) === 'sangat tinggi') &&
+//                    (strtolower($lecturer->secondExaminerLabel) === 'sangat tinggi')
+//                ) {
+//                    $firstExaminer = $lecturer;
+//                    break;
+//                }
+//            }
+            $firstExaminer = $filteredLecturers[0];
         }
 
         return $firstExaminer;

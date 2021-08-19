@@ -10,11 +10,6 @@
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
@@ -59,7 +54,7 @@
                             <td>{{ $submission->thesis->created_at }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('leader.determination.trial-examiner.root-node', $submission->id) }}"
+                                    <a href="{{ route('leader.determination.trial-examiner.set-examiner', $submission->id) }}"
                                        class="btn btn-primary">
                                         <i class="fa fa-search"></i>
                                     </a>
