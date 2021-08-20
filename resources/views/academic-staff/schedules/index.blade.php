@@ -31,7 +31,7 @@
                                href="{{ url('academic-staff/assessment-schedules/seminar') }}">Seminar Skripsi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $assessmentType === 'final-test' ? 'active' : '' }}"
+                            <a class="nav-link {{ $assessmentType === 'final-test' || strtolower($assessmentType) === 'trial' ? 'active' : '' }}"
                                href="{{ url('academic-staff/assessment-schedules/final-test') }}">Sidang Skripsi</a>
                         </li>
                         <li class="nav-item ml-auto">

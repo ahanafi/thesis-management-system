@@ -44,7 +44,9 @@
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
                                         <input type="file" class="custom-file-input js-custom-file-input-enabled"
                                                data-toggle="custom-file-input" name="guidance_card_first_supervisor" required
+                                               onchange="getFileName(this)"
                                                id="guidance_card_first_supervisor" accept="application/pdf">
+
                                         <label class="custom-file-label" for="guidance_card_first_supervisor">Pilih file</label>
 
                                         @error('guidance_card_first_supervisor')
@@ -59,7 +61,7 @@
                                     <label for="document">Kartu Bimbingan Dosen Pembimbing 2 (PDF)</label>
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled" onchange="getFileName(this)"
                                                data-toggle="custom-file-input" name="guidance_card_second_supervisor" required
                                                id="guidance_card_second_supervisor" accept="application/pdf">
                                         <label class="custom-file-label" for="guidance_card_second_supervisor">Pilih file</label>
@@ -76,7 +78,7 @@
                                     <label for="document">Laporan Skripsi (BAB I s.d. Selesai)</label>
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled" onchange="getFileName(this)"
                                                data-toggle="custom-file-input" name="report" required>
                                         <label class="custom-file-label" for="report">Pilih file</label>
 

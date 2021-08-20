@@ -69,6 +69,12 @@ class SubmissionAssessment extends Model
             ->whereNull('second_examiner');
     }
 
+    public function scopeAlreadyTesters($query)
+    {
+        return $query->whereNotNull('first_examiner')
+            ->whereNotNull('second_examiner');
+    }
+
     public function scopeApproved($query)
     {
         return $query->where('status_first_supervisor', Status::APPROVE)

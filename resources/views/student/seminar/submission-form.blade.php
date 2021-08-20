@@ -1,25 +1,5 @@
 @extends('layouts.backend')
 
-@section('css_before')
-    <!-- Page JS Plugins CSS -->
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
-    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
-@endsection
-
-@section('js_after')
-    <!-- Page JS Plugins -->
-    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
-
-    <!-- Page JS Code -->
-    <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
-@endsection
-
 @section('content')
     <!-- Page Content -->
     <div class="content">
@@ -42,7 +22,7 @@
                                     <label for="document">Kartu Bimbingan Dosen Pembimbing 1 (PDF)</label>
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled" onchange="getFileName(this)"
                                                data-toggle="custom-file-input" name="guidance_card_first_supervisor" required
                                                id="guidance_card_first_supervisor" accept="application/pdf">
                                         <label class="custom-file-label" for="guidance_card_first_supervisor">Pilih file</label>
@@ -59,7 +39,7 @@
                                     <label for="document">Kartu Bimbingan Dosen Pembimbing 2 (PDF)</label>
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled" onchange="getFileName(this)"
                                                data-toggle="custom-file-input" name="guidance_card_second_supervisor" required
                                                id="guidance_card_second_supervisor" accept="application/pdf">
                                         <label class="custom-file-label" for="guidance_card_second_supervisor">Pilih file</label>
@@ -76,7 +56,7 @@
                                     <label for="document">Laporan Skripsi (BAB I s.d. BAB IV)</label>
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled" onchange="getFileName(this)"
                                                data-toggle="custom-file-input" name="report" required>
                                         <label class="custom-file-label" for="report">Pilih file</label>
 

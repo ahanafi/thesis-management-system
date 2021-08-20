@@ -82,15 +82,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="document">
+                                    <label>
                                         File <span class="text-danger">*</span>
                                     </label>
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled"
-                                               data-toggle="custom-file-input" id="dm-profile-edit-file"
+                                        <input type="file" class="custom-file-input js-custom-file-input-enabled" onchange="getFileName(this)"
+                                               data-toggle="custom-file-input" id="document"
                                                name="document" required>
-                                        <label class="custom-file-label" for="dm-profile-edit-file">Pilih file</label>
+                                        <label class="custom-file-label" for="document">Pilih file</label>
                                     </div>
 
                                     @error('document')

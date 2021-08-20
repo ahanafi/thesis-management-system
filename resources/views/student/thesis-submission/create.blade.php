@@ -54,10 +54,9 @@
                                     <div class="custom-file">
                                         <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
                                         <input type="file" class="custom-file-input js-custom-file-input-enabled"
-                                               data-toggle="custom-file-input" id="dm-profile-edit-file"
+                                               data-toggle="custom-file-input" id="dm-profile-edit-file" onchange="getFileName(this)"
                                                name="file" required>
-                                        <label class="custom-file-label" for="dm-profile-edit-file">Pilih
-                                            file</label>
+                                        <label class="custom-file-label" for="file">Pilih file</label>
                                     </div>
                                     @error('file')
                                         <span class="invalid-feedback" role="alert">

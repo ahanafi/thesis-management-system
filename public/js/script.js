@@ -399,3 +399,13 @@ const fetchStudentInfo = async (el) => {
         }
     }
 }
+
+
+
+const getFileName = (el) => {
+    const inputName = el.getAttribute('name');
+    if(el.files.length > 0) {
+        const file = el.files[0];
+        document.querySelector(`label[for=${inputName}]`).textContent = file.name;
+    }
+}

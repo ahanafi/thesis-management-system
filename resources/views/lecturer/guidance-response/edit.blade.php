@@ -152,12 +152,11 @@
                                         <div class="col-sm-9">
                                             <div class="custom-file">
                                                 <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                                <input type="file"
+                                                <input type="file" onchange="getFileName(this)"
                                                        class="custom-file-input js-custom-file-input-enabled"
-                                                       data-toggle="custom-file-input" id="dm-profile-edit-avatar"
+                                                       data-toggle="custom-file-input" id="document"
                                                        name="document">
-                                                <label class="custom-file-label" for="dm-profile-edit-avatar">Pilih
-                                                    dokumen</label>
+                                                <label class="custom-file-label" for="document">Pilih dokumen</label>
                                             </div>
 
                                             @error('document')

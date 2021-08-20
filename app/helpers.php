@@ -303,6 +303,95 @@ if (!function_exists('idDateFormat')) {
     }
 }
 
+if(!function_exists('getFirstExaminerByLecturer')) {
+    function getFirstExaminerByLecturer(array $lecturers, $studyProgramOfStudent) {
+        $countFunctionalLecturer = countFromArray($lecturers, [
+            'functional' => 'Lektor',
+            'homebase' => $studyProgramOfStudent
+        ]);
+        $examiner = null;
+
+        if($countFunctionalLecturer === 1) {
+            foreach ($lecturers as $lecturer) {
+                if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
+                    $examiner = $lecturer;
+                    break;
+                }
+            }
+        } else if($countFunctionalLecturer > 1) {
+            $filteredLecturers = [];
+            foreach ($lecturers as $lecturer) {
+                if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
+                    $filteredLecturers[] = $lecturer;
+                }
+            }
+
+            //Sort by quota
+            usort($filteredLecturers, function ($a, $b) {
+                return $b->quota <=> $a->quota;
+            });
+
+            $examiner = $filteredLecturers[0];
+        }
+
+        return $examiner;
+    }
+}
+
+if(!function_exists('getFirstExaminerByExpertAssistant')) {
+    function getFirstExaminerByExpertAssistant(array $lecturers, $studyProgramOfStudent) {
+        $countFunctionalExpertAssisstant = countFromArray($lecturers, [
+            'functional' => 'Asisten Ahli',
+            'homebase' => $studyProgramOfStudent
+        ]);
+        $examiner = null;
+
+        if($countFunctionalExpertAssisstant === 1) {
+            foreach ($lecturers as $lecturer) {
+                if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'asisten ahli') {
+                    $examiner = $lecturer;
+                    break;
+                }
+            }
+        } else if($countFunctionalExpertAssisstant > 1) {
+            $filteredLecturers = [];
+
+            $filterFirstExaminerLabel = [];
+
+            foreach ($lecturers as $lecturer) {
+                if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'asisten ahli') {
+
+                    if(strtolower($lecturer->firstExaminerLabel) === 'sangat tinggi' || strtolower($lecturer->firstExaminerLabel) === 'tinggi') {
+                        $filterFirstExaminerLabel[] = $lecturer;
+                    } else {
+                        $filteredLecturers[] = $lecturer;
+                    }
+                }
+            }
+
+            if(count($filterFirstExaminerLabel) > 0) {
+                //Sort by quota
+                usort($filterFirstExaminerLabel, function ($a, $b) {
+                    return $b->quota <=> $a->quota;
+                });
+
+                $examiner = $filterFirstExaminerLabel[0];
+            } else {
+                //Sort by quota
+                usort($filteredLecturers, function ($a, $b) {
+                    return $b->quota <=> $a->quota;
+                });
+
+                $examiner = $filteredLecturers[0];
+            }
+
+        }
+
+        return $examiner;
+    }
+}
+
+
 if (!function_exists('getFirstExaminer')) {
 
     /*
@@ -311,43 +400,59 @@ if (!function_exists('getFirstExaminer')) {
      * */
     function getFirstExaminer(array $lecturers, $studyProgramOfStudent)
     {
-        $countFunctionalLecturer = 0;
-        $firstExaminer = null;
-        $filteredLecturers = [];
-        foreach ($lecturers as $lecturer) {
-            if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
-                $countFunctionalLecturer++;
-                $filteredLecturers[] = $lecturer;
-            }
+        $firstExaminerByFunctionalAsLectur = getFirstExaminerByLecturer($lecturers, $studyProgramOfStudent);
+
+        if($firstExaminerByFunctionalAsLectur !== null) {
+            return $firstExaminerByFunctionalAsLectur;
+        } else {
+            return getFirstExaminerByExpertAssistant($lecturers, $studyProgramOfStudent);
         }
 
-        if ($countFunctionalLecturer === 1) {
-            foreach ($lecturers as $lecturer) {
-                if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
-                    $firstExaminer = $lecturer;
-                    break;
-                }
-            }
-        } else {
-
-            usort($filteredLecturers, function ($a, $b) {
-                return $b->quota <=> $a->quota;
-            });
-
+//        $firstExaminer = null;
+//        $filteredLecturers = [];
+//        foreach ($lecturers as $lecturer) {
+//            if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
+//                $countFunctionalLecturer++;
+//                $filteredLecturers[] = $lecturer;
+//            }
+//        }
+//
+//        if ($countFunctionalLecturer === 1) {
 //            foreach ($lecturers as $lecturer) {
-//                if (($lecturer->homebase === $studyProgramOfStudent) &&
-//                    (strtolower($lecturer->functional) === 'lektor') &&
-//                    (strtolower($lecturer->firstExaminerLabel) === 'sangat tinggi') &&
-//                    (strtolower($lecturer->secondExaminerLabel) === 'sangat tinggi')
-//                ) {
+//                if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'lektor') {
 //                    $firstExaminer = $lecturer;
 //                    break;
 //                }
 //            }
-            $firstExaminer = $filteredLecturers[0];
-        }
-
-        return $firstExaminer;
+//
+//        } else if($countFunctionalLecturer > 1) {
+//
+//            usort($filteredLecturers, function ($a, $b) {
+//                return $b->quota <=> $a->quota;
+//            });
+//
+////            foreach ($lecturers as $lecturer) {
+////                if (($lecturer->homebase === $studyProgramOfStudent) &&
+////                    (strtolower($lecturer->functional) === 'lektor') &&
+////                    (strtolower($lecturer->firstExaminerLabel) === 'sangat tinggi') &&
+////                    (strtolower($lecturer->secondExaminerLabel) === 'sangat tinggi')
+////                ) {
+////                    $firstExaminer = $lecturer;
+////                    break;
+////                }
+////            }
+//            $firstExaminer = $filteredLecturers[0];
+//        } else {
+//
+//            foreach ($lecturers as $lecturer) {
+//                if ($lecturer->homebase === $studyProgramOfStudent && strtolower($lecturer->functional) === 'asisten ahli') {
+//                    $countFunctionalLecturer++;
+//                    $filteredLecturers[] = $lecturer;
+//                }
+//            }
+//        }
+//
+//        return $firstExaminer;
     }
 }
 
