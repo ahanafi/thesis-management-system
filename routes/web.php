@@ -1,10 +1,14 @@
 <?php
 
+use App\Constants\AssessmentTypes;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HomeController;
 
+use App\Models\AssessmentComponent;
+use App\Models\AssessmentScore;
+use App\Models\SubmissionAssessment;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -22,10 +26,42 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/topsis', function () {
     $nilaiSidang = DB::table('topsis')
+        //->limit(8)
         ->get();
     return view('topsis', [
         'nilaiSidang' => $nilaiSidang
     ]);
+});
+
+Route::get('/nilai-sidang', function () {
+    $submissions = SubmissionAssessment::with(['student', 'thesis'])
+        ->type(AssessmentTypes::TRIAL)
+        ->whereHas('scores')
+        ->get();
+
+    $assessmentComponents = AssessmentComponent::type(AssessmentTypes::TRIAL)->get();
+    $results = [];
+    $resultIndex = 0;
+    foreach ($submissions as $submission) {
+        $index = 1;
+
+        $results[$resultIndex] = [
+            'nim' => $submission->nim,
+            'nama_mahasiswa' => $submission->student->full_name,
+            'prodi' => $submission->student->study_program->getName(),
+            'thesis_id' => $submission->thesis->id
+        ];
+
+        $submissionId = $submission->id;
+        foreach ($assessmentComponents as $component) {
+            $componentScore = round(AssessmentScore::where('submission_assessment_id', $submissionId)->where('assessment_component_id', $component->id)->sum('score') / 2);
+            $results[$resultIndex]['c'.$index] = $componentScore;
+            $index++;
+        }
+        $resultIndex++;
+    }
+
+    return view('nilai-sidang', compact('submissions', 'results'));
 });
 
 

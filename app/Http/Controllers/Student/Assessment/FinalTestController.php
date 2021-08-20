@@ -6,6 +6,7 @@ use App\Constants\AssessmentTypes;
 use App\Http\Controllers\Controller;
 use App\Models\AssessmentComponent;
 use App\Models\AssessmentScore;
+use App\Models\Score;
 use App\Models\SubmissionAssessment;
 use App\Models\Thesis;
 use App\Services\Downloads\SubmissionAssessmentService;
@@ -114,6 +115,7 @@ class FinalTestController extends Controller
             ->download($filename);
     }
 
+    //Default Score Without Topsis Calculation
     public function score()
     {
         $nim = auth()->user()->registration_number;
@@ -126,5 +128,13 @@ class FinalTestController extends Controller
         $index = 1;
 
         return viewStudent('final-test.score', compact('submission','index', 'countAssessmentComponent'));
+    }
+
+    public function topsisScore()
+    {
+        $nim = auth()->user()->registration_number;
+        $score = Score::where('nim', $nim)->first();
+
+        return viewStudent('final-test.topsis-score', compact('score'));
     }
 }

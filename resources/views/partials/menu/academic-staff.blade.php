@@ -71,13 +71,13 @@
                     <span class="nav-main-link-name">KOMPONEN NILAI</span>
                 </a>
             </li>
-            <li class="nav-main-item">
+            <!--li class="nav-main-item">
                 <a class="nav-main-link{{ request()->routeIs('assessment-components.*') ? ' active' : '' }}"
                    href="{{ route('assessment-components.index') }}">
                     <i class="nav-main-link-icon fa fa-fw fa-edit"></i>
                     <span class="nav-main-link-name">DATA NILAI</span>
                 </a>
-            </li>
+            </li-->
             <!-- END DATA SKRIPSI -->
 
             <!-- PENGATURAN -->

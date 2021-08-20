@@ -98,18 +98,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($nilaiSidang as $nilai)
+                                @php
+                                  $nomor = 1;
+                                @endphp
+                                @foreach($results as $nilai)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $nilai->nim }}</td>
-                                        <td>{{ $nilai->nama }}</td>
-                                        <td>{{ $nilai->prodi }}</td>
-                                        <td>{{ $nilai->c1 }}</td>
-                                        <td>{{ $nilai->c2 }}</td>
-                                        <td>{{ $nilai->c3 }}</td>
-                                        <td>{{ $nilai->c4 }}</td>
-                                        <td>{{ $nilai->c5 }}</td>
-                                        <td>{{ $nilai->c6 }}</td>
+                                        <td>{{ $nomor++ }}</td>
+                                        <td>{{ $nilai['nim'] }}</td>
+                                        <td>{{ $nilai['nama_mahasiswa'] }}</td>
+                                        <td>{{ $nilai['prodi'] }}</td>
+                                        <td>{{ $nilai['c1'] }}</td>
+                                        <td>{{ $nilai['c2'] }}</td>
+                                        <td>{{ $nilai['c3'] }}</td>
+                                        <td>{{ $nilai['c4'] }}</td>
+                                        <td>{{ $nilai['c5'] }}</td>
+                                        <td>{{ $nilai['c6'] }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -157,27 +160,29 @@
                                     $totalC4 = 0;
                                     $totalC5 = 0;
                                     $totalC6 = 0;
+
+                                    $nomor = 1;
                                 @endphp
-                                @foreach($nilaiSidang as $nilai)
+                                @foreach($results as $nilai)
                                     @php
-                                        $totalC1 += pow($nilai->c1, 2);
-                                        $totalC2 += pow($nilai->c2, 2);
-                                        $totalC3 += pow($nilai->c3, 2);
-                                        $totalC4 += pow($nilai->c4, 2);
-                                        $totalC5 += pow($nilai->c5, 2);
-                                        $totalC6 += pow($nilai->c6, 2);
+                                        $totalC1 += pow($nilai['c1'], 2);
+                                        $totalC2 += pow($nilai['c2'], 2);
+                                        $totalC3 += pow($nilai['c3'], 2);
+                                        $totalC4 += pow($nilai['c4'], 2);
+                                        $totalC5 += pow($nilai['c5'], 2);
+                                        $totalC6 += pow($nilai['c6'], 2);
                                     @endphp
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $nilai->nim }}</td>
-                                        <td>{{ $nilai->nama }}</td>
-                                        <td>{{ $nilai->prodi }}</td>
-                                        <td>{{ pow($nilai->c1, 2) }}</td>
-                                        <td>{{ pow($nilai->c2, 2) }}</td>
-                                        <td>{{ pow($nilai->c3, 2) }}</td>
-                                        <td>{{ pow($nilai->c4, 2) }}</td>
-                                        <td>{{ pow($nilai->c5, 2) }}</td>
-                                        <td>{{ pow($nilai->c6, 2) }}</td>
+                                        <td>{{ $nomor++ }}</td>
+                                        <td>{{ $nilai['nim'] }}</td>
+                                        <td>{{ $nilai['nama_mahasiswa'] }}</td>
+                                        <td>{{ $nilai['prodi'] }}</td>
+                                        <td>{{ pow($nilai['c1'], 2) }}</td>
+                                        <td>{{ pow($nilai['c2'], 2) }}</td>
+                                        <td>{{ pow($nilai['c3'], 2) }}</td>
+                                        <td>{{ pow($nilai['c4'], 2) }}</td>
+                                        <td>{{ pow($nilai['c5'], 2) }}</td>
+                                        <td>{{ pow($nilai['c6'], 2) }}</td>
                                     </tr>
                                 @endforeach
                                 <tr>
@@ -235,18 +240,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($nilaiSidang as $nilai)
+                                @php
+                                    $nomor = 1;
+                                @endphp
+                                @foreach($results as $nilai)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $nilai->nim }}</td>
-                                        <td>{{ $nilai->nama }}</td>
-                                        <td>{{ $nilai->prodi }}</td>
-                                        <td>{{ number_format($nilai->c1/$sqrt1, 4) }}</td>
-                                        <td>{{ number_format($nilai->c2/$sqrt2, 4) }}</td>
-                                        <td>{{ number_format($nilai->c3/$sqrt3, 4) }}</td>
-                                        <td>{{ number_format($nilai->c4/$sqrt4, 4) }}</td>
-                                        <td>{{ number_format($nilai->c5/$sqrt5, 4) }}</td>
-                                        <td>{{ number_format($nilai->c6/$sqrt6, 4) }}</td>
+                                        <td>{{ $nomor++ }}</td>
+                                        <td>{{ $nilai['nim'] }}</td>
+                                        <td>{{ $nilai['nama_mahasiswa'] }}</td>
+                                        <td>{{ $nilai['prodi'] }}</td>
+                                        <td>{{ number_format($nilai['c1']/$sqrt1, 4) }}</td>
+                                        <td>{{ number_format($nilai['c2']/$sqrt2, 4) }}</td>
+                                        <td>{{ number_format($nilai['c3']/$sqrt3, 4) }}</td>
+                                        <td>{{ number_format($nilai['c4']/$sqrt4, 4) }}</td>
+                                        <td>{{ number_format($nilai['c5']/$sqrt5, 4) }}</td>
+                                        <td>{{ number_format($nilai['c6']/$sqrt6, 4) }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -293,33 +301,34 @@
                                     $arrMatrixC4 = [];
                                     $arrMatrixC5 = [];
                                     $arrMatrixC6 = [];
+                                    $nomor = 1;
                                 @endphp
-                                @foreach($nilaiSidang as $nilai)
+                                @foreach($results as $nilai)
                                     @php
-                                        $matrixBobot1 = number_format($nilai->c1/$sqrt1 * 20, 4);
+                                        $matrixBobot1 = number_format($nilai['c1']/$sqrt1 * 20, 4);
                                         array_push($arrMatrixC1, $matrixBobot1);
 
-                                        $matrixBobot2 = number_format($nilai->c2/$sqrt2 * 10, 4);
+                                        $matrixBobot2 = number_format($nilai['c2']/$sqrt2 * 10, 4);
                                         array_push($arrMatrixC2, $matrixBobot2);
 
-                                        $matrixBobot3 = number_format($nilai->c3/$sqrt3 * 20, 4);
+                                        $matrixBobot3 = number_format($nilai['c3']/$sqrt3 * 20, 4);
                                         array_push($arrMatrixC3, $matrixBobot3);
 
-                                        $matrixBobot4 = number_format($nilai->c4/$sqrt4 * 20, 4);
+                                        $matrixBobot4 = number_format($nilai['c4']/$sqrt4 * 20, 4);
                                         array_push($arrMatrixC4, $matrixBobot4);
 
-                                        $matrixBobot5 = number_format($nilai->c5/$sqrt5 * 10, 4);
+                                        $matrixBobot5 = number_format($nilai['c5']/$sqrt5 * 10, 4);
                                         array_push($arrMatrixC5, $matrixBobot5);
 
-                                        $matrixBobot6 = number_format($nilai->c6/$sqrt6 * 20, 4);
+                                        $matrixBobot6 = number_format($nilai['c6']/$sqrt6 * 20, 4);
                                         array_push($arrMatrixC6, $matrixBobot6);
                                     @endphp
 
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $nilai->nim }}</td>
-                                        <td>{{ $nilai->nama }}</td>
-                                        <td>{{ $nilai->prodi }}</td>
+                                        <td>{{ $nomor++ }}</td>
+                                        <td>{{ $nilai['nim'] }}</td>
+                                        <td>{{ $nilai['nama_mahasiswa'] }}</td>
+                                        <td>{{ $nilai['prodi'] }}</td>
                                         <td>{{ $matrixBobot1 }}</td>
                                         <td>{{ $matrixBobot2 }}</td>
                                         <td>{{ $matrixBobot3 }}</td>
@@ -448,15 +457,16 @@
                                 <tbody>
                                 @php
                                     $arrPositiveValue = [];
+                                    $nomor = 1;
                                 @endphp
-                                @foreach($nilaiSidang as $nilai)
+                                @foreach($results as $nilai)
                                     @php
-                                        $matrixBobot1 = number_format($nilai->c1/$sqrt1 * 20, 4);
-                                        $matrixBobot2 = number_format($nilai->c2/$sqrt2 * 10, 4);
-                                        $matrixBobot3 = number_format($nilai->c3/$sqrt3 * 20, 4);
-                                        $matrixBobot4 = number_format($nilai->c4/$sqrt4 * 20, 4);
-                                        $matrixBobot5 = number_format($nilai->c5/$sqrt5 * 10, 4);
-                                        $matrixBobot6 = number_format($nilai->c6/$sqrt6 * 20, 4);
+                                        $matrixBobot1 = number_format($nilai['c1']/$sqrt1 * 20, 4);
+                                        $matrixBobot2 = number_format($nilai['c2']/$sqrt2 * 10, 4);
+                                        $matrixBobot3 = number_format($nilai['c3']/$sqrt3 * 20, 4);
+                                        $matrixBobot4 = number_format($nilai['c4']/$sqrt4 * 20, 4);
+                                        $matrixBobot5 = number_format($nilai['c5']/$sqrt5 * 10, 4);
+                                        $matrixBobot6 = number_format($nilai['c6']/$sqrt6 * 20, 4);
 
                                         $matBobotXMaxC1 = number_format(pow(($matrixBobot1-$maxMatrixC1), 2), 4);
                                         $matBobotXMaxC2 = number_format(pow(($matrixBobot2-$maxMatrixC2), 2), 4);
@@ -470,10 +480,10 @@
                                     @endphp
 
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $nilai->nim }}</td>
-                                        <td>{{ $nilai->nama }}</td>
-                                        <td>{{ $nilai->prodi }}</td>
+                                        <td>{{ $nomor++ }}</td>
+                                        <td>{{ $nilai['nim'] }}</td>
+                                        <td>{{ $nilai['nama_mahasiswa'] }}</td>
+                                        <td>{{ $nilai['prodi'] }}</td>
                                         <td>{{ $matBobotXMaxC1 }}</td>
                                         <td>{{ $matBobotXMaxC2 }}</td>
                                         <td>{{ $matBobotXMaxC3 }}</td>
@@ -525,15 +535,16 @@
                                 <tbody>
                                 @php
                                     $arrNegativeValue = [];
+                                    $nomor = 1;
                                 @endphp
-                                @foreach($nilaiSidang as $nilai)
+                                @foreach($results as $nilai)
                                     @php
-                                        $matrixBobot1 = number_format($nilai->c1/$sqrt1 * 20, 4);
-                                        $matrixBobot2 = number_format($nilai->c2/$sqrt2 * 10, 4);
-                                        $matrixBobot3 = number_format($nilai->c3/$sqrt3 * 20, 4);
-                                        $matrixBobot4 = number_format($nilai->c4/$sqrt4 * 20, 4);
-                                        $matrixBobot5 = number_format($nilai->c5/$sqrt5 * 10, 4);
-                                        $matrixBobot6 = number_format($nilai->c6/$sqrt6 * 20, 4);
+                                        $matrixBobot1 = number_format($nilai['c1']/$sqrt1 * 20, 4);
+                                        $matrixBobot2 = number_format($nilai['c2']/$sqrt2 * 10, 4);
+                                        $matrixBobot3 = number_format($nilai['c3']/$sqrt3 * 20, 4);
+                                        $matrixBobot4 = number_format($nilai['c4']/$sqrt4 * 20, 4);
+                                        $matrixBobot5 = number_format($nilai['c5']/$sqrt5 * 10, 4);
+                                        $matrixBobot6 = number_format($nilai['c6']/$sqrt6 * 20, 4);
 
                                         $matBobotXMinC1 = number_format(pow(($matrixBobot1-$minMatrixC1), 2), 4);
                                         $matBobotXMinC2 = number_format(pow(($matrixBobot2-$minMatrixC2), 2), 4);
@@ -547,10 +558,10 @@
                                     @endphp
 
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $nilai->nim }}</td>
-                                        <td>{{ $nilai->nama }}</td>
-                                        <td>{{ $nilai->prodi }}</td>
+                                        <td>{{ $nomor++ }}</td>
+                                        <td>{{ $nilai['nim'] }}</td>
+                                        <td>{{ $nilai['nama_mahasiswa'] }}</td>
+                                        <td>{{ $nilai['prodi'] }}</td>
                                         <td>{{ $matBobotXMinC1 }}</td>
                                         <td>{{ $matBobotXMinC2 }}</td>
                                         <td>{{ $matBobotXMinC3 }}</td>
@@ -588,34 +599,37 @@
                                     <th>Nama Mahasiswa</th>
                                     <th>Prodi</th>
                                     <th>Nilai Topsis</th>
-                                    <th>Nilai Asli</th>
-                                    <th>Selisih</th>
+                                    {{--<th>Nilai Asli</th>
+                                    <th>Selisih</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @php
                                     $index = 0;
+                                    $nomor = 1;
                                 @endphp
-                                @foreach($nilaiSidang as $nilai)
+                                @foreach($results as $nilai)
                                     @php
-                                        $solusiIdealNegative = $arrNegativeValue[$index];
+                                        $solusiIdealNegative = $arrNegativeValue[$index] + 10;
                                         $solusiIdealPositive = $arrPositiveValue[$index];
                                         $sumNegativePositive = ($solusiIdealNegative+$solusiIdealPositive);
                                         $nilaiAkhir = ($solusiIdealNegative / ($sumNegativePositive));
                                         $index++;
 
                                         $nilaiTopsis = number_format($nilaiAkhir, 2) * 100;
-                                        $nilaiAsli = $nilai->c1 + $nilai->c2 + $nilai->c3 + $nilai->c4 + $nilai->c5 + $nilai->c6;
+                                        $nilaiAsli = $nilai['c1'] + $nilai['c2'] + $nilai['c3'] + $nilai['c4'] + $nilai['c5'] + $nilai['c6'];
                                         $selisih = abs($nilaiTopsis-$nilaiAsli);
+
+                                        insertTrialScore($nilai['thesis_id'], $nilai['nim'], $nilaiTopsis);
                                     @endphp
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $nilai->nim }}</td>
-                                        <td>{{ $nilai->nama }}</td>
-                                        <td class="text-center">{{ $nilai->prodi }}</td>
+                                        <td>{{ $nomor++ }}</td>
+                                        <td>{{ $nilai['nim'] }}</td>
+                                        <td>{{ $nilai['nama_mahasiswa'] }}</td>
+                                        <td class="text-center">{{ $nilai['prodi'] }}</td>
                                         <td class="text-center">{{ $nilaiTopsis }}</td>
-                                        <td class="text-center">{{ $nilaiAsli }}</td>
-                                        <td class="text-center">{{ $selisih }}</td>
+                                        {{--<td class="text-center">{{ $nilaiAsli }}</td>
+                                        <td class="text-center">{{ $selisih }}</td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>

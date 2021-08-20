@@ -2,6 +2,7 @@
 
 use App\Constants\Functional;
 use App\Models\Lecturer;
+use App\Models\Score;
 
 if (!function_exists('educationLevel')) {
     function educationLevel($key = null)
@@ -504,6 +505,27 @@ if (!function_exists('getSecondExaminer')) {
                     return null;
                 }
             }
+        }
+    }
+}
+
+if(!function_exists('insertTrialScore')) {
+    function insertTrialScore($thesisId, $nim, $score) {
+        $checkScore = Score::where('thesis_id', $thesisId)
+            ->where('nim', $nim)
+            ->first();
+
+        if($checkScore && $checkScore->trial === null) {
+            $checkScore->trial = $score;
+            $checkScore->save();
+        }
+
+        if(!$checkScore) {
+            Score::create([
+                'thesis_id' => $thesisId,
+                'nim' => $nim,
+                'trial' => $score
+            ]);
         }
     }
 }

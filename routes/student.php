@@ -75,7 +75,7 @@ Route::prefix('student')
                         Route::get('submission/{submission}/{type}/download', [FinalTestController::class, 'download'])->name('submission.download');
                         Route::post('seminar/apply', [FinalTestController::class, 'apply'])->name('apply');
 
-                        Route::get('score', [FinalTestController::class, 'score'])->name('score');
+                        Route::get('score', [FinalTestController::class, 'topsisScore'])->name('score');
                     });
 
             });

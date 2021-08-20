@@ -105,6 +105,7 @@ class HomeController extends Controller
                 ->get();
 
             $studentToBeTests = SubmissionAssessment::with('thesis')
+                ->whereHas('schedule')
                 ->where('first_examiner', $nidn)
                 ->orWhere('second_examiner', $nidn)
                 ->get();
