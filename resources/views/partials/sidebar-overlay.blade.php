@@ -11,8 +11,10 @@
 
                             <!-- User Info -->
                             <div class="ml-2">
-                                <a class="text-white font-w600" href="javascript:void(0)">George Taylor</a>
-                                <div class="text-white-75 font-size-sm">Full Stack Developer</div>
+                                <a class="text-white font-w600" href="javascript:void(0)">{{ showName(auth()->user()->full_name) }}</a>
+                                <div class="text-white-75 font-size-sm">
+                                    {{ auth()->user()->registration_number ?? 'BAAK' }}
+                                </div>
                             </div>
                             <!-- END User Info -->
 
@@ -140,18 +142,6 @@
                                     <a class="d-block py-3 bg-body-dark font-w600 text-dark" data-toggle="layout" data-action="content_layout_full_width" href="javascript:void(0)">Full Width</a>
                                 </div>
                             </div>
-                        </div>
-                        <!-- END Content -->
-                    </div>
-                    <div class="block pull-x mb-0">
-                        <!-- Content -->
-                        <div class="block-content block-content-sm block-content-full bg-body">
-                            <span class="text-uppercase font-size-sm font-w700">Heading</span>
-                        </div>
-                        <div class="block-content">
-                            <p>
-                                Content..
-                            </p>
                         </div>
                         <!-- END Content -->
                     </div>
