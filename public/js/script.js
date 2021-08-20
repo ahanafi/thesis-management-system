@@ -400,12 +400,35 @@ const fetchStudentInfo = async (el) => {
     }
 }
 
-
-
 const getFileName = (el) => {
     const inputName = el.getAttribute('name');
     if(el.files.length > 0) {
         const file = el.files[0];
         document.querySelector(`label[for=${inputName}]`).textContent = file.name;
+    }
+}
+
+const changeType = (el) => {
+    const showTextStatus = el.getAttribute('data-showtext');
+    const iconBtn = document.querySelector('#btn-change-type > i');
+    const inputCurrentPassword = document.querySelector('#current_password');
+    const inputNewPassword = document.querySelector('#new_password');
+    const inputConfirmPassword = document.querySelector('#new_password_confirmation');
+
+
+    if(showTextStatus === 'false') {
+        iconBtn.classList.remove('fa-eye-slash');
+        iconBtn.classList.add('fa-eye');
+        inputCurrentPassword.setAttribute('type', 'text');
+        inputNewPassword.setAttribute('type', 'text');
+        inputConfirmPassword.setAttribute('type', 'text');
+        el.setAttribute('data-showtext', 'true');
+    } else {
+        iconBtn.classList.add('fa-eye-slash');
+        iconBtn.classList.remove('fa-eye');
+        inputCurrentPassword.setAttribute('type', 'password');
+        inputNewPassword.setAttribute('type', 'password');
+        inputConfirmPassword.setAttribute('type', 'password');
+        el.setAttribute('data-showtext', 'false');
     }
 }
