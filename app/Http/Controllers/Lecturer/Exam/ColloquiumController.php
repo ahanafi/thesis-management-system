@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Lecturer\Exam;
 
+use App\Constants\AssessmentTypes;
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Models\AssessmentComponent;
 use App\Models\AssessmentScore;
+use App\Models\Score;
 use App\Models\SubmissionAssessment;
 use Illuminate\Http\Request;
 
@@ -27,7 +29,6 @@ class ColloquiumController extends Controller
                     'timer' => 5000
                 ]);
         }
-
 
         $assessmentType = $submission->assessment_type;
         $components = AssessmentComponent::type($assessmentType)->get();
@@ -59,6 +60,19 @@ class ColloquiumController extends Controller
                 'nidn' => auth()->user()->registration_number,
                 'score' => $scores[$index]
             ]);
+        }
+
+        //count
+        $countAssessmentComponent = AssessmentComponent::type(AssessmentTypes::COLLOQUIUM)->count();
+
+        //Check assessment_score
+        $submission->load(['scores', 'thesis']);
+        if($submission->scores && count($submission->scores) >= $countAssessmentComponent) {
+            $colloquiumScore = AssessmentScore::getTotalScore($submission->id);
+
+            Score::studentId($submission->nim)
+                ->thesisId($submission->thesis->id)
+                ->update(['colloquium' => $colloquiumScore]);
         }
 
         if ($assessmentScore) {

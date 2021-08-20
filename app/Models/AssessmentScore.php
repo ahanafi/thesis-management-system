@@ -35,4 +35,11 @@ class AssessmentScore extends Model
     {
         return $query->where('nidn', $lecturerId);
     }
+
+    public static function getTotalScore($submissionId)
+    {
+        $score = self::where('submission_assessment_id', $submissionId)
+            ->sum('score');
+        return $score / 2;
+    }
 }

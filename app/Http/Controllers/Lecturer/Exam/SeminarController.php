@@ -6,6 +6,7 @@ use App\Constants\AssessmentTypes;
 use App\Http\Controllers\Controller;
 use App\Models\AssessmentComponent;
 use App\Models\AssessmentScore;
+use App\Models\Score;
 use App\Models\SubmissionAssessment;
 use Illuminate\Http\Request;
 
@@ -68,7 +69,21 @@ class SeminarController extends Controller
             ]);
         }
 
-        $submission->schedule()->setIsDone(true);
+        $submission->schedule()->update(['is_done' => true]);
+
+        //count
+        $countAssessmentComponent = AssessmentComponent::type(AssessmentTypes::SEMINAR)->count();
+
+        //Check assessment_score
+        $submission->load(['scores', 'thesis']);
+        if($submission->scores && count($submission->scores) >= $countAssessmentComponent) {
+            $seminarScore = AssessmentScore::getTotalScore($submission->id);
+            Score::create([
+                'thesis_id' => $submission->thesis->id,
+                'nim' => $submission->nim,
+                'seminar' => $seminarScore,
+            ]);
+        }
 
         if($assessmentScore) {
             $message = setFlashMessage('success', 'insert', 'nilai ujian seminar skripsi');

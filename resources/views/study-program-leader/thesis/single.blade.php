@@ -51,22 +51,22 @@
                                     @if ($thesis->assessmentSubmission !== null && countFromArray($thesis->assessmentSubmission, ['assessment_type' => \App\Constants\AssessmentTypes::SEMINAR]) > 0)
                                         @foreach($thesis->assessmentSubmission as $submission)
                                             @if($submission->assessment_type === \App\Constants\AssessmentTypes::SEMINAR)
-                                                - {{ $submission->firstExaminer->getNameWithDegree() }} <br>
-                                                - {{ $submission->secondExaminer->getNameWithDegree() }}
+                                                - {{ optional($submission->firstExaminer)->getNameWithDegree() }} <br>
+                                                - {{ optional($submission->secondExaminer)->getNameWithDegree() }}
                                             @endif
                                         @endforeach
                                     @endif
                                 </td>
                             </tr>
                             <tr>
-                                <td class="align-top" width="180">Penguji Seminar</td>
+                                <td class="align-top" width="180">Penguji Sidang</td>
                                 <td>:</td>
                                 <td>
                                     @if ($thesis->assessmentSubmission !== null && countFromArray($thesis->assessmentSubmission, ['assessment_type' => \App\Constants\AssessmentTypes::TRIAL]) > 0)
                                         @foreach($thesis->assessmentSubmission as $submission)
                                             @if($submission->assessment_type === \App\Constants\AssessmentTypes::TRIAL)
-                                                - {{ $submission->firstExaminer->getNameWithDegree() }} <br>
-                                                - {{ $submission->secondExaminer->getNameWithDegree() }}
+                                                - {{ optional($submission->firstExaminer)->getNameWithDegree() }} <br>
+                                                - {{ optional($submission->secondExaminer)->getNameWithDegree() }}
                                             @endif
                                         @endforeach
                                     @endif
