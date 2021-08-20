@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student\Assessment;
 
 use App\Constants\AssessmentTypes;
 use App\Http\Controllers\Controller;
+use App\Models\AssessmentComponent;
 use App\Models\AssessmentScore;
 use App\Models\SubmissionAssessment;
 use App\Models\Thesis;
@@ -116,13 +117,14 @@ class FinalTestController extends Controller
     public function score()
     {
         $nim = auth()->user()->registration_number;
-        $scores = AssessmentScore::with(['components'])
-            ->whereHas('submission', function ($query) use ($nim) {
-                $query->where('nim', $nim)
-                    ->where('assessment_type', AssessmentTypes::TRIAL);
-            })
-            ->get();
+        $submission = SubmissionAssessment::type(AssessmentTypes::TRIAL)
+            ->studentId($nim)
+            ->with('scores')
+            ->first();
 
-        return viewStudent('final-test.score', compact('scores'));
+        $countAssessmentComponent = AssessmentComponent::type(AssessmentTypes::TRIAL)->count();
+        $index = 1;
+
+        return viewStudent('final-test.score', compact('submission','index', 'countAssessmentComponent'));
     }
 }

@@ -7,7 +7,7 @@
         <x-student-thesis-info
             name="{{ $submission->thesis->student->getName() }}"
             nim="{{ $submission->thesis->student->nim }}"
-            study-program-name="{{ $submission->thesis->student->getName() }}"
+            study-program-name="{{ $submission->thesis->student->study_program->name }}"
             semester="{{ $submission->thesis->student->semester }}"
             avatar="{{ $submission->thesis->student->user->avatar }}"
             research-title="{{ $submission->thesis->research_title }}"

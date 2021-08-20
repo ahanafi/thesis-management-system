@@ -16,9 +16,9 @@ class SeminarController extends Controller
         $nidn = auth()->user()->registration_number;
 
         $submissions = SubmissionAssessment::with(['student', 'schedule'])
-            ->type(AssessmentTypes::SEMINAR)
             ->where('first_examiner', $nidn)
             ->orWhere('second_examiner', $nidn)
+            ->type(AssessmentTypes::SEMINAR)
             ->approved()
             ->get();
 
@@ -68,7 +68,7 @@ class SeminarController extends Controller
             ]);
         }
 
-        $submission->schedule()->update(['is_done' => true]);
+        $submission->schedule()->setIsDone(true);
 
         if($assessmentScore) {
             $message = setFlashMessage('success', 'insert', 'nilai ujian seminar skripsi');

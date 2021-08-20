@@ -25,8 +25,7 @@ class ThesisController extends Controller
 
     public function show(Thesis $thesis)
     {
-        $thesis->load(['student', 'scienceField']);
-
+        $thesis->load(['student', 'scienceField', 'assessmentSubmission']);
         return viewStudyProgramLeader('thesis.single', compact('thesis'));
     }
 

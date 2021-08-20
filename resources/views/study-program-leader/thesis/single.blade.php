@@ -36,17 +36,40 @@
                                 <td>{{ $thesis->created_at }}</td>
                             </tr>
                             <tr>
-                                <td width="180">Pembimbing 1</td>
+                                <td class="align-top" width="180">Pembimbing Skripsi</td>
                                 <td>:</td>
                                 <td>
-                                    {{ $thesis->firstSupervisor ? $thesis->firstSupervisor->getNameWithDegree() : '-' }}
+                                    - {{ $thesis->firstSupervisor ? $thesis->firstSupervisor->getNameWithDegree() : '-' }}
+                                    <br>
+                                    - {{ $thesis->secondSupervisor ? $thesis->secondSupervisor->getNameWithDegree() : '-' }}
                                 </td>
                             </tr>
                             <tr>
-                                <td width="180">Pembimbing 2</td>
+                                <td class="align-top" width="180">Penguji Seminar</td>
                                 <td>:</td>
                                 <td>
-                                    {{ $thesis->secondSupervisor ? $thesis->secondSupervisor->getNameWithDegree() : '-' }}
+                                    @if ($thesis->assessmentSubmission !== null && countFromArray($thesis->assessmentSubmission, ['assessment_type' => \App\Constants\AssessmentTypes::SEMINAR]) > 0)
+                                        @foreach($thesis->assessmentSubmission as $submission)
+                                            @if($submission->assessment_type === \App\Constants\AssessmentTypes::SEMINAR)
+                                                - {{ $submission->firstExaminer->getNameWithDegree() }} <br>
+                                                - {{ $submission->secondExaminer->getNameWithDegree() }}
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-top" width="180">Penguji Seminar</td>
+                                <td>:</td>
+                                <td>
+                                    @if ($thesis->assessmentSubmission !== null && countFromArray($thesis->assessmentSubmission, ['assessment_type' => \App\Constants\AssessmentTypes::TRIAL]) > 0)
+                                        @foreach($thesis->assessmentSubmission as $submission)
+                                            @if($submission->assessment_type === \App\Constants\AssessmentTypes::TRIAL)
+                                                - {{ $submission->firstExaminer->getNameWithDegree() }} <br>
+                                                - {{ $submission->secondExaminer->getNameWithDegree() }}
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </td>
                             </tr>
                             <tr>

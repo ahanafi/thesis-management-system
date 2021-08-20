@@ -31,17 +31,25 @@ class FinalTestController extends Controller
 
     public function show(SubmissionAssessment $submission)
     {
-        $submission->load(['student', 'thesis']);
+        $submission->load(['student', 'thesis', 'scores']);
         return viewLecturer('exam.final-test.single', compact('submission'));
     }
 
     public function score(SubmissionAssessment $submission)
     {
-        $submission->load(['student', 'thesis']);
+        $submission->load(['student', 'thesis', 'scores']);
         $assessmentType = $submission->assessment_type;
         $components = AssessmentComponent::type($assessmentType)->get();
+        $nidn = auth()->user()->registration_number;
 
-        return viewLecturer('exam.final-test.score', compact('submission', 'components'));
+        $scores = AssessmentScore::lecturerId($nidn)
+            ->with('components')
+            ->whereHas('submission', function ($q) use ($submission) {
+                $q->where('submission_assessment_id', $submission->id);
+            })
+            ->get();
+
+        return viewLecturer('exam.final-test.score', compact('submission', 'components', 'scores'));
     }
 
     public function inputScore(Request $request, SubmissionAssessment $submission)

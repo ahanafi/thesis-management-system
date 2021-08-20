@@ -34,7 +34,7 @@
                                     </a>
                                     <!-- Toggle Side Overlay -->
                                     <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                                    <a class="dropdown-item" href="javascript:void(0)">
+                                    <a class="dropdown-item" href="{{ route('account.change-password') }}">
                                         <i class="fa fa-fw fa-key mr-1"></i>
                                         <span>Ubah Password</span>
                                     </a>

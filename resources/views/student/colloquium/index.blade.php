@@ -76,17 +76,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @isset($submission)
+                        @isset($colloquiumSubmission)
                             <tr>
-                                <td class="text-center">{{ $submission->created_at ? $submission->created_at->format('d-m-Y H:i:s') : '-' }}</td>
-                                <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_first_supervisor) : '-'  !!}</td>
-                                <td class="text-center">{!! $submission ? \App\Constants\Status::getLabel($submission->status_second_supervisor) : '-'  !!}</td>
-                                <td class="text-center">{{ $submission->response_date_first_supervisor ?: '-' }}</td>
-                                <td class="text-center">{{ $submission->response_date_second_supervisor ?: '-' }}</td>
+                                <td class="text-center">{{ $colloquiumSubmission->created_at ? $colloquiumSubmission->created_at->format('d-m-Y H:i:s') : '-' }}</td>
+                                <td class="text-center">{!! $colloquiumSubmission ? \App\Constants\Status::getLabel($colloquiumSubmission->status_first_supervisor) : '-'  !!}</td>
+                                <td class="text-center">{!! $colloquiumSubmission ? \App\Constants\Status::getLabel($colloquiumSubmission->status_second_supervisor) : '-'  !!}</td>
+                                <td class="text-center">{{ $colloquiumSubmission->response_date_first_supervisor ?: '-' }}</td>
+                                <td class="text-center">{{ $colloquiumSubmission->response_date_second_supervisor ?: '-' }}</td>
                                 <td class="text-center">
-                                    @if($submission->document && Storage::exists($submission->document))
+                                    @if($colloquiumSubmission->document && Storage::exists($colloquiumSubmission->document))
                                         <a href="{{ route('student.assessment.colloquium.submission.download', [
-                                        'submission' => $submission->id,
+                                        'submission' => $colloquiumSubmission->id,
                                         'type' => 'report'
                                     ]) }}" class="btn btn-sm btn-primary">
                                             <i class="fa fa-file-download"></i>
@@ -97,8 +97,8 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    @if($submission->id)
-                                        <a href="{{ route('student.assessment.colloquium.submission.show', $submission->id) }}"
+                                    @if($colloquiumSubmission->id)
+                                        <a href="{{ route('student.assessment.colloquium.submission.show', $colloquiumSubmission->id) }}"
                                            class="btn btn-sm btn-success">
                                             <i class="fa fa-fw fa-search-plus"></i>
                                             <span>Detail</span>
