@@ -15,6 +15,11 @@ use Illuminate\Support\Str;
 
 class SeminarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('check-thesis');
+    }
+
     public function index()
     {
         $nim = auth()->user()->registration_number;
@@ -29,6 +34,7 @@ class SeminarController extends Controller
     public function submission()
     {
         $nim = auth()->user()->registration_number;
+
         $submission = SubmissionAssessment::type(AssessmentTypes::SEMINAR)
             ->studentId($nim);
 
@@ -58,25 +64,26 @@ class SeminarController extends Controller
 
     public function apply(Request $request)
     {
-        $this->validate($request, [
-            'guidance_card_first_supervisor' => 'required|mimes:pdf',
-            'guidance_card_second_supervisor' => 'required|mimes:pdf',
-            'report' => 'required|mimes:pdf,doc,docx,zip,rar',
-        ]);
+        $this->validate($request, ['report' => 'required|mimes:pdf,doc,docx,zip,rar',]);
 
         $nim = auth()->user()->registration_number;
         $thesis = Thesis::studentId($nim)->select('id')->first();
 
-        $guidanceCardFirstSupervisor = $request->file('guidance_card_first_supervisor')->store('documents/guidance-cards');
-        $guidanceCardSecondSupervisor = $request->file('guidance_card_second_supervisor')->store('documents/guidance-cards');
+        if ($thesis === null) {
+            return redirect()->back()
+                ->with('message', [
+                    'type' => 'warning',
+                    'text' => 'Data skripsi tidak ditemukan! Silahkan buat pengajuan proposal Skripsi terlebih dahulu!',
+                    'timer' => 5000,
+                ]);
+        }
+
         $report = $request->file('report')->store('documents/seminar');
 
         $submissionAssessment = new SubmissionAssessment();
         $submissionAssessment->nim = $nim;
         $submissionAssessment->thesis_id = $thesis->id;
         $submissionAssessment->assessment_type = AssessmentTypes::SEMINAR;
-        $submissionAssessment->guidance_card_first_supervisor = $guidanceCardFirstSupervisor;
-        $submissionAssessment->guidance_card_second_supervisor = $guidanceCardSecondSupervisor;
         $submissionAssessment->document = $report;
 
         if ($submissionAssessment->save()) {
@@ -121,6 +128,6 @@ class SeminarController extends Controller
 
         $countAssessmentComponent = AssessmentComponent::type(AssessmentTypes::SEMINAR)->count();
         $index = 1;
-        return viewStudent('seminar.score', compact('submission','index', 'countAssessmentComponent'));
+        return viewStudent('seminar.score', compact('submission', 'index', 'countAssessmentComponent'));
     }
 }

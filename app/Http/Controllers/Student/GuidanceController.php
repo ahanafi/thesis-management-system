@@ -12,6 +12,11 @@ use Ramsey\Uuid\Guid\Guid;
 
 class GuidanceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('check-thesis');
+    }
+
     public function index()
     {
         $nim = auth()->user()->registration_number;
@@ -27,7 +32,7 @@ class GuidanceController extends Controller
     {
         $nim = auth()->user()->registration_number;
         $supervisor = Thesis::getSupervisorOnly($nim);
-        if($supervisor->first_supervisor === null && $supervisor->second_supervisor === null) {
+        if ($supervisor->first_supervisor === null && $supervisor->second_supervisor === null) {
             return redirect()->back()->with('message', [
                 'type' => 'info',
                 'text' => 'Anda belum dapat melakukan bimbingan, karena Pembimbing belum ditetapkan oleh Program Studi.',
@@ -78,7 +83,7 @@ class GuidanceController extends Controller
     {
         $guidance->load(['student', 'thesis', 'response']);
         $nim = auth()->user()->registration_number;
-        if($guidance->nim !== $nim) {
+        if ($guidance->nim !== $nim) {
             abort(403);
         }
 
@@ -88,11 +93,11 @@ class GuidanceController extends Controller
     public function edit(Guidance $guidance)
     {
         $nim = auth()->user()->registration_number;
-        if($guidance->nim !== $nim) {
+        if ($guidance->nim !== $nim) {
             abort(403);
         }
 
-        if($guidance->status === GuidanceStatus::REPLIED) {
+        if ($guidance->status === GuidanceStatus::REPLIED) {
             return redirect()
                 ->back()
                 ->with('message', [
@@ -114,14 +119,14 @@ class GuidanceController extends Controller
     {
         $validated = $request->validated();
 
-        if($request->hasFile('document')) {
+        if ($request->hasFile('document')) {
             $guidance->document = $request->file('document')->store('documents/guidance');
         }
 
         $guidance->title = $validated['title'];
         $guidance->note = $validated['note'];
 
-        if($guidance->update()) {
+        if ($guidance->update()) {
             $message = setFlashMessage('success', 'update', 'bimbingan skripsi');
         } else {
             $message = setFlashMessage('error', 'update', 'bimbingan skripsi');

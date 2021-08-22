@@ -14,6 +14,11 @@ use Illuminate\Support\Str;
 
 class ColloquiumController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('check-thesis');
+    }
+
     public function index()
     {
         $nim = auth()->user()->registration_number;
@@ -129,6 +134,6 @@ class ColloquiumController extends Controller
         $countAssessmentComponent = AssessmentComponent::type(AssessmentTypes::COLLOQUIUM)->count();
         $index = 1;
 
-        return viewStudent('colloquium.score', compact('submission','index', 'countAssessmentComponent'));
+        return viewStudent('colloquium.score', compact('submission', 'index', 'countAssessmentComponent'));
     }
 }

@@ -18,39 +18,6 @@
                             <form action="{{ route('student.assessment.seminar.apply') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
-                                <div class="form-group">
-                                    <label for="document">Kartu Bimbingan Dosen Pembimbing 1 (PDF)</label>
-                                    <div class="custom-file">
-                                        <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled" onchange="getFileName(this)"
-                                               data-toggle="custom-file-input" name="guidance_card_first_supervisor" required
-                                               id="guidance_card_first_supervisor" accept="application/pdf">
-                                        <label class="custom-file-label" for="guidance_card_first_supervisor">Pilih file</label>
-
-                                        @error('guidance_card_first_supervisor')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="document">Kartu Bimbingan Dosen Pembimbing 2 (PDF)</label>
-                                    <div class="custom-file">
-                                        <!-- Populating custom file input label with the selected filename (data-toggle="custom-file-input" is initialized in Helpers.coreBootstrapCustomFileInput()) -->
-                                        <input type="file" class="custom-file-input js-custom-file-input-enabled" onchange="getFileName(this)"
-                                               data-toggle="custom-file-input" name="guidance_card_second_supervisor" required
-                                               id="guidance_card_second_supervisor" accept="application/pdf">
-                                        <label class="custom-file-label" for="guidance_card_second_supervisor">Pilih file</label>
-
-                                        @error('guidance_card_second_supervisor')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
 
                                 <div class="form-group">
                                     <label for="document">Laporan Skripsi (BAB I s.d. BAB IV)</label>
@@ -96,12 +63,8 @@
                     </div>
                     <div class="block-content">
                         <ol>
-                            <li>Silahkan unduh kartu bimbingan di halaman <a
-                                    href="{{ route('student.guidance.index') }}"><b>Bimbingan Skripsi</b></a>.
-                            </li>
                             <li>Pastikan Anda telah <b>menyelesaikan Laporan Skripsi Anda dari BAB I s.d. BAB IV</b>
                             </li>
-                            <li>Unggah Kartu Bimbingan dengan ekstensi <b>.pdf</b> pada form di samping.</li>
                             <li>Unggah Laporan Skripsi Anda dengan salah satu ekstensi berikut:
                                 <b>pdf,doc/docx,zip/rar.</b></li>
                             <li>Pengajuan Seminar Anda akan ditinjau oleh Pembimbing terkait, mohon agar sabar menunggu

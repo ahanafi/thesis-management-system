@@ -25,7 +25,7 @@ class SubmitSupervisorResponseRequest extends FormRequest
     {
         return [
             'response' => 'required',
-            'document' => 'pdf,doc,docx,rar,zip'
+            'document' => 'file|mimes:pdf,doc,docx,rar,zip'
         ];
     }
 }

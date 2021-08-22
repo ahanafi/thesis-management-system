@@ -5,7 +5,7 @@
     <div class="content">
         <h2 class="content-heading">Data Skripsi</h2>
         @if(is_null($thesis))
-            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x balert-warning"
+            <div class="alert alert-warning d-flex align-items-center justify-content-between border-3x border-warning"
                  role="alert">
                 <div class="flex-fill mr-3">
                     <p class="mb-0">
@@ -309,7 +309,7 @@
                 <x-student-info
                     name="{{ $user->studentProfile->getName() }}"
                     nim="{{ $user->studentProfile->nim }}"
-                    study-program-name="{{ $user->studentProfile->getName() }}"
+                    study-program-name="{{ $user->studentProfile->study_program->name }}"
                     semester="{{ $user->studentProfile->semester }}"
                     avatar="{{ $user->studentProfile->user->avatar }}"
                 ></x-student-info>

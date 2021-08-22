@@ -89,11 +89,11 @@
                                 <td>Dokumen Balasan</td>
                                 <td>:</td>
                                 <td>
-                                    @if($guidance->response->document !== '' && Storage::exists($guidance->guide_document))
+                                    @if($guidance->response->document !== null && Storage::exists($guidance->response->document))
                                         <a href="#"
                                            onclick="showDocument(
-                                               '{{ Storage::url($guidance->guide_document) }}',
-                                               '{{ File::extension(Storage::url($guidance->guide_document)) }}'
+                                               '{{ Storage::url($guidance->response->document) }}',
+                                               '{{ File::extension(Storage::url($guidance->response->document)) }}'
                                                )"
                                            data-toggle="modal" data-target="#modal-detail-document"
                                            class="btn btn-sm btn-primary">

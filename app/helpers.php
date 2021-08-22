@@ -1,6 +1,5 @@
 <?php
 
-use App\Constants\Functional;
 use App\Models\Lecturer;
 use App\Models\Score;
 
